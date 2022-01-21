@@ -1,0 +1,8 @@
+1/19 Notes
+• Basic bootstrapping is used to find variance of a point estimate
+• Involves re-sampling points from original dataset with replacement to form a new bootstrapped dataset, repeating this many times, and creating a distribution of a certain statistic calculated from each sample
+• Block bootstrap is used for time series
+• To account for time factor, series is split into blocks, which may overlap or may not overlap, and the blocks are resampled to create a new bootstrapped time series
+• Problem of block size (large enough to preserve temporal dependence and small enough to have some variance)
+• What is the largest time series necessary to be effective?
+• Task: Create order 1 autoregression simulation with AR coefficient = 0.5 and size = 100
