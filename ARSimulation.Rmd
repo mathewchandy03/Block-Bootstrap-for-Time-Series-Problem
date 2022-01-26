@@ -6,19 +6,28 @@ title: "Block Bootstrap for Time Series"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r simulation, echo=FALSE}
-# simulates, prints, and plots auto-regressive process of order 1 with ar = 0.5 and size = 100
-ts.sim <- arima.sim(list(order = c(1,0,0), ar = 0.5), n = 100) 
+Simulates, prints, and plots auto-regressive process of order 1 with ar = 0.5 and size = 100
+```{r, echo = FALSE}
+ts.sim <- arima.sim(list(order = c(1, 0, 0), ar = 0.5), n = 100) 
 ts.sim
 plot(ts.sim)
-# splits time series into ten blocks of size 10 and stores them in a list
+```
+
+Splits time series into ten blocks of size 10 and stores them in a list
+```{r, echo = False}
 ts.blocks <- list(ts.sim[c(1:10)], ts.sim[c(11:20)], ts.sim[c(21:30)], ts.sim[c(31:40)], ts.sim[c(41:50)], ts.sim[c(51:60)], ts.sim[c(61:70)], ts.sim[c(71:80)], ts.sim[c(81:90)], ts.sim[c(91:100)])
 ts.blocks
-# randomly samples 10 non-overlapping blocks (with replacement) from ts.blocks, creating a single bootstrapped time series
+```
+
+Randomly samples 10 non-overlapping blocks (with replacement) from ts.blocks, creating a single bootstrapped time series
+```{r, echo = False}
 ts.boot1 <- sample(ts.blocks, 10, replace = T)
 ts.boot1
 class(ts.boot1)
-# ts.boot1 is a list of vectors and does not work with the plot() function, so ts.boot2 is a simpler numeric vector
+```
+
+ts.boot1 is a list of vectors and does not work with the plot() function, so we use a nested loop to store the values in ts.boot2, a simpler numeric vector
+```{r, echo = False}
 ts.boot2 <- c()
 for(i in 1:10) {
   for(j in 1: 10) {
@@ -27,16 +36,11 @@ for(i in 1:10) {
 }
 ts.boot2
 class(ts.boot2)
-#ts.boot2 is plotted
+```
+
+Ts.boot2 is plotted
+```{r, echo = False}
 plot(ts.boot2, type = "l")
-
-
-
-
-
-
-
-
 ```
 
 
