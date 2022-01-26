@@ -6,3 +6,9 @@
 • Problem of block size (large enough to preserve temporal dependence and small enough to have some variance)
 • What is the largest time series necessary to be effective?
 • Task: Create order 1 autoregression simulation with AR coefficient = 0.5 and size = 100
+
+1/26 Notes
+• Create a function that returns a point estimate and standard error
+• Takes input: observed time series, bootstrap sample size, block size, and later a boolean: overlapping vs. non-overlapping
+• After function is done, we can begin to work on simulation
+• Problem: as time series length goes to infinity, block size goes to infinity, but ratio of block size : time series length must decrease
