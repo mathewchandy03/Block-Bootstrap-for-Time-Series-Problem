@@ -42,5 +42,9 @@ Ts.boot2 is plotted
 ```{r, echo = False}
 plot(ts.boot2, type = "l")
 ```
-
+```{r, echo = False}
+bootstrap <- function(series, B, b, overlap)
+{
+  
+}
 
