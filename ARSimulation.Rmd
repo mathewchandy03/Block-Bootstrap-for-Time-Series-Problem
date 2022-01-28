@@ -42,9 +42,14 @@ Ts.boot2 is plotted
 ```{r, echo = False}
 plot(ts.boot2, type = "l")
 ```
-```{r, echo = False}
-bootstrap <- function(series, B, b, overlap)
-{
-  
-}
+We need to start with a sample of a certain size B of consecutive points from a time series ts.series. First we need to randomly select a single point in the time series, and we can do this by selecting a number between 1 and 100.
 
+```{r, echo = False}
+ts.sim <- arima.sim(list(order = c(1, 0, 0), ar = 0.5), n = 100) 
+single_point <- function(ts.series, B, b, overlap)
+{
+  point1 <- sample(c(1:length(ts.series)), 1, replace = T)
+  print(point1)
+}
+bootstrap(ts.sim, 0, 0, F)
+```
