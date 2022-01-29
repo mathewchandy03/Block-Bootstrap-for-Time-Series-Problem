@@ -60,7 +60,7 @@ one_sample <- function(ts.series, B)
 {
   point1 <- sample(c(1:length(ts.series)), 1, replace = T)
   ts.samp1 <- c()
-  for(i in 1:B)
+  for(i in 1 : B)
   {
     ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
   }
@@ -71,4 +71,31 @@ one_sample <- function(ts.series, B)
   plot(ts.samp1, type = 'l')
 }
 one_sample(ts.sim, 10)
+```
+Now we need to separate the sample into blocks of size b.
+```{r, echo == False}
+blocks <- function(ts.series, B, b)
+{
+  point1 <- sample(c(1:length(ts.series)), 1, replace = T)
+  ts.samp1 <- c()
+  for(i in 1 : B)
+  {
+    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+  }
+  print(ts.sim)
+  plot(ts.sim)
+  print(point1)
+  print(ts.samp1)
+  i <- 1
+  ts.block_list <- list()
+  while(i < B)
+  {
+    x <- list(ts.samp1[i : (i + b - 1)])
+    ts.block_list <- append(ts.block_list, x)
+    i = i + b
+  }
+  print(ts.block_list)
+  plot(ts.samp1, type = 'l')
+}
+blocks(ts.sim, 20, 4)
 ```
