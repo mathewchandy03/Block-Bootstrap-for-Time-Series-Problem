@@ -54,7 +54,9 @@ single_point <- function(ts.series)
 }
 single_point(ts.sim)
 ```
+
 one_sample creates the sample that we'll be working with now
+
 ```{r, echo = False}
 one_sample <- function(ts.series, B)
 {
@@ -72,7 +74,9 @@ one_sample <- function(ts.series, B)
 }
 one_sample(ts.sim, 10)
 ```
-Now we need to separate the sample into blocks of size b.
+
+Now we need to separate the sample into blocks of size b. We are assuming that B is divisible by b.
+
 ```{r, echo == False}
 blocks <- function(ts.series, B, b)
 {
@@ -98,4 +102,36 @@ blocks <- function(ts.series, B, b)
   plot(ts.samp1, type = 'l')
 }
 blocks(ts.sim, 20, 4)
+```
+
+Randomly samples B/b non-overlapping blocks (with replacement) from ts.block_list, creating a single bootstrapped time series. 
+```{r, echo = False}
+blocks <- function(ts.series, B, b)
+{
+  point1 <- sample(c(1:length(ts.series)), 1, replace = T)
+  ts.samp1 <- c()
+  for(i in 1 : B)
+  {
+    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+  }
+  print(ts.sim)
+  plot(ts.sim)
+  print(point1)
+  print(ts.samp1)
+  plot(ts.samp1, type = 'l')
+  i <- 1
+  ts.block_list <- list()
+  while(i < B)
+  {
+    x <- list(ts.samp1[i : (i + b - 1)])
+    ts.block_list <- append(ts.block_list, x)
+    i = i + b
+  }
+  print(ts.block_list)
+  ts.bootstrap_1 <- sample(ts.block_list, B/b, replace = T)
+  print(ts.bootstrap_1)
+  class(ts.boot1)
+}
+blocks(ts.sim, 20, 4)
+
 ```
