@@ -15,7 +15,7 @@ plot(ts.sim)
 
 Splits time series into ten blocks of size 10 and stores them in a list
 ```{r, echo = False}
-ts.blocks <- list(ts.sim[c(1:10)], ts.sim[c(11:20)], ts.sim[c(21:30)], ts.sim[c(31:40)], ts.sim[c(41:50)], ts.sim[c(51:60)], ts.sim[c(61:70)], ts.sim[c(71:80)], ts.sim[c(81:90)], ts.sim[c(91:100)])
+ts.blocks <- list(ts.sim[c(1 : 10)], ts.sim[c(11 : 20)], ts.sim[c(21 : 30)], ts.sim[c(31 : 40)], ts.sim[c(41 : 50)], ts.sim[c(51 : 60)], ts.sim[c(61 : 70)], ts.sim[c(71 : 80)], ts.sim[c(81 : 90)], ts.sim[c(91 : 100)])
 ts.blocks
 ```
 
@@ -29,8 +29,8 @@ class(ts.boot1)
 ts.boot1 is a list of vectors and does not work with the plot() function, so we use a nested loop to store the values in ts.boot2, a simpler numeric vector
 ```{r, echo = False}
 ts.boot2 <- c()
-for(i in 1:10) {
-  for(j in 1: 10) {
+for(i in 1 : 10) {
+  for(j in 1 : 10) {
     ts.boot2 <- c(ts.boot2, ts.boot1[[i]][[j]])
   }
 }
@@ -106,7 +106,7 @@ blocks(ts.sim, 20, 4)
 
 Randomly samples B/b non-overlapping blocks (with replacement) from ts.block_list, creating a single bootstrapped time series. 
 ```{r, echo = False}
-blocks <- function(ts.series, B, b)
+bootstrap_samp1 <- function(ts.series, B, b)
 {
   point1 <- sample(c(1:length(ts.series)), 1, replace = T)
   ts.samp1 <- c()
@@ -132,6 +132,45 @@ blocks <- function(ts.series, B, b)
   print(ts.bootstrap_1)
   class(ts.boot1)
 }
-blocks(ts.sim, 20, 4)
+bootstrap_samp1(ts.sim, 20, 4)
+```
 
+ts.bootstrap_1 is a list of lists and will be difficult to work with, so we use a nested loop to store the values in ts.bootstrap_2, a simpler numeric vector
+
+```{r, echo = False}
+bootstrap_samp2 <- function(ts.series, B, b)
+{
+  point1 <- sample(c(1:length(ts.series)), 1, replace = T)
+  ts.samp1 <- c()
+  for(i in 1 : B)
+  {
+    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+  }
+  print(ts.sim)
+  plot(ts.sim)
+  print(point1)
+  print(ts.samp1)
+  plot(ts.samp1, type = 'l')
+  i <- 1
+  ts.block_list <- list()
+  while(i < B)
+  {
+    x <- list(ts.samp1[i : (i + b - 1)])
+    ts.block_list <- append(ts.block_list, x)
+    i = i + b
+  }
+  print(ts.block_list)
+  ts.bootstrap_1 <- sample(ts.block_list, B/b, replace = T)
+  print(ts.bootstrap_1)
+  class(ts.boot1)
+  ts.bootstrap_2 <- c()
+  for(i in 1 : (B/b)) {
+    for(j in 1 : b) {
+      ts.bootstrap_2 <- c(ts.bootstrap_2, ts.bootstrap_1[[i]][[j]])
+    }
+  }
+  print(ts.bootstrap_2)
+  class(ts.bootstrap_2)
+}
+bootstrap_samp2(ts.sim, 20, 4)
 ```
