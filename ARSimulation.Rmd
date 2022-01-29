@@ -49,6 +49,7 @@ ts.sim <- arima.sim(list(order = c(1, 0, 0), ar = 0.5), n = 100)
 single_point <- function(ts.series)
 {
   point1 <- sample(c(1:length(ts.series)), 1, replace = T)
+  print(ts.sim)
   print(point1)
 }
 single_point(ts.sim)
@@ -58,14 +59,16 @@ one_sample creates the sample that we'll be working with now
 one_sample <- function(ts.series, B)
 {
   point1 <- sample(c(1:length(ts.series)), 1, replace = T)
-  samp1 <- c()
+  ts.samp1 <- c()
   for(i in 1:B)
   {
-    samp1 <- c(samp1, ts.sim[point1 + i - 1])
+    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
   }
   print(ts.sim)
+  plot(ts.sim)
   print(point1)
-  print(samp1)
+  print(ts.samp1)
+  plot(ts.samp1, type = 'l')
 }
 one_sample(ts.sim, 10)
 ```
