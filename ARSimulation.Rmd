@@ -175,9 +175,9 @@ bootstrap_samp2 <- function(ts.series, B, b)
 }
 bootstrap_samp2(ts.sim, 20, 4)
 ```
-Now we can find the mean of this bootstrap, repeat the process many times, and find the point estimate for the mean and the standard error of the distribution.
+Now we can find the mean of this bootstrap, repeat the process many times, and find the point estimate for the mean and the standard error of the distribution (or the standard deviation of the sample mean).
 ```{r, echo = False}
-bootstrap_samp2 <- function(ts.series, B, b)
+samp_dist <- function(ts.series, B, b)
 {
   point1 <- sample(c(1:length(ts.series)), 1, replace = T)
   ts.samp1 <- c()
@@ -212,8 +212,9 @@ bootstrap_samp2 <- function(ts.series, B, b)
     samp_mean <- c(samp_mean, mean(ts.bootstrap_2))
   }
   print(samp_mean)
+  return(c(mean(samp_mean), sd(samp_mean)))
   
   
 }
-bootstrap_samp2(ts.sim, 20, 4)
+print(samp_dist(ts.sim, 20, 4))
 ```
