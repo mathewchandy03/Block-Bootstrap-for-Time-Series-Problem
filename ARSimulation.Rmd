@@ -175,3 +175,45 @@ bootstrap_samp2 <- function(ts.series, B, b)
 }
 bootstrap_samp2(ts.sim, 20, 4)
 ```
+Now we can find the mean of this bootstrap, repeat the process many times, and find the point estimate for the mean and the standard error of the distribution.
+```{r, echo = False}
+bootstrap_samp2 <- function(ts.series, B, b)
+{
+  point1 <- sample(c(1:length(ts.series)), 1, replace = T)
+  ts.samp1 <- c()
+  for(i in 1 : B)
+  {
+    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+  }
+  print(ts.sim)
+  plot(ts.sim)
+  print(point1)
+  print(ts.samp1)
+  plot(ts.samp1, type = 'l')
+  i <- 1
+  ts.block_list <- list()
+  while(i < B)
+  {
+    x <- list(ts.samp1[i : (i + b - 1)])
+    ts.block_list <- append(ts.block_list, x)
+    i = i + b
+  }
+  print(ts.block_list)
+  samp_mean <- c()
+  for(i in 1 : 1000)
+  {
+    ts.bootstrap_1 <- sample(ts.block_list, B/b, replace = T)
+    ts.bootstrap_2 <- c()
+    for(i in 1 : (B/b)) {
+      for(j in 1 : b) {
+        ts.bootstrap_2 <- c(ts.bootstrap_2, ts.bootstrap_1[[i]][[j]])
+      }
+    }
+    samp_mean <- c(samp_mean, mean(ts.bootstrap_2))
+  }
+  print(samp_mean)
+  
+  
+}
+bootstrap_samp2(ts.sim, 20, 4)
+```
