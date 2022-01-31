@@ -171,6 +171,7 @@ bootstrap_samp2 <- function(ts.series, B, b)
   }
   print(ts.bootstrap_2)
   class(ts.bootstrap_2)
+  plot(ts.bootstrap_2, type = 'l')
 }
 bootstrap_samp2(ts.sim, 20, 4)
 ```
