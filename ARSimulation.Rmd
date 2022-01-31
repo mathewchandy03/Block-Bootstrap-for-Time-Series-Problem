@@ -49,7 +49,7 @@ ts.sim <- arima.sim(list(order = c(1, 0, 0), ar = 0.5), n = 100)
 single_point <- function(ts.series)
 {
   point1 <- sample(c(1:length(ts.series)), 1, replace = T)
-  print(ts.sim)
+  print(ts.series)
   print(point1)
 }
 single_point(ts.sim)
@@ -66,8 +66,8 @@ one_sample <- function(ts.series, B)
   {
     ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
   }
-  print(ts.sim)
-  plot(ts.sim)
+  print(ts.series)
+  plot(ts.series)
   print(point1)
   print(ts.samp1)
   plot(ts.samp1, type = 'l')
@@ -84,10 +84,10 @@ blocks <- function(ts.series, B, b)
   ts.samp1 <- c()
   for(i in 1 : B)
   {
-    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+    ts.samp1 <- c(ts.samp1, ts.series[point1 + i - 1])
   }
-  print(ts.sim)
-  plot(ts.sim)
+  print(ts.series)
+  plot(ts.series)
   print(point1)
   print(ts.samp1)
   i <- 1
@@ -112,10 +112,10 @@ bootstrap_samp1 <- function(ts.series, B, b)
   ts.samp1 <- c()
   for(i in 1 : B)
   {
-    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+    ts.samp1 <- c(ts.samp1, ts.series[point1 + i - 1])
   }
-  print(ts.sim)
-  plot(ts.sim)
+  print(ts.series)
+  plot(ts.series)
   print(point1)
   print(ts.samp1)
   plot(ts.samp1, type = 'l')
@@ -144,10 +144,10 @@ bootstrap_samp2 <- function(ts.series, B, b)
   ts.samp1 <- c()
   for(i in 1 : B)
   {
-    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+    ts.samp1 <- c(ts.samp1, ts.series[point1 + i - 1])
   }
-  print(ts.sim)
-  plot(ts.sim)
+  print(ts.series)
+  plot(ts.series)
   print(point1)
   print(ts.samp1)
   plot(ts.samp1, type = 'l')
@@ -183,12 +183,9 @@ samp_dist <- function(ts.series, B, b)
   ts.samp1 <- c()
   for(i in 1 : B)
   {
-    ts.samp1 <- c(ts.samp1, ts.sim[point1 + i - 1])
+    ts.samp1 <- c(ts.samp1, ts.series[point1 + i - 1])
   }
-  print(ts.sim)
-  plot(ts.sim)
-  print(point1)
-  print(ts.samp1)
+  plot(ts.series)
   plot(ts.samp1, type = 'l')
   i <- 1
   ts.block_list <- list()
@@ -198,7 +195,6 @@ samp_dist <- function(ts.series, B, b)
     ts.block_list <- append(ts.block_list, x)
     i = i + b
   }
-  print(ts.block_list)
   samp_mean <- c()
   for(i in 1 : 1000)
   {
@@ -211,10 +207,16 @@ samp_dist <- function(ts.series, B, b)
     }
     samp_mean <- c(samp_mean, mean(ts.bootstrap_2))
   }
-  print(samp_mean)
   return(c(mean(samp_mean), sd(samp_mean)))
   
   
 }
 print(samp_dist(ts.sim, 20, 4))
+```
+
+Let's test how well the function works now with a larger time series and a larger sample size:
+```{r, echo = False}
+ts.sim1 <- arima.sim(list(order = c(1, 0, 0), ar = 0.5), n = 1000)
+print(samp_dist(ts.sim1, 100, 10))
+print(mean(ts.sim1))
 ```
