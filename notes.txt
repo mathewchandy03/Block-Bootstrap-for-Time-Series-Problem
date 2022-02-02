@@ -12,3 +12,7 @@
 • Takes input: observed time series, bootstrap sample size, block size, and later a boolean: overlapping vs. non-overlapping
 • After function is done, we can begin to work on simulation
 • Problem: as time series length goes to infinity, block size goes to infinity, but ratio of block size : time series length must decrease
+
+2/2 Notes
+• B is bootstrap sample size or number of replications
+• Review Block Bootstrap section from Statistical Computing Course
