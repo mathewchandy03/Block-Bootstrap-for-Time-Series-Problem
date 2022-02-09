@@ -16,3 +16,10 @@
 2/2 Notes
 • B is bootstrap sample size or number of replications
 • Review Block Bootstrap section from Statistical Computing Course
+
+2/9 Notes
+• Design a simulation study for a given sample size (time series length): 100 for example
+• Returns point estimate and standard error
+• Replicate 100 times, check if it recovers empirical statistic and variance
+• Check if 95% CI is in fact 95% confident
+• Adjust parameters (sigma (noise level), length of time series, play with block size, temporal dependence, nm/mv)
