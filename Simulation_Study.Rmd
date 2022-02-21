@@ -1,0 +1,59 @@
+---
+title: "Simulation_Study"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We need all necessary functions:
+
+```{r functions, echo = FALSE}
+nmblk <- function(n, l) {
+  b <- n / l # assuming that is an integer
+  idx <- sample(seq(1, n - l + 1, by = l), b, replace = TRUE) # Sample between 1 and n - l + 1, 
+  # separating by l, b times
+  c(outer(0:(l - 1), idx, "+")) # Creates a vector listing random blocks of size l with starting points 
+  # decided by idx
+}
+
+mvblk <- function(n, l) {
+  b <- n / l
+  idx <- sample(1:(n - l + 1), b, replace = TRUE) # Sample any starting point between 1 and n - 1 + 1
+  # they can overlap
+  c(outer(0:(l - 1), idx, "+")) # Creates a vector listing random blocks of size l with starting points
+  # decided by idx
+}
+
+blkboot <- function(tseries, statistic, R, l) {
+  n <- length(tseries) 
+  ## observed statistic
+  stat <- statistic(tseries) #stat stores a certain statistic of tseries using a function
+  ## nonmoving block bootstrap
+  nm.stat <- replicate(R, statistic(tseries[nmblk(n, l)])) # finds the statistic of nm bootstrap and repeats R times
+  ## moving block bootstrap
+  mv.stat <- replicate(R, statistic(tseries[mvblk(n, l)])) # finds the statistic of mv bootstrap and repeats R times
+  list(stat = stat, nm.stat = nm.stat, mv.stat = mv.stat) # returns list of three values
+}
+
+do1rep <- function(n, theta, sd, l, statistic) {
+  x <- arima.sim(list(ar = theta), n, sd = sd)
+  bt <- blkboot(x, statistic, 1000, l) 
+  nm_interval = c(bt$stat - 1.96*sd(bt$nm.stat), bt$stat + 1.96*sd(bt$nm.stat))
+  mv_interval = c(bt$stat - 1.96*sd(bt$mv.stat), bt$stat + 1.96*sd(bt$mv.stat))
+  if (0.5 >)
+  c(bt$stat, sd(bt$nm.stat), sd(bt$mv.stat), nm_interval, mv_interval) 
+    # returns statistics and sd's for nm and mv respectively
+  
+}
+```
+
+Let's conduct a simulation study with n = 100, ar = 0.5, and sd = 0.1
+
+```{r functions, echo = False}
+ar1 <- function(x) cor(x[-1], x[-length(x)])
+sim <- replicate(100, do1rep(100, 0.5, 0.1, 10, ar1))
+print(sim)
+
+```
