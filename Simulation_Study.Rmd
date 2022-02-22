@@ -42,18 +42,74 @@ do1rep <- function(n, theta, sd, l, statistic) {
   bt <- blkboot(x, statistic, 1000, l) 
   nm_interval = c(bt$stat - 1.96*sd(bt$nm.stat), bt$stat + 1.96*sd(bt$nm.stat))
   mv_interval = c(bt$stat - 1.96*sd(bt$mv.stat), bt$stat + 1.96*sd(bt$mv.stat))
-  if (0.5 >)
-  c(bt$stat, sd(bt$nm.stat), sd(bt$mv.stat), nm_interval, mv_interval) 
+  nm_chi = c(999 * var(bt$nm.stat) / qchisq(p = .025, df = 999, lower.tail = FALSE), 999 * var(bt$nm.stat) / qchisq(p = .975, df = 999, lower.tail = FALSE))
+  mv_chi = c(999 * var(bt$mv.stat) / qchisq(p = .025, df = 999, lower.tail = FALSE), 999 * var(bt$mv.stat) / qchisq(p = .975, df = 999, lower.tail = FALSE))
+  nm_contains = FALSE
+  if (nm_interval[1] < theta && nm_interval[2] > theta)
+  {
+    nm_contains = TRUE
+  }
+  mv_contains = FALSE
+  if (mv_interval[1] < theta && mv_interval[2] > theta)
+  {
+    mv_contains = TRUE
+  }
+  nm_chi_contains = FALSE
+  if (nm_chi[1] < sd**2 && nm_chi[2] > sd**2)
+  {
+    nm_chi_contains = TRUE
+  }
+  mv_chi_contains = FALSE
+  if (mv_chi[1] < sd**2 && mv_chi[2] > sd**2)
+  {
+    mv_chi_contains = TRUE
+  }
+
+  c(bt$stat, sd(bt$nm.stat), sd(bt$mv.stat), nm_interval, mv_interval, nm_contains, mv_contains, nm_chi, mv_chi, nm_chi_contains, mv_chi_contains) 
     # returns statistics and sd's for nm and mv respectively
   
 }
 ```
 
-Let's conduct a simulation study with n = 100, ar = 0.5, and sd = 0.1
+Let's conduct a simulation study with n = 100, ar = 0.5, and sd = 0.1 (var = 0.01)
 
 ```{r functions, echo = False}
+options(max.print = 1000000)
 ar1 <- function(x) cor(x[-1], x[-length(x)])
-sim <- replicate(100, do1rep(100, 0.5, 0.1, 10, ar1))
+nmcount = 0
+mvcount = 0
+nmchicount = 0
+mvchicount = 0
+sim <- replicate(100, do1rep(100, 0.7, 0.3, 10, ar1))
 print(sim)
+for(i in sim[8,])
+{
+  if(i == 1)
+  {
+    nmcount = nmcount + 1
+  }
+}
+for(i in sim[9,])
+{
+  if(i == 1)
+  {
+    mvcount = mvcount + 1
+  }
+}
+for(i in sim[14,])
+{
+  if(i == 1)
+  {
+    nmchicount = nmchicount + 1
+  }
+}
+for(i in sim[15,])
+{
+  if(i == 1)
+  {
+    mvchicount = mvchicount + 1
+  }
+}
+c(nmcount, mvcount, nmchicount, mvchicount)
 
 ```
