@@ -38,35 +38,38 @@ blkboot <- function(tseries, statistic, R, l) {
 }
 
 do1rep <- function(n, theta, sd, l, statistic) {
-  x <- arima.sim(list(ar = theta), n, sd = sd)
+  x <- arima.sim(list(ar = theta), n = n, sd = sd) 
+  # sd is the standard deviation of the noise -> true_variance(X_t) = sd^2/(1 - theta^2)
+  
   bt <- blkboot(x, statistic, 1000, l) 
-  nm_interval = c(bt$stat - 1.96*sd(bt$nm.stat), bt$stat + 1.96*sd(bt$nm.stat))
-  mv_interval = c(bt$stat - 1.96*sd(bt$mv.stat), bt$stat + 1.96*sd(bt$mv.stat))
-  nm_chi = c(999 * var(bt$nm.stat) / qchisq(p = .025, df = 999, lower.tail = FALSE), 999 * var(bt$nm.stat) / qchisq(p = .975, df = 999, lower.tail = FALSE))
-  mv_chi = c(999 * var(bt$mv.stat) / qchisq(p = .025, df = 999, lower.tail = FALSE), 999 * var(bt$mv.stat) / qchisq(p = .975, df = 999, lower.tail = FALSE))
+
+  # Variance Stuff that isn't working
+  # 95 % Confidence Interval for Variance -> Lower bound: (n - 1) * sample_variance(X_t) / chisq(.025, n - 1)
+  # Upper bound: (n - 1) * sample_variance(X_t) / chisq(.975, n - 1)
+  # sample_variance(X_t) = se^2 * n 
+
+ 
+
+ # nm_lower_bound with quantile function
+  
+  nm_interval = quantile(bt$nm.stat, probs = c(0.025, 0.975))
+  mv_interval = quantile(bt$mv.stat, probs = c(0.025, 0.975))
+  
   nm_contains = FALSE
-  if (nm_interval[1] < theta && nm_interval[2] > theta)
+  if (nm_interval[1] < 0 && nm_interval[2] > 0)
   {
     nm_contains = TRUE
   }
   mv_contains = FALSE
-  if (mv_interval[1] < theta && mv_interval[2] > theta)
+  if (mv_interval[1] < 0 && mv_interval[2] > 0)
   {
     mv_contains = TRUE
   }
-  nm_chi_contains = FALSE
-  if (nm_chi[1] < sd**2 && nm_chi[2] > sd**2)
-  {
-    nm_chi_contains = TRUE
-  }
-  mv_chi_contains = FALSE
-  if (mv_chi[1] < sd**2 && mv_chi[2] > sd**2)
-  {
-    mv_chi_contains = TRUE
-  }
+  
+  c(bt$stat, sd(bt$nm.stat), nm_interval, nm_contains, sd(bt$mv.stat), mv_interval, mv_contains) 
 
-  c(bt$stat, sd(bt$nm.stat), sd(bt$mv.stat), nm_interval, mv_interval, nm_contains, mv_contains, nm_chi, mv_chi, nm_chi_contains, mv_chi_contains) 
-    # returns statistics and sd's for nm and mv respectively
+  
+    # returns statistics and standard error's for nm and mv respectively, standard error (sd(bt$mv.stat) is estimated as the sqrt(sample_variance(X_t) / n)
   
 }
 ```
@@ -76,40 +79,21 @@ Let's conduct a simulation study with n = 100, ar = 0.5, and sd = 0.1 (var = 0.0
 ```{r functions, echo = False}
 options(max.print = 1000000)
 ar1 <- function(x) cor(x[-1], x[-length(x)])
+m1 <- function(x) mean(x)
 nmcount = 0
 mvcount = 0
 nmchicount = 0
 mvchicount = 0
-sim <- replicate(100, do1rep(100, 0.7, 0.3, 10, ar1))
+
+sim <- replicate(100, do1rep(100, 0.1, 0.1, 10, m1))
+
+my_summary <- function(x)
+{
+  c(rowMeans(x), sd(x[1,]))
+}
+my_summary(sim)
 print(sim)
-for(i in sim[8,])
-{
-  if(i == 1)
-  {
-    nmcount = nmcount + 1
-  }
-}
-for(i in sim[9,])
-{
-  if(i == 1)
-  {
-    mvcount = mvcount + 1
-  }
-}
-for(i in sim[14,])
-{
-  if(i == 1)
-  {
-    nmchicount = nmchicount + 1
-  }
-}
-for(i in sim[15,])
-{
-  if(i == 1)
-  {
-    mvchicount = mvchicount + 1
-  }
-}
-c(nmcount, mvcount, nmchicount, mvchicount)
+
+#Counts how many times the true statistic was found in the interval
 
 ```
