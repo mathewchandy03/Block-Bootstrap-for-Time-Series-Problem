@@ -39,16 +39,10 @@ blkboot <- function(tseries, statistic, R, l) {
 
 do1rep <- function(n, theta, sd, l, statistic) {
   x <- arima.sim(list(ar = theta), n = n, sd = sd) 
+  
   # sd is the standard deviation of the noise -> true_variance(X_t) = sd^2/(1 - theta^2)
   
   bt <- blkboot(x, statistic, 1000, l) 
-
-  # Variance Stuff that isn't working
-  # 95 % Confidence Interval for Variance -> Lower bound: (n - 1) * sample_variance(X_t) / chisq(.025, n - 1)
-  # Upper bound: (n - 1) * sample_variance(X_t) / chisq(.975, n - 1)
-  # sample_variance(X_t) = se^2 * n 
-
- 
 
  # nm_lower_bound with quantile function
   
@@ -68,7 +62,6 @@ do1rep <- function(n, theta, sd, l, statistic) {
   
   c(bt$stat, sd(bt$nm.stat), nm_interval, nm_contains, sd(bt$mv.stat), mv_interval, mv_contains) 
 
-  
     # returns statistics and standard error's for nm and mv respectively, standard error (sd(bt$mv.stat) is estimated as the sqrt(sample_variance(X_t) / n)
   
 }
@@ -80,20 +73,77 @@ Let's conduct a simulation study with n = 100, ar = 0.5, and sd = 0.1 (var = 0.0
 options(max.print = 1000000)
 ar1 <- function(x) cor(x[-1], x[-length(x)])
 m1 <- function(x) mean(x)
-nmcount = 0
-mvcount = 0
-nmchicount = 0
-mvchicount = 0
-
-sim <- replicate(100, do1rep(100, 0.1, 0.1, 10, m1))
 
 my_summary <- function(x)
 {
-  c(rowMeans(x), sd(x[1,]))
+  rm = rowMeans(x)
+  c(rm, sd(x[1,]), rm[2] - sd(x[1,]), rm[6] - sd(x[1,]), (rm[2] - sd(x[1,])) / sd(x[1,]), (rm[6] - sd(x[1,])) / sd(x[1,]))
 }
-my_summary(sim)
-print(sim)
 
-#Counts how many times the true statistic was found in the interval
 
+
+```
+
+```{r functions, echo = False}
+sim <- replicate(100, do1rep(100, 0.5, 0.1, 10, m1))
+
+n_100 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(200, 0.5, 0.1, 10, m1))
+
+n_200 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(300, 0.5, 0.1, 10, m1))
+
+n_300 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(400, 0.5, 0.1, 10, m1))
+
+n_400 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(500, 0.5, 0.1, 10, m1))
+
+n_500 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(600, 0.5, 0.1, 10, m1))
+
+n_600 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(700, 0.5, 0.1, 10, m1))
+
+n_700 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(800, 0.5, 0.1, 10, m1))
+
+n_800 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(900, 0.5, 0.1, 10, m1))
+
+n_900 <- my_summary(sim)
+
+sim <- replicate(100, do1rep(1000, 0.5, 0.1, 10, m1))
+
+n_1000 <- my_summary(sim)
+
+n_constant_l.data <- data.frame(
+   n = c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000),
+   ar = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
+   sigma = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1),
+   l = c(10, 10, 10, 10, 10, 10, 10, 10, 10, 10),
+   mean = c(n_100[1], n_200[1], n_300[1], n_400[1], n_500[1], n_600[1], n_700[1], n_800[1], n_900[1], n_1000[1]), 
+   nm_se = c(n_100[2], n_200[2], n_300[2], n_400[2], n_500[2], n_600[2], n_700[2], n_800[2], n_900[2], n_1000[2]),
+   nm_lower = c(n_100[3], n_200[3], n_300[3], n_400[3], n_500[3], n_600[3], n_700[3], n_800[3], n_900[3], n_1000[3]), 
+   nm_upper = c(n_100[4], n_200[4], n_300[4], n_400[4], n_500[4], n_600[4], n_700[4], n_800[4], n_900[4], n_1000[4]),
+   nm_success = c(n_100[5], n_200[5], n_300[5], n_400[5], n_500[5], n_600[5], n_700[5], n_800[5], n_900[5], n_1000[5]),
+   mv_se = c(n_100[6], n_200[6], n_300[6], n_400[6], n_500[6], n_600[6], n_700[6], n_800[6], n_900[6], n_1000[6]),
+   mv_lower = c(n_100[7], n_200[7], n_300[7], n_400[7], n_500[7], n_600[7], n_700[7], n_800[7], n_900[7], n_1000[7]), 
+   mv_upper = c(n_100[8], n_200[8], n_300[8], n_400[8], n_500[8], n_600[8], n_700[8], n_800[8], n_900[8], n_1000[8]),
+   mv_success = c(n_100[9], n_200[9], n_300[9], n_400[9], n_500[9], n_600[9], n_700[9], n_800[9], n_900[9], n_1000[9]),
+   true_se = c(n_100[10], n_200[10], n_300[10], n_400[10], n_500[10], n_600[10], n_700[10], n_800[10], n_900[10], n_1000[10]),
+   nm_diff = c(n_100[11], n_200[11], n_300[11], n_400[11], n_500[11], n_600[11], n_700[11], n_800[11], n_900[11], n_1000[11]),
+   mv_diff = c(n_100[12], n_200[12], n_300[12], n_400[12], n_500[12], n_600[12], n_700[12], n_800[12], n_900[12], n_1000[12]),
+   nm_percent_change = c(n_100[13], n_200[13], n_300[13], n_400[13], n_500[13], n_600[13], n_700[13], n_800[13], n_900[13], n_1000[13]),
+   mv_percent_change = c(n_100[14], n_200[14], n_300[14], n_400[14], n_500[14], n_600[14], n_700[14], n_800[14], n_900[14], n_1000[14])
+)
+print(n_constant_l.data)
 ```
