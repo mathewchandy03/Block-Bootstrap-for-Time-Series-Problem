@@ -84,66 +84,94 @@ my_summary <- function(x)
 
 ```
 
+
 ```{r functions, echo = False}
-sim <- replicate(100, do1rep(100, 0.5, 0.1, 10, m1))
-
-n_100 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(200, 0.5, 0.1, 10, m1))
-
-n_200 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(300, 0.5, 0.1, 10, m1))
-
-n_300 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(400, 0.5, 0.1, 10, m1))
-
-n_400 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(500, 0.5, 0.1, 10, m1))
-
-n_500 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(600, 0.5, 0.1, 10, m1))
-
-n_600 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(700, 0.5, 0.1, 10, m1))
-
-n_700 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(800, 0.5, 0.1, 10, m1))
-
-n_800 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(900, 0.5, 0.1, 10, m1))
-
-n_900 <- my_summary(sim)
-
-sim <- replicate(100, do1rep(1000, 0.5, 0.1, 10, m1))
-
-n_1000 <- my_summary(sim)
-
 n_constant_l.data <- data.frame(
-   n = c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000),
-   ar = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
-   sigma = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1),
-   l = c(10, 10, 10, 10, 10, 10, 10, 10, 10, 10),
-   mean = c(n_100[1], n_200[1], n_300[1], n_400[1], n_500[1], n_600[1], n_700[1], n_800[1], n_900[1], n_1000[1]), 
-   nm_se = c(n_100[2], n_200[2], n_300[2], n_400[2], n_500[2], n_600[2], n_700[2], n_800[2], n_900[2], n_1000[2]),
-   nm_lower = c(n_100[3], n_200[3], n_300[3], n_400[3], n_500[3], n_600[3], n_700[3], n_800[3], n_900[3], n_1000[3]), 
-   nm_upper = c(n_100[4], n_200[4], n_300[4], n_400[4], n_500[4], n_600[4], n_700[4], n_800[4], n_900[4], n_1000[4]),
-   nm_success = c(n_100[5], n_200[5], n_300[5], n_400[5], n_500[5], n_600[5], n_700[5], n_800[5], n_900[5], n_1000[5]),
-   mv_se = c(n_100[6], n_200[6], n_300[6], n_400[6], n_500[6], n_600[6], n_700[6], n_800[6], n_900[6], n_1000[6]),
-   mv_lower = c(n_100[7], n_200[7], n_300[7], n_400[7], n_500[7], n_600[7], n_700[7], n_800[7], n_900[7], n_1000[7]), 
-   mv_upper = c(n_100[8], n_200[8], n_300[8], n_400[8], n_500[8], n_600[8], n_700[8], n_800[8], n_900[8], n_1000[8]),
-   mv_success = c(n_100[9], n_200[9], n_300[9], n_400[9], n_500[9], n_600[9], n_700[9], n_800[9], n_900[9], n_1000[9]),
-   true_se = c(n_100[10], n_200[10], n_300[10], n_400[10], n_500[10], n_600[10], n_700[10], n_800[10], n_900[10], n_1000[10]),
-   nm_diff = c(n_100[11], n_200[11], n_300[11], n_400[11], n_500[11], n_600[11], n_700[11], n_800[11], n_900[11], n_1000[11]),
-   mv_diff = c(n_100[12], n_200[12], n_300[12], n_400[12], n_500[12], n_600[12], n_700[12], n_800[12], n_900[12], n_1000[12]),
-   nm_percent_change = c(n_100[13], n_200[13], n_300[13], n_400[13], n_500[13], n_600[13], n_700[13], n_800[13], n_900[13], n_1000[13]),
-   mv_percent_change = c(n_100[14], n_200[14], n_300[14], n_400[14], n_500[14], n_600[14], n_700[14], n_800[14], n_900[14], n_1000[14])
+  
+   n = c(),
+   ar = c(),
+   sigma = c(),
+   l = c(),
+   mean = c(), 
+   nm_se = c(),
+   nm_lower = c(), 
+   nm_upper = c(),
+   nm_success = c(),
+   mv_se = c(),
+   mv_lower = c(), 
+   mv_upper = c(),
+   mv_success = c(),
+   true_se = c(),
+   nm_diff = c(),
+   mv_diff = c(),
+   nm_percent_change = c(),
+   mv_percent_change = c()
 )
+
+for(n in c(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000))
+{
+  for(i in 1:3)
+  {
+    sim <- replicate(100, do1rep(n, 0.5, 0.1, 10, m1))
+    m <- my_summary(sim)
+    tobind.data <- data.frame(
+     n = c(n),
+     ar = c(0.5),
+     sigma = c(0.1),
+     l = c(10),
+     mean = c(m[1]), 
+     nm_se = c(m[2]),
+     nm_lower = c(m[3]), 
+     nm_upper = c(m[4]),
+     nm_success = c(m[5]),
+     mv_se = c(m[6]),
+     mv_lower = c(m[7]), 
+     mv_upper = c(m[8]),
+     mv_success = c(m[9]),
+     true_se = c(m[10]),
+     nm_diff = c(m[11]),
+     mv_diff = c(m[12]),
+     nm_percent_change = c(m[13]),
+     mv_percent_change = c(m[14])
+    )
+    n_constant_l.data = rbind(n_constant_l.data, tobind.data)
+  }
+}
+
 print(n_constant_l.data)
+```
+
+```{r functions, echo = False}
+
+plot(n_constant_l.data$n, n_constant_l.data$nm_success, pch = 19, col = rgb(red = 0.2, green = 0.2, blue = 0.2, alpha = 0.3))
+```
+
+```{r functions, echo = False}
+
+plot(n_constant_l.data$n, n_constant_l.data$mv_success, pch = 19, col = rgb(red = 0.2, green = 0.2, blue = 0.2, alpha = 0.3))
+```
+
+```{r functions, echo = False}
+
+plot(n_constant_l.data$n, n_constant_l.data$nm_diff, pch = 19, col = rgb(red = 0.2, green = 0.2, blue = 0.2, alpha = 0.3))
+```
+
+```{r functions, echo = False}
+
+plot(n_constant_l.data$n, n_constant_l.data$mv_diff, pch = 19, col = rgb(red = 0.2, green = 0.2, blue = 0.2, alpha = 0.3))
+```
+
+```{r functions, echo = False}
+
+plot(n_constant_l.data$n, n_constant_l.data$nm_percent_change, pch = 19, col = rgb(red = 0.2, green = 0.2, blue = 0.2, alpha = 0.3))
+```
+
+```{r functions, echo = False}
+
+plot(n_constant_l.data$n, n_constant_l.data$mv_percent_change, pch = 19, col = rgb(red = 0.2, green = 0.2, blue = 0.2, alpha = 0.3))
+```
+
+```{r functions, echo = False}
+
+plot(n_constant_l.data$n, n_constant_l.data$mv_percent_change, pch = 19, col = rgb(red = 0.2, green = 0.2, blue = 0.2, alpha = 0.3))
 ```
