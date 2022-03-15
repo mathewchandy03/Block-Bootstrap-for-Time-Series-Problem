@@ -84,6 +84,7 @@ my_summary <- function(x)
 
 ```
 
+Let's first do this while keeping l = 10 constant.
 
 ```{r functions, echo = False}
 test.data <- data.frame(
@@ -140,6 +141,7 @@ for(n in c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 
 
 print(test.data)
 ```
+There doesn't seem to be any clear pattern when looking at these larger sample sizes. Let's zoom in a little.
 
 ```{r functions, echo = False}
 install.packages("ggplot2")
@@ -208,6 +210,7 @@ for(n in c(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 
 
 print(test.data)
 ```
+The pattern is not super clear, although it seems to begin to increasingly underestimate somewhere around n = 200.
 
 ```{r functions, echo = False}
 install.packages("ggplot2")
@@ -276,7 +279,8 @@ for(n in c(20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300
 
 print(test.data)
 ```
-
+For these smaller sample sizes, it seems to have a tendency to increasingly underestimate as n decreases. A notable drop occurs around n = 40.
+ 
 ```{r functions, echo = False}
 install.packages("ggplot2")
 library(ggplot2)
@@ -344,6 +348,7 @@ for(n in c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160
 
 print(test.data)
 ```
+Again, for these smaller sample sizes, it seems to have a tendency to increasingly underestimate as n decreases. Notable drops occur around n = 50 and n = 20.
 
 ```{r functions, echo = False}
 
@@ -355,7 +360,7 @@ test_reshaped <- data.frame(x = test.data$n,
 ggplot(test_reshaped, aes(x, y, col = group)) +  geom_point()
 
 ```
-
+Let's try this while keeping the ratio n/l = 10 constant.
 
 ```{r functions, echo = False}
 test.data <- data.frame(
@@ -412,6 +417,7 @@ for(n in c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 
 
 print(test.data)
 ```
+There is no pattern for these larger sample sizes, let's zoom in.
 
 ```{r functions, echo = False}
 
@@ -478,6 +484,7 @@ for(n in c(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 
 
 print(test.data)
 ```
+Again, there is really no pattern here.
 
 ```{r functions, echo = False}
 
@@ -544,6 +551,7 @@ for(n in c(20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300
 
 print(test.data)
 ```
+No pattern.
 
 ```{r functions, echo = False}
 
@@ -610,6 +618,7 @@ for(n in c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160
 
 print(test.data)
 ```
+No pattern, it seems that changing the sample size while keeping the ratio constant has no effect on the variance estimation. However it appears that on average, using this ratio results in a slight underestimation of the variance, regardless of the sample size.
 
 ```{r functions, echo = False}
 
@@ -621,6 +630,8 @@ test_reshaped <- data.frame(x = test.data$n,
 ggplot(test_reshaped, aes(x, y, col = group)) +  geom_point()
 
 ```
+Let's try it while setting l equal n^(1/3).
+
 ```{r functions, echo = False}
 test.data <- data.frame(
   
@@ -676,6 +687,7 @@ for(n in c(1, 8, 27, 64, 125, 216, 343, 512, 729, 1000, 1331, 1728, 2197, 2744, 
 
 print(test.data)
 ```
+It seems to begin to clearly underestimate around n = 27.
 
 ```{r functions, echo = False}
 
@@ -687,6 +699,8 @@ test_reshaped <- data.frame(x = test.data$n,
 ggplot(test_reshaped, aes(x, y, col = group)) +  scale_x_sqrt() + geom_point()
 
 ```
+Let's try it while setting l equal n^(1/4).
+
 ```{r functions, echo = False}
 test.data <- data.frame(
   
@@ -742,6 +756,7 @@ for(n in c(1, 16, 81, 256, 625, 1296, 2401, 4096))
 
 print(test.data)
 ```
+There seems to be a more steady increase in underestimation, until it drops to -1 when n = 1.
 
 ```{r functions, echo = False}
 
@@ -808,6 +823,7 @@ for(n in c(1, 32, 243, 1024, 3125, 7776))
 
 print(test.data)
 ```
+It is difficult to discern a pattern until it drops to -1 when n = 1. However, even at the higher n's, it seems to be somewhat underestimating the variance.
 
 ```{r functions, echo = False}
 
@@ -819,9 +835,272 @@ test_reshaped <- data.frame(x = test.data$n,
 ggplot(test_reshaped, aes(x, y, col = group)) +  scale_x_sqrt() + geom_point()
 
 ```
+Let's conduct a simulation study with n = 100, ar = 0.1, and sd = 0.1 (var = 0.01)
 
+```{r functions, echo = False}
+test.data <- data.frame(
+  
+   n = c(),
+   ar = c(),
+   sigma = c(),
+   l = c(),
+   mean = c(), 
+   nm_se = c(),
+   nm_lower = c(), 
+   nm_upper = c(),
+   nm_success = c(),
+   mv_se = c(),
+   mv_lower = c(), 
+   mv_upper = c(),
+   mv_success = c(),
+   true_se = c(),
+   nm_diff = c(),
+   mv_diff = c(),
+   nm_percent_change = c(),
+   mv_percent_change = c()
+)
 
+for(n in c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000))
+{
+  for(i in 1:3)
+  {
+    sim <- replicate(100, do1rep(n, 0.5, 0.1, 10, m1))
+    m <- my_summary(sim)
+    tobind.data <- data.frame(
+     n = c(n),
+     ar = c(0.5),
+     sigma = c(0.1),
+     l = c(10),
+     mean = c(m[1]), 
+     nm_se = c(m[2]),
+     nm_lower = c(m[3]), 
+     nm_upper = c(m[4]),
+     nm_success = c(m[5]),
+     mv_se = c(m[6]),
+     mv_lower = c(m[7]), 
+     mv_upper = c(m[8]),
+     mv_success = c(m[9]),
+     true_se = c(m[10]),
+     nm_diff = c(m[11]),
+     mv_diff = c(m[12]),
+     nm_percent_diff = c(m[13]),
+     mv_percent_diff = c(m[14])
+    )
+    test.data = rbind(test.data, tobind.data)
+  }
+}
 
+print(test.data)
+```
+
+```{r functions, echo = False}
+
+test_reshaped <- data.frame(x = test.data$n,                           
+                       y = c(test.data$nm_percent_diff, test.data$mv_percent_diff),
+                       group = c(rep("Non-moving Percent Difference", nrow(test.data)),
+                                 rep("Moving Percent Difference", nrow(test.data))))
+
+ggplot(test_reshaped, aes(x, y, col = group)) +  geom_point()
+
+```
+```{r functions, echo = False}
+test.data <- data.frame(
+  
+   n = c(),
+   ar = c(),
+   sigma = c(),
+   l = c(),
+   mean = c(), 
+   nm_se = c(),
+   nm_lower = c(), 
+   nm_upper = c(),
+   nm_success = c(),
+   mv_se = c(),
+   mv_lower = c(), 
+   mv_upper = c(),
+   mv_success = c(),
+   true_se = c(),
+   nm_diff = c(),
+   mv_diff = c(),
+   nm_percent_change = c(),
+   mv_percent_change = c()
+)
+
+for(n in c(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000))
+{
+  for(i in 1:3)
+  {
+    sim <- replicate(100, do1rep(n, 0.5, 0.1, 10, m1))
+    m <- my_summary(sim)
+    tobind.data <- data.frame(
+     n = c(n),
+     ar = c(0.5),
+     sigma = c(0.1),
+     l = c(10),
+     mean = c(m[1]), 
+     nm_se = c(m[2]),
+     nm_lower = c(m[3]), 
+     nm_upper = c(m[4]),
+     nm_success = c(m[5]),
+     mv_se = c(m[6]),
+     mv_lower = c(m[7]), 
+     mv_upper = c(m[8]),
+     mv_success = c(m[9]),
+     true_se = c(m[10]),
+     nm_diff = c(m[11]),
+     mv_diff = c(m[12]),
+     nm_percent_diff = c(m[13]),
+     mv_percent_diff = c(m[14])
+    )
+    test.data = rbind(test.data, tobind.data)
+  }
+}
+
+print(test.data)
+```
+
+```{r functions, echo = False}
+
+test_reshaped <- data.frame(x = test.data$n,                           
+                       y = c(test.data$nm_percent_diff, test.data$mv_percent_diff),
+                       group = c(rep("Non-moving Percent Difference", nrow(test.data)),
+                                 rep("Moving Percent Difference", nrow(test.data))))
+
+ggplot(test_reshaped, aes(x, y, col = group)) +  geom_point()
+
+```
+```{r functions, echo = False}
+test.data <- data.frame(
+  
+   n = c(),
+   ar = c(),
+   sigma = c(),
+   l = c(),
+   mean = c(), 
+   nm_se = c(),
+   nm_lower = c(), 
+   nm_upper = c(),
+   nm_success = c(),
+   mv_se = c(),
+   mv_lower = c(), 
+   mv_upper = c(),
+   mv_success = c(),
+   true_se = c(),
+   nm_diff = c(),
+   mv_diff = c(),
+   nm_percent_change = c(),
+   mv_percent_change = c()
+)
+
+for(n in c(20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400, 420, 440, 460, 480, 500))
+{
+  for(i in 1:3)
+  {
+    sim <- replicate(100, do1rep(n, 0.5, 0.1, 10, m1))
+    m <- my_summary(sim)
+    tobind.data <- data.frame(
+     n = c(n),
+     ar = c(0.5),
+     sigma = c(0.1),
+     l = c(10),
+     mean = c(m[1]), 
+     nm_se = c(m[2]),
+     nm_lower = c(m[3]), 
+     nm_upper = c(m[4]),
+     nm_success = c(m[5]),
+     mv_se = c(m[6]),
+     mv_lower = c(m[7]), 
+     mv_upper = c(m[8]),
+     mv_success = c(m[9]),
+     true_se = c(m[10]),
+     nm_diff = c(m[11]),
+     mv_diff = c(m[12]),
+     nm_percent_diff = c(m[13]),
+     mv_percent_diff = c(m[14])
+    )
+    test.data = rbind(test.data, tobind.data)
+  }
+}
+
+print(test.data)
+```
+
+```{r functions, echo = False}
+
+test_reshaped <- data.frame(x = test.data$n,                           
+                       y = c(test.data$nm_percent_diff, test.data$mv_percent_diff),
+                       group = c(rep("Non-moving Percent Difference", nrow(test.data)),
+                                 rep("Moving Percent Difference", nrow(test.data))))
+
+ggplot(test_reshaped, aes(x, y, col = group)) +  geom_point()
+
+```
+```{r functions, echo = False}
+test.data <- data.frame(
+  
+   n = c(),
+   ar = c(),
+   sigma = c(),
+   l = c(),
+   mean = c(), 
+   nm_se = c(),
+   nm_lower = c(), 
+   nm_upper = c(),
+   nm_success = c(),
+   mv_se = c(),
+   mv_lower = c(), 
+   mv_upper = c(),
+   mv_success = c(),
+   true_se = c(),
+   nm_diff = c(),
+   mv_diff = c(),
+   nm_percent_change = c(),
+   mv_percent_change = c()
+)
+
+for(n in c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250))
+{
+  for(i in 1:3)
+  {
+    sim <- replicate(100, do1rep(n, 0.5, 0.1, 10, m1))
+    m <- my_summary(sim)
+    tobind.data <- data.frame(
+     n = c(n),
+     ar = c(0.5),
+     sigma = c(0.1),
+     l = c(10),
+     mean = c(m[1]), 
+     nm_se = c(m[2]),
+     nm_lower = c(m[3]), 
+     nm_upper = c(m[4]),
+     nm_success = c(m[5]),
+     mv_se = c(m[6]),
+     mv_lower = c(m[7]), 
+     mv_upper = c(m[8]),
+     mv_success = c(m[9]),
+     true_se = c(m[10]),
+     nm_diff = c(m[11]),
+     mv_diff = c(m[12]),
+     nm_percent_diff = c(m[13]),
+     mv_percent_diff = c(m[14])
+    )
+    test.data = rbind(test.data, tobind.data)
+  }
+}
+
+print(test.data)
+```
+
+```{r functions, echo = False}
+
+test_reshaped <- data.frame(x = test.data$n,                           
+                       y = c(test.data$nm_percent_diff, test.data$mv_percent_diff),
+                       group = c(rep("Non-moving Percent Difference", nrow(test.data)),
+                                 rep("Moving Percent Difference", nrow(test.data))))
+
+ggplot(test_reshaped, aes(x, y, col = group)) +  geom_point()
+
+```
 
 
 
