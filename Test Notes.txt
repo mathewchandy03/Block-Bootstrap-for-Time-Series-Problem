@@ -1,0 +1,43 @@
+For AR = 0.1, L = 10, the underestimation becomes most noticeable around n = 60.
+For AR = 0.1, L = N/10, it appears to underestimating regardless of the sample size.
+For AR = 0.1, L = N^(1/3), the underestimation becomes most noticeable around n = 64.
+For AR = 0.1, L = N^(1/4), the underestimation becomes most noticeable around n = 27.
+For AR = 0.1, L = N^(1/5), the underestimation becomes most noticeable around n = 1.
+As AR increases, underestimation on average increases.
+For AR = 0.5, L = 10, the underestimation becomes most noticeable around n = 100.
+For AR = 0.5, L = N/10, it appears to underestimating regardless of the sample size. The underestimation is more noticeable, and it drops around n = 80.
+For AR = 0.5, L = N^(1/3), the underestimation becomes most noticeable around n = 125.
+For AR = 0.5, L = N^(1/4), increase in underestimation as n decreases.
+For AR = 0.5, L = N^(1/5), increase in underestimation as n decreases.
+For AR = 0.9, L = 10, the underestimation is significant even for n = 2000.
+For AR = 0.9, L = N/10, the underestimation is significant even for n = 2000, and the downward trend as n decreases is even clearer.
+
+Because it is an autoregressive model, the variance on average will be underestimated, and as n decreases, this underestimation increases. As n decreases, the rate at which the underestimation increases also increases. As AR increases, underestimation increases. When the variance is underestimated, the 100 confidence intervals created by each simulation will be less successful. If the variance is correctly estimated, we expect the 95% confidence intervals to be successful (contain the true mean 0) 95% of the time.
+
+Sigma = 0.1 for all
+
+AR = 0.1:
+
+When L is Constant (L = 10), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 10. When n = 20, all observations have success rates below .70. When n = 30, all observations have success rates less than or equal to .80. We finally stop seeing success rates below .80 at n = 60, and we stop seeing success rates below .85 at n = 80. As n gets larger, we see gradually fewer success rates below .90, and the success rates approach .95.
+
+When K (N/L) is Constant (K = 10), we see very little difference in the success rates between the smaller sample sizes and the larger sample sizes. We observe significant underestimation of variance for all sample sizes observed.
+
+For block bootstrap, we want L to increase as N increases, but we want K to decrease. We can achieve this by setting L equal to a root of N. 
+
+Using the L = N^(1/3), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 1. When n = 8, all observations have success rates below .90, and many are below .80. When n = 27, all observations have success rates above .85. As n gets larger, we see gradually fewer success rates below .90, and the success rates approach .95.
+
+Using the L = N^(1/4), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 1. When n = 16, only one observation has a success rate not below .90, and one has a success rate below .85. When n = 81, all observations have success rates above .85. As n gets larger, we see gradually fewer success rates below .90, and the success rates approach .95.
+
+Using the L = N^(1/5), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 1. When n = 32, there are a few observations with success rates below .90. Once n >= 243, very few success rates below .90 were observed.
+
+AR = 0.5:
+
+When L is Constant (L = 10), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 10. When n = 20, all observations have success rates below .60, some below .50. Only when n >= 40 do we stop observing success rates below .70, and only when n >= 60 do we stop observing success rates below .80. The largest n at which a success rate below .85 was observed was 400. Again, as n gets larger, we see gradually fewer success rates below .90, and the success rates approach .95.
+
+When K (N/L) is Constant (K = 10), we observe significant underestimation of variance for all sample sizes observed. However, unlike when AR = 0.1, there is a clear difference between larger n's and smaller n's. When n = 10, all success rates are below .70. Only when n >= 60 do we stop observing success rates below .80. Success rates below .85 are still observed for sample sizes larger than 1000.
+
+Using the L = N^(1/3), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 1. When n = 8, all observations have success rates below .70, and many are below .60. When n = 27, all observations have success rates above .70. Once n >= 125, we no longer observe success rates below .85. As n gets larger, we see gradually fewer success rates below .90, and the success rates approach .95.
+
+Using the L = N^(1/4), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 1. When n = 16, all success rates are less than or equal to .80, and some are less than .70. When n >= 256, all observations have success rates above .85. As n gets larger, we see gradually fewer success rates below .90, and the success rates approach .95.
+
+Using the L = N^(1/5), we unsurprisingly observe success rates (proportion of confidence intervals that contain 0) of 0 when n = 1. When n = 32, all observations have success rates below .90, and most have success rates below .80. For n >= 1024, all observed success rates are above .85.
