@@ -29,3 +29,7 @@
 • Need to test if standard error of point estimate recovers true standard error
 • Construct 95% CI's with quantile function
 • Play around with n, ar, sd, and l
+
+3/23 Notes
+• Start with n = 400, ar = 0.2, then gradually lower n and record coverage rates
+• Write code in way that it can be called with one line (use replicate instead of for loops)
