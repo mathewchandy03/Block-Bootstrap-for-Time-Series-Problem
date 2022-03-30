@@ -33,3 +33,8 @@
 3/23 Notes
 • Start with n = 400, ar = 0.2, then gradually lower n and record coverage rates
 • Write code in way that it can be called with one line (use replicate instead of for loops)
+
+3/30 Notes
+• Use 1000 replicates instead of 3 trials of 100
+• Experiment with constant l
+• Begin Writing Paper (Use Format from NBA Covid Bubble Analysis)
