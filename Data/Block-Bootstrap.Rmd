@@ -78,8 +78,6 @@ my_summary <- function(x)
   c(rm, sd(x[1,]), rm[2] - sd(x[1,]), rm[6] - sd(x[1,]), (rm[2] - sd(x[1,])) / sd(x[1,]), (rm[6] - sd(x[1,])) / sd(x[1,]))
 }
 
-
-
 ```
 
 
@@ -139,7 +137,6 @@ print(root_0.4_1)
 ```
 
 
-
 ```{r functions, echo = False}
 o = my_summary(replicate(1000, do1rep(400, 0.4, 0.1, 20, m1)))
 root_0.4_2 <- data.frame(c(400, 20, o))
@@ -153,6 +150,7 @@ for(l in 19:16)
 
 print(root_0.4_2)
 ```
+
 
 ```{r functions, echo = False}
 o = my_summary(replicate(1000, do1rep(225, 0.4, 0.1, 15, m1)))
@@ -274,6 +272,8 @@ for(l in 34:31)
 
 print(root_0.8_2)
 ```
+
+
 ```{r functions, echo = False}
 o = my_summary(replicate(1000, do1rep(900, 0.8, 0.1, 30, m1)))
 root_0.8_3 <- data.frame(c(900, 30, o))
