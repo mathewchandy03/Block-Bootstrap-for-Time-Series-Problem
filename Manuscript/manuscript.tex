@@ -131,13 +131,38 @@ Block Bootstrap
 
 \section{Introduction}
 
-For this study, many block bootstrap simulations were conducted with R. At the base level, we are block-bootstrapping an auto-regressive process with true mean 0. Bootstrapping is the term for creating new samples of the same size by re-sampling from the original sample with replacement. Many bootstrapped samples are used to create a distribution of sampling means to estimate mean and variance. This works for samples that are not dependent. However, for a time series such as an auto-regressive process, a different procedure is required to account for the time dependence. In such a case, the series is split into blocks that may overlap (moving block bootstrap) or may not overlap (non-moving block bootstrap). These blocks are then re-sampled to create new bootstrapped time series. 
+For this study, many block bootstrap simulations were conducted with R. At the base
+level, we are block-bootstrapping an auto-regressive process with true mean 0.
+Bootstrapping is the term for creating new samples of the same size by re-sampling from
+the original sample with replacement. Many bootstrapped samples are used to create a
+distribution of sampling means to estimate mean and variance. This works for samples
+that are not dependent. However, for a time series such as an auto-regressive process,
+a different procedure is required to account for the time dependence. In such a case,
+the series is split into blocks that may overlap (moving block bootstrap) or may not
+overlap (non-moving block bootstrap). These blocks are then re-sampled to create new
+bootstrapped time series. 
 
-In our experiment, we find the means of a 1000 block-bootstrapped time series, and create a 95 \% confidence interval of the means. We replicate this 1000 times, and record the proportion of confidence intervals that recover the true mean (coverage rate). We are effectively observing how successful the bootstrapping process is at estimating the mean and variance. The key variable being observed was n, the length of the time series, or the size of the sample. It is known that as n increases, block bootstrapping will become a less accurate method for estimation (the coverage rates will decrease). The question is at what range of n values does this start to become a problem. 
+In our experiment, we find the means of a 1000 block-bootstrapped time series, 
+and create a 95 \% confidence interval of the means. We replicate this 1000 times, 
+and record the proportion of confidence intervals that recover the true mean 
+(coverage rate). We are effectively observing how successful the bootstrapping process
+is at estimating the mean and variance. The key variable being observed was n, 
+the length of the time series, or the size of the sample. It is known that as n
+increases, block bootstrapping will become a less accurate method for estimation
+(the coverage rates will decrease). The question is at what range of n values does this
+start to become a problem. 
 
-In this experiment, there are certain factors that are expected to affect the coverage rates. As the AR coefficient (the time dependence) of the time series increases, we expect the coverage rates of the confidence intervals to decrease. The coverage rates are also affected by the size of the blocks - more specifically, the ratio of the size of the blocks (l) to the size of the time series (L) - and whether or not they overlap.
+In this experiment, there are certain factors that are expected to affect the coverage
+rates. As the AR coefficient (the time dependence) of the time series increases,
+we expect the coverage rates of the confidence intervals to decrease.
+The coverage rates are also affected by the size of the blocks - more specifically,
+the ratio of the size of the blocks (l) to the size of the time series (L) - 
+and whether or not they overlap.
 
-So to solve the question of what n is necessary for effective block bootstrapping, while still accounting for all these factors, the simulations were repeated for multiple combinations of AR coefficient and l:L ratios. In addition, the coverage rates for both the non-moving and moving methods were recorded.
+So to solve the question of what n is necessary for effective block bootstrapping,
+while still accounting for all these factors, the simulations were repeated for
+multiple combinations of AR coefficient and l:L ratios. In addition, the coverage rates
+for both the non-moving and moving methods were recorded.
 
 \section{Literature Review}
 
