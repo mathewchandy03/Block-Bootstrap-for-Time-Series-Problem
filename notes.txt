@@ -38,3 +38,8 @@
 • Use 1000 replicates instead of 3 trials of 100
 • Experiment with constant l
 • Begin Writing Paper (Use Format from NBA Covid Bubble Analysis)
+
+9/8 Notes
+• Use Format from KS Test Paper
+• ar = 0.2, 0.4, 0.6
+• Research question: At what sample size of a time series is block bootstrap no longer an effective method for estimating variance?
