@@ -100,15 +100,15 @@ increases, block bootstrapping will become a less accurate method for estimation
 start to become a problem. 
 
 In this experiment, there are certain factors that are expected to affect the coverage
-rates. As the AR coefficient (the time dependence) of the time series increases,
+rates. As the Auto-Regressive (AR) coefficient (the time dependence) of the time series increases,
 we expect the coverage rates of the confidence intervals to decrease.
 The coverage rates are also affected by the size of the blocks - more specifically,
-the ratio of the size of the blocks (l) to the size of the time series (L) - 
+how the size of the blocks (l) relates to the size of the time series (n) - 
 and whether or not they overlap.
 
 So to solve the question of what n is necessary for effective block bootstrapping,
 while still accounting for all these factors, the simulations were repeated for
-multiple combinations of AR coefficient and l:L ratios. In addition, the coverage rates
+multiple combinations of AR coefficient and the function of n used to decide l. In addition, the coverage rates
 for both the non-moving and moving methods were recorded.
 
 \section{Literature Review}
@@ -126,10 +126,30 @@ for both the non-moving and moving methods were recorded.
 \section{Methods}
 \label{sec:methods}
 
+A simulation of an autoregressive integrated moving average (ARIMA) process was run repeatedly with varying parameters. 
+The mean and standard deviation of the time series was held constant at 0 and 0.1, whereas the sample size and AR Coefficient
+ were varied. The AR Coefficients that were used were 0.2, 0.4, and 0.6. The sample sizes that were used depended on the AR
+ Coefficient, and the function used to compute l. For each of these variations, 1000 confidence intervals are created using
+ the block bootstrap method, and the proportion of these intervals that recover the true mean (0) is recorded as the coverage
+ rate. The block bootstrap method has different settings that were varied in this study: non-moving vs moving, 
+and the function for block length - the two used were a constant block length of 10 and the square root of n.
 
-
+For the simulations using a constant block length of 10, the sample size was gradually lowered by increments of 20 to see when
+the block bootstrap would begin to consistently return coverage rates below .90. For AR = 0.2 using a constant l, results for
+sample sizes ranging from 400 to 20 were observed. For AR = 0.4 using a constant l, results for sample sizes ranging from 600
+to 20 were observed. For AR = 0.6, using a constant l, results for sample sizes ranging from 900 to 220 were observed. For the simulations in which the block length was the square root of the time series length, the only sample sizes used were perfect squares so that the blocks would have whole number lengths. For AR = 0.2 using l = sqrt{n}, results for sample sizes ranging from 625 to 36 were observed. For AR = 0.4 using sqrt{n}, results for sample sizes ranging from 900 to 121 were observed. For AR = 0.6 using l = sqrt{n}, results for sample sizes ranging from 1600 to 121 were observed. 
 
 \section{Results}
+
+As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was required for effective block bootstrap estimation. 
+
+\begin{figure}[]
+  \centering
+  \includegraphics[width=\textwidth]{constant_0.2}
+  \caption{}
+  \label{fig:constant_0.2}
+\end{figure}
+
 \label{sec:results}
 
 
