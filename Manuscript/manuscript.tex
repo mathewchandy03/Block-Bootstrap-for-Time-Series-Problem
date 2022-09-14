@@ -135,13 +135,17 @@ The mean and standard deviation of the time series was held constant at 0 and 0.
 and the function for block length - the two used were a constant block length of 10 and the square root of n.
 
 For the simulations using a constant block length of 10, the sample size was gradually lowered by increments of 20 to see when
-the block bootstrap would begin to consistently return coverage rates below .90. For AR = 0.2 using a constant l, results for
+the block bootstrap would begin to consistently return low coverage rates. For AR = 0.2 using a constant l, results for
 sample sizes ranging from 400 to 20 were observed. For AR = 0.4 using a constant l, results for sample sizes ranging from 600
 to 20 were observed. For AR = 0.6, using a constant l, results for sample sizes ranging from 900 to 220 were observed. For the simulations in which the block length was the square root of the time series length, the only sample sizes used were perfect squares so that the blocks would have whole number lengths. For AR = 0.2 using l = sqrt{n}, results for sample sizes ranging from 625 to 36 were observed. For AR = 0.4 using sqrt{n}, results for sample sizes ranging from 900 to 121 were observed. For AR = 0.6 using l = sqrt{n}, results for sample sizes ranging from 1600 to 121 were observed. 
 
 \section{Results}
 
-As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was required for effective block bootstrap estimation. 
+As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was required for effective block bootstrap estimation. With l = sqrt{n} and AR = 0.2, all observed coverage rates are lower than .92 for n <= 225. For all n's <= 100, all observed coverage rates were below .90. With l = sqrt{n} and AR = 0.4, all observed coverage rates were below .92 for n <= 441. For all n's <= 144, all observed coverage rates were below .90. With l = sqrt{n} and AR = 0.6, all observed coverage rates were below .92 for n <= 400. For all n's <= 196, all observed coverage rates were below .90. 
+
+With a constant l and AR = 0.2, for n <= 180, all observed coverage rates were below .92. For all n's <= 60, all observed coverage rates were below .90. With a constant l and AR = 0.4, for n <= 160, all observed coverage rates were below .91. For all n's <= 80, all observed coverage rates were below .90. With a constant l and AR = 0.6, for n <= 380, all observed coverage rates were below .92. For all n's <= 240, all observed coverage rates were below .90.
+
+
 
 \begin{figure}[]
   \centering
