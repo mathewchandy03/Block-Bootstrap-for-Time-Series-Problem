@@ -43,3 +43,14 @@
 • Use Format from KS Test Paper
 • ar = 0.2, 0.4, 0.6
 • Research question: At what sample size of a time series is block bootstrap no longer an effective method for estimating variance?
+
+9/15 Notes
+• Sections: (Introduction (includes Literature Review),
+• Include who proposed block bootstrap
+• Look for sample size investigation for bootstrap
+• Block bootstrap is a widely used method when there is temporal dependence and estimating the variance is challenging (can be used for hypothesis testing and estimation)
+• But for a finite sample size it will not work as well as expected.
+• It is necessary to know which sample size is big enough 
+• What has been investigated concerning Block Bootstrap?
+• Our study investigates what sample size is needed for Block Bootstrap to work?
+• Look at optimal block size paper
