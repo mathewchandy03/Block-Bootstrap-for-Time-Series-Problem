@@ -79,7 +79,8 @@ block bootstrap;
 \label{sec:intro}
 
 Block bootstrapping is a widely used method in Statistics. The concept for block 
-bootstrapping was developed independently by. It has been applied to a variety of 
+bootstrapping was developed independently by \citet{Hall}, \citet{Carlstein}, and 
+\citet{Kunsch}. \citet{Radovanov} It has been applied to a variety of 
 different fields such 
 as econometrics \citep{MacKinnon} and meteorology \citep{Varga}. It can be used for 
 situations in which there is temporal dependence and the goal is estimation or hypothesis 
@@ -91,10 +92,16 @@ procedure) to know at which sample size the method stops working at an acceptabl
 The goal of this study is to find a threshold or range of sample sizes at block bootstrap 
 is no longer an effective method for estimating variance.
 
+
 \citet{Nevitt} find that a sample size of 200-1000 is usually sufficient for standard 
-bootstrap estimation. However, block bootstrapping is a different situation especially in 
-the context of time series because the sample is split into blocks and there is a time 
-dependence factor.
+bootstrap estimation. However, block bootstrapping is a different situation because the 
+sample is split into blocks.
+
+\citet{Goncalves} found that standard error estimates from block bootstrapping small 
+samples 
+may be significantly more accurate than inference from closed-form asymptotic estimates. 
+This however, works only under the assumption of low dependence and heterogeneity. In the
+context of a time series, it becomes more complicated.
 
 For this study, many block bootstrap simulations were conducted with R. At the base
 level, we are block-bootstrapping an auto-regressive process with true mean 0.
@@ -125,8 +132,8 @@ The coverage rates are also affected by the size of the blocks - more specifical
 how the size of the blocks (l) relates to the size of the time series (n) - 
 and whether or not they overlap. It is known that as the size of the time series 
 increases, the optimal block length should increase, and the ratio of the block length to 
-the time series length should decrease. l = (n)(1/3) is typically considered the optimal 
-block length according to asymptotic theory. If only perfect cubes are used for the time 
+the time series length should decrease. l = n$^3$ is typically considered the optimal 
+block length according to asymptotic theory. \citep{Buhlmann} If only perfect cubes are used for the time 
 series length, n gets too large when l increases by relatively little. An alternative 
 would be to use smaller time series, find the cube root, and set the block length to the 
 nearest whole number. However, in this study l = sqrt{n} is used, as it allows for smaller 

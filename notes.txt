@@ -54,3 +54,13 @@
 • What has been investigated concerning Block Bootstrap?
 • Our study investigates what sample size is needed for Block Bootstrap to work?
 • Look at optimal block size paper
+
+9/22 Notes
+• Coverage rate confidence interval (confidence interval for proportions), create plots
+• Section 2: Review of Block Bootstrap
+• Section 3: Simulation Study Design
+• Use citation keys from Google Scholar
+• Go through papers that have cited Goncalves, may be relevant
+
+
+
