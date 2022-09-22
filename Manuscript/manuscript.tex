@@ -56,7 +56,7 @@
 }
 \date{}
 
-\begin{document}
+\begin{document} 
 \maketitle
 
 \doublespace
@@ -77,6 +77,24 @@ block bootstrap;
 
 \section{Introduction}
 \label{sec:intro}
+
+Block bootstrapping is a widely used method in Statistics. The concept for block 
+bootstrapping was developed independently by. It has been applied to a variety of 
+different fields such 
+as econometrics \citep{MacKinnon} and meteorology \citep{Varga}. It can be used for 
+situations in which there is temporal dependence and the goal is estimation or hypothesis 
+testing. It is useful for a variety of applicationsAssuming that the sample is infinitely 
+large, the method will work perfectly. However, for a finite sample size, the method will 
+not work as well as expected. It may be necessary (in order to plan an applied 
+statistical 
+procedure) to know at which sample size the method stops working at an acceptable level. 
+The goal of this study is to find a threshold or range of sample sizes at block bootstrap 
+is no longer an effective method for estimating variance.
+
+\citet{Nevitt} find that a sample size of 200-1000 is usually sufficient for standard 
+bootstrap estimation. However, block bootstrapping is a different situation especially in 
+the context of time series because the sample is split into blocks and there is a time 
+dependence factor.
 
 For this study, many block bootstrap simulations were conducted with R. At the base
 level, we are block-bootstrapping an auto-regressive process with true mean 0.
@@ -100,15 +118,24 @@ increases, block bootstrapping will become a less accurate method for estimation
 start to become a problem. 
 
 In this experiment, there are certain factors that are expected to affect the coverage
-rates. As the Auto-Regressive (AR) coefficient (the time dependence) of the time series increases,
+rates. As the Auto-Regressive (AR) coefficient (the time dependence) of the time series 
+increases,
 we expect the coverage rates of the confidence intervals to decrease.
 The coverage rates are also affected by the size of the blocks - more specifically,
 how the size of the blocks (l) relates to the size of the time series (n) - 
-and whether or not they overlap. It is known that as the size of the time series increases, the optimal block length should increase, and the ratio of the block length to the time series length should decrease.
+and whether or not they overlap. It is known that as the size of the time series 
+increases, the optimal block length should increase, and the ratio of the block length to 
+the time series length should decrease. l = (n)(1/3) is typically considered the optimal 
+block length according to asymptotic theory. If only perfect cubes are used for the time 
+series length, n gets too large when l increases by relatively little. An alternative 
+would be to use smaller time series, find the cube root, and set the block length to the 
+nearest whole number. However, in this study l = sqrt{n} is used, as it allows for smaller 
+sample sizes, but it still follows the aforementioned principle.
 
 So to solve the question of what n is necessary for effective block bootstrapping,
 while still accounting for all these factors, the simulations were repeated for
-multiple combinations of AR coefficient and the function of n used to decide l. In addition, the coverage rates
+multiple combinations of AR coefficient and the function of n used to decide l. In 
+addition, the coverage rates
 for both the non-moving and moving methods were recorded.
 
 \section{Literature Review}
@@ -126,28 +153,72 @@ for both the non-moving and moving methods were recorded.
 \section{Methods}
 \label{sec:methods}
 
-A simulation of an autoregressive integrated moving average (ARIMA) process was run repeatedly with varying parameters. 
-The mean and standard deviation of the time series was held constant at 0 and 0.1, whereas the sample size and AR Coefficient
- were varied. The AR Coefficients that were used were 0.2, 0.4, and 0.6. The sample sizes that were used depended on the AR
- Coefficient, and the function used to compute l. For each of these variations, 1000 confidence intervals are created using
- the block bootstrap method, and the proportion of these intervals that recover the true mean (0) is recorded as the coverage
- rate. The block bootstrap method has different settings that were varied in this study: non-moving vs moving, 
-and the function for block length - the two used were a constant block length of 10 and the square root of n.
+Before each simulation, the random seed was set to 5 so that the randomized results can be 
+reproduced. 
 
-For the simulations using a constant block length of 10, the sample size was gradually lowered by increments of 20 to see when
-the block bootstrap would begin to consistently return low coverage rates. For AR = 0.2 using a constant l, results for
-sample sizes ranging from 400 to 20 were observed. For AR = 0.4 using a constant l, results for sample sizes ranging from 600
-to 20 were observed. For AR = 0.6, using a constant l, results for sample sizes ranging from 900 to 220 were observed. For the simulations in which the block length was the square root of the time series length, the only sample sizes used were perfect squares so that the blocks would have whole number lengths. For AR = 0.2 using l = sqrt{n}, results for sample sizes ranging from 625 to 36 were observed. For AR = 0.4 using sqrt{n}, results for sample sizes ranging from 900 to 121 were observed. For AR = 0.6 using l = sqrt{n}, results for sample sizes ranging from 1600 to 121 were observed. 
+A simulation of an autoregressive integrated moving average (ARIMA) process was run 
+repeatedly with varying parameters. 
+The mean and standard deviation of the time series was held constant at 0 and 0.1, whereas 
+the sample size and AR Coefficient
+ were varied. The AR Coefficients that were used were 0.2, 0.4, and 0.6. The sample sizes 
+ that were used depended on the AR
+ Coefficient, and the function used to compute l. For each of these variations, 1000 
+ confidence intervals are created using
+ the block bootstrap method, and the proportion of these intervals that recover the true 
+ mean (0) is recorded as the coverage
+ rate. The block bootstrap method has different settings that were varied in this study: 
+ non-moving vs moving, 
+and the function for block length - the two used were a constant block length of 10 and 
+the square root of n.
+
+For the simulations using a constant block length of 10, the sample size was gradually 
+lowered by increments of 20 to see when
+the block bootstrap would begin to consistently return low coverage rates. For AR = 0.2 
+using a constant l, results for
+sample sizes ranging from 400 to 20 were observed. For AR = 0.4 using a constant l, 
+results for sample sizes ranging from 600
+to 20 were observed. For AR = 0.6, using a constant l, results for sample sizes ranging 
+from 900 to 220 were observed. For the simulations in which the block length was the 
+square root of the time series length, the only sample sizes used were perfect squares so 
+that the blocks would have whole number lengths. For AR = 0.2 using l = sqrt{n}, results 
+for sample sizes ranging from 625 to 36 were observed. For AR = 0.4 using sqrt{n}, results 
+for sample sizes ranging from 900 to 121 were observed. For AR = 0.6 using l = sqrt{n}, 
+results for sample sizes ranging from 1600 to 121 were observed. 
 
 \section{Results}
+\label{sec:results}
 
-As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was required for effective block bootstrap estimation. With l = sqrt{n} and AR = 0.2, all observed coverage rates are lower than .92 for n <= 225. For all n's <= 100, all observed coverage rates were below .90. With l = sqrt{n} and AR = 0.4, all observed coverage rates were below .92 for n <= 441. For all n's <= 144, all observed coverage rates were below .90. With l = sqrt{n} and AR = 0.6, all observed coverage rates were below .92 for n <= 400. For all n's <= 196, all observed coverage rates were below .90. 
+As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was 
+required for effective block bootstrap estimation. With l = sqrt{n} and AR = 0.2, all 
+observed coverage rates were lower than .92 for n <= 144. For all n's <= 49, all observed 
+coverage rates were below .90. A coverage rate of .895 was recorded for the non-moving 
+method when n = 196, indicating that even at such a sample size, a coverage rate below .90 
+is possible. A coverage rate below .90 (.895) was recorded for the moving method at a 
+sample size as large as n = 144. With l = sqrt{n} and AR = 0.4, all observed coverage 
+rates were below .91 for n <= 169. For all n's <= 100, all observed coverage rates were 
+below .90. A coverage rate of .897 was recorded for the non-moving method when n = 400, 
+indicating that even at such a sample size, a coverage rate below .90 is possible. A 
+coverage rate below .90 (.897) was recorded for the moving method at a sample size as 
+large as n = 169. With l = sqrt{n} and AR = 0.6, all observed coverage rates were below 
+.91 for n <= 361. For all n's <= 225, all observed coverage rates were below .90. A 
+coverage rate of .896 was recorded for the moving method when n = 361, indicating that 
+even at such a sample size, a coverage rate below .90 is possible. A coverage rate below 
+.90 (.891) was recorded for the non-moving method at a sample size as large as n = 225.
 
-With a constant l and AR = 0.2, for n <= 180, all observed coverage rates were below .92. For all n's <= 60, all observed coverage rates were below .90. With a constant l and AR = 0.4, for n <= 160, all observed coverage rates were below .91. For all n's <= 80, all observed coverage rates were below .90. With a constant l and AR = 0.6, for n <= 380, all observed coverage rates were below .92. For all n's <= 240, all observed coverage rates were below .90.
+With a constant l and AR = 0.2, for n <= 180, all observed coverage rates were below .92. 
+For all n's <= 100, all observed coverage rates were below .90. A coverage rate of .899 
+was recorded for the non-moving method when n = 140, indicating that even at such a sample 
+size, a coverage rate below .90 is possible. A coverage rate below .90 (.899) was recorded 
+for the moving method at a sample size as large as n = 100. With a constant l and AR = 
+0.4, for n <= 280, all observed coverage rates were below .92. For all n's <= 120, all 
+observed coverage rates were below .90. A coverage rate of .892 was recorded for the 
+moving method when n = 260, indicating that even at such a sample size, a coverage rate 
+below .90 is possible. A coverage rate below .90 (.896) was recorded for the non-moving 
+method at a sample size as large as n = 160. With a constant l and AR = 0.6.
 
 
 
-\begin{figure}[]
+\begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{constant_0.2}
   \caption{}
