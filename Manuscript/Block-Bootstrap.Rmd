@@ -9,11 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 We need all necessary functions:
 
-```{r}
-set.seed(5)
-```
-
-
 ```{r functions, echo = FALSE}
 nmblk <- function(n, l) {
   b <- n / l # assuming that is an integer
@@ -80,17 +75,19 @@ m1 <- function(x) mean(x)
 my_summary <- function(x)
 {
   rm = rowMeans(x)
-  c(rm, sd(x[1,]), rm[2] - sd(x[1,]), rm[6] - sd(x[1,]), (rm[2] - sd(x[1,])) / sd(x[1,]), (rm[6] - sd(x[1,])) / sd(x[1,]))
+  c(rm, sd(x[1,]), rm[2] - sd(x[1,]), rm[6] - sd(x[1,]), (rm[2] - sd(x[1,])) / sd(x[1,]), (rm[6] - sd(x[1,])) / sd(x[1,]), rm[5] + qnorm(.975) * sqrt((rm[5] * (1 - rm[5])) / 1000), rm[5] - qnorm(.975) * sqrt((rm[5] * (1 - rm[5])) / 1000),  rm[9] + qnorm(.975) * sqrt((rm[9] * (1 - rm[9])) / 1000), rm[9] - qnorm(.975) * sqrt((rm[9] * (1 - rm[9])) / 1000))
 }
 
 ```
 
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(400, 0.2, 0.1, 20, m1)))
 root_0.2_1 <- data.frame(c(400, 20, o))
 for(l in 19:16)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.2, 0.1, l, m1)))
   root_0.2_1 <- cbind(root_0.2_1, c(n, l, t))
@@ -101,10 +98,12 @@ print(root_0.2_1)
 ```
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(225, 0.2, 0.1, 15, m1)))
 root_0.2_2 <- data.frame(c(225, 15, o))
 for(l in 14:11)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.2, 0.1, l, m1)))
   root_0.2_2 <- cbind(root_0.2_2, c(n, l, t))
@@ -115,10 +114,12 @@ print(root_0.2_2)
 Observed coverage rates seem to be lower, all are lower than .92 for n <= 225.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(100, 0.2, 0.1, 10, m1)))
 root_0.2_3 <- data.frame(c(100, 10, o))
 for(l in 9:6)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.2, 0.1, l, m1)))
   root_0.2_3 <- cbind(root_0.2_3, c(n, l, t))
@@ -129,10 +130,12 @@ print(root_0.2_3)
 For all n's at or below 100, the coverage rates are below .90.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(625, 0.4, 0.1, 25, m1)))
 root_0.4_1 <- data.frame(c(625, 25, o))
 for(l in 24:21)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, l, m1)))
   root_0.4_1 <- cbind(root_0.4_1, c(n, l, t))
@@ -144,10 +147,12 @@ print(root_0.4_1)
 
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(400, 0.4, 0.1, 20, m1)))
 root_0.4_2 <- data.frame(c(400, 20, o))
 for(l in 19:16)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, l, m1)))
   root_0.4_2 <- cbind(root_0.4_2, c(n, l, t))
@@ -159,10 +164,12 @@ print(root_0.4_2)
 All coverage rates below .92 for n <= 441. Coverage for n = 256 below .90 for both methods.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(225, 0.4, 0.1, 15, m1)))
 root_0.4_3 <- data.frame(c(225, 15, o))
 for(l in 14:11)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, l, m1)))
   root_0.4_3 <- cbind(root_0.4_3, c(n, l, t))
@@ -175,10 +182,12 @@ print(root_0.4_3)
 Observed coverage rates seem to be lower, when n was 144 and 121, both coverage rates recorded were below .90. For n = 225, coverage rate below .90 recorded for moving method.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(100, 0.4, 0.1, 10, m1)))
 root_0.4_4 <- data.frame(c(100, 10, o))
 for(l in 9:6)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, l, m1)))
   root_0.4_4 <- cbind(root_0.4_4, c(n, l, t))
@@ -191,10 +200,12 @@ print(root_0.4_4)
 For all n's at or below 100, the coverage rates are below .90.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(900, 0.6, 0.1, 30, m1)))
 root_0.6_1 <- data.frame(c(900, 30, o))
 for(l in 29:26)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, l, m1)))
   root_0.6_1 <- cbind(root_0.6_1, c(n, l, t))
@@ -206,10 +217,12 @@ print(root_0.6_1)
 Coverage rates seem pretty good at this range of n values.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(625, 0.6, 0.1, 25, m1)))
 root_0.6_2 <- data.frame(c(625, 25, o))
 for(l in 24:21)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, l, m1)))
   root_0.6_2 <- cbind(root_0.6_2, c(n, l, t))
@@ -221,10 +234,12 @@ print(root_0.6_2)
 Coverage rates are still pretty good.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(400, 0.6, 0.1, 20, m1)))
 root_0.6_3 <- data.frame(c(400, 20, o))
 for(l in 19:16)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, l, m1)))
   root_0.6_3 <- cbind(root_0.6_3, c(n, l, t))
@@ -237,10 +252,12 @@ print(root_0.6_3)
 Observed coverage rates seem to be lower, when n was 324, a coverage rate below .90 was recorded for the moving method. When n was 256, both coverage rates were below .90. All coverage rates are below .92.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(225, 0.6, 0.1, 15, m1)))
 root_0.6_4 <- data.frame(c(225, 15, o))
 for(l in 14:11)
 {
+  set.seed(5)
   n = l^2
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, l, m1)))
   root_0.6_4 <- cbind(root_0.6_4, c(n, l, t))
@@ -252,70 +269,12 @@ print(root_0.6_4)
 8 out of the 10 coverage rates are below .90.
 
 ```{r functions, echo = False}
-o = my_summary(replicate(1000, do1rep(1600, 0.8, 0.1, 40, m1)))
-root_0.8_1 <- data.frame(c(1600, 40, o))
-for(l in 39:36)
-{
-  n = l^2
-  t = my_summary(replicate(1000, do1rep(n, 0.8, 0.1, l, m1)))
-  root_0.8_1 <- cbind(root_0.8_1, c(n, l, t))
-  
-}
-
-print(root_0.8_1)
-```
-Coverage rates generally seem good at this range.
-
-```{r functions, echo = False}
-o = my_summary(replicate(1000, do1rep(1225, 0.8, 0.1, 35, m1)))
-root_0.8_2 <- data.frame(c(1225, 35, o))
-for(l in 34:31)
-{
-  n = l^2
-  t = my_summary(replicate(1000, do1rep(n, 0.8, 0.1, l, m1)))
-  root_0.8_2 <- cbind(root_0.8_2, c(n, l, t))
-  
-}
-
-print(root_0.8_2)
-```
-Coverage rates still seem pretty good.
-
-```{r functions, echo = False}
-o = my_summary(replicate(1000, do1rep(900, 0.8, 0.1, 30, m1)))
-root_0.8_3 <- data.frame(c(900, 30, o))
-for(l in 29:26)
-{
-  n = l^2
-  t = my_summary(replicate(1000, do1rep(n, 0.8, 0.1, l, m1)))
-  root_0.8_3 <- cbind(root_0.8_3, c(n, l, t))
-  
-}
-
-print(root_0.8_3)
-```
-Observed coverage rates seem to be lower, when n was 841 and 784, coverage rates below .90 were recorded for non-moving method, and when n was 900, coverage rate for moving method was below .90. All coverage rates below .92.
-
-```{r functions, echo = False}
-o = my_summary(replicate(1000, do1rep(625, 0.8, 0.1, 25, m1)))
-root_0.8_4 <- data.frame(c(625, 25, o))
-for(l in 24:21)
-{
-  n = l^2
-  t = my_summary(replicate(1000, do1rep(n, 0.8, 0.1, l, m1)))
-  root_0.8_4 <- cbind(root_0.8_4, c(n, l, t))
-  
-}
-
-print(root_0.8_4)
-```
-All but 3 of the coverage rates are below .90.
-
-```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(400, 0.2, 0.1, 10, m1)))
 constant_0.2_1 <- data.frame(c(400, 10, o))
 for(m in 19:16)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.2, 0.1, 10, m1)))
   constant_0.2_1 <- cbind(constant_0.2_1, c(n, 10, t))
@@ -327,10 +286,12 @@ print(constant_0.2_1)
 Coverage rates are good.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(300, 0.2, 0.1, 10, m1)))
 constant_0.2_2 <- data.frame(c(300, 10, o))
 for(m in 14:11)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.2, 0.1, 10, m1)))
   constant_0.2_2 <- cbind(constant_0.2_2, c(n, 10, t))
@@ -342,10 +303,12 @@ print(constant_0.2_2)
 Coverage rates are still good.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(200, 0.2, 0.1, 10, m1)))
 constant_0.2_3 <- data.frame(c(200, 10, o))
 for(m in 9:6)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.2, 0.1, 10, m1)))
   constant_0.2_3 <- cbind(constant_0.2_3, c(n, 10, t))
@@ -357,10 +320,12 @@ print(constant_0.2_3)
 For n <= 180, coverage rates are below .92. For n = 140, both coverage rates are below .90, and the moving method has a coverage rate below .90 for n = 120.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(100, 0.2, 0.1, 10, m1)))
 constant_0.2_4 <- data.frame(c(100, 10, o))
 for(m in 4:1)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.2, 0.1, 10, m1)))
   constant_0.2_4 <- cbind(constant_0.2_4, c(n, 10, t))
@@ -372,10 +337,12 @@ print(constant_0.2_4)
 Coverage rates are poor.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(600, 0.4, 0.1, 10, m1)))
 constant_0.4_1 <- data.frame(c(600, 10, o))
 for(m in 29:26)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, 10, m1)))
   constant_0.4_1 <- cbind(constant_0.4_1, c(n, 10, t))
@@ -387,10 +354,12 @@ print(constant_0.4_1)
 Good coverage rates.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(500, 0.4, 0.1, 10, m1)))
 constant_0.4_2 <- data.frame(c(500, 10, o))
 for(m in 24:21)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, 10, m1)))
   constant_0.4_2 <- cbind(constant_0.4_2, c(n, 10, t))
@@ -403,10 +372,12 @@ print(constant_0.4_2)
 Good coverage rates.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(400, 0.4, 0.1, 10, m1)))
 constant_0.4_3 <- data.frame(c(400, 10, o))
 for(m in 19:16)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, 10, m1)))
   constant_0.4_3 <- cbind(constant_0.4_3, c(n, 10, t))
@@ -419,10 +390,12 @@ print(constant_0.4_3)
 Still good.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(300, 0.4, 0.1, 10, m1)))
 constant_0.4_4 <- data.frame(c(300, 10, o))
 for(m in 14:11)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, 10, m1)))
   constant_0.4_4 <- cbind(constant_0.4_4, c(n, 10, t))
@@ -435,10 +408,12 @@ print(constant_0.4_4)
 Coverage rates still pretty good.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(200, 0.4, 0.1, 10, m1)))
 constant_0.4_5 <- data.frame(c(200, 10, o))
 for(m in 9:6)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, 10, m1)))
   constant_0.4_5 <- cbind(constant_0.4_5, c(n, 10, t))
@@ -451,10 +426,12 @@ print(constant_0.4_5)
 Non-moving method resulted in coverage rate below .90 for n = 200. All coverage rates for n = 140 and 120 are below .90.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(100, 0.4, 0.1, 10, m1)))
 constant_0.4_6 <- data.frame(c(100, 10, o))
 for(m in 4:1)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.4, 0.1, 10, m1)))
   constant_0.4_6 <- cbind(constant_0.4_6, c(n, 10, t))
@@ -467,10 +444,12 @@ print(constant_0.4_6)
 Poor coverage rates.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(900, 0.6, 0.1, 10, m1)))
 constant_0.6_1 <- data.frame(c(900, 10, o))
 for(m in 44:41)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
   constant_0.6_1 <- cbind(constant_0.6_1, c(n, 10, t))
@@ -483,10 +462,12 @@ print(constant_0.6_1)
 All coverage rates below .92.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(800, 0.6, 0.1, 10, m1)))
 constant_0.6_2 <- data.frame(c(800, 10, o))
 for(m in 39:36)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
   constant_0.6_2 <- cbind(constant_0.6_2, c(n, 10, t))
@@ -499,10 +480,12 @@ print(constant_0.6_2)
 Moving coverage rate for n = 760 is below .90.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(700, 0.6, 0.1, 10, m1)))
 constant_0.6_3 <- data.frame(c(700, 10, o))
 for(m in 34:31)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
   constant_0.6_3 <- cbind(constant_0.6_3, c(n, 10, t))
@@ -514,10 +497,12 @@ print(constant_0.6_3)
 All coverage rates below .92 except those for n = 680.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(600, 0.6, 0.1, 10, m1)))
 constant_0.6_4 <- data.frame(c(600, 10, o))
 for(m in 29:26)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
   constant_0.6_4 <- cbind(constant_0.6_4, c(n, 10, t))
@@ -530,10 +515,12 @@ print(constant_0.6_4)
 All coverage rates below .92 except those for n = 540. 
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(500, 0.6, 0.1, 10, m1)))
 constant_0.6_5 <- data.frame(c(500, 10, o))
 for(m in 24:21)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
   constant_0.6_5 <- cbind(constant_0.6_5, c(n, 10, t))
@@ -546,10 +533,12 @@ print(constant_0.6_5)
 Coverage rates are generally good.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(400, 0.6, 0.1, 10, m1)))
 constant_0.6_6 <- data.frame(c(400, 10, o))
 for(m in 19:16)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
   constant_0.6_6 <- cbind(constant_0.6_6, c(n, 10, t))
@@ -562,10 +551,12 @@ print(constant_0.6_6)
 All coverage rates below .92 for n <= 380. Coverage rates below .90 for n = 360 and 340.
 
 ```{r functions, echo = False}
+set.seed(5)
 o = my_summary(replicate(1000, do1rep(300, 0.6, 0.1, 10, m1)))
 constant_0.6_7 <- data.frame(c(300, 10, o))
 for(m in 14:11)
 {
+  set.seed(5)
   n = 20 * m
   t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
   constant_0.6_7 <- cbind(constant_0.6_7, c(n, 10, t))
@@ -574,6 +565,24 @@ for(m in 14:11)
 
 print(constant_0.6_7)
 ```
+
+
+```{r functions, echo = False}
+set.seed(5)
+o = my_summary(replicate(1000, do1rep(200, 0.6, 0.1, 10, m1)))
+constant_0.6_8 <- data.frame(c(200, 10, o))
+for(m in 9:6)
+{
+  set.seed(5)
+  n = 20 * m
+  t = my_summary(replicate(1000, do1rep(n, 0.6, 0.1, 10, m1)))
+  constant_0.6_8 <- cbind(constant_0.6_8, c(n, 10, t))
+  
+}
+
+print(constant_0.6_8)
+```
+
 ```{r} 
 colnames(root_0.2_1) <- NULL
 colnames(root_0.2_2) <- NULL
@@ -584,121 +593,128 @@ root_0.2_3
 
 ```{r}
 
-root_0.2 <- data.frame(rbind(t(root_0.2_1[c(1, 2, 7),]), t(root_0.2_1[c(1, 2, 11),]), t(root_0.2_2[c(1, 2, 7),]), t(root_0.2_2[c(1, 2, 11),]), t(root_0.2_3[c(1, 2, 7),]), t(root_0.2_3[c(1, 2, 11),])))
+root_0.2 <- data.frame(rbind(t(root_0.2_1[c(1, 2, 7, 18, 17),]), t(root_0.2_1[c(1, 2, 11, 20, 19),]), t(root_0.2_2[c(1, 2, 7, 18, 17),]), t(root_0.2_2[c(1, 2, 11, 20, 19),]), t(root_0.2_3[c(1, 2, 7, 18, 17),]), t(root_0.2_3[c(1, 2, 11, 20, 19),])))
 rownames(root_0.2) <- NULL
-colnames(root_0.2) <- c("n", "l", 'ci')
+colnames(root_0.2) <- c("n", "l", 'coverage_rate', 'lb', 'ub')
 root_0.2['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-root_0.2
+root_0.2[order(-root_0.2$n), ]
 ```
 ```{r}
 library(ggplot2)
-ggplot(root_0.2, aes(x = n, y = ci, color = method)) +
+ggplot(root_0.2, aes(x = n, y = coverage_rate, color = method)) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
   geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
+  geom_point() +
+  facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
+  labs(title = expression('l = ' * sqrt(n) * ', AR = 0.2'), x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
+  theme(legend.position="none") +
+  scale_color_manual(labels = c("Moving Method", "Non-Moving Method"), values = c("blue", "red"))
 ggsave('root_0.2.pdf')
 ```
+
 ```{r}
-root_0.4 <- data.frame(rbind(t(root_0.4_1[c(1, 2, 7),]), t(root_0.4_1[c(1, 2, 11),]), t(root_0.4_2[c(1, 2, 7),]), t(root_0.4_2[c(1, 2, 11),]), t(root_0.4_3[c(1, 2, 7),]), t(root_0.4_3[c(1, 2, 11),]), t(root_0.4_4[c(1, 2, 7),]), t(root_0.4_4[c(1, 2, 11),])))
+root_0.4 <- data.frame(rbind(t(root_0.4_1[c(1, 2, 7, 18, 17),]), t(root_0.4_1[c(1, 2, 11, 20, 19),]), t(root_0.4_2[c(1, 2, 7, 18, 17),]), t(root_0.4_2[c(1, 2, 11, 20, 19),]), t(root_0.4_3[c(1, 2, 7, 18, 17),]), t(root_0.4_3[c(1, 2, 11, 20, 19),]), t(root_0.4_4[c(1, 2, 7, 18, 17),]), t(root_0.4_4[c(1, 2, 11, 20, 19),])))
 rownames(root_0.4) <- NULL
-colnames(root_0.4) <- c("n", "l", 'ci')
+colnames(root_0.4) <- c("n", "l", 'ci', 'lb', 'ub')
 root_0.4['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-root_0.4
+root_0.4[order(-root_0.4$n), ]
 ```
 ```{r}
 library(ggplot2)
 ggplot(root_0.4, aes(x = n, y = ci, color = method)) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
   geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
+  geom_point() +
+  facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
+  labs(title = expression('l = ' * sqrt(n) * ', AR = 0.4'), x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
+  theme(legend.position="none") +
+  scale_color_manual(labels = c("Moving Method", "Non-Moving Method"), values = c("blue", "red"))
 ggsave('root_0.4.pdf')
 ```
 ```{r}
-root_0.6 <- data.frame(rbind(t(root_0.6_1[c(1, 2, 7),]), t(root_0.6_1[c(1, 2, 11),]), t(root_0.6_2[c(1, 2, 7),]), t(root_0.6_2[c(1, 2, 11),]), t(root_0.6_3[c(1, 2, 7),]), t(root_0.6_3[c(1, 2, 11),]), t(root_0.6_4[c(1, 2, 7),]), t(root_0.6_4[c(1, 2, 11),])))
+root_0.6 <- data.frame(rbind(t(root_0.6_1[c(1, 2, 7, 18, 17),]), t(root_0.6_1[c(1, 2, 11, 20, 19),]), t(root_0.6_2[c(1, 2, 7, 18, 17),]), t(root_0.6_2[c(1, 2, 11, 20, 19),]), t(root_0.6_3[c(1, 2, 7, 18, 17),]), t(root_0.6_3[c(1, 2, 11, 20, 19),]), t(root_0.6_4[c(1, 2, 7, 18, 17),]), t(root_0.6_4[c(1, 2, 11, 20, 19),])))
 rownames(root_0.6) <- NULL
-colnames(root_0.6) <- c("n", "l", 'ci')
+colnames(root_0.6) <- c("n", "l", 'ci', 'lb', 'ub')
 root_0.6['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-root_0.6
+root_0.6[order(-root_0.6$n), ]
 ```
+
 
 ```{r}
 library(ggplot2)
 ggplot(root_0.6, aes(x = n, y = ci, color = method)) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
   geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
-ggsave('root_0.6.pdf') 
-```
-```{r}
-root_0.8 <- data.frame(rbind(t(root_0.8_1[c(1, 2, 7),]), t(root_0.8_1[c(1, 2, 11),]), t(root_0.8_2[c(1, 2, 7),]), t(root_0.8_2[c(1, 2, 11),]), t(root_0.8_3[c(1, 2, 7),]), t(root_0.8_3[c(1, 2, 11),]), t(root_0.8_4[c(1, 2, 7),]), t(root_0.8_4[c(1, 2, 11),])))
-rownames(root_0.8) <- NULL
-colnames(root_0.8) <- c("n", "l", 'ci')
-root_0.8['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-root_0.8
+  geom_point() +
+  facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
+  labs(title = expression('l = ' * sqrt(n) * ', AR = 0.6'), x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
+  theme(legend.position="none") +
+  scale_color_manual(labels = c("Moving Method", "Non-Moving Method"), values = c("blue", "red"))
+ggsave('root_0.6.pdf')
 ```
 
 ```{r}
-library(ggplot2)
-ggplot(root_0.8, aes(x = n, y = ci, color = method)) +
-  geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
-ggsave('root_0.8.pdf') 
-```
-```{r}
-constant_0.2 <- data.frame(rbind(t(constant_0.2_1[c(1, 2, 7),]), t(constant_0.2_1[c(1, 2, 11),]), t(constant_0.2_2[c(1, 2, 7),]), t(constant_0.2_2[c(1, 2, 11),]), t(constant_0.2_3[c(1, 2, 7),]), t(constant_0.2_3[c(1, 2, 11),]), t(constant_0.2_4[c(1, 2, 7),]), t(constant_0.2_4[c(1, 2, 11),])))
+constant_0.2 <- data.frame(rbind(t(constant_0.2_1[c(1, 2, 7, 18, 17),]), t(constant_0.2_1[c(1, 2, 11, 20, 19),]), t(constant_0.2_2[c(1, 2, 7, 18, 17),]), t(constant_0.2_2[c(1, 2, 11, 20, 19),]), t(constant_0.2_3[c(1, 2, 7, 18, 17),]), t(constant_0.2_3[c(1, 2, 11, 20, 19),]), t(constant_0.2_4[c(1, 2, 7, 18, 17),]), t(constant_0.2_4[c(1, 2, 11, 20, 19),])))
 rownames(constant_0.2) <- NULL
-colnames(constant_0.2) <- c("n", "l", 'ci')
+colnames(constant_0.2) <- c("n", "l", 'ci', 'lb', 'ub')
 constant_0.2['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-constant_0.2
+constant_0.2[order(-constant_0.2$n), ]
 ```
 
 ```{r}
 library(ggplot2)
 ggplot(constant_0.2, aes(x = n, y = ci, color = method)) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
   geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
-ggsave('constant_0.2.pdf')  
+  geom_point() +
+  facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
+  labs(title = expression('l = 10, AR = 0.2'), x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
+  theme(legend.position="none") +
+  scale_color_manual(labels = c("Moving Method", "Non-Moving Method"), values = c("blue", "red"))
+ggsave('constant_0.2.pdf')
 ```
+
 ```{r}
-constant_0.4 <- data.frame(rbind(t(constant_0.4_1[c(1, 2, 7),]), t(constant_0.4_1[c(1, 2, 11),]), t(constant_0.4_2[c(1, 2, 7),]), t(constant_0.4_2[c(1, 2, 11),]), t(constant_0.4_3[c(1, 2, 7),]), t(constant_0.4_3[c(1, 2, 11),]), t(constant_0.4_4[c(1, 2, 7),]), t(constant_0.4_4[c(1, 2, 11),]), t(constant_0.4_5[c(1, 2, 7),]), t(constant_0.4_5[c(1, 2, 11),]), t(constant_0.4_6[c(1, 2, 7),]), t(constant_0.4_6[c(1, 2, 11),])))
+constant_0.4 <- data.frame(rbind(t(constant_0.4_1[c(1, 2, 7, 18, 17),]), t(constant_0.4_1[c(1, 2, 11, 20, 19),]), t(constant_0.4_2[c(1, 2, 7, 18, 17),]), t(constant_0.4_2[c(1, 2, 11, 20, 19),]), t(constant_0.4_3[c(1, 2, 7, 18, 17),]), t(constant_0.4_3[c(1, 2, 11, 20, 19),]), t(constant_0.4_4[c(1, 2, 7, 18, 17),]), t(constant_0.4_4[c(1, 2, 11, 20, 19),]), t(constant_0.4_5[c(1, 2, 7, 18, 17),]), t(constant_0.4_5[c(1, 2, 11, 20, 19),]), t(constant_0.4_6[c(1, 2, 7, 18, 17),]), t(constant_0.4_6[c(1, 2, 11, 20, 19),])))
 rownames(constant_0.4) <- NULL
-colnames(constant_0.4) <- c("n", "l", 'ci')
+colnames(constant_0.4) <- c("n", "l", 'ci', 'lb', 'ub')
 constant_0.4['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-constant_0.4
+constant_0.4[order(-constant_0.4$n), ]
 ```
 
 ```{r}
 library(ggplot2)
 ggplot(constant_0.4, aes(x = n, y = ci, color = method)) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
   geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
-ggsave('constant_0.4.pdf')  
+  geom_point() +
+  facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
+  labs(title = expression('l = 10, AR = 0.4'), x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
+  theme(legend.position="none") +
+  scale_color_manual(labels = c("Moving Method", "Non-Moving Method"), values = c("blue", "red"))
+ggsave('constant_0.4.pdf')
 ```
+
 ```{r}
-constant_0.6 <- data.frame(rbind(t(constant_0.6_1[c(1, 2, 7),]), t(constant_0.6_1[c(1, 2, 11),]), t(constant_0.6_2[c(1, 2, 7),]), t(constant_0.6_2[c(1, 2, 11),]), t(constant_0.6_3[c(1, 2, 7),]), t(constant_0.6_3[c(1, 2, 11),]), t(constant_0.6_4[c(1, 2, 7),]), t(constant_0.6_4[c(1, 2, 11),]), t(constant_0.6_5[c(1, 2, 7),]), t(constant_0.6_5[c(1, 2, 11),]), t(constant_0.6_6[c(1, 2, 7),]), t(constant_0.6_6[c(1, 2, 11),]), t(constant_0.6_7[c(1, 2, 7),]), t(constant_0.6_7[c(1, 2, 11),])))
+constant_0.6 <- data.frame(rbind(t(constant_0.6_1[c(1, 2, 7, 18, 17),]), t(constant_0.6_1[c(1, 2, 11, 20, 19),]), t(constant_0.6_2[c(1, 2, 7, 18, 17),]), t(constant_0.6_2[c(1, 2, 11, 20, 19),]), t(constant_0.6_3[c(1, 2, 7, 18, 17),]), t(constant_0.6_3[c(1, 2, 11, 20, 19),]), t(constant_0.6_4[c(1, 2, 7, 18, 17),]), t(constant_0.6_4[c(1, 2, 11, 20, 19),]), t(constant_0.6_5[c(1, 2, 7, 18, 17),]), t(constant_0.6_5[c(1, 2, 11, 20, 19),]), t(constant_0.6_6[c(1, 2, 7, 18, 17),]), t(constant_0.6_6[c(1, 2, 11, 20, 19),]), t(constant_0.6_7[c(1, 2, 7, 18, 17),]), t(constant_0.6_7[c(1, 2, 11, 20, 19),]), t(constant_0.6_8[c(1, 2, 7, 18, 17),]), t(constant_0.6_8[c(1, 2, 11, 20, 19),])))
 rownames(constant_0.6) <- NULL
-colnames(constant_0.6) <- c("n", "l", 'ci')
-constant_0.6['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-constant_0.6
+colnames(constant_0.6) <- c("n", "l", 'ci', 'lb', 'ub')
+constant_0.6['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv', 'nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
+constant_0.6[order(-constant_0.6$n), ]
 ```
 
 ```{r}
 library(ggplot2)
 ggplot(constant_0.6, aes(x = n, y = ci, color = method)) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
   geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
-ggsave('constant_0.6.pdf')  
+  geom_point() +
+  facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
+  labs(title = expression('l = 10, AR = 0.6'), x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
+  theme(legend.position="none") +
+  scale_color_manual(labels = c("Moving Method", "Non-Moving Method"), values = c("blue", "red"))
+ggsave('constant_0.6.pdf')
 ```
 
-```{r}
-constant_0.8 <- data.frame(rbind(t(constant_0.8_1[c(1, 2, 7),]), t(constant_0.8_1[c(1, 2, 11),])))
-rownames(constant_0.8) <- NULL
-colnames(constant_0.8) <- c("n", "l", 'ci')
-constant_0.8['method'] <- c('nm', 'nm', 'nm', 'nm', 'nm', 'mv', 'mv', 'mv', 'mv', 'mv')
-constant_0.8
-```
 
-```{r}
-library(ggplot2)
-ggplot(constant_0.8, aes(x = n, y = ci, color = method)) +
-  geom_line() +
-  labs(x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate',  color = 'Method')
-ggsave('constant_0.8.pdf')  
-```
+
