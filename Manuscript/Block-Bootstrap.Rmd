@@ -622,7 +622,7 @@ root_0.4[order(-root_0.4$n), ]
 ```{r}
 library(ggplot2)
 ggplot(root_0.4, aes(x = n, y = ci, color = method)) +
-  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=10) +
   geom_line() +
   geom_point() +
   facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
@@ -643,7 +643,7 @@ root_0.6[order(-root_0.6$n), ]
 ```{r}
 library(ggplot2)
 ggplot(root_0.6, aes(x = n, y = ci, color = method)) +
-  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=15) +
   geom_line() +
   geom_point() +
   facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
@@ -685,7 +685,7 @@ constant_0.4[order(-constant_0.4$n), ]
 ```{r}
 library(ggplot2)
 ggplot(constant_0.4, aes(x = n, y = ci, color = method)) +
-  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=10) +
   geom_line() +
   geom_point() +
   facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +
@@ -706,7 +706,7 @@ constant_0.6[order(-constant_0.6$n), ]
 ```{r}
 library(ggplot2)
 ggplot(constant_0.6, aes(x = n, y = ci, color = method)) +
-  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=5) +
+  geom_errorbar(aes(ymin=lb, ymax=ub), colour="black", width=15) +
   geom_line() +
   geom_point() +
   facet_wrap(~method, labeller=labeller(method = c(mv = 'Moving Method', nm = 'Non-Moving Method'))) +

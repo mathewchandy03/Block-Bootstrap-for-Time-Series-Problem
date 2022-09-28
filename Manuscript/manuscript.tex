@@ -79,12 +79,12 @@ block bootstrap;
 \label{sec:intro}
 
 Block bootstrapping is a widely used method in Statistics. The concept for block 
-bootstrapping was developed independently by \citet{Hall}, \citet{Carlstein}, and 
-\citet{Kunsch}. \citet{Radovanov} It has been applied to a variety of 
+bootstrapping was developed independently by \citet{hall1985resampling}, \citet{carlstein1986use}, and 
+\citet{kunsch1989jackknife}. \citet{radovanov2014comparison} It has been applied to a variety of 
 different fields such 
-as econometrics \citep{MacKinnon} and meteorology \citep{Varga}. It can be used for 
+as econometrics \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}. It can be used for 
 situations in which there is temporal dependence and the goal is estimation or hypothesis 
-testing. It is useful for a variety of applicationsAssuming that the sample is infinitely 
+testing. Assuming that the sample is infinitely 
 large, the method will work perfectly. However, for a finite sample size, the method will 
 not work as well as expected. It may be necessary (in order to plan an applied 
 statistical 
@@ -93,15 +93,13 @@ The goal of this study is to find a threshold or range of sample sizes at block 
 is no longer an effective method for estimating variance.
 
 
-\citet{Nevitt} find that a sample size of 200-1000 is usually sufficient for standard 
+\citet{nevitt2001performance} find that a sample size of 200-1000 is usually sufficient for standard 
 bootstrap estimation. However, block bootstrapping is a different situation because the 
 sample is split into blocks.
 
-\citet{Goncalves} found that standard error estimates from block bootstrapping small 
+\citet{goncalves2005bootstrap} found that standard error estimates from block bootstrapping small 
 samples 
-may be significantly more accurate than inference from closed-form asymptotic estimates. 
-This however, works only under the assumption of low dependence and heterogeneity. In the
-context of a time series, it becomes more complicated.
+may be significantly more accurate than inference from closed-form asymptotic estimates. That study focused on variance estimation within the context of linear regression. Still, the rate at which confidence intervals recover the true variance for small sample sizes wasn't very close to the confidence level of the intervals. This study aims to find how small the sample size can be for time series (which has a dependence factor which can be compared to a linear regression) in order for the coverage rate to be close to the confidence level.
 
 For this study, many block bootstrap simulations were conducted with R. At the base
 level, we are block-bootstrapping an auto-regressive process with true mean 0.
@@ -133,7 +131,7 @@ how the size of the blocks (l) relates to the size of the time series (n) -
 and whether or not they overlap. It is known that as the size of the time series 
 increases, the optimal block length should increase, and the ratio of the block length to 
 the time series length should decrease. l = n$^3$ is typically considered the optimal 
-block length according to asymptotic theory. \citep{Buhlmann} If only perfect cubes are used for the time 
+block length according to asymptotic theory. \citep{buhlmann1999block} If only perfect cubes are used for the time 
 series length, n gets too large when l increases by relatively little. An alternative 
 would be to use smaller time series, find the cube root, and set the block length to the 
 nearest whole number. However, in this study l = sqrt{n} is used, as it allows for smaller 
@@ -145,14 +143,18 @@ multiple combinations of AR coefficient and the function of n used to decide l. 
 addition, the coverage rates
 for both the non-moving and moving methods were recorded.
 
-\section{Literature Review}
-\label{sec:litreview}
+\section{Review of Block Bootstrap}
+\label{sec:blkbootreview}
+
+Block bootstrapping is a method that can be applied to time series to estimate a parameter and it's variance. Suppose that a sample of size n of a time series is given. In order to account for the temporal dependence, the time series can be split into blocks, typically of the same size. The block should be of size l large enough to include time dependence, yet small enough to include some variance. The designer of the study can choose whether the blocks overlap or not. If the bloc(Figure here) A bootstrapped sample is created by taking a sample of n / l blocks with replacement to create a new series of size n. An estimator of the parameter is computed from the sample. This procedure can be repeated many times to create a sampling distribution if the distribution is unknown. Using this sampling distribution, a confidence interval for the parameter can be created using the alpha/2 and 1 - alpha/2 percentiles.
 
 
 
+\section{Simulation Study Design}
+\label{sec:simdesign}
 
-\section{Data}
-\label{sec:data}
+The basic objective of the study was to assess how well block bootstrap estimates the variance for an autoregressive process. In the previous section, the process for creating a confidence interval using the block bootstrap method is described. This process is applied to a simulation of an autoregressive integrated moving average (ARIMA) with sigma = 0.1 to create a confidence interval of the mean of the process. For a certain AR coefficient, a block bootstrap 95\% confidence interval is replicated 1000 times at a starting sample size at which block bootstrap is expected to be very effective. For each individual confidence interval, it can be recorded whether or not the interval includes the true mean (0). The coverage rate, or the proportion of intervals that include the mean, can then be recorded. If the variance is being properly estimated by the block bootstrap, the coverage rate should reflect this by being close to the confidence level of 95\%. If this is not the case, the method is not working as well as it should. Since the coverage rate is a proportion, a 95\% confidence interval of the coverage rate can also be created.
+
 
 
 
@@ -185,7 +187,7 @@ using a constant l, results for
 sample sizes ranging from 400 to 20 were observed. For AR = 0.4 using a constant l, 
 results for sample sizes ranging from 600
 to 20 were observed. For AR = 0.6, using a constant l, results for sample sizes ranging 
-from 900 to 220 were observed. For the simulations in which the block length was the 
+from 900 to 120 were observed. For the simulations in which the block length was the 
 square root of the time series length, the only sample sizes used were perfect squares so 
 that the blocks would have whole number lengths. For AR = 0.2 using l = sqrt{n}, results 
 for sample sizes ranging from 625 to 36 were observed. For AR = 0.4 using sqrt{n}, results 
@@ -196,32 +198,7 @@ results for sample sizes ranging from 1600 to 121 were observed.
 \label{sec:results}
 
 As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was 
-required for effective block bootstrap estimation. With l = sqrt{n} and AR = 0.2, all 
-observed coverage rates were lower than .92 for n <= 144. For all n's <= 49, all observed 
-coverage rates were below .90. A coverage rate of .895 was recorded for the non-moving 
-method when n = 196, indicating that even at such a sample size, a coverage rate below .90 
-is possible. A coverage rate below .90 (.895) was recorded for the moving method at a 
-sample size as large as n = 144. With l = sqrt{n} and AR = 0.4, all observed coverage 
-rates were below .91 for n <= 169. For all n's <= 100, all observed coverage rates were 
-below .90. A coverage rate of .897 was recorded for the non-moving method when n = 400, 
-indicating that even at such a sample size, a coverage rate below .90 is possible. A 
-coverage rate below .90 (.897) was recorded for the moving method at a sample size as 
-large as n = 169. With l = sqrt{n} and AR = 0.6, all observed coverage rates were below 
-.91 for n <= 361. For all n's <= 225, all observed coverage rates were below .90. A 
-coverage rate of .896 was recorded for the moving method when n = 361, indicating that 
-even at such a sample size, a coverage rate below .90 is possible. A coverage rate below 
-.90 (.891) was recorded for the non-moving method at a sample size as large as n = 225.
-
-With a constant l and AR = 0.2, for n <= 180, all observed coverage rates were below .92. 
-For all n's <= 100, all observed coverage rates were below .90. A coverage rate of .899 
-was recorded for the non-moving method when n = 140, indicating that even at such a sample 
-size, a coverage rate below .90 is possible. A coverage rate below .90 (.899) was recorded 
-for the moving method at a sample size as large as n = 100. With a constant l and AR = 
-0.4, for n <= 280, all observed coverage rates were below .92. For all n's <= 120, all 
-observed coverage rates were below .90. A coverage rate of .892 was recorded for the 
-moving method when n = 260, indicating that even at such a sample size, a coverage rate 
-below .90 is possible. A coverage rate below .90 (.896) was recorded for the non-moving 
-method at a sample size as large as n = 160. With a constant l and AR = 0.6.
+required for effective block bootstrap estimation. 
 
 
 
@@ -230,6 +207,41 @@ method at a sample size as large as n = 160. With a constant l and AR = 0.6.
   \includegraphics[width=\textwidth]{constant_0.2}
   \caption{}
   \label{fig:constant_0.2}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{constant_0.4}
+  \caption{}
+  \label{fig:constant_0.4}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{constant_0.6}
+  \caption{}
+  \label{fig:constant_0.6}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{root_0.2}
+  \caption{}
+  \label{fig:root_0.2}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{root_0.4}
+  \caption{}
+  \label{fig:root_0.4}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{root_0.6}
+  \caption{}
+  \label{fig:root_0.6}
 \end{figure}
 
 \label{sec:results}
