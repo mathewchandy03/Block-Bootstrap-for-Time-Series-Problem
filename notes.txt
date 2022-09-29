@@ -63,7 +63,7 @@
 • Go through papers that have cited Goncalves, may be relevant
 
 9/29 Notes
-• Try AR = 0: regular sample or ignore weapons
+• Try AR = 0: regular sample or ignore warnings
 • Set sigma term so that variance is same according to equation: https://stats.stackexchange.com/questions/103405/prove-expression-for-variance-ar1
 • Create figures for Block Bootstrap review
 
