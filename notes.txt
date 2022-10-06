@@ -67,6 +67,10 @@
 • Set sigma term so that variance is same according to equation: https://stats.stackexchange.com/questions/103405/prove-expression-for-variance-ar1
 • Create figures for Block Bootstrap review
 
+10/6 Notes
+• Keep figures for later, not in paper
+• Repeat program with 4000 replicates
+
 
 
 
