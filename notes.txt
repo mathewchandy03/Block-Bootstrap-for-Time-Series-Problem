@@ -71,6 +71,8 @@
 • Keep figures for later, not in paper
 • Repeat program with 4000 replicates
 
+10/20 Notes
+• Use same data and different methods (l = 10 vs l = sqrt(n))
 
 
 
