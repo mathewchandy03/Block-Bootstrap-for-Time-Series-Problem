@@ -86,7 +86,7 @@ as econometrics \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017g
 situations in which there is temporal dependence and the goal is estimation or hypothesis 
 testing. Assuming that the sample is infinitely 
 large, the method will work perfectly. However, for a finite sample size, the method will 
-not work as well as expected. It may be necessary (in order to plan an applied 
+not work as well as expected. \citet{hesterberg2015teachers} notes that while intervals based on the percentiles from nonparametric bootstrapping are more accurate than t-intervals for larger sample sizes, they are less accurate for smaller sample sizes. It may be necessary (in order to plan an applied 
 statistical 
 procedure) to know at which sample size the method stops working at an acceptable level. 
 The goal of this study is to find a threshold or range of sample sizes at block bootstrap 
@@ -130,12 +130,8 @@ The coverage rates are also affected by the size of the blocks - more specifical
 how the size of the blocks (l) relates to the size of the time series (n) - 
 and whether or not they overlap. It is known that as the size of the time series 
 increases, the optimal block length should increase, and the ratio of the block length to 
-the time series length should decrease. l = n$^3$ is typically considered the optimal 
-block length according to asymptotic theory. \citep{buhlmann1999block} If only perfect cubes are used for the time 
-series length, n gets quite large when l increases by relatively little. An alternative 
-would be to use smaller time series, find the cube root, and set the block length to the 
-nearest whole number. However, in this study l = sqrt{n} is used, as it allows for smaller 
-sample sizes while still using perfect squares.
+the time series length should decrease. l = n$^{1/3}$ is typically considered the optimal 
+block length according to asymptotic theory. \citep{buhlmann1999block} The effect of this relation on the block bootstrap method was observed in this study. Simulations were conducted with a constant l, l = $\sqrt{n}$, and l = n$^{1/3}$. 
 
 So to solve the question of what n is necessary for effective block bootstrapping,
 while still accounting for all these factors, the simulations were repeated for
@@ -146,7 +142,7 @@ for both the non-moving and moving methods were recorded.
 \section{Review of Block Bootstrap}
 \label{sec:blkbootreview}
 
-Block bootstrapping is a method that can be applied to a time series (or any sample of data for that matter) to estimate a parameter and its variance. Suppose that a sample of size n of a time series is given. In regular bootstrap procedure, the new sample of the same size as the original would just be created by resampling observations with replacement. In the case of a time series, in order to account for the temporal dependence, the time series can be split into blocks, typically of the same size. The block should be of size l large enough to include time dependence, yet small enough to include some variance. A bootstrapped sample is created by taking a sample of n / l blocks with replacement to create a new series of size n. The designer of the study can choose whether the blocks overlap or not. If the blocks can never overlap, it is called a non-moving block bootstrap. In this case, the original sample is split evenly into n / l blocks, and the same number of blocks is sampled without replacement to create a bootstrapped sample. If the blocks do overlap, it is called a moving block bootstrap. n / l samples are taken randomly from the original sample, but they do not have to be from a group of evenly spaced blocks. An estimator of the parameter is computed from the bootstrapped sample. This procedure can be repeated many times to create a sampling distribution of the estimator. Using this distribution of estimators, a confidence interval for the parameter can be created using the $\alpha$/2 and 1 - $\alpha$/2 percentiles.
+Block bootstrapping is a method that can be applied to a time series (or any sample of data for that matter) to estimate a parameter and its variance. Suppose that a sample of size n of a time series is given. In regular bootstrap procedure, the new sample of the same size as the original would just be created by resampling observations with replacement. In the case of a time series, in order to account for the temporal dependence, the time series can be split into blocks, typically of the same size. The block should be of size l large enough to include time dependence, yet small enough to include some variance. As n increases, an ideal l should also increase, but the ratio of l to n should decrease. To achieve this, l is often assigned a value as a function of n. A common function that is considered the best by much previous literature is l = n$^{1/3}$. However not all n sizes are perfect squares, and l must be a whole number, so the ceiling of this function must be used. The same can be done for the $\sqrt{n}$. A bootstrapped sample is created by taking a sample of n / l blocks with replacement to create a new series of size n. The designer of the study can choose whether the blocks overlap or not. If the blocks can never overlap, it is called a non-moving block bootstrap. In this case, the original sample is split evenly into n / l blocks, and the same number of blocks is sampled without replacement to create a bootstrapped sample. If the blocks do overlap, it is called a moving block bootstrap. n / l samples are taken randomly from the original sample, but they do not have to be from a group of evenly spaced blocks. An estimator of the parameter is computed from the bootstrapped sample. This procedure can be repeated many times (typically 1000) to create a sampling distribution of the estimator. Using this distribution of estimators, a confidence interval for the parameter can be created using the $\alpha$/2 and 1 - $\alpha$/2 percentiles.
 
 \section{Simulation Study Design}
 \label{sec:simdesign}
@@ -156,7 +152,7 @@ The central objective of the study was to assess at which sample size block boot
 \[ \sigma_{x}^{2}=\sigma_{\eta}^{2}/\left( 1-\phi^2 \right)\]
 \[\sigma_{\eta}=\sqrt{\sigma_{x}^{2}*\left( 1-\phi^2 \right)}\]
 
-For a certain AR coefficient, a block bootstrap 95\% confidence interval is replicated 4000 times at a starting sample size at which block bootstrap is expected to be very effective (a relatively large sample). For each individual confidence interval, it can be recorded whether or not the interval includes the true mean (0). The coverage rate, or the proportion of intervals that include the mean, can then be recorded. If the variance is being properly estimated by the block bootstrap, the coverage rate should reflect this by being close to the confidence level of 95\%. If this is not the case, the method is not working as well as it should. Since the coverage rate is a proportion based on many replication of independent Bernoulli outcomes, a 95\% confidence interval of the coverage rate at that sample size can also be created. Once the simulation is done for the starting n, the sample size can gradually be lowered until the coverage rates and their respective confidence intervals indicate that the method no longer functions well.
+For a certain AR coefficient, a block bootstrap 95\% confidence interval is replicated 4000 times at a starting sample size at which block bootstrap is expected to be very effective (a relatively large sample). For each individual confidence interval, it can be recorded whether or not the interval includes the true mean (0). The coverage rate, or the proportion of intervals that include the mean, can then be recorded. If the parameter and its variance are being properly estimated by the block bootstrap, the coverage rate should reflect this by being close to the confidence level of 95\%. If this is not the case, the method is not working as well as it should. The width of the confidence interval for each replication is dependent on the variance of the means of the bootstrapped samples. If the interval is not wide enough to capture the mean at the expected rate of 95\%, it indicates that the variance of the parameter (which will be estimated from the variance of the means of the bootstrapped samples) will be underestimated. Since the coverage rate is a proportion based on many replication of independent Bernoulli outcomes, a 95\% confidence interval of the coverage rate at that sample size can also be created. Once the simulation is done for the starting n, the sample size can gradually be lowered until the coverage rates and their respective confidence intervals indicate that the method no longer functions well.
 
 
 
@@ -165,101 +161,66 @@ For a certain AR coefficient, a block bootstrap 95\% confidence interval is repl
 \section{Methods}
 \label{sec:methods}
 
-Before each simulation (4000 replications of confidence intervals from block bootstrapped sample mean distributions), the random seed was set to 5 so that the randomized results can be 
+Before each set of 4000 replications of confidence intervals from block bootstrapped sample mean distributions, the random seed was set to 5 so that the randomized results can be 
 reproduced. 
 
 A simulation of an autoregressive integrated moving average (ARIMA) process was run 
 repeatedly with varying parameters. 
 The mean and standard deviation of the time series was held constant at 0 and 0.1, respectively, whereas 
-the sample size and AR Coefficient
- were varied. The AR Coefficients that were used were 0 (or a sample from a normal distribution with no temporal dependence) 0.2, 0.4, and 0.6. The sample sizes 
+the sample length and AR Coefficient
+ were varied. The AR Coefficients that were observed with were 0.2, 0.4, and 0.6. Normally distributed samples, in other words, samples with AR Coefficients of 0, were also experimented with as a control group to compare against. The sample lengths 
  that were used depended on the AR
- Coefficient, and the function used to compute l. For each of these variations, 1000 
- confidence intervals are created using
- the block bootstrap method, and the proportion of these intervals that recover the true 
- mean (0) is recorded as the coverage
- rate. The block bootstrap method has different settings that were varied in this study: 
- non-moving vs moving, 
-and the function for block length - the two used were a constant block length of 10 and 
-the square root of n.
+ Coefficient and the function used to compute l. 
+ 
+ The block bootstrap method has different settings that were varied in this study: 
+ non-moving vs moving, and the function for block length - the three functions used were l = 10 and 
+the l = f(n) = $\lceil \sqrt{n} \rceil$, and l = f(n) = $\lceil n^{1/3} \rceil$. That means six variations of the block bootstrap method. 
 
-For the simulations using a constant block length of 10, the sample size was gradually 
-lowered by increments of 20 to see when
-the block bootstrap would begin to consistently return low coverage rates. For both AR = 0 and AR = 0.2 
-using a constant l, results for
-sample sizes ranging from 400 to 20 were observed. For AR = 0.4 using a constant l, 
-results for sample sizes ranging from 600
-to 20 were observed. For AR = 0.6, using a constant l, results for sample sizes ranging 
-from 900 to 120 were observed. For the simulations in which the block length was the 
-square root of the time series length, the only sample sizes used were perfect squares so 
-that the blocks would have whole number lengths. For AR = 0.2 using l = $\sqrt{n}$, results 
-for sample sizes ranging from 625 to 36 were observed. For AR = 0.4 using $\sqrt{n}$, results 
-for sample sizes ranging from 900 to 121 were observed. For AR = 0.6 using l = $\sqrt{n}$, 
-results for sample sizes ranging from 1600 to 121 were observed. 
+For each simulated ARIMA process, the block bootstrap method with each of these six variations was applied to the sample. 4000 replications were conducted, meaning that 4000 samples of the same size from a process with the same parameters were simulated. For each sample, a 95\% confidence interval was created, and for each block bootstrap variation, the proportion of all 4000 intervals (created using that variation) that recovered the true mean (0) was recorded as the coverage
+ rate for that specific variation. 95\% confidence intervals for these proportions were also computed.
+ 
+For each AR coefficient, a starting sample size was decided based on expectations of how the bootstrap method would perform. Then, the sample size was gradually lowered by increments of 20 to see when
+the block bootstrap would begin to consistently return low coverage rates. 
+
+For both AR = 0 and AR = 0.2, results for sample sizes ranging from 400 to 20 were observed. For AR = 0.4, results for sample sizes ranging from 600 to 20 were observed. For AR = 0.6, results for sample sizes ranging from 900 to 20 were observed.
+
+ 
 
 \section{Results}
 \label{sec:results}
 
 As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was 
-required for effective block bootstrap estimation. When AR = 0.2, n = 225, and l = $\sqrt{n}$, we are 95\% confident that the coverage rate given an infinite number of replications is within the interval \[0.907, 0.940\] for the non-moving method and \[0.916, 0.932\] for the moving method. When AR = 0.2, n = 225, and l = $\sqrt{n}$, we are 95\% confident that the coverage rate given an infinite number of replications is within the interval \[0.888, 0.925\] for the non-moving method and \[0.900, 0.918\] for the moving method. When AR = 0.2, n = 100, and l = $\sqrt{n}$, we are 95\% confident that the coverage rate given an infinite number of replications is within the interval \[0.883, 0.920\].
+required for effective block bootstrap estimation. The tables below for each corresponding block length function and AR Coefficient display information about the length of the sample of the ARIMA process, the block length used in bootstrap, the method (non-moving or moving), and the proportion of 95\% confidence intervals produced by each of 4000 block bootstrap replications that recover the mean, as well as an interval in which we can be 95\% confident that the true coverage rate given an infinite number of replications is contained. 
+As shown in the plots, as n decreases, the coverage rate decreases. As AR increases, not only is a larger sample size required for effective bootstrap estimation, but the level of noise also increases. The best block length function, as shown in previous literature, is l = n$^{1/3}$, as it yields the most consistently high coverage rates even for samples as small as n = 20. For the larger sample sizes, there does not appear to be a significant difference in results for moving method vs non-moving method. However, block bootstrap with moving method appears to perform better for smaller sample sizes than block bootstrap with non-moving method.
 
-\begin{figure}[tbp]
+\begin{figure}[p]
   \centering
-  \includegraphics[width=\textwidth]{constant_0}
+  \includegraphics[width=\textwidth]{norm}
   \caption{}
-  \label{fig:constant_norm}
+  \label{fig:norm}
 \end{figure}
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{constant_0.2}
-  \caption{}
-  \label{fig:constant_0.2}
-\end{figure}
+%\begin{figure}[p]
+%  \centering
+%  \includegraphics[width=\textwidth]{ar_0.2}
+%  \caption{}
+%  \label{fig:ar_0.2}
+%\end{figure}
+%
+%\begin{figure}[p]
+%  \centering
+%  \includegraphics[width=\textwidth]{ar_0.4}
+%  \caption{}
+%  \label{fig:ar_0.4}
+%\end{figure}
+%
+%\begin{figure}[p]
+%  \centering
+%  \includegraphics[width=\textwidth]{ar_0.6}
+%  \caption{}
+%  \label{fig:ar_0.6}
+%\end{figure}
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{constant_0.4}
-  \caption{}
-  \label{fig:constant_0.4}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{constant_0.6}
-  \caption{}
-  \label{fig:constant_0.6}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{root_0}
-  \caption{}
-  \label{fig:root_norm}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{root_0.2}
-  \caption{}
-  \label{fig:root_0.2}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{root_0.4}
-  \caption{}
-  \label{fig:root_0.4}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{root_0.6}
-  \caption{}
-  \label{fig:root_0.6}
-\end{figure}
-
-\label{sec:results}
 
 
 
@@ -267,10 +228,12 @@ required for effective block bootstrap estimation. When AR = 0.2, n = 225, and l
 \section{Discussion}
 \label{sec:discuss}
 
+This study finds that as the AR coefficient increases, the sample size necessary for good block bootstrap estimation must be larger.
+
 
 
 \bibliographystyle{chicago}
-\bibliography{citations.bib}
+\bibliography{citations.bib}[tp]
 
 
 \end{document}
