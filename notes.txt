@@ -74,5 +74,11 @@
 10/20 Notes
 • Use same data and different methods (l = 10 vs l = sqrt(n))
 
+11/3 Notes
+• Remove sqrt
+• Cut height of plots by half, add captions, facet grid
+• Add 95% Lines
+
+
 
 
