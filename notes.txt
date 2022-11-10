@@ -79,6 +79,9 @@
 • Cut height of plots by half, add captions, facet grid
 • Add 95% Lines
 
-
+11/10 Notes
+• Remove l = 10
+• Try n = 32, 64, 128 ..., until starts to work
+• Estimate mean as well as AR(1) Coefficient
 
 
