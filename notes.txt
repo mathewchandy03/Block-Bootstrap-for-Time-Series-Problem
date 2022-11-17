@@ -85,4 +85,7 @@
 • Try n = 32, 64, 128 ..., until starts to work
 • Estimate mean as well as AR(1) Coefficient
 
+11/17 Notes
+• Clean up code
+
 
