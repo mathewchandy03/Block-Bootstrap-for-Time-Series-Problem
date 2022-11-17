@@ -26,74 +26,26 @@ blkboot <- function(tseries, statistic, R, l) {
   list(stat = stat, nm.stat = nm.stat, mv.stat = mv.stat) # returns list of three values
 }
 
-do1rep <- function(n, theta, sd, l, statistic) {
-  x <- arima.sim(list(ar = theta), n = n, sd = sqrt((sd^2)*(1-theta^2))) 
-  
-  # sd is the standard deviation of the noise -> true_variance(X_t) = sd^2/(1 - theta^2)
-  
-  bt <- blkboot(x, statistic, 1000, l) 
+do1rep <- function(n, theta, sigma,
+                   target,
+                   len, statistic, B = 1000) {
+  x <- arima.sim(list(ar = theta), n = n, sd = sigma * sqrt(1-theta^2))
+  ## sd is the standard deviation of the noise -> true_variance(X_t) = sd^2/(1 - theta^2)
+  bt <- blkboot(x, statistic, B, len) 
 
- # nm_lower_bound with quantile function
+  ## two intervals  
+  nm = quantile(bt$nm.stat, probs = c(0.025, 0.975))
+  mv = quantile(bt$mv.stat, probs = c(0.025, 0.975))
   
-  nm_interval = quantile(bt$nm.stat, probs = c(0.025, 0.975))
-  mv_interval = quantile(bt$mv.stat, probs = c(0.025, 0.975))
+  nm.cov <- nm[1] < target && target < nm[2]
+  mv.cov <- mv[1] < target && target < mv[2]
   
-  nm_contains = FALSE
-  value = 0
-  if (identical(statistic, ar1))
-  {
-    value = theta
-  }
-  if (nm_interval[1] < value && nm_interval[2] > value)
-  {
-    nm_contains = TRUE
-  }
-  mv_contains = FALSE
-  if (mv_interval[1] < value && mv_interval[2] > value)
-  {
-    mv_contains = TRUE
-  }
-  
-  c(bt$stat, sd(bt$nm.stat), nm_interval, nm_contains, sd(bt$mv.stat), mv_interval, mv_contains) 
+  ## c(bt$stat, sd(bt$nm.stat), nm_interval, nm_contains, sd(bt$mv.stat), mv_interval, mv_contains) 
 
-    # returns statistics and standard error's for nm and mv respectively, standard error (sd(bt$mv.stat) is estimated as the sqrt(sample_variance(X_t) / n)
-  
+  ## returns statistics and standard error's for nm and mv respectively, standard error (sd(bt$mv.stat) is estimated as the sqrt(sample_variance(X_t) / n)
+  c(nm.cov, mv.cov)
 }
 
-do1rep2 <- function(n, theta, sd, l, statistic) {
-  x <- rnorm(n = n, sd = sd)
-  
-  # sd is the standard deviation of the noise -> true_variance(X_t) = sd^2/(1 - theta^2)
-  
-  bt <- blkboot(x, statistic, 1000, l) 
-
- # nm_lower_bound with quantile function
-  
-  nm_interval = quantile(bt$nm.stat, probs = c(0.025, 0.975))
-  mv_interval = quantile(bt$mv.stat, probs = c(0.025, 0.975))
-  
-  nm_contains = FALSE
-  value = 0
-  if (identical(statistic, ar1))
-  {
-    value = theta
-  }
-    
-  if (nm_interval[1] < value && nm_interval[2] > value)
-  {
-    nm_contains = TRUE
-  }
-  mv_contains = FALSE
-  if (mv_interval[1] < value && mv_interval[2] > value)
-  {
-    mv_contains = TRUE
-  }
-  
-  c(bt$stat, sd(bt$nm.stat), nm_interval, nm_contains, sd(bt$mv.stat), mv_interval, mv_contains) 
-
-    # returns statistics and standard error's for nm and mv respectively, standard error (sd(bt$mv.stat) is estimated as the sqrt(sample_variance(X_t) / n)
-  
-}
 ```
 
 ```{r more_functions, echo = False}
@@ -262,10 +214,13 @@ set.seed(5)
 
 ```{r}
 #m_norm_1024 <- c(1024, m_norm_1024)
+# Save the simulation results to an external file
 ```
 
 
 ```{r}
+## put the processing of the results in a separate script
+## load the simulation results
 m_norm <- data.frame(rbind(t(m_norm_32[c(1, 6, 17, 16)]), t(m_norm_32[c(1, 10, 19, 18)]), t(m_norm_64[c(1, 6, 17, 16)]), t(m_norm_64[c(1, 10, 19, 18)]), t(m_norm_128[c(1, 6, 17, 16)]), t(m_norm_128[c(1, 10, 19, 18)]), t(m_norm_256[c(1, 6, 17, 16)]), t(m_norm_256[c(1, 10, 19, 18)]), t(m_norm_512[c(1, 6, 17, 16)]), t(m_norm_512[c(1, 10, 19, 18)]), t(m_norm_1024[c(1, 6, 17, 16)]), t(m_norm_1024[c(1, 10, 19, 18)])))
 rownames(m_norm) <- NULL
 colnames(m_norm) <- c("n", 'coverage_rate', 'lb', 'ub')
