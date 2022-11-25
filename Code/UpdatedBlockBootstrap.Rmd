@@ -7,8 +7,8 @@ numeric2 <- function(theta) {
     c(theta)
   }
 }
-numeric2(0)
-numeric2(0.2)
+numeric2(0) # Returns numeric (0) when theta is 0
+numeric2(0.2) # Returns theta when theta is not 0, this ensures that the arima simulation runs without a warning
 ```
 
 
@@ -74,25 +74,6 @@ my_summary <- function(x)
   c(rm, rm[1] - qnorm(.975) * sqrt((rm[1] * (1 - rm[1])) / 4000), rm[1] + qnorm(.975) * sqrt((rm[1] * (1 - rm[1])) / 4000),  rm[2] - qnorm(.975) * sqrt((rm[2] * (1 - rm[2])) / 4000), rm[2] + qnorm(.975) * sqrt((rm[2] * (1 - rm[2])) / 4000))
 }
 
-```
-
-
-```{r}
-asdf <- c(32, my_summary(replicate(200, do1rep(n = 32, theta = 0.2, sigma = 0.1, target = 0, len = ceiling(32**(1/3)), statistic = m1))))
-```
-
-```{r}
-qwer <- c(64, my_summary(replicate(200, do1rep(n = 64, theta = 0.4, sigma = 0.1, target = 0.4, len = ceiling(64**(1/3)), statistic = ar1))))
-```
-
-```{r}
-do1rep(n = 64, theta = 0.4, sigma = 0.1, target = 0.4, len = ceiling(64**(1/3)), statistic = ar1)
-```
-
-```{r}
-zxcv <- data.frame(rbind(asdf, qwer))
-colnames(zxcv) <- c('Sample Length', 'Non-Moving Coverage Rate', 'Moving Coverage Rate', 'Non-Moving Lower Bound', 'Non-Moving Upper Bound', 'Moving Lower Bound', 'Moving Upper Bound')
-zxcv
 ```
 
 ```{r Normal Sample n = 32}
