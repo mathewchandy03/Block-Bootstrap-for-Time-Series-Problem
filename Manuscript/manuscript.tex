@@ -151,7 +151,7 @@ For all simulation studies, the mean can be kept at 0, but the AR(1) Coefficient
 
 12 variations of simulation studies were analyzed based on factors that might affect the results of the block bootstrap method. Simulation studies were conducted for an autoregressive process with AR = 0, an autoregressive process with AR = 0.2, and an autoregressive process with AR = 0.4. For each of these AR(1) coefficient values, separate simulation studies were conducted for the mean and AR(1) coefficient. For each of these variations, the non-moving block bootstrap method as well as the moving block bootstrap method were applied to estimate the respective parameter. 
 
-The goal was to determine what range sample sizes was acceptable for each of these variations of simulation studies.
+The goal was to determine what range of sample sizes was acceptable for each of these variations of simulation studies.
 
 
 
@@ -160,46 +160,38 @@ The goal was to determine what range sample sizes was acceptable for each of the
 \section{Results}
 \label{sec:results}
 
-As the AR Coefficient increases, it was found unsurprisingly that a larger sample size was 
-required for effective block bootstrap estimation. The tables below for each corresponding block length function and AR Coefficient display information about the length of the sample of the ARIMA process, the block length used in bootstrap, the method (non-moving or moving), and the proportion of 95\% confidence intervals produced by each of 4000 block bootstrap replications that recover the mean, as well as an interval in which we can be 95\% confident that the true coverage rate given an infinite number of replications is contained. 
-As shown in the plots, as n decreases, the coverage rate decreases. As AR increases, not only is a larger sample size required for effective bootstrap estimation, but the level of noise also increases. The best block length function, as shown in previous literature \citep{buhlmann1999block}, is l = n$^{1/3}$, as it yields the most consistently high coverage rates even for samples as small as n = 20. l = 10 seems to perform almost as well as l = n$^{1/3}$ for higher sample sizes, but the coverage rates for l = 10 drop down much more for small sample sizes. For the larger sample sizes, there does not appear to be a significant difference in results for moving method vs non-moving method. However, block bootstrap with moving method appears to perform better for smaller sample sizes than block bootstrap with non-moving method.
+As the AR(1) coefficient increases, it was found unsurprisingly that a large sample size was needed for the block bootstrap method to work. When the target for estimation was the mean of the process, moving block bootstrap generally had a similar performance to non-moving block bootstrap. However when the target for estimation was the AR(1) coefficient of the process, moving block bootstrap noticeably recovered the parameter at a greater rate than non-moving block bootstrap. When the target was the mean and theta was more than 0, the coverage rate was generally much higher than that for when the target was the AR(1) coefficient. However when theta was 0, the AR(1) coefficient was recovered at a greater rate than the mean. 
+
+
 
 \begin{figure}[tbp]
-\caption{The figure below demonstrates how block bootstrap performs at estimating the mean of a normal population. As shown in the plots, even for a sample with no time dependency, a very large sample size is needed to even approach a coverage rate of 95\%.  While for large sample sizes (approximately greater than 300), the performance for l = 10 is comparable to the performance for l = n$^{1/3}$, the performance with l = 10 is much worse than that for l = n$^{1/3}$ when using very small sample sizes (approximately less than 100). The moving method seems to have a similar performance to the non-moving method, although it appears to perform slightly better for very low sample sizes regardless of the block length function.}
+\caption{The figure below shows results for block bootstrap estimation when theta is 0. When the target was the mean and the moving method was used, the coverage rate confidence interval included .95 when the sample length was 512, indicating that even for a sample with no temporal dependence, a very large sample length of around 500 is necessary to get an accurate estimation of the mean. Similarly, when the target was the mean and the non-moving method was used, the coverage rate confidence interval included .95 when the sample length was 512, showing that a sample size of around 500 is necessary for good block bootstrap estimation. When the target was the AR(1) coefficient and the moving method was used, the parameter was over-covered - all of the coverage rate confidence interval lower bounds were greater than .95 - for all sample sizes that were observed (32, 64, 128, 256, and 512). This indicates that the variance of the parameter is being overestimated. When the target was the AR(1) coefficient and the non-moving method was used, the parameter was under-covered when the sample length was 32 and slightly over-covered when the sample length was 256. For sample lengths 64, 128, and 512, the non-moving method recovered the parameter well.}
   \centering
-  \includegraphics[width=\textwidth]{norm}
+  \includegraphics[width=\textwidth]{theta_0}
   \caption{}
-  \label{fig:norm}
+  \label{fig:theta_0}
 \end{figure}
 
 \begin{figure}[tbp]
-\caption{The figure below demonstrates how block bootstrap performs at estimating the mean of a AR = 0.2 process. As shown in the plots, even for a sample with relatively low dependency, a very large sample size is needed to even approach a coverage rate of 95\%.  While for large sample sizes (approximately greater than 200), the performance for l = 10 is comparable to the performance for l = n$^{1/3}$, the performance with l = 10 is much worse than that for l = n$^{1/3}$ when using small sample sizes (approximately less than 100). Again, the moving method seems to have a similar performance overall to the non-moving method, but the coverage rates drop off slightly more for non-moving method when using smaller sample sizes.}
+\caption{The figure below shows results for block bootstrap estimation when theta is 0.2. When the target was the mean and the moving method was used, the coverage rate confidence interval included .95 when the sample length was 2048 and 4096, indicating that even for a sample with relatively low temporal dependence, a very large sample of around 2000 is necessary to get an accurate estimation of the mean. Similarly, when the target was the mean and the non-moving method was used, the coverage rate confidence interval included .95 when the sample length was 2048 and 4096, showing that a sample size of around 2000 is necessary for good block bootstrap estimation. When the target was the AR(1) coefficient, for both methods, the parameter was under-covered for sample lengths as large as 4096, although the moving method appeared to perform better for all sample sizes. }
   \centering
-  \includegraphics[width=\textwidth]{ar_0.2}
+  \includegraphics[width=\textwidth]{theta_0.2}
   \caption{}
-  \label{fig:ar_0.2}
+  \label{fig:theta_0.2}
 \end{figure}
 
 \begin{figure}[tbp]
-\caption{The figure below demonstrates how block bootstrap performs at estimating the mean of a AR = 0.4 process. As shown in the plots, even for a sample of size 600, the block bootstrap method fails to adequately capture the mean at a rate of \%.  While for large sample sizes, the performance for l = 10 is comparable to the performance for l = n$^{1/3}$, the performance with l = 10 is much worse than that for l = n$^{1/3}$ when using small sample sizes. Again, the moving method seems to have a similar performance overall to the non-moving method, but the coverage rates drop off slightly more for non-moving method when using smaller sample sizes.}
+\caption{The figure below shows results for block bootstrap estimation when theta is 0.4. When the target was the mean, for both methods, the coverage rate was under-covered for sample sizes as large as 8192. When the target was the AR(1) coefficient, for both methods, the parameter was under-covered for sample lengths as large as 4096, although the moving method appeared to perform better for smaller sample sizes. }
   \centering
-  \includegraphics[width=\textwidth]{ar_0.4}
+  \includegraphics[width=\textwidth]{theta_0.4}
   \caption{}
-  \label{fig:ar_0.4}
-\end{figure}
-
-\begin{figure}[tbp]
-\caption{The figure below demonstrates how block bootstrap performs at estimating the mean of a AR = 0.6 process. As shown in the plots, even for a sample of size 900, the block bootstrap method fails to adequately capture the mean at a rate of 95\%.  While for large sample sizes, the performance for l = 10 is comparable to the performance for l = n$^{1/3}$, the performance with l = 10 is much worse than that for l = n$^{1/3}$ when using small sample sizes. Again, the moving method seems to have a similar performance overall to the non-moving method, but the coverage rates drop off slightly more for non-moving method when using smaller sample sizes, although the difference is less noticeable than for samples with lesser time dependence.}
-  \centering
-  \includegraphics[width=\textwidth]{ar_0.6}
-  \caption{}
-  \label{fig:ar_0.6}
+  \label{fig:theta_0.4}
 \end{figure}
 
 \section{Discussion}
 \label{sec:discuss}
 
-This study finds that as the AR coefficient increases, the sample size necessary for effective block bootstrap estimation must be larger. When implementing the block bootstrap method using a block length function of l = n$^{1/3}$ results in the highest coverage rates overall (indicating a more accurate estimation of a parameter and its variance), but using l = 10 results in similar performance for large sample sizes. It is important to note that a different constant block length will perform differently for different ranges of sample sizes. While the moving-method and non-moving method yield similar coverage rates, the non-moving method performs slightly worse when using very small sample sizes.
+This study finds that as the AR coefficient increases, the sample size necessary for effective block bootstrap estimation must be larger. When implementing the block bootstrap method to estimate the mean of an autoregressive process, the non-moving method and moving method perform about the same. However, when estimating the AR(1) coefficient, the non-moving method performs noticeably worse than the moving method, which still covers the coefficient poorly when theta is greater than 0.
 
 
 

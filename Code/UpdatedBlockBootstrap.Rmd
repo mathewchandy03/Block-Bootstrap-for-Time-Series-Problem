@@ -256,3 +256,24 @@ write.csv(ar_0.2,"../Data/ar_0.2.csv", row.names = FALSE)
 write.csv(m_0.4,"../Data/m_0.4.csv", row.names = FALSE)
 write.csv(ar_0.4,"../Data/ar_0.4.csv", row.names = FALSE)
 ```
+
+```{r}
+tf <- function(df, target, theta) {
+  library(reshape2)
+  library(dplyr)
+  d1 <- melt(df[1:3], id.vars = 'Sample.Length', variable.name = 'Method', value.name = 'Coverage.Rate')
+  levels(d1$Method) <- list(Non.Moving  = "Non.Moving.Coverage.Rate", Moving = "Moving.Coverage.Rate")
+  d2 <- melt(df[c(1, 4, 6)], id.vars = 'Sample.Length', variable.name = 'Method', value.name = 'Lower.Bound')
+  levels(d2$Method) <- list(Non.Moving  = "Non.Moving.Lower.Bound", Moving = "Moving.Lower.Bound")
+  d3 <- melt(df[c(1, 5, 7)], id.vars = 'Sample.Length', variable.name = 'Method', value.name= 'Upper.Bound')
+  levels(d3$Method) <- list(Non.Moving  = "Non.Moving.Upper.Bound", Moving = "Moving.Upper.Bound")
+  z <- merge(x=d1,y=d2)
+  z <- merge(x=z,y=d3)
+  z %>%
+    mutate(Target = target) %>%
+    mutate(Theta = theta)
+}
+df <- rbind(tf(m_0, 'Mean', 0), tf(m_0.2, 'Mean', 0.2), tf(m_0.4, 'Mean', 0.4), tf(ar_0, 'Theta', 0), tf(ar_0.2, 'Theta', 0.2), tf(ar_0.4, 'Theta', 0.4))
+write.csv(df,"../Data/df.csv", row.names = FALSE)
+```
+
