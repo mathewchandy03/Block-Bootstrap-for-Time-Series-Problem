@@ -46,7 +46,7 @@
 \newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
 
 
-\title{Time Series Length at Which Block Bootstrapping is Effective for Estimation of Variance}
+\title{Time Series Length at Which Block Bootstrapping is Effective for Estimation of Parameter and Its Variance}
 
 \author{Mathew Chandy\\
 %   \href{mailto:mathew.chandy@uconn.edu}
@@ -81,40 +81,39 @@ block bootstrap;
 Block bootstrapping is a widely used method in Statistics. The concept for block 
 bootstrapping was developed independently by \citet{hall1985resampling}, \citet{carlstein1986use}, and 
 \citet{kunsch1989jackknife}. \citet{radovanov2014comparison} It has been applied to a variety of 
-different fields such 
+different domains such 
 as econometrics \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}. It can be used for 
-situations in which there is temporal dependence, and the goal is the estimation or testing a hypothesis about a parameter. Assuming that the sample is infinitely 
+situations in which there is temporal dependence within a population, and the goal is the estimation or testing a hypothesis about a parameter. Assuming that the sample is infinitely 
 large, the method will work perfectly. However, for a finite sample size, the method will 
 not work as well as expected. \citet{hesterberg2015teachers} notes that while intervals based on the percentiles from nonparametric bootstrapping are more accurate than t-intervals for larger sample sizes, they are less accurate for smaller sample sizes. In the context of planning an applied 
-statistical procedure, for which a large sample size is not always practical, it may be helpful to know at which sample size the method stops working at an acceptable level. 
+statistical procedure, for which a large sample size is not always practical, it may be helpful to know which sample size is necessary for the method to work at an acceptable level. 
 The goal of this study is to find a threshold or range of sample sizes at which block bootstrap 
-is no longer an effective method for estimating variance of a parameter.
+is an effective method for estimating a parameter and its variance. This is true if 1 - $\alpha$/2 \% (for some predetermined $\alpha$) of confidence intervals created from samples of the same size recover the parameter.
 
 \citet{nevitt2001performance} find that a sample size of 200-1000 is usually sufficient for estimation using the bootstrap method (simple resampling with no blocks involved). However, block bootstrapping is a different situation altogether because the sample is split into blocks.
 
 \citet{goncalves2005bootstrap} found that standard error estimates from block bootstrapping small 
 samples 
-may be significantly more accurate than inference from closed-form asymptotic estimates. That study focused on the estimation of a parameter within the context of linear regression. Still, the block bootstrap percentile confidence intervals under covered even for n = 1024. This study aims to find how small the sample size can be for time series (which has a dependence factor which can be compared to that of a linear regression) in order for the coverage rate to be close to the confidence level.
+may be significantly more accurate than inference from closed-form asymptotic estimates. That study focused on the estimation of a coefficient parameter within the context of linear regression. Still, the block bootstrap percentile confidence intervals under-covered the parameter even for n = 1024. This study aims to find how small the sample size can be for time series (which has a time dependence factor which can be compared to a coefficient of a linear regression) in order for the coverage rate to be close to the confidence level.
 
 For this study, many block bootstrap simulations were conducted with RStudio. At the base
 level, we are block-bootstrapping an auto-regressive process with true mean 0, and some AR(1) coefficient.
 Bootstrapping is the term for creating new samples of the same size by re-sampling from
-the original sample with replacement. Estimates of two parameters (the mean and the AR(1) coefficient) from many bootstrapped samples are used to create a
-distribution to estimate the parameter and its variance. This works well for samples
+the original sample with replacement. Basic bootstrapping works well for samples
 that are do not have a dependence factor. However, for a time series such as an auto-regressive process,
 a different procedure is required to account for the time dependence. In such a case,
 the series is split into blocks that can overlap (moving block bootstrap) or not(non-moving block bootstrap). These blocks are then re-sampled to create a new
-bootstrapped time series sample. 
+bootstrapped time series sample. Point estimates of a parameter from many block bootstrapped samples are used to create a distribution to create an interval estimation of the parameter.
 
-In our experiment, we find the mean and auto-correlation function estimatesof a 1000 block-bootstrapped time series, 
-and create 95\% confidence intervals of these paramters We replicate this 1000 times, 
-and record the proportion of confidence intervals that recover the true known parameter 
-(coverage rate). We are effectively observing how successful the bootstrapping process
-is at estimating a parameter and its variance. The key variable being observed was n, 
+In this experiment, the mean and auto-correlation function (with a maximum lag of 1) of a 1000 block-bootstrapped time series samples are computed, 
+and a 95\% confidence intervals of these parameters is created. This is replicated 4000 times, 
+and the proportion of confidence intervals that recover the true known parameter 
+(coverage rate) is recorded. The goal of this is to observe how successful the bootstrapping process
+is at estimating a parameter and its variance. The key variable being observed was, 
 the length of the time series, or the size of the sample. It is known that as n
 increases, block bootstrapping will become a less accurate method for estimation
-(the coverage rates will decrease). The question is at what range of n values does this
-start to become a problem and what range of n values is necessary to reach a coverage rate of 95\%.
+(the coverage rates will decrease). The question is at what range of sample lengths does this
+start to become a problem and what range of sample lengths is necessary to reach a coverage rate of 95\%.
 
 In this experiment, there are certain factors that are expected to affect the coverage
 rates. As the Auto-Regressive (AR) coefficient (the time dependence) of the time series 
@@ -129,12 +128,12 @@ block length according to asymptotic theory. \citep{buhlmann1999block} Simulatio
 
 In order to solve the question of what n is necessary for effective block bootstrapping,
 while still accounting for all these factors, the simulations were repeated for
-various combinations of AR coefficients, block length functions, and non-moving vs moving method. For each of these combinations, coverage rates were recorded for a wide range of sample sizes.
+variations of the AR coefficient, target parameter, and non-moving vs moving method. For each of these combinations, block bootstrap results were recorded for a wide range of sample sizes.
 
 \section{Review of Block Bootstrap}
 \label{sec:blkbootreview}
 
-Block bootstrapping is a method that can be applied to a time series (or any sample of data for that matter) to estimate a parameter and its variance. Suppose that a sample of size n of a time series is given. In regular bootstrap procedure, the new sample of the same size as the original would just be created by resampling observations with replacement. In the case of a time series, in order to account for the temporal dependence, the time series can be split into blocks, typically of the same size. The block should be of size l large enough to include time dependence, yet small enough to include some variance. As n increases, an ideal l should also increase, but the ratio of l to n should decrease. To achieve this, l is often assigned a value as a function of n. A common function that is considered the best by much previous literature is l = n$^{1/3}$. However not all n sizes are perfect squares, and l must be a whole number, so the ceiling of this function must be used. A bootstrapped sample is created by taking a sample of n / l blocks with replacement to create a new series of size n. The designer of the study can choose whether the blocks overlap or not. If the blocks can never overlap, it is called a non-moving block bootstrap. In this case, the original sample is split evenly into n / l blocks, and the same number of blocks is sampled without replacement to create a bootstrapped sample. If the blocks do overlap, it is called a moving block bootstrap. n / l samples are taken randomly from the original sample, but they do not have to be from a set of evenly spaced blocks. An estimate of the parameter is computed from the bootstrapped sample. This procedure can be repeated many times (typically 1000) to create a sampling distribution of the estimator. Using this distribution of estimates, a 1 - $\alpha$/2 \% confidence interval for the parameter can be created using the $\alpha$/2 and 1 - $\alpha$/2 percentiles.
+Block bootstrapping is a method that can be applied to a time series (or any sample of data for that matter) to estimate a parameter and its variance. Suppose that a sample of size n of a time series is given. In regular bootstrap procedure, the new sample of the same size as the original would just be created by resampling observations with replacement. In the case of a time series, in order to account for the temporal dependence, the time series can be split into blocks, typically of the same size. The block should be of size l large enough to include time dependence, yet small enough to include some variance. As n increases, an ideal l should also increase, but the ratio of l to n should decrease. To achieve this, l is often assigned a value as a function of n. A common function that is considered the best by much previous literature is l = n$^{1/3}$. However not all n sizes are perfect squares, and l must be a whole number, so the ceiling of this function must be used. A bootstrapped sample is created by taking a sample of n / l blocks with replacement to create a new series of size n. The designer of the study can choose whether the blocks overlap or not. If the blocks can never overlap, it is called a non-moving block bootstrap. In this case, the original sample is split evenly into n / l blocks, and the same number of blocks is sampled without replacement to create a bootstrapped sample. If the blocks do overlap, it is called a moving block bootstrap. n / l samples are taken randomly from the original sample, but they do not have to be from a set of evenly spaced blocks. An estimate of the parameter is computed from the bootstrapped sample. This procedure can be repeated many times (typically 1000) to create a sampling distribution of the estimator. Using this distribution of estimates, a 1 - $\alpha$/2 \% confidence interval for the parameter can be created using the $\alpha$/2 and 1 - $\alpha$/2 percentiles of sample estimates.
 
 \section{Simulation Study Design}
 \label{sec:simdesign}
@@ -144,14 +143,14 @@ The central objective of the study was to assess what sample size is necessary f
 \[ \sigma_{x}^{2}=\sigma_{\eta}^{2}/\left( 1-\phi^2 \right)\]
 \[\sigma_{\eta}=\sqrt{\sigma_{x}^{2}*\left( 1-\phi^2 \right)}\]
 
-For all simulation studies, the mean can be kept at 0, but the AR(1) Coefficient is the main factor that makes block bootstrap less effective, so its impact on the method's performance should be analyzed. For a certain variation of the ARIMA process, a block bootstrap 95\% confidence interval for a sample of length 32 is replicated 4000 times. For each individual confidence interval, it can be recorded whether or not the interval includes the true parameter. The coverage rate, or the proportion of intervals that include the true parameter, can then be recorded. If the parameter and its variance are being properly estimated by the block bootstrap, the coverage rate should reflect this by being close to the confidence level of 95\%. If this is not the case, the method is not working as well as it should. The width of the confidence interval for each replication is dependent on the variance of the parameter of the time series. If the interval is on average not wide enough to capture the parameter at the expected rate of 95\%, it indicates that the variance of the parameter (which will be estimated from the standard error of the parameter estimates from the bootstrapped samples) will be underestimated. If the interval is too wide and captures the parameter at a rate above 95\%, it indicates that the variance of the parameter will be overestimated. Since the coverage rate is a proportion based on many replication of independent Bernoulli outcomes, a 95\% confidence interval of the coverage rate at that sample size can also be created. We can be 95\% confident that the true expected coverage rate is included in this interval, so if .95 is included in the interval, this indicates that the block bootstrap method is working well. Once the simulation is done for this sample size, the process can be run again with a sample twice as big. This can be continued until the method is determined to be working acceptably (.95 is included within the confidence interval of the coverage rate).
+For all simulation studies, the mean can be kept at 0, but the AR(1) Coefficient is the main factor that makes block bootstrap less effective, so its impact on the method's performance should be analyzed. For a certain variation of the ARIMA process, a block bootstrap 95\% confidence interval for a sample of length 32 is replicated 4000 times (each replication of the method is applied to a newly generated ARIMA simulation). For each individual confidence interval, it can be recorded whether or not the interval includes the true parameter. The coverage rate, or the proportion of intervals that include the true parameter, can then be recorded. If the parameter and its variance are being properly estimated by the block bootstrap, the coverage rate should reflect this by being close to the confidence level of 95\%. If this is not the case, the method is not working as well as it should. The width of the confidence interval for each replication is dependent on the variance of the parameter of the time series. If the interval is on average not wide enough to capture the parameter at the expected rate of 95\%, it indicates that the variance of the parameter (which will be estimated from the standard error of the parameter estimates from the bootstrapped samples) will be underestimated. If the interval is too wide and captures the parameter at a rate above 95\%, it indicates that the variance of the parameter will be overestimated. Since the coverage rate is a proportion based on many replication of independent Bernoulli outcomes, a 95\% confidence interval of the coverage rate at that sample size can also be created. We can be 95\% confident that the true expected coverage rate is included in this interval, so if .95 is included in the interval, this indicates that the block bootstrap method is working well. Once the simulation is done for this sample size, the process can be run again with a sample twice as big. This can be continued until the method is determined to be working acceptably (.95 is included within the confidence interval of the coverage rate).
 
 \section{Methods}
 \label{sec:methods}
 
 12 variations of simulation studies were analyzed based on factors that might affect the results of the block bootstrap method. Simulation studies were conducted for an autoregressive process with AR = 0, an autoregressive process with AR = 0.2, and an autoregressive process with AR = 0.4. For each of these AR(1) coefficient values, separate simulation studies were conducted for the mean and AR(1) coefficient. For each of these variations, the non-moving block bootstrap method as well as the moving block bootstrap method were applied to estimate the respective parameter. 
 
-The goal was to determine what range of sample sizes was acceptable for each of these variations of simulation studies.
+The goal was to determine what range of sample sizes was acceptable for each of these variations of simulation studies. For theta = 0, results for five sample sizes (32, 64, 128, 256, 512) were observed. For theta = 0.2, results for eight sample sizes (32,  64, 128, 256, 512, 1024, 2048, 4096) were observed. For theta = 0.4, results for nine sample sizes (32, 64, 128, 256, 512, 1024, 2048, 4096, 8192) were observed.
 
 
 
