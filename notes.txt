@@ -88,4 +88,7 @@
 11/17 Notes
 • Clean up code
 
-
+12/1 Notes
+• Clean up code
+• Make functions work for vector
+• Investigate sigma
