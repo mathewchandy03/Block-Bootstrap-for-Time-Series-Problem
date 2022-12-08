@@ -1,150 +1,26 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ```{r}
-(m_0 <- read.csv('../Data/m_0.csv'))
+df <- read.csv('../Data/df.csv')
 ```
 ```{r}
-(m_0.2 <- read.csv('../Data/m_0.2.csv'))
+(df <- read.csv('../Data/summary.df.csv'))
 ```
-```{r}
-(m_0.4 <- read.csv('../Data/m_0.4.csv'))
-```
-```{r}
-(ar_0 <- read.csv('../Data/ar_0.csv'))
-```
-```{r}
-(ar_0.2 <- read.csv('../Data/ar_0.2.csv'))
-```
-```{r}
-(ar_0.4 <- read.csv('../Data/ar_0.4.csv'))
-```
+
 ```{r}
 library(ggplot2)
-library(gridExtra)
-m_0_nm <- ggplot(m_0, aes(x = Sample.Length, y = Non.Moving.Coverage.Rate)) +
+ggplot(df[df$theta == 0, ], aes(x = n, y = cov, color = method)) +
   geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Non.Moving.Lower.Bound, ymax=Non.Moving.Upper.Bound), colour="black", width=0.1) +
+  geom_errorbar(aes(ymin=lower, ymax=upper), colour="black", width=0.1) +
   geom_line() +
   geom_point(size = 0.5) +
-  labs(title = 'Theta = 0, Non-Moving Method for Mean', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") + 
-  scale_x_continuous(trans='log2')
-m_0_nm
-```
-```{r}
-m_0_m <- ggplot(m_0, aes(x = Sample.Length, y = Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Moving.Lower.Bound, ymax=Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0, Moving Method for Mean', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") + 
-  scale_x_continuous(trans='log2')
-grid.arrange(m_0_nm, m_0_m, ncol=2)
-```
-```{r}
-ggplot(m_0.2, aes(x = Sample.Length, y = Non.Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Non.Moving.Lower.Bound, ymax=Non.Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0.2, Non-Moving Method for Mean', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(m_0.2, aes(x = Sample.Length, y = Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Moving.Lower.Bound, ymax=Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0.2, Moving Method for Mean', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(m_0.4, aes(x = Sample.Length, y = Non.Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Non.Moving.Lower.Bound, ymax=Non.Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0.4, Non-Moving Method for Mean', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(ar_0, aes(x = Sample.Length, y = Non.Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Non.Moving.Lower.Bound, ymax=Non.Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0, Non-Moving Method for AR(1) Coefficient', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(ar_0, aes(x = Sample.Length, y = Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Moving.Lower.Bound, ymax=Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0, Moving Method for AR(1) Coefficient', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(ar_0.2, aes(x = Sample.Length, y = Non.Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Non.Moving.Lower.Bound, ymax=Non.Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0.2, Non-Moving Method for AR(1) Coefficient', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(ar_0.2, aes(x = Sample.Length, y = Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Moving.Lower.Bound, ymax=Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0.2, Moving Method for AR(1) Coefficient', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(ar_0.4, aes(x = Sample.Length, y = Non.Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Non.Moving.Lower.Bound, ymax=Non.Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0.4, Non-Moving Method for AR(1) Coefficient', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-ggplot(ar_0.4, aes(x = Sample.Length, y = Moving.Coverage.Rate)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Moving.Lower.Bound, ymax=Moving.Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  labs(title = 'Theta = 0.4, Moving Method for AR(1) Coefficient', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate') +
-  theme(legend.position="none") +
-  scale_x_continuous(trans='log2')
-```
-```{r}
-(df <- read.csv('../Data/df.csv'))
-```
-```{r}
-library(ggplot2)
-ggplot(df[df$Theta == 0, ], aes(x = Sample.Length, y = Coverage.Rate, color = Method)) +
-  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Lower.Bound, ymax=Upper.Bound), colour="black", width=0.1) +
-  geom_line() +
-  geom_point(size = 0.5) +
-  facet_grid(Method ~ Target) +
+  facet_grid(method ~ target) +
   labs(title = 'Theta = 0', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
   theme(legend.position="none") +
   scale_x_continuous(trans='log2')
-ggsave('../Manuscript/theta_0.pdf', height = 5)
 ```
 ```{r}
 library(ggplot2)
@@ -161,14 +37,26 @@ ggsave('../Manuscript/theta_0.2.pdf', height = 5)
 ```
 ```{r}
 library(ggplot2)
-ggplot(df[df$Theta == 0.4, ], aes(x = Sample.Length, y = Coverage.Rate, color = Method)) +
+ggplot(df[df$theta == 0.2, ], aes(x = n, y = cov, color = method)) +
   geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
-  geom_errorbar(aes(ymin=Lower.Bound, ymax=Upper.Bound), colour="black", width=0.1) +
+  geom_errorbar(aes(ymin=lower, ymax=upper), colour="black", width=0.1) +
   geom_line() +
   geom_point(size = 0.5) +
-  facet_grid(Method ~ Target) +
+  facet_grid(method ~ target) +
+  labs(title = 'Theta = 0.2', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
+  theme(legend.position="none") +
+  scale_x_continuous(trans='log2')
+```
+
+```{r}
+library(ggplot2)
+ggplot(df[df$theta == 0.4, ], aes(x = n, y = cov, color = method)) +
+  geom_hline(yintercept = .95, linetype = 'dashed', color = 'orange') + 
+  geom_errorbar(aes(ymin=lower, ymax=upper), colour="black", width=0.1) +
+  geom_line() +
+  geom_point(size = 0.5) +
+  facet_grid(method ~ target) +
   labs(title = 'Theta = 0.4', x = 'Time Series Length', y = 'Confidence Interval Mean Recovery Rate', color = 'Method') +
   theme(legend.position="none") +
   scale_x_continuous(trans='log2')
-ggsave('../Manuscript/theta_0.4.pdf', height = 5)
 ```

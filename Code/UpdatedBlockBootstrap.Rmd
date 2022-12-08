@@ -11,7 +11,6 @@ numeric2(0) # Returns numeric (0) when theta is 0
 numeric2(0.2) # Returns theta when theta is not 0, this ensures that the arima simulation runs without a warning
 ```
 
-
 ```{r functions, echo = FALSE}
 nmblk <- function(n, l) {
   b <- n / l # assuming that is an integer
@@ -47,17 +46,21 @@ do1rep <- function(n, theta, sigma,
   ## sd is the standard deviation of the noise -> true_variance(X_t) = sd^2/(1 - theta^2)
   bt <- blkboot(x, statistic, B, len) 
 
-  ## two intervals  
-  nm = quantile(bt$nm.stat, probs = c(0.025, 0.975))
-  mv = quantile(bt$mv.stat, probs = c(0.025, 0.975))
-  
-  nm.cov <- nm[1] < target && target < nm[2]
-  mv.cov <- mv[1] < target && target < mv[2]
+  ## two intervals for each statistic
+  ret <- c()
+  num <- dim(bt$nm.stat)[1]
+  for (s in 1:num) {
+    nm = quantile(bt$nm.stat[s,], probs = c(0.025, 0.975))
+    ret <- append(ret, nm[1] < target[s] && target[s] < nm[2])
+    mv = quantile(bt$mv.stat[s,], probs = c(0.025, 0.975))
+    ret <- append(ret, mv[1] < target[s] && target[s] < mv[2])
+  }
   
   ## c(bt$stat, sd(bt$nm.stat), nm_interval, nm_contains, sd(bt$mv.stat), mv_interval, mv_contains) 
 
   ## returns statistics and standard error's for nm and mv respectively, standard error (sd(bt$mv.stat) is estimated as the sqrt(sample_variance(X_t) / n)
-  c(nm.cov, mv.cov)
+  #c(nm.cov, mv.cov)
+  c(ret)
 }
 
 ```
@@ -65,207 +68,463 @@ do1rep <- function(n, theta, sigma,
 ```{r more_functions, echo = False}
 options(max.print = 1000000)
 #ar1 <- function(x) cor(x[-1], x[-length(x)])
-ar1 <- function(x) acf(x, plot = FALSE, lag.max = 1)$acf[2]
+ar1 <- function(x) c(acf(x, plot = FALSE, lag.max = 1)$acf)[2]
 m1 <- function(x) mean(x)
+s1 <- function(x) c(mean(x), acf(x, plot = FALSE, lag.max = 1)$acf[2], var(x))
 
-my_summary <- function(x)
+my_summary <- function(x, alpha = .05)
 {
+  n = dim(x)[2]
+  ret <- c()
   rm = rowMeans(x)
-  c(rm, rm[1] - qnorm(.975) * sqrt((rm[1] * (1 - rm[1])) / 4000), rm[1] + qnorm(.975) * sqrt((rm[1] * (1 - rm[1])) / 4000),  rm[2] - qnorm(.975) * sqrt((rm[2] * (1 - rm[2])) / 4000), rm[2] + qnorm(.975) * sqrt((rm[2] * (1 - rm[2])) / 4000))
+  for (s in rm) {
+    ret = append(ret, c(s, s - qnorm(1 - alpha/2) * sqrt((s * (1 - s)) / n), s + qnorm(1 - alpha/2) * sqrt((s * (1 - s)) / n)))
+  }
+  c(ret)
 }
 
 ```
 
-```{r Normal Sample n = 32}
+```{r Theta = 0, Sigma = 0.1, n = 32}
+my.summary <- data.frame(matrix(ncol = 21, nrow = 0))
+colnames(my.summary) <- c('theta', 'sigma', 'n', 'nm.cov.mu', 'nm.lower.mu', 'nm.upper.mu', 'mv.cov.mu', 'mv.lower.mu', 'mv.upper.mu', 'nm.cov.theta', 'nm.lower.theta', 'nm.upper.theta', 'mv.cov.theta', 'mv.lower.theta', 'mv.upper.theta', 'nm.cov.sigsq', 'nm.lower.sigsq', 'nm.upper.sigsq', 'mv.cov.sigsq', 'mv.lower.sigsq', 'mv.upper.sigsq')
+nrep <- 4000
+statistic <- s1
+mu <- 0
+theta <- 0
+sigma <- 0.1
 set.seed(1)
-(m_norm_32 = c(32, my_summary(replicate(4000, do1rep(32, 0, 0.1, 0, ceiling(32**(1/3)), m1)))))
+n <- 32
+d_0_0.1_32 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.1_32)))
+```
+
+```{r Theta = 0, Sigma = 0.1, n = 64}
+set.seed(5)
+n <- 64
+d_0_0.1_64 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.1_64)))
+```
+
+```{r Theta = 0, Sigma = 0.1, n = 128}
+set.seed(25)
+n <- 128
+d_0_0.1_128 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.1_128)))
+```
+
+```{r Theta = 0, Sigma = 0.1, n = 256}
+set.seed(125)
+n <- 256
+d_0_0.1_256 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.1_256)))
+```
+
+```{r Theta = 0, Sigma = 0.1, n = 512}
+set.seed(625)
+n <- 512
+d_0_0.1_512 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.1_512)))
+```
+
+```{r Theta = 0, Sigma = 0.1, n = 1024}
+set.seed(3125)
+n <- 1024
+d_0_0.1_1024 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.1_1024)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 32}
+theta <- 0.2
+set.seed(3)
+n <- 32
+d_0.2_0.1_32 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_32)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 64}
+set.seed(15)
+n <- 64
+d_0.2_0.1_64 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_64)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 128}
+set.seed(75)
+n <- 128
+d_0.2_0.1_128 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_128)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 256}
+set.seed(375)
+n <- 256
+d_0.2_0.1_256 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_256)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 512}
+set.seed(1875)
+n <- 512
+d_0.2_0.1_512 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_512)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 1024}
+set.seed(9375)
+n <- 1024
+d_0.2_0.1_1024 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_1024)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 2048}
+set.seed(46875)
+n <- 2048
+d_0.2_0.1_2048 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_2048)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 4096}
+set.seed(234375)
+n <- 4096
+d_0.2_0.1_4096 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_4096)))
+```
+
+```{r Theta = 0.2, Sigma = 0.1, n = 8192}
+set.seed(1171875)
+n <- 8192
+d_0.2_0.1_8192 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.1_8192)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 32}
+theta <- 0.4
+set.seed(5)
+n <- 32
+d_0.4_0.1_32 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_32)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 64}
+set.seed(25)
+n <- 64
+d_0.4_0.1_64 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_64)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 128}
+set.seed(125)
+n <- 128
+d_0.4_0.1_128 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_128)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 256}
+set.seed(625)
+n <- 256
+d_0.4_0.1_256 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_256)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 512}
+set.seed(3125)
+n <- 512
+d_0.4_0.1_512 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_512)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 1024}
+set.seed(15625)
+n <- 1024
+d_0.4_0.1_1024 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_1024)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 2048}
+set.seed(78125)
+n <- 2048
+d_0.4_0.1_2048 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_2048)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 4096}
+set.seed(390625)
+n <- 4096
+d_0.4_0.1_4096 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_4096)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 8192}
+set.seed(1953125)
+n <- 8192
+d_0.4_0.1_8192 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_8192)))
+```
+
+```{r Theta = 0.4, Sigma = 0.1, n = 16384}
+set.seed(9765625)
+n <- 16384
+d_0.4_0.1_16384 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.1_16384)))
+```
+
+```{r Theta = 0, Sigma = 0.5, n = 32}
+theta <- 0
+sigma <- 0.5
 set.seed(1)
-(ar_norm_32 = c(32, my_summary(replicate(4000, do1rep(32, 0, 0.1, 0, ceiling(32**(1/3)), ar1)))))
+n <- 32
+d_0_0.5_32 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.5_32)))
 ```
 
-```{r Normal Sample n = 64}
+```{r Theta = 0, Sigma = 0.5, n = 64}
 set.seed(5)
-(m_norm_64 = c(64, my_summary(replicate(4000, do1rep(64, 0, 0.1, 0, ceiling(64**(1/3)), m1)))))
+n <- 64
+d_0_0.5_64 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.5_64)))
+```
+
+```{r Theta = 0, Sigma = 0.5, n = 128}
+set.seed(25)
+n <- 128
+d_0_0.5_128 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.5_128)))
+```
+
+```{r Theta = 0, Sigma = 0.5, n = 256}
+set.seed(125)
+n <- 256
+d_0_0.5_256 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.5_256)))
+```
+
+```{r Theta = 0, Sigma = 0.5, n = 512}
+set.seed(625)
+n <- 512
+d_0_0.5_512 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.5_512)))
+```
+
+```{r Theta = 0, Sigma = 0.5, n = 1024}
+set.seed(3125)
+n <- 1024
+d_0_0.5_1024 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0_0.5_1024)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 32}
+theta <- 0.2
+set.seed(3)
+n <- 32
+d_0.2_0.5_32 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_32)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 64}
+set.seed(15)
+n <- 64
+d_0.2_0.5_64 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_64)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 128}
+set.seed(75)
+n <- 128
+d_0.2_0.5_128 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_128)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 256}
+set.seed(375)
+n <- 256
+d_0.2_0.5_256 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_256)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 512}
+set.seed(1875)
+n <- 512
+d_0.2_0.5_512 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_512)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 1024}
+set.seed(9375)
+n <- 1024
+d_0.2_0.5_1024 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_1024)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 2048}
+set.seed(46875)
+n <- 2048
+d_0.2_0.5_2048 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_2048)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 4096}
+set.seed(234375)
+n <- 4096
+d_0.2_0.5_4096 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_4096)))
+```
+
+```{r Theta = 0.2, Sigma = 0.5, n = 8192}
+set.seed(1171875)
+n <- 8192
+d_0.2_0.5_8192 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.2_0.5_8192)))
+```
+
+```{r Theta = 0.4, Sigma = 0.5, n = 32}
+theta <- 0.4
 set.seed(5)
-(ar_norm_64 = c(64, my_summary(replicate(4000, do1rep(64, 0, 0.1, 0, ceiling(64**(1/3)), ar1)))))
+n <- 32
+d_0.4_0.5_32 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_32)))
 ```
 
-```{r Normal Sample n = 128}
-set.seed(10)
-(m_norm_128 = c(128, my_summary(replicate(4000, do1rep(128, 0, 0.1, 0, ceiling(128**(1/3)), m1)))))
-set.seed(10)
-(ar_norm_128 = c(128, my_summary(replicate(4000, do1rep(128, 0, 0.1, 0, ceiling(128**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 64}
+set.seed(25)
+n <- 64
+d_0.4_0.5_64 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_64)))
 ```
 
-```{r Normal Sample n = 256}
-set.seed(50)
-(m_norm_256 = c(256, my_summary(replicate(4000, do1rep(256, 0, 0.1, 0, ceiling(256**(1/3)), m1)))))
-set.seed(50)
-(ar_norm_256 = c(256, my_summary(replicate(4000, do1rep(256, 0, 0.1, 0, ceiling(256**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 128}
+set.seed(125)
+n <- 128
+d_0.4_0.5_128 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_128)))
 ```
 
-```{r Normal Sample n = 512}
-set.seed(100)
-(m_norm_512 = c(512, my_summary(replicate(4000, do1rep(512, 0, 0.1, 0, ceiling(512**(1/3)), m1)))))
-set.seed(100)
-(ar_norm_512 = c(512, my_summary(replicate(4000, do1rep(512, 0, 0.1, 0, ceiling(512**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 256}
+set.seed(625)
+n <- 256
+d_0.4_0.5_256 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_256)))
 ```
 
-```{r AR = 0.2 Sample n = 32}
-set.seed(1)
-(m_0.2_32 = c(32, my_summary(replicate(4000, do1rep(32, 0.2, 0.1, 0, ceiling(32**(1/3)), m1)))))
-set.seed(1)
-(ar_0.2_32 = c(32, my_summary(replicate(4000, do1rep(32, 0.2, 0.1, 0.2, ceiling(32**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 512}
+set.seed(3125)
+n <- 512
+d_0.4_0.5_512 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_512)))
 ```
 
-```{r AR = 0.2 Sample n = 64}
-set.seed(5)
-(m_0.2_64 = c(64, my_summary(replicate(4000, do1rep(64, 0.2, 0.1, 0, ceiling(64**(1/3)), m1)))))
-set.seed(5)
-(ar_0.2_64 = c(64, my_summary(replicate(4000, do1rep(64, 0.2, 0.1, 0.2, ceiling(64**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 1024}
+set.seed(15625)
+n <- 1024
+d_0.4_0.5_1024 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_1024)))
 ```
 
-```{r AR = 0.2 Sample n = 128}
-set.seed(10)
-(m_0.2_128 = c(128, my_summary(replicate(4000, do1rep(128, 0.2, 0.1, 0, ceiling(128**(1/3)), m1)))))
-set.seed(10)
-(ar_0.2_128 = c(128, my_summary(replicate(4000, do1rep(128, 0.2, 0.1, 0.2, ceiling(128**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 2048}
+set.seed(78125)
+n <- 2048
+d_0.4_0.5_2048 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_2048)))
 ```
 
-```{r AR = 0.2 Sample n = 256}
-set.seed(50)
-(m_0.2_256 = c(256, my_summary(replicate(4000, do1rep(256, 0.2, 0.1, 0, ceiling(256**(1/3)), m1)))))
-set.seed(50)
-(ar_0.2_256 = c(256, my_summary(replicate(4000, do1rep(256, 0.2, 0.1, 0.2, ceiling(256**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 4096}
+set.seed(390625)
+n <- 4096
+d_0.4_0.5_4096 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_4096)))
 ```
 
-```{r AR = 0.2 Sample n = 512}
-set.seed(100)
-(m_0.2_512 = c(512, my_summary(replicate(4000, do1rep(512, 0.2, 0.1, 0, ceiling(512**(1/3)), m1)))))
-set.seed(100)
-(ar_0.2_512 = c(512, my_summary(replicate(4000, do1rep(512, 0.2, 0.1, 0.2, ceiling(512**(1/3)), ar1)))))
-```
-
-```{r AR = 0.2 Sample n = 1024}
-set.seed(500)
-(m_0.2_1024 = c(1024, my_summary(replicate(4000, do1rep(1024, 0.2, 0.1, 0, ceiling(1024**(1/3)), m1)))))
-set.seed(500)
-(ar_0.2_1024 = c(1024, my_summary(replicate(4000, do1rep(1024, 0.2, 0.1, 0.2, ceiling(1024**(1/3)), ar1)))))
-```
-
-```{r AR = 0.2 Sample n = 2048}
-set.seed(1000)
-(m_0.2_2048 = c(2048, my_summary(replicate(4000, do1rep(2048, 0.2, 0.1, 0, ceiling(2048**(1/3)), m1)))))
-set.seed(1000)
-(ar_0.2_2048 = c(2048, my_summary(replicate(4000, do1rep(2048, 0.2, 0.1, 0.2, ceiling(2048**(1/3)), ar1)))))
-```
-
-```{r AR = 0.2 Sample n = 4096}
-set.seed(5000)
-(m_0.2_4096 = c(4096, my_summary(replicate(4000, do1rep(4096, 0.2, 0.1, 0, ceiling(4096**(1/3)), m1)))))
-set.seed(5000)
-(ar_0.2_4096 = c(4096, my_summary(replicate(4000, do1rep(4096, 0.2, 0.1, 0.2, ceiling(4096**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 32}
-set.seed(1)
-(m_0.4_32 = c(32, my_summary(replicate(4000, do1rep(32, 0.4, 0.1, 0, ceiling(32**(1/3)), m1)))))
-set.seed(1)
-(ar_0.4_32 = c(32, my_summary(replicate(4000, do1rep(32, 0.4, 0.1, 0.4, ceiling(32**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 64}
-set.seed(5)
-(m_0.4_64 = c(64, my_summary(replicate(4000, do1rep(64, 0.4, 0.1, 0, ceiling(64**(1/3)), m1)))))
-set.seed(5)
-(ar_0.4_64 = c(64, my_summary(replicate(4000, do1rep(64, 0.4, 0.1, 0.4, ceiling(64**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 128}
-set.seed(10)
-(m_0.4_128 = c(128, my_summary(replicate(4000, do1rep(128, 0.4, 0.1, 0, ceiling(128**(1/3)), m1)))))
-set.seed(10)
-(ar_0.4_128 = c(128, my_summary(replicate(4000, do1rep(128, 0.4, 0.1, 0.4, ceiling(128**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 256}
-set.seed(50)
-(m_0.4_256 = c(256, my_summary(replicate(4000, do1rep(256, 0.4, 0.1, 0, ceiling(256**(1/3)), m1)))))
-set.seed(50)
-(ar_0.4_256 = c(256, my_summary(replicate(4000, do1rep(256, 0.4, 0.1, 0.4, ceiling(256**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 512}
-set.seed(100)
-(m_0.4_512 = c(512, my_summary(replicate(4000, do1rep(512, 0.4, 0.1, 0, ceiling(512**(1/3)), m1)))))
-set.seed(100)
-(ar_0.4_512 = c(512, my_summary(replicate(4000, do1rep(512, 0.4, 0.1, 0.4, ceiling(512**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 1024}
-set.seed(500)
-(m_0.4_1024 = c(1024, my_summary(replicate(4000, do1rep(1024, 0.4, 0.1, 0, ceiling(1024**(1/3)), m1)))))
-set.seed(500)
-(ar_0.4_1024 = c(1024, my_summary(replicate(4000, do1rep(1024, 0.4, 0.1, 0.4, ceiling(1024**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 2048}
-set.seed(1000)
-(m_0.4_2048 = c(2048, my_summary(replicate(4000, do1rep(2048, 0.4, 0.1, 0, ceiling(2048**(1/3)), m1)))))
-set.seed(1000)
-(ar_0.4_2048 = c(2048, my_summary(replicate(4000, do1rep(2048, 0.4, 0.1, 0.4, ceiling(2048**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 4096}
-set.seed(5000)
-(m_0.4_4096 = c(4096, my_summary(replicate(4000, do1rep(4096, 0.4, 0.1, 0, ceiling(4096**(1/3)), m1)))))
-set.seed(5000)
-(ar_0.4_4096 = c(4096, my_summary(replicate(4000, do1rep(4096, 0.4, 0.1, 0.4, ceiling(4096**(1/3)), ar1)))))
-```
-
-```{r AR = 0.4 Sample n = 8192}
-set.seed(10000)
-(m_0.4_8192 = c(8192, my_summary(replicate(4000, do1rep(8192, 0.4, 0.1, 0, ceiling(8192**(1/3)), m1)))))
-set.seed(10000)
-(ar_0.4_8192 = c(8192, my_summary(replicate(4000, do1rep(8192, 0.4, 0.1, 0.4, ceiling(8192**(1/3)), ar1)))))
+```{r Theta = 0.4, Sigma = 0.5, n = 8192}
+set.seed(1953125)
+n <- 8192
+d_0.4_0.5_8192 <- replicate(nrep, do1rep(n, theta, sigma, c(mu, theta, sigma^2), ceiling(n**(1/3)), statistic))
+(my.summary[nrow(my.summary) + 1,] <- c(theta, sigma, n, my_summary(d_0.4_0.5_8192)))
 ```
 
 ```{r}
-m_0 <- data.frame(rbind(m_norm_32, m_norm_64, m_norm_128, m_norm_256, m_norm_512))
-ar_0 <- data.frame(rbind(ar_norm_32, ar_norm_64, ar_norm_128, ar_norm_256, ar_norm_512))
-m_0.2 <- data.frame(rbind(m_0.2_32, m_0.2_64, m_0.2_128, m_0.2_256, m_0.2_512, m_0.2_1024, m_0.2_2048, m_0.2_4096))
-ar_0.2 <- data.frame(rbind(ar_0.2_32, ar_0.2_64, ar_0.2_128, ar_0.2_256, ar_0.2_512, ar_0.2_1024, ar_0.2_2048, ar_0.2_4096))
-m_0.4 <- data.frame(rbind(m_0.4_32, m_0.4_64, m_0.4_128, m_0.4_256, m_0.4_512, m_0.4_1024, m_0.4_2048, m_0.4_4096, m_0.4_8192))
-ar_0.4 <- data.frame(rbind(ar_0.4_32, ar_0.4_64, ar_0.4_128, ar_0.4_256, ar_0.4_512, ar_0.4_1024, ar_0.4_2048, ar_0.4_4096, ar_0.4_8192))
-colnames(m_0) <- c('Sample Length', 'Non-Moving Coverage Rate', 'Moving Coverage Rate', 'Non-Moving Lower Bound', 'Non-Moving Upper Bound', 'Moving Lower Bound', 'Moving Upper Bound')
-colnames(ar_0) <- c('Sample Length', 'Non-Moving Coverage Rate', 'Moving Coverage Rate', 'Non-Moving Lower Bound', 'Non-Moving Upper Bound', 'Moving Lower Bound', 'Moving Upper Bound')
-colnames(m_0.2) <- c('Sample Length', 'Non-Moving Coverage Rate', 'Moving Coverage Rate', 'Non-Moving Lower Bound', 'Non-Moving Upper Bound', 'Moving Lower Bound', 'Moving Upper Bound')
-colnames(ar_0.2) <- c('Sample Length', 'Non-Moving Coverage Rate', 'Moving Coverage Rate', 'Non-Moving Lower Bound', 'Non-Moving Upper Bound', 'Moving Lower Bound', 'Moving Upper Bound')
-colnames(m_0.4) <- c('Sample Length', 'Non-Moving Coverage Rate', 'Moving Coverage Rate', 'Non-Moving Lower Bound', 'Non-Moving Upper Bound', 'Moving Lower Bound', 'Moving Upper Bound')
-colnames(ar_0.4) <- c('Sample Length', 'Non-Moving Coverage Rate', 'Moving Coverage Rate', 'Non-Moving Lower Bound', 'Non-Moving Upper Bound', 'Moving Lower Bound', 'Moving Upper Bound')
-m_0
-ar_0
-m_0.2
-ar_0.2
-m_0.4
-ar_0.4
-write.csv(m_0,"../Data/m_0.csv", row.names = FALSE)
-write.csv(ar_0,"../Data/ar_0.csv", row.names = FALSE)
-write.csv(m_0.2,"../Data/m_0.2.csv", row.names = FALSE)
-write.csv(ar_0.2,"../Data/ar_0.2.csv", row.names = FALSE)
-write.csv(m_0.4,"../Data/m_0.4.csv", row.names = FALSE)
-write.csv(ar_0.4,"../Data/ar_0.4.csv", row.names = FALSE)
+my.summary
+```
+
+
+```{r}
+library(tidyr)
+(summary.df <- my.summary %>%
+  pivot_longer(
+    cols = nm.cov.mu:mv.upper.sigsq,
+    names_to = c('method', '.value', 'target'),
+    names_pattern = "(.*)\\.(.*)\\.(.*)"
+  ))
+write.csv(summary.df,"../Data/summary.df.csv", row.names = FALSE)
+```
+
+
+```{r}
+write.csv(my.summary,"../Data/my.summary.csv", row.names = FALSE)
+```
+
+```{r}
+write.csv(d_0_0.1_32,"../Data/Raw/d_0_0.1_32.csv", row.names = FALSE)
+write.csv(d_0_0.1_64,"../Data/Raw/d_0_0.1_64.csv", row.names = FALSE)
+write.csv(d_0_0.1_128,"../Data/Raw/d_0_0.1_128.csv", row.names = FALSE)
+write.csv(d_0_0.1_256,"../Data/Raw/d_0_0.1_256.csv", row.names = FALSE)
+write.csv(d_0_0.1_512,"../Data/Raw/d_0_0.1_512.csv", row.names = FALSE)
+write.csv(d_0_0.1_1024,"../Data/Raw/d_0_0.1_1024.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_32,"../Data/Raw/d_0.2_0.1_32.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_64,"../Data/Raw/d_0.2_0.1_64.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_128,"../Data/Raw/d_0.2_0.1_128.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_256,"../Data/Raw/d_0.2_0.1_256.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_512,"../Data/Raw/d_0.2_0.1_512.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_1024,"../Data/Raw/d_0.2_0.1_1024.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_2048,"../Data/Raw/d_0.2_0.1_2048.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_4096,"../Data/Raw/d_0.2_0.1_4096.csv", row.names = FALSE)
+write.csv(d_0.2_0.1_8192,"../Data/Raw/d_0.2_0.1_8192.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_32,"../Data/Raw/d_0.4_0.1_32.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_64,"../Data/Raw/d_0.4_0.1_64.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_128,"../Data/Raw/d_0.4_0.1_128.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_256,"../Data/Raw/d_0.4_0.1_256.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_512,"../Data/Raw/d_0.4_0.1_512.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_1024,"../Data/Raw/d_0.4_0.1_1024.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_2048,"../Data/Raw/d_0.4_0.1_2048.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_4096,"../Data/Raw/d_0.4_0.1_4096.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_8192,"../Data/Raw/d_0.4_0.1_8192.csv", row.names = FALSE)
+write.csv(d_0.4_0.1_16384,"../Data/Raw/d_0.4_0.1_16384.csv", row.names = FALSE)
+write.csv(d_0_0.5_32,"../Data/Raw/d_0_0.5_32.csv", row.names = FALSE)
+write.csv(d_0_0.5_64,"../Data/Raw/d_0_0.5_64.csv", row.names = FALSE)
+write.csv(d_0_0.5_128,"../Data/Raw/d_0_0.5_128.csv", row.names = FALSE)
+write.csv(d_0_0.5_256,"../Data/Raw/d_0_0.5_256.csv", row.names = FALSE)
+write.csv(d_0_0.5_512,"../Data/Raw/d_0_0.5_512.csv", row.names = FALSE)
+write.csv(d_0_0.5_1024,"../Data/Raw/d_0_0.5_1024.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_32,"../Data/Raw/d_0.2_0.5_32.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_64,"../Data/Raw/d_0.2_0.5_64.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_128,"../Data/Raw/d_0.2_0.5_128.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_256,"../Data/Raw/d_0.2_0.5_256.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_512,"../Data/Raw/d_0.2_0.5_512.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_1024,"../Data/Raw/d_0.2_0.5_1024.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_2048,"../Data/Raw/d_0.2_0.5_2048.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_4096,"../Data/Raw/d_0.2_0.5_4096.csv", row.names = FALSE)
+write.csv(d_0.2_0.5_8192,"../Data/Raw/d_0.2_0.5_8192.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_32,"../Data/Raw/d_0.4_0.5_32.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_64,"../Data/Raw/d_0.4_0.5_64.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_128,"../Data/Raw/d_0.4_0.5_128.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_256,"../Data/Raw/d_0.4_0.5_256.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_512,"../Data/Raw/d_0.4_0.5_512.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_1024,"../Data/Raw/d_0.4_0.5_1024.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_2048,"../Data/Raw/d_0.4_0.5_2048.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_4096,"../Data/Raw/d_0.4_0.5_4096.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_8192,"../Data/Raw/d_0.4_0.5_8192.csv", row.names = FALSE)
+write.csv(d_0.4_0.5_16384,"../Data/Raw/d_0.4_0.5_16384.csv", row.names = FALSE)
+
 ```
 
 ```{r}
 tf <- function(df, target, theta) {
   library(reshape2)
   library(dplyr)
-  d1 <- melt(df[1:3], id.vars = 'Sample.Length', variable.name = 'Method', value.name = 'Coverage.Rate')
+  d1 <- melt(df[1:3], id.vars = 'n', variable.name = 'Method', value.name = 'Coverage.Rate')
   levels(d1$Method) <- list(Non.Moving  = "Non.Moving.Coverage.Rate", Moving = "Moving.Coverage.Rate")
-  d2 <- melt(df[c(1, 4, 6)], id.vars = 'Sample.Length', variable.name = 'Method', value.name = 'Lower.Bound')
+  d2 <- melt(df[c(1, 4, 6)], id.vars = 'n', variable.name = 'Method', value.name = 'Lower.Bound')
   levels(d2$Method) <- list(Non.Moving  = "Non.Moving.Lower.Bound", Moving = "Moving.Lower.Bound")
-  d3 <- melt(df[c(1, 5, 7)], id.vars = 'Sample.Length', variable.name = 'Method', value.name= 'Upper.Bound')
+  d3 <- melt(df[c(1, 5, 7)], id.vars = 'nh', variable.name = 'Method', value.name= 'Upper.Bound')
   levels(d3$Method) <- list(Non.Moving  = "Non.Moving.Upper.Bound", Moving = "Moving.Upper.Bound")
   z <- merge(x=d1,y=d2)
   z <- merge(x=z,y=d3)
@@ -275,5 +534,9 @@ tf <- function(df, target, theta) {
 }
 df <- rbind(tf(m_0, 'Mean', 0), tf(m_0.2, 'Mean', 0.2), tf(m_0.4, 'Mean', 0.4), tf(ar_0, 'Theta', 0), tf(ar_0.2, 'Theta', 0.2), tf(ar_0.4, 'Theta', 0.4))
 write.csv(df,"../Data/df.csv", row.names = FALSE)
+```
+
+```{r}
+m_0
 ```
 
