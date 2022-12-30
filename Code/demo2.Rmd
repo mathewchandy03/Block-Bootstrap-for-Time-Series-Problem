@@ -16,7 +16,7 @@ do1rep <- function(n, theta, statistic, blksize, R = 1000) {
     bts <- boot::tsboot(x, statistic, l = blksize, sim = "fixed", R = R)
     ## returns a vector with length twice of that of mystat's returned values
     ## each pair forms an interval for one target
-    delta <- sweep(asdf$t, 2, mystat(x)) 
+    delta <- sweep(bts$t, 2, mystat(x)) 
     # Subtract vector from each row of mystat(x) delta = pseudosample mean - original sample mean
     percentile <- apply(bts$t, 2, quantile, prob = c(.025, .975))
     empirical <- rep(mystat(x), each = 2) - apply(delta, 2, quantile, prob = c(.975, .025))
