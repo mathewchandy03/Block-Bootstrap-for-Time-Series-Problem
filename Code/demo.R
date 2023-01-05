@@ -20,7 +20,7 @@ do1rep <- function(n, theta, statistic, blksize, R = 1000, level = .95) {
     z0 <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
     ## thetajack <- sapply(1:n, function(i) statistic(x[-i]))
     thetajack <- sapply(1: (n / blksize),
-                        function(i) statistics(x[ - ((i - 1) * blksize + 1:blksize)]))
+                        function(i) statistic(x[ - ((i - 1) * blksize + 1:blksize)]))
     a <- apply(thetajack, 1, e1071::skewness) / 6
     alpha1 <- pnorm(z0 + (z0 + qnorm(alpha/2)) / (1 - a * (z0 + qnorm(alpha/2))))
     alpha2 <- pnorm(z0 + (z0 + qnorm(1 - alpha/2)) / (1 - a * (z0 + qnorm(1 - alpha/2))))
