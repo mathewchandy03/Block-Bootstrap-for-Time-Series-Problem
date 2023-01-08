@@ -86,3 +86,10 @@ set.seed(4567)
 sim_.3_8k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
 mychk(sim_.3_8k, target)
 ```
+```{r}
+write.csv(sim_.3_125,"../Data/Raw/sim_.3_125.csv", row.names = FALSE)
+write.csv(sim_.3_1k,"../Data/Raw/sim_.3_1k.csv", row.names = FALSE)
+write.csv(sim_.3_3375,"../Data/Raw/sim_.3_3375.csv", row.names = FALSE)
+write.csv(sim_.3_8k,"../Data/Raw/sim_.3_8k.csv", row.names = FALSE)
+```
+
