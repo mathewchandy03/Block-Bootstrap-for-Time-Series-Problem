@@ -14,7 +14,10 @@ do1rep <- function(n, theta, statistic, blksize, R = 1000, level = .95) {
     alpha <- 1 - level
     ## returns a vector with length twice of that of mystat's returned values
     ## each pair forms an interval for one target
-    pctCI <- apply(bts$t, 2, quantile, prob = c(alpha/2, 1 - alpha/2))
+    ## pctCI <- apply(bts$t, 2, quantile, prob = c(alpha/2, 1 - alpha/2))
+    mbts <- apply(bts$t, 2, mean)
+    crit <- apply(abs(t(t(bts$t) - mbts)), 2, quantile, prob = level)
+    pctCI <- rbind(bts$t0 - crit, bts$t0 + crit)  
     empCI <- matrix(2 * bts$t0, 2, length(bts$t0), byrow = TRUE) - pctCI[c(2, 1),]
     ## BCa interval
     z0 <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
