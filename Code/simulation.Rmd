@@ -47,6 +47,36 @@ mychk <- function(sim, target) {
 nrep <- 4000
 ```
 
+```{r ma = .1, n = 125}
+n <- 125
+blksize <- 5
+theta <- .1
+target <- c(0, 1, theta / (1 + theta^2))
+set.seed(1234)
+sim_.1_125 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+mychk(sim_.1_125, target)
+```
+
+```{r ma = .1, n = 1000}
+n <- 1000
+blksize <- 10
+theta <- .1
+target <- c(0, 1, theta / (1 + theta^2))
+set.seed(2345)
+sim_.1_1k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+mychk(sim_.1_1k, target)
+```
+
+```{r ma = .1, n = 3375}
+n <- 3375
+blksize <- 15
+theta <- .1
+target <- c(0, 1, theta / (1 + theta^2))
+set.seed(3456)
+sim_.1_3375 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+mychk(sim_.1_3375, target)
+```
+
 ```{r ma = .3, n = 125}
 n <- 125
 blksize <- 5
@@ -86,7 +116,30 @@ set.seed(4567)
 sim_.3_8k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
 mychk(sim_.3_8k, target)
 ```
+
+```{r ma = .5, n = 3375}
+n <- 3375
+blksize <- 15
+theta <- .5
+target <- c(0, 1, theta / (1 + theta^2))
+set.seed(3456)
+sim_.5_3375 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+mychk(sim_.5_3375, target)
+```
+
+```{r ma = .5, n = 8000}
+n <- 8000
+blksize <- 20
+theta <- .5
+target <- c(0, 1, theta / (1 + theta^2))
+set.seed(4567)
+sim_.5_8k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+mychk(sim_.5_8k, target)
+```
+
 ```{r}
+write.csv(sim_.1_125,"../Data/Raw/sim_.1_125.csv", row.names = FALSE)
+write.csv(sim_.1_1k,"../Data/Raw/sim_.1_1k.csv", row.names = FALSE)
 write.csv(sim_.3_125,"../Data/Raw/sim_.3_125.csv", row.names = FALSE)
 write.csv(sim_.3_1k,"../Data/Raw/sim_.3_1k.csv", row.names = FALSE)
 write.csv(sim_.3_3375,"../Data/Raw/sim_.3_3375.csv", row.names = FALSE)
