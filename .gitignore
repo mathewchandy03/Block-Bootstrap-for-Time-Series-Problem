@@ -28,3 +28,4 @@ code/*/*
 */Rnw/cache
 
 .vscode
+.DS_Store
