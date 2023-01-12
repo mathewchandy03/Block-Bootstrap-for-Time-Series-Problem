@@ -92,3 +92,15 @@
 • Clean up code
 • Make functions work for vector
 • Investigate sigma
+
+12/8 Notes
+• Look at tapered block bootstrap
+• Review literature about block bootstrap
+
+1/12 Notes
+• Try Centered Asymmetric Intervals (around original estimate and mean of bootstrapped estimates)
+• Use 1000 Replications
+• Focus on AR
+
+
+
