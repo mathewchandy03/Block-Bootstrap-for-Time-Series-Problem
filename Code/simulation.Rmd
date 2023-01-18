@@ -1,6 +1,6 @@
 ```{r functions}
 ## This note checks the empirical coverage rate of CIs constructed from
-## block bootstrap with series generated from an MA process
+## block bootstrap with series generated from an AR process
 
 mystat <- function(x) {
     c(mean(x),
@@ -10,25 +10,63 @@ mystat <- function(x) {
 }
 
 do1rep <- function(n, theta, statistic, blksize, R = 1000, level = .95) {
-    x <- arima.sim(list(ma = theta), n = n) / sqrt(1 + theta^2)
+    x <- arima.sim(list(ar = theta), n = n) * sqrt(1 - theta^2)
     bts <- boot::tsboot(x, statistic, l = blksize, sim = "fixed", R = R)
     alpha <- 1 - level
-    ## returns a vector with length twice of that of mystat's returned values
-    ## each pair forms an interval for one target
-    pctCI <- apply(bts$t, 2, quantile, prob = c(alpha/2, 1 - alpha/2))
-    empCI <- matrix(2 * bts$t0, 2, length(bts$t0), byrow = TRUE) - pctCI[c(2, 1),]
+    
+    
+    ## Percentile interval
+    mbts <- apply(bts$t, 2, mean)
+    crit <- 
+      apply(t(t(bts$t) - mbts), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
+    ## alpha/2 and 1 - alpha/2 critical values 
+    ## of pseudo-estimate - mean of pseudo-estimates
+    crit2 <- 
+      apply(t(t(bts$t) - bts$t0), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
+    ## alpha/2 and 1 - alpha/2 critical values 
+    ## of pseudo-estimate - original estimate
+    
+    ## interval centered around...
+    estCI <- sweep(crit, 2, bts$t0, FUN = '+') # original estimate
+    ## LB: bts$t0 + alpha/2 crit, UB: bts$t0 + (1 - alpha/2) crit
+    mbtCI <- sweep(crit2, 2, mbts, FUN = '+') # mean of pseudo-estimates
+    ## LB: mbts + alpha/2 crit2, UB: mbts + (1 - alpha/2) crit2
+    altCI <- sweep(-crit[order(2:1),], 2, bts$t0, FUN = '+') # both
+    ## LB: bts$t0 - (1 - alpha/2) crit, UB: bts$t0 - alpha/2 crit and
+    ## LB: mbts - (1 - alpha/2) crit2, UB: mbts - alpha/2 crit2
+    
+    
     ## BCa interval
     z0 <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
-    ## thetajack <- sapply(1:n, function(i) statistic(x[-i]))
-    thetajack <- sapply(1: (n / blksize),
-                        function(i) statistic(x[ - ((i - 1) * blksize + 1:blksize)]))
+    thetajack <- sapply(1: (n / blksize), 
+                        function(i) 
+                          statistic(x[ - ((i - 1) * blksize + 1:blksize)]))
     a <- apply(thetajack, 1, e1071::skewness) / 6
-    alpha1 <- pnorm(z0 + (z0 + qnorm(alpha/2)) / (1 - a * (z0 + qnorm(alpha/2))))
-    alpha2 <- pnorm(z0 + (z0 + qnorm(1 - alpha/2)) / (1 - a * (z0 + qnorm(1 - alpha/2))))
-    bcaCI <- sapply(1:length(bts$t0),
-                    function(i) quantile(bts$t[,i], prob = c(alpha1[i], alpha2[i])))
+    alpha1 <- pnorm(
+      z0 + (z0 + qnorm(alpha/2)) / (1 - a * (z0 + qnorm(alpha/2))))
+    alpha2 <- pnorm(
+      z0 + (z0 + qnorm(1 - alpha/2)) / (1 - a * (z0 + qnorm(1 - alpha/2))))
+    crit3 <- sapply(1:length(bts$t0), function(i) 
+      quantile(t(t(bts$t[,i]) - mbts[i]), prob = c(alpha1[i], alpha2[i]))) 
+    ## alpha1 and alpha2 critical values 
+    ## of pseudo-estimate - mean of pseudo-estimates
+    crit4 <- sapply(1:length(bts$t0), function(i) 
+      quantile(t(t(bts$t[,i]) - bts$t0[i]), prob = c(alpha1[i], alpha2[i])))
+    ## alpha1 and alpha2 critical values 
+    ## of pseudo-estimate - original estimate
+    
+    ## interval centered around...
+    bcaCIest <- sweep(crit3, 2, bts$t0, FUN = '+') # original estimate
+    ## LB: bts$t0 + alpha1 crit3, UB: bts$t0 + alpha2 crit3
+    bcaCImbt <- sweep(crit4, 2, mbts, FUN = '+') # mean of pseudo-estimates
+    ## LB: mbts + alpha1 crit4, UB: mbts + alpha2 crit4
+    bcaCIalt <- sweep(-crit3[order(2:1),], 2, bts$t0, FUN = '+') # both
+    ## LB: bts$t0 - alpha2 crit3, UB: bts$t0 - alpha1 crit3 and
+    ## LB: mbts - alpha2 crit4, UB: mbts - alpha1 crit4
+    
+    
     ## return all intervals
-    c(pctCI, empCI, bcaCI)
+    c(estCI, mbtCI, altCI, bcaCIest, bcaCImbt, bcaCIalt)
 }
     
 mychk <- function(sim, target) {
@@ -44,105 +82,99 @@ mychk <- function(sim, target) {
 ```
 
 ```{r simulation}
-nrep <- 4000
+nrep <- 1000
 ```
 
-```{r ma = .1, n = 125}
-n <- 125
+```{r ma = .1, n = 100}
+n <- 100
 blksize <- 5
 theta <- .1
-target <- c(0, 1, theta / (1 + theta^2))
+target <- c(0, 1, theta)
 set.seed(1234)
-sim_.1_125 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
-mychk(sim_.1_125, target)
+sim_.1_1h <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.1_1h,"../Data/Raw/sim_.1_1h.csv", row.names = FALSE)
+mychk(sim_.1_1h, target)
 ```
-
+```{r ma = .1, n = 500}
+n <- 500
+blksize <- 8
+theta <- .1
+target <- c(0, 1, theta)
+set.seed(2345)
+sim_.1_5h <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.1_5h,"../Data/Raw/sim_.1_5h.csv", row.names = FALSE)
+mychk(sim_.1_5h, target)
+```
 ```{r ma = .1, n = 1000}
 n <- 1000
 blksize <- 10
 theta <- .1
-target <- c(0, 1, theta / (1 + theta^2))
-set.seed(2345)
+target <- c(0, 1, theta)
+set.seed(3456)
 sim_.1_1k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.1_1k,"../Data/Raw/sim_.1_1k.csv", row.names = FALSE)
 mychk(sim_.1_1k, target)
 ```
-
-```{r ma = .1, n = 3375}
-n <- 3375
-blksize <- 15
-theta <- .1
-target <- c(0, 1, theta / (1 + theta^2))
-set.seed(3456)
-sim_.1_3375 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
-mychk(sim_.1_3375, target)
-```
-
-```{r ma = .3, n = 125}
-n <- 125
+```{r ma = .3, n = 100}
+n <- 100
 blksize <- 5
 theta <- .3
-target <- c(0, 1, theta / (1 + theta^2))
+target <- c(0, 1, theta)
 set.seed(1234)
-sim_.3_125 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
-mychk(sim_.3_125, target)
+sim_.3_1h <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.3_1h,"../Data/Raw/sim_.3_1h.csv", row.names = FALSE)
+mychk(sim_.3_1h, target)
 ```
-
+```{r ma = .3, n = 500}
+n <- 500
+blksize <- 8
+theta <- .3
+target <- c(0, 1, theta)
+set.seed(2345)
+sim_.3_5h <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.3_5h,"../Data/Raw/sim_.3_5h.csv", row.names = FALSE)
+mychk(sim_.3_5h, target)
+```
 ```{r ma = .3, n = 1000}
 n <- 1000
 blksize <- 10
 theta <- .3
-target <- c(0, 1, theta / (1 + theta^2))
-set.seed(2345)
+target <- c(0, 1, theta)
+set.seed(3456)
 sim_.3_1k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.3_1k,"../Data/Raw/sim_.3_1k.csv", row.names = FALSE)
 mychk(sim_.3_1k, target)
 ```
-
-```{r ma = .3, n = 3375}
-n <- 3375
-blksize <- 15
-theta <- .3
-target <- c(0, 1, theta / (1 + theta^2))
-set.seed(3456)
-sim_.3_3375 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
-mychk(sim_.3_3375, target)
-```
-
-```{r ma = .3, n = 8000}
-n <- 8000
-blksize <- 20
-theta <- .3
-target <- c(0, 1, theta / (1 + theta^2))
-set.seed(4567)
-sim_.3_8k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
-mychk(sim_.3_8k, target)
-```
-
-```{r ma = .5, n = 3375}
-n <- 3375
-blksize <- 15
+```{r ma = .5, n = 100}
+n <- 100
+blksize <- 5
 theta <- .5
-target <- c(0, 1, theta / (1 + theta^2))
-set.seed(3456)
-sim_.5_3375 <- replicate(nrep, do1rep(n, theta, mystat, blksize))
-mychk(sim_.5_3375, target)
+target <- c(0, 1, theta)
+set.seed(1234)
+sim_.5_1h <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.5_1h,"../Data/Raw/sim_.5_1h.csv", row.names = FALSE)
+mychk(sim_.5_1h, target)
 ```
-
-```{r ma = .5, n = 8000}
-n <- 8000
-blksize <- 20
+```{r ma = .5, n = 500}
+n <- 500
+blksize <- 8
 theta <- .5
-target <- c(0, 1, theta / (1 + theta^2))
-set.seed(4567)
-sim_.5_8k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
-mychk(sim_.5_8k, target)
+target <- c(0, 1, theta)
+set.seed(2345)
+sim_.5_5h <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.5_5h,"../Data/Raw/sim_.5_5h.csv", row.names = FALSE)
+mychk(sim_.5_5h, target)
+```
+```{r ma = .5, n = 1000}
+n <- 1000
+blksize <- 10
+theta <- .5
+target <- c(0, 1, theta)
+set.seed(3456)
+sim_.5_1k <- replicate(nrep, do1rep(n, theta, mystat, blksize))
+write.csv(sim_.5_1k,"../Data/Raw/sim_.5_1k.csv", row.names = FALSE)
+mychk(sim_.5_1k, target)
 ```
 
-```{r}
-write.csv(sim_.1_125,"../Data/Raw/sim_.1_125.csv", row.names = FALSE)
-write.csv(sim_.1_1k,"../Data/Raw/sim_.1_1k.csv", row.names = FALSE)
-write.csv(sim_.3_125,"../Data/Raw/sim_.3_125.csv", row.names = FALSE)
-write.csv(sim_.3_1k,"../Data/Raw/sim_.3_1k.csv", row.names = FALSE)
-write.csv(sim_.3_3375,"../Data/Raw/sim_.3_3375.csv", row.names = FALSE)
-write.csv(sim_.3_8k,"../Data/Raw/sim_.3_8k.csv", row.names = FALSE)
-```
+
 

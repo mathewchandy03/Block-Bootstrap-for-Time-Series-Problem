@@ -134,7 +134,7 @@ Block bootstrapping is a method that can be applied to a non-stationary process 
 (BCA) confidence interval, which takes the form: \[ [\hat{\theta}_{b, \alpha_{L}}, \hat{\theta}_{b, \alpha_{U}}].\] $\alpha{L}$ and $\alpha{U}$ are the cumulative probability of $z{L}$ and $z{U}$, respectively, where:
 \[z_{L} = \frac{z_{0} - z_{1 - \alpha/2}}{1 - a(z_{0} - z_{1 - \alpha/2})} + z_{0}\] and
 \[z_{U} = \frac{z_{0} + z_{1 - \alpha/2}}{1 - a(z_{0} + z_{1 - \alpha/2})} + z_{0}.\] 
-	Both of these intervals are good at recovering the mean and standard deviation of a temporally dependent process, but their coverage of the temporal dependence deteriorates as n increases. A potential solution to this issue is to center the intervals around either the original sample estimate $\hat{\theta}$ or the mean of all $\hat{\theta}_{b}$.
+	Both of these intervals are good at recovering the mean and standard deviation of a temporally dependent process, but their coverage of the temporal dependence deteriorates as n increases. A potential solution to this issue is to center the intervals around either the original sample estimate $\hat{\theta}$ or the mean of all $\hat{\theta}_{b}$. To do this, the distribution of $\delta = $\hat{\theta}_{b}$ - $\hat{\theta}$ or 
 
 \section{Simulation Study Design}
 \label{sec:simdesign}
@@ -172,34 +172,33 @@ For all simulation studies, , but $\mu$ and $\sigma_{x}$ can be kept constant, b
 
 
 \begin{figure}[tbp]
-\caption{The figure below shows results for block bootstrap estimation when theta is 0. When the target was the mean and the moving method was used, the coverage rate confidence interval included .95 when the sample length was 512, indicating that even for a sample with no temporal dependence, a very large sample length of around 500 is necessary to get an accurate estimation of the mean. Similarly, when the target was the mean and the non-moving method was used, the coverage rate confidence interval included .95 when the sample length was 512, showing that a sample size of around 500 is necessary for good block bootstrap estimation. When the target was the AR(1) coefficient and the moving method was used, the parameter was over-covered - all of the coverage rate confidence interval lower bounds were greater than .95 - for all sample sizes that were observed (32, 64, 128, 256, and 512). This indicates that the variance of the parameter is being overestimated. When the target was the AR(1) coefficient and the non-moving method was used, the parameter was under-covered when the sample length was 32 and slightly over-covered when the sample length was 256. For sample lengths 64, 128, and 512, the non-moving method recovered the parameter well.}
+\caption{}
   \centering
-  \includegraphics[width=\textwidth]{theta_0}
+  \includegraphics[width=\textwidth]{figures/plot_.1}
   \caption{}
-  \label{fig:theta_0}
+  \label{fig:plot_.1}
 \end{figure}
 
 \begin{figure}[tbp]
-\caption{The figure below shows results for block bootstrap estimation when theta is 0.2. When the target was the mean and the moving method was used, the coverage rate confidence interval included .95 when the sample length was 2048 and 4096, indicating that even for a sample with relatively low temporal dependence, a very large sample of around 2000 is necessary to get an accurate estimation of the mean. Similarly, when the target was the mean and the non-moving method was used, the coverage rate confidence interval included .95 when the sample length was 2048 and 4096, showing that a sample size of around 2000 is necessary for good block bootstrap estimation. When the target was the AR(1) coefficient, for both methods, the parameter was under-covered for sample lengths as large as 4096, although the moving method appeared to perform better for all sample sizes. }
+\caption{}
   \centering
-  \includegraphics[width=\textwidth]{theta_0.2}
+  \includegraphics[width=\textwidth]{figures/plot_.3}
   \caption{}
-  \label{fig:theta_0.2}
+  \label{fig:plot_.3}
 \end{figure}
 
 \begin{figure}[tbp]
-\caption{The figure below shows results for block bootstrap estimation when theta is 0.4. When the target was the mean, for both methods, the coverage rate was under-covered for sample sizes as large as 8192. When the target was the AR(1) coefficient, for both methods, the parameter was under-covered for sample lengths as large as 4096, although the moving method appeared to perform better for smaller sample sizes. }
+\caption{}
   \centering
-  \includegraphics[width=\textwidth]{theta_0.4}
+  \includegraphics[width=\textwidth]{figures/plot_.5}
   \caption{}
-  \label{fig:theta_0.4}
+  \label{fig:plot_.5}
 \end{figure}
 
 \section{Discussion}
 \label{sec:discuss}
 
 This study finds that as the AR coefficient increases, the sample size necessary for effective block bootstrap estimation must be larger. When implementing the block bootstrap method to estimate the mean or variance of an autoregressive process, the non-moving method and moving method perform about the same. However, when estimating the AR(1) coefficient, the non-moving method performs noticeably worse than the moving method, which still covers the coefficient poorly when theta is greater than 0. Whereas the performance improves as sample length increases when the target is the mean or variance, the performance decays as sample length increases when the target is the AR(1) coefficient.
-
 
 
 \bibliographystyle{chicago}

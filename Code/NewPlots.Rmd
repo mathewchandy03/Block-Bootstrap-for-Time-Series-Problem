@@ -1,0 +1,42 @@
+```{r}
+graph_bts <- function(cov, theta, target, width, nrep = 1000, sizes = c(100, 500, 1000), types = c('estCI', 'mbtCI', 'altCI', 'bcaCIest', 'bcaCImbt', 'bcaCIalt'), parameters = c('mu', 'sigma', 'theta'), level = .95) {
+  n <- rep(sizes, each = length(types) * length(parameters))
+  CI <- rep(types, times = length(sizes), each = length(parameters))
+  t <- rep(parameters, times = length(sizes) * length(types))
+  LB <- sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[1])
+  UB <-sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[2])
+  
+  df <- data.frame(n, CI, t, cov, LB, UB)
+  library(ggplot2)
+  ggplot(df, aes(x = n, y = cov)) +
+    geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
+    geom_line() +
+    geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width) +
+    facet_grid(t ~ CI)
+}
+```
+
+```{r}
+theta <- 0.1
+target <- c(0, 1, theta)
+cov <- c(mychk(sim_.1_1h, target), mychk(sim_.1_5h, target), mychk(sim_.1_1k, target))
+
+graph_bts(cov, theta, target, width = 50)
+ggsave('../Manuscript/plot_.1.pdf')
+```
+```{r}
+theta <- 0.3
+target <- c(0, 1, theta)
+cov <- c(mychk(sim_.3_1h, target), mychk(sim_.3_5h, target), mychk(sim_.3_1k, target))
+
+graph_bts(cov, theta, target, width = 25)
+ggsave('../Manuscript/plot_.3.pdf')
+```
+```{r}
+theta <- 0.5
+target <- c(0, 1, theta)
+cov <- c(mychk(sim_.5_1h, target), mychk(sim_.5_5h, target), mychk(sim_.5_1k, target))
+
+graph_bts(cov, theta, target, width = 10)
+ggsave('../Manuscript/plot_.5.pdf')
+```
