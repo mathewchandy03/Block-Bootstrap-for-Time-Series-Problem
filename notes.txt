@@ -102,5 +102,19 @@
 • Use 1000 Replications
 • Focus on AR
 
+1/19 Notes
+• Applications of Block Bootstrap
+• Introduce problem of sample size
+• Some studies have done this, but nobody has done this
+• We are going to do this study with a AR(1) process with several confidence intervals from the literature, which will be reviewed in section 2
+• Set up notation in the beginning of review of block bootstrap
+• Introduce block bootstrap procedure
+• Based on theta-stars, how will we set up confidence intervals
+• Use math mode
+• Try overlapping blocks
+• Use star instead of b, and bar for mean, n for sample size
+• Simulation Study includes Methods, description of Design, and report of results
+• Section 4: Concluding Remarks
+• Try n = 100, 200, 300, 400, 500
 
 
