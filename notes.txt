@@ -117,4 +117,21 @@
 • Section 4: Concluding Remarks
 • Try n = 100, 200, 300, 400, 500
 
+1/26 Notes
+• Define acronyms for types of intervals
+• Put sigma second row
+• Try phi = -.2 and -.4
+• No stars for multiplication
+• mean is 0
+• We are controlling sigma
+• Phi is experimental factor with three levels: -0.4, -0.2, 0, 0.2, 0.4
+• Don't start a sentence with a symbol
+• Constructing confidence intervals for three parameters of interest, mean, sd, and autocorrelation
+• Look at their empirical coverage
+• Discuss the figure, 1 paragraph for each level
+• Summarize that all mu work at that sample size, sigma does not deteriorate
+• Try n = 600
+• Try nrep = 4000
+• Come back to motivation which is what is a good sample size for block bootstrap, how big?
+• Conclusion is that even for mu, a sample size of 500 may be necessary
 

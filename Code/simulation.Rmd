@@ -90,6 +90,138 @@ mychk <- function(sim, target) {
 nrep <- 1000
 ```
 
+```{r ar = -.4, n = 100}
+n <- 100
+blksize <- 5
+phi <- -.4
+target <- c(0, 1, phi)
+set.seed(1234)
+sim_n.4_1h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.4_1h,"../Data/Raw/sim_n.4_1h.csv", row.names = FALSE)
+mychk(sim_n.4_1h, target)
+```
+
+```{r ar = -.4, n = 200}
+n <- 200
+blksize <- 6
+phi <- -.4
+target <- c(0, 1, phi)
+set.seed(2345)
+sim_n.4_2h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.4_2h,"../Data/Raw/sim_n.4_2h.csv", row.names = FALSE)
+mychk(sim_n.4_2h, target)
+```
+
+```{r ar = -.4, n = 300}
+n <- 300
+blksize <- 7
+phi <- -.4
+target <- c(0, 1, phi)
+set.seed(3456)
+sim_n.4_3h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.4_3h,"../Data/Raw/sim_n.4_3h.csv", row.names = FALSE)
+mychk(sim_n.4_3h, target)
+```
+
+```{r ar = -.4, n = 400}
+n <- 400
+blksize <- 7
+phi <- -.4
+target <- c(0, 1, phi)
+set.seed(4567)
+sim_n.4_4h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.4_4h,"../Data/Raw/sim_n.4_4h.csv", row.names = FALSE)
+mychk(sim_n.4_4h, target)
+```
+
+```{r ar = -.4, n = 500}
+n <- 500
+blksize <- 8
+phi <- -.4
+target <- c(0, 1, phi)
+set.seed(5678)
+sim_n.4_5h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.4_5h,"../Data/Raw/sim_n.4_5h.csv", row.names = FALSE)
+mychk(sim_n.4_5h, target)
+```
+
+```{r ar = -.4, n = 600}
+n <- 600
+blksize <- 9
+phi <- -.4
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_n.4_6h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.4_6h,"../Data/Raw/sim_n.4_6h.csv", row.names = FALSE)
+mychk(sim_n.4_6h, target)
+```
+
+```{r ar = -.2, n = 100}
+n <- 100
+blksize <- 5
+phi <- -.2
+target <- c(0, 1, phi)
+set.seed(1234)
+sim_n.2_1h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.2_1h,"../Data/Raw/sim_n.2_1h.csv", row.names = FALSE)
+mychk(sim_n.2_1h, target)
+```
+
+```{r ar = -.2, n = 200}
+n <- 200
+blksize <- 6
+phi <- -.2
+target <- c(0, 1, phi)
+set.seed(2345)
+sim_n.2_2h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.2_2h,"../Data/Raw/sim_n.2_2h.csv", row.names = FALSE)
+mychk(sim_n.2_2h, target)
+```
+
+```{r ar = -.2, n = 300}
+n <- 300
+blksize <- 7
+phi <- -.2
+target <- c(0, 1, phi)
+set.seed(3456)
+sim_n.2_3h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.2_3h,"../Data/Raw/sim_n.2_3h.csv", row.names = FALSE)
+mychk(sim_n.2_3h, target)
+```
+
+```{r ar = -.2, n = 400}
+n <- 400
+blksize <- 7
+phi <- -.2
+target <- c(0, 1, phi)
+set.seed(4567)
+sim_n.2_4h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.2_4h,"../Data/Raw/sim_n.2_4h.csv", row.names = FALSE)
+mychk(sim_n.2_4h, target)
+```
+
+```{r ar = -.2, n = 500}
+n <- 500
+blksize <- 8
+phi <- -.2
+target <- c(0, 1, phi)
+set.seed(5678)
+sim_n.2_5h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.2_5h,"../Data/Raw/sim_n.2_5h.csv", row.names = FALSE)
+mychk(sim_n.2_5h, target)
+```
+
+```{r ar = -.2, n = 600}
+n <- 600
+blksize <- 9
+phi <- -.2
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_n.2_6h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.2_6h,"../Data/Raw/sim_n.2_6h.csv", row.names = FALSE)
+mychk(sim_n.2_6h, target)
+```
+
 ```{r ar = 0, n = 100}
 n <- 100
 blksize <- 5
@@ -143,6 +275,17 @@ set.seed(5678)
 sim_0_5h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
 write.csv(sim_0_5h,"../Data/Raw/sim_0_5h.csv", row.names = FALSE)
 mychk(sim_0_5h, target)
+```
+
+```{r ar = 0, n = 600}
+n <- 600
+blksize <- 9
+phi <- 0
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_0_6h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_0_6h,"../Data/Raw/sim_0_6h.csv", row.names = FALSE)
+mychk(sim_0_6h, target)
 ```
 
 ```{r ar = .2, n = 100}
@@ -200,6 +343,17 @@ write.csv(sim_.2_5h,"../Data/Raw/sim_.2_5h.csv", row.names = FALSE)
 mychk(sim_.2_5h, target)
 ```
 
+```{r ar = .2, n = 600}
+n <- 600
+blksize <- 9
+phi <- .2
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_.2_6h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_.2_6h,"../Data/Raw/sim_.2_6h.csv", row.names = FALSE)
+mychk(sim_.2_6h, target)
+```
+
 ```{r ar = .4, n = 100}
 n <- 100
 blksize <- 5
@@ -253,4 +407,15 @@ set.seed(5678)
 sim_.4_5h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
 write.csv(sim_.4_5h,"../Data/Raw/sim_.4_5h.csv", row.names = FALSE)
 mychk(sim_.4_5h, target)
+```
+
+```{r ar = .4, n = 600}
+n <- 600
+blksize <- 9
+phi <- .4
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_.4_6h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_.4_6h,"../Data/Raw/sim_.4_6h.csv", row.names = FALSE)
+mychk(sim_.4_6h, target)
 ```
