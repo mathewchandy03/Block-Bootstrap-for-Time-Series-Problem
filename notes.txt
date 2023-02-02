@@ -135,3 +135,12 @@
 • Come back to motivation which is what is a good sample size for block bootstrap, how big?
 • Conclusion is that even for mu, a sample size of 500 may be necessary
 
+2/2 Notes
+• drop mbtCI
+• drop altCI
+• Keep 1st and 4th (estCI and BCACIest)
+• https://statds.github.io/stat-writing/
+
+
+
+
