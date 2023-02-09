@@ -1,5 +1,5 @@
 ```{r}
-graph_bts <- function(cov, phi, target, width, trans = 'identity', nrep = 1000, sizes = c(100, 200, 300, 400, 500, 600), types = c('estCI', 'mbtCI', 'altCI', 'bcaCIest', 'bcaCImbt', 'bcaCIalt'), parameters = c('mu', 'sigma', 'phi'), level = .95) {
+graph_bts <- function(cov, phi, target, width, trans = 'identity', nrep = 1000, sizes = c(100, 200, 300, 400, 500, 600, 700), types = c('estCI', 'bcaCIest'), parameters = c('mu', 'sigma', 'phi'), level = .95) {
   n <- rep(sizes, each = length(types) * length(parameters))
   CI <- rep(types, times = length(sizes), each = length(parameters))
   t <- rep(parameters, times = length(sizes) * length(types))
@@ -20,38 +20,38 @@ graph_bts <- function(cov, phi, target, width, trans = 'identity', nrep = 1000, 
 ```{r}
 phi <- -.4
 target <- c(0, 1, phi)
-cov <- c(mychk(sim_n.4_1h, target), mychk(sim_n.4_2h, target), mychk(sim_n.4_3h, target), mychk(sim_n.4_4h, target), mychk(sim_n.4_5h, target), mychk(sim_n.4_6h, target))
+cov <- c(mychk(sim_n.4_1h, target), mychk(sim_n.4_2h, target), mychk(sim_n.4_3h, target), mychk(sim_n.4_4h, target), mychk(sim_n.4_5h, target), mychk(sim_n.4_6h, target), mychk(sim_n.4_7h, target))
 
-graph_bts(cov, phi, target, width = 25, trans = 'probit')
+graph_bts(cov, phi, target, width = 10)
 ggsave('../Manuscript/figures/plot_n.4.pdf')
 ```
 ```{r}
 phi <- -.2
 target <- c(0, 1, phi)
-cov <- c(mychk(sim_n.2_1h, target), mychk(sim_n.2_2h, target), mychk(sim_n.2_3h, target), mychk(sim_n.2_4h, target), mychk(sim_n.2_5h, target), mychk(sim_n.2_6h, target))
-graph_bts(cov, phi, target, width = 25, trans = 'exp')
+cov <- c(mychk(sim_n.2_1h, target), mychk(sim_n.2_2h, target), mychk(sim_n.2_3h, target), mychk(sim_n.2_4h, target), mychk(sim_n.2_5h, target), mychk(sim_n.2_6h, target), mychk(sim_n.2_7h, target))
+graph_bts(cov, phi, target, width = 25)
 ggsave('../Manuscript/figures/plot_n.2.pdf')
 ```
 
 ```{r}
 phi <- 0
 target <- c(0, 1, phi)
-cov <- c(mychk(sim_0_1h, target), mychk(sim_0_2h, target), mychk(sim_0_3h, target), mychk(sim_0_4h, target), mychk(sim_0_5h, target), mychk(sim_0_6h, target))
+cov <- c(mychk(sim_0_1h, target), mychk(sim_0_2h, target), mychk(sim_0_3h, target), mychk(sim_0_4h, target), mychk(sim_0_5h, target), mychk(sim_0_6h, target), mychk(sim_0_7h, target))
 graph_bts(cov, phi, target, width = 25)
 ggsave('../Manuscript/figures/plot_0.pdf')
 ```
 ```{r}
 phi <- .2
 target <- c(0, 1, phi)
-cov <- c(mychk(sim_.2_1h, target), mychk(sim_.2_2h, target), mychk(sim_.2_3h, target), mychk(sim_.2_4h, target), mychk(sim_.2_5h, target), mychk(sim_.2_6h, target))
+cov <- c(mychk(sim_.2_1h, target), mychk(sim_.2_2h, target), mychk(sim_.2_3h, target), mychk(sim_.2_4h, target), mychk(sim_.2_5h, target), mychk(sim_.2_6h, target), mychk(sim_.2_7h, target))
 graph_bts(cov, phi, target, width = 25)
 ggsave('../Manuscript/figures/plot_.2.pdf')
 ```
 ```{r}
 phi <- .4
 target <- c(0, 1, phi)
-cov <- c(mychk(sim_.4_1h, target), mychk(sim_.4_2h, target), mychk(sim_.4_3h, target), mychk(sim_.4_4h, target), mychk(sim_.4_5h, target), mychk(sim_.4_6h, target))
+cov <- c(mychk(sim_.4_1h, target), mychk(sim_.4_2h, target), mychk(sim_.4_3h, target), mychk(sim_.4_4h, target), mychk(sim_.4_5h, target), mychk(sim_.4_6h, target), mychk(sim_.4_7h, target))
 
-graph_bts(cov, phi, target, width = 25, trans = 'probit')
+graph_bts(cov, phi, target, width = 25)
 ggsave('../Manuscript/figures/plot_.4.pdf')
 ```

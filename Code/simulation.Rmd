@@ -26,17 +26,17 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
       apply(t(t(bts$t) - mbts), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
     ## alpha/2 and 1 - alpha/2 critical values 
     ## of pseudo-estimate - mean of pseudo-estimates
-    crit2 <- 
-      apply(t(t(bts$t) - bts$t0), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
+    # crit2 <- 
+    #  apply(t(t(bts$t) - bts$t0), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
     ## alpha/2 and 1 - alpha/2 critical values 
     ## of pseudo-estimate - original estimate
     
     ## interval centered around...
     estCI <- sweep(crit, 2, bts$t0, FUN = '+') # original estimate
     ## LB: bts$t0 + alpha/2 crit, UB: bts$t0 + (1 - alpha/2) crit
-    mbtCI <- sweep(crit2, 2, mbts, FUN = '+') # mean of pseudo-estimates
+    # mbtCI <- sweep(crit2, 2, mbts, FUN = '+') # mean of pseudo-estimates
     ## LB: mbts + alpha/2 crit2, UB: mbts + (1 - alpha/2) crit2
-    altCI <- sweep(-crit[order(2:1),], 2, bts$t0, FUN = '+') # both
+    # altCI <- sweep(-crit[order(2:1),], 2, bts$t0, FUN = '+') # both
     ## LB: bts$t0 - (1 - alpha/2) crit, UB: bts$t0 - alpha/2 crit and
     ## LB: mbts - (1 - alpha/2) crit2, UB: mbts - alpha/2 crit2
     
@@ -55,23 +55,23 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
       quantile(t(t(bts$t[,i]) - mbts[i]), prob = c(alpha1[i], alpha2[i]))) 
     ## alpha1 and alpha2 critical values 
     ## of pseudo-estimate - mean of pseudo-estimates
-    crit4 <- sapply(1:length(bts$t0), function(i) 
-      quantile(t(t(bts$t[,i]) - bts$t0[i]), prob = c(alpha1[i], alpha2[i])))
+    # crit4 <- sapply(1:length(bts$t0), function(i) 
+    #  quantile(t(t(bts$t[,i]) - bts$t0[i]), prob = c(alpha1[i], alpha2[i])))
     ## alpha1 and alpha2 critical values 
     ## of pseudo-estimate - original estimate
     
     ## interval centered around...
     bcaCIest <- sweep(crit3, 2, bts$t0, FUN = '+') # original estimate
     ## LB: bts$t0 + alpha1 crit3, UB: bts$t0 + alpha2 crit3
-    bcaCImbt <- sweep(crit4, 2, mbts, FUN = '+') # mean of pseudo-estimates
+    # bcaCImbt <- sweep(crit4, 2, mbts, FUN = '+') # mean of pseudo-estimates
     ## LB: mbts + alpha1 crit4, UB: mbts + alpha2 crit4
-    bcaCIalt <- sweep(-crit3[order(2:1),], 2, bts$t0, FUN = '+') # both
+    # bcaCIalt <- sweep(-crit3[order(2:1),], 2, bts$t0, FUN = '+') # both
     ## LB: bts$t0 - alpha2 crit3, UB: bts$t0 - alpha1 crit3 and
     ## LB: mbts - alpha2 crit4, UB: mbts - alpha1 crit4
     
     
     ## return all intervals
-    c(estCI, mbtCI, altCI, bcaCIest, bcaCImbt, bcaCIalt)
+    c(estCI, bcaCIest)
 }
     
 mychk <- function(sim, target) {
@@ -156,6 +156,17 @@ write.csv(sim_n.4_6h,"../Data/Raw/sim_n.4_6h.csv", row.names = FALSE)
 mychk(sim_n.4_6h, target)
 ```
 
+```{r ar = -.4, n = 700}
+n <- 700
+blksize <- 9
+phi <- -.4
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_n.4_7h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.4_7h,"../Data/Raw/sim_n.4_7h.csv", row.names = FALSE)
+mychk(sim_n.4_7h, target)
+```
+
 ```{r ar = -.2, n = 100}
 n <- 100
 blksize <- 5
@@ -220,6 +231,17 @@ set.seed(6789)
 sim_n.2_6h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
 write.csv(sim_n.2_6h,"../Data/Raw/sim_n.2_6h.csv", row.names = FALSE)
 mychk(sim_n.2_6h, target)
+```
+
+```{r ar = -.2, n = 700}
+n <- 700
+blksize <- 9
+phi <- -.2
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_n.2_7h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_n.2_7h,"../Data/Raw/sim_n.2_7h.csv", row.names = FALSE)
+mychk(sim_n.2_7h, target)
 ```
 
 ```{r ar = 0, n = 100}
@@ -288,6 +310,17 @@ write.csv(sim_0_6h,"../Data/Raw/sim_0_6h.csv", row.names = FALSE)
 mychk(sim_0_6h, target)
 ```
 
+```{r ar = 0, n = 700}
+n <- 700
+blksize <- 9
+phi <- 0
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_0_7h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_0_7h,"../Data/Raw/sim_0_7h.csv", row.names = FALSE)
+mychk(sim_0_7h, target)
+```
+
 ```{r ar = .2, n = 100}
 n <- 100
 blksize <- 5
@@ -354,6 +387,17 @@ write.csv(sim_.2_6h,"../Data/Raw/sim_.2_6h.csv", row.names = FALSE)
 mychk(sim_.2_6h, target)
 ```
 
+```{r ar = .2, n = 700}
+n <- 700
+blksize <- 9
+phi <- .2
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_.2_7h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_.2_7h,"../Data/Raw/sim_.2_7h.csv", row.names = FALSE)
+mychk(sim_.2_7h, target)
+```
+
 ```{r ar = .4, n = 100}
 n <- 100
 blksize <- 5
@@ -418,4 +462,15 @@ set.seed(6789)
 sim_.4_6h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
 write.csv(sim_.4_6h,"../Data/Raw/sim_.4_6h.csv", row.names = FALSE)
 mychk(sim_.4_6h, target)
+```
+
+```{r ar = .4, n = 700}
+n <- 700
+blksize <- 9
+phi <- .4
+target <- c(0, 1, phi)
+set.seed(6789)
+sim_.4_7h <- replicate(nrep, do1rep(n, phi, mystat, blksize))
+write.csv(sim_.4_7h,"../Data/Raw/sim_.4_7h.csv", row.names = FALSE)
+mychk(sim_.4_7h, target)
 ```
