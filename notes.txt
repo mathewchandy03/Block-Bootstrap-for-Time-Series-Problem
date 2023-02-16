@@ -141,7 +141,7 @@
 • Keep 1st and 4th (estCI and BCACIest)
 • https://statds.github.io/stat-writing/
 
-2/6 Notes
+2/9 Notes
 • Before the period
 • Punctuation for equations
 • Present design for simulation
@@ -151,6 +151,10 @@
 • What is the observation 1, observation 2 ... on list, and then organize them into paragraphs
 • In discussion, compare two interval methods
 
+2/16 Notes
+• Align formulas
+• Make lines not as wide
+• Remove extra caption
 
 
 
