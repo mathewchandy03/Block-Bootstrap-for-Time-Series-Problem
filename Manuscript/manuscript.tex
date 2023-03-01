@@ -151,6 +151,17 @@ future explorations.
 \section{Block Bootstrap Confidence Intervals}
 \label{sec:blkbootreview}
 
+\jy{set up notations for sample; give the algorithm to perform bootstrap
+  procedure}
+
+\jy{two subsections: 1) block bootstrap basics; 2) bootstrap CIs. The different
+  CIs should each take a paragraph.}
+
+\jy{Needs to distinguish the basic percentile bootstrap and corrected percentile
+  bootstrap. Recall that we had trouble covering phi using the basic percentile
+  method.}
+
+
 Block bootstrap is a method that can be used to estimate a parameter of
 serially dependent data. Suppose that one wants to estimate a parameter or
 parameters $\theta$ of a population. The first step is to generate a sample of
@@ -233,7 +244,8 @@ around $\hat{\theta}_{n}$ and asymmetric.
 
 \section{Simulation Study}
 \label{sec:simstudy}
- 
+
+
 Base R has a built in function arima.sim that allows one to simulate an AR(1)
 process, for which one can set the theoretical $\phi$. By default, the mean of
 the process $\mu$ is 0 and the standard deviation of the error term
@@ -249,8 +261,9 @@ Var(X_{t}) &= Var(\epsilon_{t} + \phi X_{t-1});\\
 \sigma_{x}\sqrt{1 - \phi^2} &= 1.
 \end{align}
 The experimental factor of this study was $\phi$, as the temporal dependence
-affects the performance of block bootstrap. $\phi = -0.4 -0.2,$ and $0$ (a
-standard normal distribution)$, 0.2, and 0.4$ were used in this study. 
+affects the performance of block bootstrap.
+$\phi \in \{-0.4 -0.2, 0, 0.2, 0.4\}$.
+
 
 
 As described in the last section, the block bootstrap method can be used to
