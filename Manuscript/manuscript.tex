@@ -47,21 +47,19 @@
 \newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
 
 
-\title{Sample Length at Which Block Bootstrapping is Effective for Estimation
-  of Parameter of Time Series}
+\title{How Large a Sample Size is Needed for Block Bootstrap Confidence Intrvals
+  to Have Desired Coverage Rates?}
 
-\author{Mathew Chandy\\
+\author{Mathew Chandy
 %   \href{mailto:mathew.chandy@uconn.edu}
 % {\nolinkurl{mathew.chandy@uconn.edu}}\\
-  Jun Yan\\[1ex]
+  \and Jun Yan\\[1ex]
   Department of Statistics, University of Connecticut\\
 }
 \date{}
 
 \begin{document} 
 \maketitle
-
-\doublespace
 
 \begin{abstract}
 Block bootstrap is a method that is useful for estimating a parameter of a time
@@ -78,15 +76,17 @@ the series' level of temporal dependence.
 
 
 \bigskip
-\noindent\sc{Keywords}:
-simulation;
+\noindent{\sc Keywords}:
+dependent data; gsimulation
 \end{abstract}
 
+\doublespace
 
 \jy{Practice my writing tips on latex (e.g., keep line width under 80; use
   double blank lines to separate paragraphs; etc.):
   \url{
-https://statds.github.io/stat-writing/using-the-right-tools-for-writing.html}}
+https://statds.github.io/stat-writing/using-the-right-tools-for-writing.html},
+  chapter 2}
 
 \jy{turn on the column number mode of your editor. Keep the width to under 80.}
 
@@ -94,44 +94,53 @@ https://statds.github.io/stat-writing/using-the-right-tools-for-writing.html}}
 \section{Introduction}
 \label{sec:intro}
 
-Block bootstrap is an important tool for constructing confidence intervals when
+Block bootstrap is a powerful tool for constructing confidence intervals when
 making inferences about dependent data. Early ideas were developed
 independently by \citet{hall1985resampling}, \citet{carlstein1986use}, and 
-\citet{kunsch1989jackknife}. % \citet{radovanov2014comparison}
-It has been applied to a variety of different domains such 
-as econometrics \citep{mackinnon2006bootstrap} and meteorology
-\citep{varga2017generalised}. It is particularly useful for serially dependent
-data when the serial dependence is not specified or of not primary interest.
-As the sample size goes to infinity, block bootstrap confidence intervals are
-expected to have coverage rates matching their nominal levels. For finite
-sample sizes, however, a natural question is, how large a sample size is large
-enough for block bootstrap confidence intervals to have the desired coverage
-rates?
+\citet{kunsch1989jackknife}.
+It has since been applied in various fields such as econometrics
+\citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}.
+Block bootstrap is particularly useful for serially dependent
+data when the serial dependence is not specified or not of primary interest.
+The method is expected to produce confidence intervals with coverage rates
+matching their nominal levels as the sample size grows to infinity. However,
+when dealing with finite sample sizes, an important question is how large the
+sample size needs to be for block bootstrap confidence intervals to have the
+desired coverage rates.
 
 
-\citet{hesterberg2015teachers} notes that while percentile-based confidence
-intervals from basic nonparametric bootstrap (simple resampling with no blocks
-involved) are more accurate than t-intervals for larger sample sizes, they are
-less accurate for smaller sample sizes. \citet{nevitt2001performance} find
-that a sample size of 200-1000 is usually sufficient for interval estimation
-using basic nonparametric bootstrap. \citet{goncalves2005bootstrap} found that
-standard error estimates from block bootstrap small samples may be
-significantly more accurate than inference from closed-form asymptotic
-estimates. That study focused on the estimation of a coefficient parameter
-within the context of linear regression. Still, the block bootstrap percentile
-confidence intervals under-covered the parameter even for n = 1024. 
+The necessary sample size for bootstrap standard errors to provide valid
+uncertainty measures in practice has not been extensively studied. For
+independent data and non-block bootstrap, \citet{hesterberg2015teachers} notes
+that while percentile-based confidence intervals from nonparametric bootstrap
+are more accurate than $t$-intervals for larger sample sizes, they are
+less accurate for smaller sample sizes. In the contect of structural equation
+modeling, \citet{nevitt2001performance} find
+that a sample size of 200--1000 is usually sufficient for interval estimation
+using standard nonparametric bootstrap. For dependent data, the necessary sample
+size for block bootstrap is even less clear. In a linear regression setting with
+dependent data, \citet{goncalves2005bootstrap} find that, standard error
+estimates from block bootstrap in small samples may be more accurate than
+inference from closed-form asymptotic estimates, but block bootstrap percentile
+confidence intervals still do not have sufficient coverage even for sample size
+$n = 1024$.
 
 
-While the aforementioned studies have looked into the necessary sample size
-for various bootstrap methods to make inferences about various types of data,
-the goal of this study is to find a threshold or range of sample sizes at
-which block bootstrap is an effective method for estimating a parameter
-specifically in the context of a time series. The method can be considered
-effective if the rate at which confidence intervals created from samples of
-the same size recover the parameter is approximately equal to the nominal
-confidence level. This study will focus on estimating parameters of an AR(1)
-process with two types of block bootstrap confidence intervals from the
-literature \citep{diciccio1996bootstrap} \citep{rice2006mathematical}. How
+The goal of this paper is to provide some practical recommendations on necessary
+sample size for block bootstrap with dependent data. We consider a simple
+situation of a stationary time series, where the parameters of interests are the
+mean, standard deviation, and the first-order autocorrelation coefficient.
+We compare four variants of confidence intervals from block bootstrap:
+\jy{list them} literature \citep{diciccio1996bootstrap}
+\citep{rice2006mathematical}.
+Their empirical coverage rates at different sample sizes and dependence levels
+are compared in a simulation study.
+\jy{may reveal the most interesting result here to engage interests.}
+
+
+
+The remainder of the papers is organized as follows.
+\jy{refer to sections by label instead of hard number}
 these intervals are constructed as well as the general procedure for block
 bootstrap parameter estimation is reviewed in Section 2. Section 3 offers an
 explanation of the simulation design and results. Section 4 discusses the main
@@ -139,7 +148,7 @@ takeaways from the results, how these findings could be useful, and possible
 future explorations.
 
 
-\section{Review of Block Bootstrap}
+\section{Block Bootstrap Confidence Intervals}
 \label{sec:blkbootreview}
 
 Block bootstrap is a method that can be used to estimate a parameter of
