@@ -156,5 +156,15 @@
 • Make lines not as wide
 • Remove extra caption
 
+3/2 Notes
+• Review how block bootstrap is done
+• Overlapping block and non-overlapping blocks
+• Find reference that there is no significant difference
+• tsboot needs to be cited
+• Include basic percentile interval as third interval
+• Layout three intervals in section 3
+• Greek symbols for plots
+• Three figures, one for mu, one for sigma, one for phi
+• 3 columns for levels of phi, and 5 rows for method
 
 
