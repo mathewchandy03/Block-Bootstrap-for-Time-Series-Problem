@@ -47,7 +47,8 @@
 \newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
 
 
-\title{How Large a Sample Size is Needed for Block Bootstrap Confidence Intrvals
+\title{How Large a Sample Size is Needed for Block Bootstrap Confidence
+  Intervals
   to Have Desired Coverage Rates?}
 
 \author{Mathew Chandy
@@ -126,26 +127,28 @@ confidence intervals still do not have sufficient coverage even for sample size
 $n = 1024$.
 
 
-The goal of this paper is to provide some practical recommendations on necessary
-sample size for block bootstrap with dependent data. We consider a simple
-situation of a stationary time series, where the parameters of interests are the
-mean, standard deviation, and the first-order autocorrelation coefficient.
-We compare four variants of confidence intervals from block bootstrap:
-\jy{list them} literature \citep{diciccio1996bootstrap}
-\citep{rice2006mathematical}.
-Their empirical coverage rates at different sample sizes and dependence levels
-are compared in a simulation study.
-\jy{may reveal the most interesting result here to engage interests.}
+The goal of this paper is to provide some practical recommendations on
+necessary sample size for block bootstrap with dependent data. We consider a
+simple situation of a stationary time series, where the parameters of
+interests are the mean, standard deviation, and the first-order
+autocorrelation coefficient. We compare three variants of block bootstrap
+confidence intervals from the literature \citep{diciccio1996bootstrap}
+\citep{rice2006mathematical}: a basic percentile interval, a percentile
+interval centered around the original estimate, and a bias-corrected and
+accelerated ($BC_a$) interval also centered around the original estimate. Their
+empirical coverage rates at different sample sizes and dependence levels are
+compared in a simulation study. The results of this study suggest that
+appropriate recovery of temporal dependence parameters is heavily dependent on
+the type of interval used.
 
 
-
-The remainder of the papers is organized as follows.
-\jy{refer to sections by label instead of hard number}
-these intervals are constructed as well as the general procedure for block
-bootstrap parameter estimation is reviewed in Section 2. Section 3 offers an
-explanation of the simulation design and results. Section 4 discusses the main
-takeaways from the results, how these findings could be useful, and possible
-future explorations.
+The remainder of the papers is organized as follows:
+The Block Bootstrap Confidence Intervals section reviews how these intervals
+are constructed as well as the general procedure for block bootstrap parameter
+estimation. The Simulation Study section offers an explanation of the
+simulation design and results. Finally, the Concluding Remarks section
+discusses the main takeaways from the results, how these findings could be
+useful, and possible future explorations.
 
 
 \section{Block Bootstrap Confidence Intervals}
@@ -183,32 +186,64 @@ to be some variability between each pseudo-sample. Ideally, as $n$ increases,
 $l$ should also increase, but $l / n$ should decrease. To achieve this, $l$ is
 often assigned a value as a function of $n$. A common function that is
 considered the best by much previous literature is $l = \lceil n^{1/3} \rceil$
-\citep{buhlmann1999block}. The designer of the study can choose whether the
-blocks overlap or not. If the blocks do not overlap, it is called a non-moving
-block bootstrap. In this case, the original sample is split evenly into
-blocks, which will then be resampled to create new pseudo-samples. If the
-blocks do overlap, it is called a moving block bootstrap. Blocks are resampled
-randomly from the original sample, but they do not have to be from a set of
-evenly spaced blocks. For moving block bootstrap, if $l \vert n$, a
-bootstrapped pseudo-sample is created by taking a sample of $n / l$ blocks of
-size $l$ with replacement to create a new pseudo-sample of size $n$. If
-$l does not divide n$, the pseudo-sample is created by taking a sample of
-$\lfloor n / l \rfloor$ blocks of size $l$ and one block of size
-$(n \;\mathrm{mod})\; l$. An estimate $\hat\theta_n^*$ is computed from the
-pseudo-sample. This procedure can be repeated many times to create a
-distribution of $\hat\theta_n^*$. 
+\citep{buhlmann1999block}.
+
+
+The designer of the study can choose whether the blocks overlap or not. If the
+blocks do not overlap, it is called non-overlapping or non-moving block
+bootstrap. In this case, blocks are resample randomly from the set of all
+non-overlapping blocks of size $l$. For non-moving block bootstrap, $l \vert n$
+must always be true. In this case, a set of $n / l$ non-overlapping blocks of
+size $l$ is constructed from the original sample. Each bootstrapped
+pseudo-sample is created by sampling $n / l$ blocks with replacement from the
+same set.
+
+If the blocks do overlap, it is called overlapping or moving block bootstrap.
+In this case, blocks are resampled randomly from the set of all possible
+blocks of size $l$. For moving block bootstrap, $l \vert n$ is not a necessary
+condition. The set of available blocks is created by iterating through each
+observation $i$ in the original sample and adding to the set the block of size
+$l$ that begins with $i$. This set can limited to blocks that end with an
+$i <= n$, meaning that $n - l + 1$ blocks are availabe to resample from, or it
+can be expanded to include blocks that ``wrap around'': in
+other words, blocks that end with a lesser index than the index they began
+with, meaning that $n$ blocks are available to resample from. If $l \vert n$,
+a bootstrapped pseudo-sample is created by taking a sample of $n / l$ blocks
+from the set with replacement to create a new pseudo-sample of size $n$. If
+$l does not divide n$, the last block selected will be reduced in size so that
+the final size of the pseudo-sample is $n$. Moving block bootstrap was used in
+this study as it has been found to yield the lowest error in general
+\citep{radovanov2014comparison}. The set of available was not limited as
+described above.
+
+An estimate $\hat\theta_n^*$ is computed from the pseudo-sample. This
+procedure can be repeated many times to create a distribution of
+$\hat\theta_n^*$. 
 
 
 In this study, 1000 $\hat\theta_n^*$ were created for one simulation of block
-bootstrap estimation. Using this distribution of $\hat\theta_n^*$, a
-$1 - \alpha$/2 \% confidence interval for the parameter can be constructed. 
-The most simplistic method for constructing this interval is the percentile
-confidence interval. For a parameter $\theta$, the percentile $1 - \alpha$/2
-\% confidence interval takes the form: 
+bootstrap estimation. Using this distribution of $\hat\theta_n^*$, several
+variants of a $1 - \alpha$/2 \% confidence interval for the parameter can be
+constructed. The most simplistic method for constructing this interval is the
+basic percentile confidence interval. For a parameter $\theta$, the percentile
+$1 - \alpha$/2 \% confidence interval takes the form: 
 \[ [\hat\theta_{n, \alpha/2}^*, \hat\theta_{n, 1 - \alpha/2}^*].\] 
-Another method is the bias-corrected and accelerated 
-(BCA) $1 - \alpha$/2 \% confidence interval, which takes the form: 
-\[ [\hat\theta_{n, \alpha_1}^*,\hat\theta_{n, \alpha_2}^*].\] 
+	
+This interval works well when attempting to recover the mean and
+standard deviation of a temporally dependent process, but its coverage of
+the temporal dependence deteriorates as $n$ increases. A potential solution to
+this issue is to center the intervals around $\hat{\theta}_{n}$. To do this,
+the distribution of $\delta^*$ should be considered. For a parameter $\theta$,
+the $\hat{\theta}_{n}$-centered $1 - \alpha$/2 \% confidence interval takes
+the form:
+\[ [\hat{\theta}_{n} + \delta^*_{\alpha/2},
+  \hat{\theta}_{n} + \delta^*_{1 - \alpha/2}].\] 
+  
+An alternative method is a $BC_a$ interval centered around $\hat{\theta}_{n}$.
+For a parameter $\theta$, the $BC_a$ $1 - \alpha$/2 \% confidence interval
+takes the form:
+\[ [\hat{\theta}_{n} + \delta^*_{\alpha_1},
+  \hat{\theta}_{n} + \delta^*_{\alpha_2}].\] 
 $\alpha_{1}$ and $\alpha_{2}$ are the cumulative probability of $z_{1}$ and
 $z_{2}$, respectively, where:
 \[z_{1} = \frac{z_{0} - z_{1 - \alpha/2}}{1 - a(z_{0} - z_{1 - \alpha/2})} +
@@ -216,42 +251,27 @@ z_{0}\] and
 \[z_{2} = \frac{z_{0} + z_{1 - \alpha/2}}{1 - a(z_{0} + z_{1 - \alpha/2})} +
 z_{0}.\] 
 Where $z_0$ is the quantile function of the proportion of
-$\hat\theta_n^* < \bar\theta_n^*$, and $a$ is the skewness of
+$\hat\theta_n^* < \bar\theta_n^*$, and $a$ is the skewness (computed using
+the skewness function from the R e1071 package \citep{e1071}) of
 $\hat{\theta}_{n, -i}$, where $\hat{\theta}_{n, -i}$ is the statistic of the
 original sample computed without the $i^{th}$ block.
-	
-	
-Both of these intervals work well when attempting to recover the mean and
-standard deviation of a temporally dependent process, but their coverage of
-the temporal dependence deteriorates as $n$ increases. A potential solution to
-this issue is to center the intervals $\hat{\theta}_{n}$. To do this, the
-distribution $\delta^*$ should be considered. A percentile interval centered
-around $\hat{\theta}_{n}$ ($CI_{\hat{\theta}_{n}}$) takes the form:
-\[ [\hat{\theta}_{n} + \delta^*_{\alpha/2},
-  \hat{\theta}_{n} + \delta^*_{1 - \alpha/2}].\] 
-This centering procedure can also be applied to a BCA interval. A BCA interval
-centered around $\hat{\theta}_{n}$ ($CI_{BCA, \hat{\theta}_{n}}$) takes the
-form:
-\[ [\hat{\theta}_{n} + \delta^*_{\alpha_1},
-  \hat{\theta}_{n} + \delta^*_{\alpha_2}].\] 
 
 
-Thus, there are two types of intervals that can be constructed for block
-bootstrap estimation in this study: $CI_{\hat{\theta}_{n}}$ and
-$CI_{BCA, \hat{\theta}_{n}}$. Note that both of these intervals are centered
-around $\hat{\theta}_{n}$ and asymmetric. 
+Thus, there are three types of intervals that can be constructed for block
+bootstrap estimation in this study: Percentile, $\hat{\theta}_{n}$-Centered,
+and $BC_a$. 
 
 
 \section{Simulation Study}
 \label{sec:simstudy}
 
 
-Base R has a built in function arima.sim that allows one to simulate an AR(1)
-process, for which one can set the theoretical $\phi$. By default, the mean of
-the process $\mu$ is 0 and the standard deviation of the error term
-$\sigma_{\epsilon}$ is 1. For the purposes of this study, the standard
-deviation of the process $\sigma_{x}$ should be controlled at 1. The
-observations can be multiplied by $\sqrt{1 - \phi^2}$ so that the new
+The Base R stats package has a built in function arima.sim that allows one to
+simulate an AR(1) process, for which one can set the theoretical $\phi$
+\citep{R}. By default, the mean of the process $\mu$ is 0 and the standard
+deviation of the error term $\sigma_{\epsilon}$ is 1. For the purposes of this
+study, the standard deviation of the process $\sigma_{x}$ should be controlled
+at 1. The observations can be multiplied by $\sqrt{1 - \phi^2}$ so that the new
 theoretical $\sigma_{x}$ is equivalent to 1, as shown below:
 \begin{align}
 X_{t} &= \epsilon_{t} + \phi X_{t-1};\\
@@ -265,19 +285,19 @@ affects the performance of block bootstrap.
 $\phi \in \{-0.4 -0.2, 0, 0.2, 0.4\}$.
 
 
-
 As described in the last section, the block bootstrap method can be used to
 estimate a parameter $\theta$ of an AR(1) process. This method can be
-simulated with the tsboot function from the boot R package. In this study,
-$\theta$ is composed of the target parameters $\mu = 0$, $\sigma_{x}$, and
-$\phi$. The sample mean $\bar{x}$ can be used as the statistic to estimate
-$\mu$, the sample standard deviation $S_x$ can be used as the statistic to
-estimate $\sigma$, and the autocorrelation function of the sample at lag 1
-$\rho_1$ can be used as the statistic to estimate $\phi$. In the R
-implementation, these three statistics are incorporated into a function that
-will apply each statistic to the original sample and to each bootstrapped
-pseudo-sample. From a sample of length $n$, two types of block bootstrap 95\%
-confidence intervals can be constructed for each target parameter:
+simulated with the tsboot function from the R boot package \citep{boot}
+\citep{davison}. In this study, $\theta$ is composed of the target parameters
+$\mu = 0$, $\sigma_{x}$, and $\phi$. The sample mean $\bar{x}$ can be used as
+the statistic to estimate $\mu$, the sample standard deviation $S_x$ can be
+used as the statistic to estimate $\sigma$, and the autocorrelation function
+of the sample at lag 1 $\rho_1$ can be used as the statistic to estimate
+$\phi$. In the R implementation, these three statistics are incorporated into
+a function that will apply each statistic to the original sample and to each
+bootstrapped pseudo-sample. From a sample of length $n$, two types of block
+bootstrap 95\% confidence intervals can be constructed for each target
+parameter:
 $CI_{\hat{\theta}_{n}}$ and $CI_{BCA, \hat{\theta}_{n}}$.
 
 
@@ -303,7 +323,7 @@ necessary, assuming that performance will improve as $n$ is increased. $n =$
 the goal of this study is to find the smallest $n$ which is sufficient for
 proper coverage. 
 
-
+The figures below were created using the R ggplot2 package \citep{ggplot2}.
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/plot_n.4}
