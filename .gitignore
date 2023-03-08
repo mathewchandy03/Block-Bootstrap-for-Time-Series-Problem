@@ -29,3 +29,8 @@ code/*/*
 
 .vscode
 .DS_Store
+.RData
+.Rapp.history
+.Rhistory
+
+Old_Files/
