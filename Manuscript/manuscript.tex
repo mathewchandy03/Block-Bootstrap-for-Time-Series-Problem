@@ -288,20 +288,22 @@ $\phi \in \{-0.4 -0.2, 0, 0.2, 0.4\}$.
 As described in the last section, the block bootstrap method can be used to
 estimate a parameter $\theta$ of an AR(1) process. This method can be
 simulated with the tsboot function from the R boot package \citep{boot}
-\citep{davison}. In this study, $\theta$ is composed of the target parameters
+\citep{davison1997bootstrap}. In this study, $\theta$ is composed of the target parameters
 $\mu = 0$, $\sigma_{x}$, and $\phi$. The sample mean $\bar{x}$ can be used as
 the statistic to estimate $\mu$, the sample standard deviation $S_x$ can be
 used as the statistic to estimate $\sigma$, and the autocorrelation function
 of the sample at lag 1 $\rho_1$ can be used as the statistic to estimate
 $\phi$. In the R implementation, these three statistics are incorporated into
 a function that will apply each statistic to the original sample and to each
-bootstrapped pseudo-sample. From a sample of length $n$, two types of block
+bootstrapped pseudo-sample. From a sample of length $n$, three types of block
 bootstrap 95\% confidence intervals can be constructed for each target
 parameter:
-$CI_{\hat{\theta}_{n}}$ and $CI_{BCA, \hat{\theta}_{n}}$.
+Percentile, $\hat{\theta}_{n}$-Centered,
+and $BC_a$.
 
 
-Each of these 6 intervals either recovers $\theta$ or does not. Remember that
+
+Each of these 9 intervals either recovers $\theta$ or does not. Remember that
 95\% of many of a certain type of 95\% confidence intervals constructed from
 samples of the same $n$ should recover $\theta$. To see if this is
 approximately the case, one can run 1000 replications of the block bootstrap
@@ -323,89 +325,53 @@ necessary, assuming that performance will improve as $n$ is increased. $n =$
 the goal of this study is to find the smallest $n$ which is sufficient for
 proper coverage. 
 
-The figures below were created using the R ggplot2 package \citep{ggplot2}.
+
+The figures below which are grouped by the target $\theta$  were created using
+the R ggplot2 package \citep{ggplot2}.
+
+
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_n.4}
-  \caption{At $\phi = -.4$, both intervals covered $\mu$ correctly as low as
-    $n = 100$. $CI_{\hat{\theta}_{n}}$ seems to cover $\sigma$ well as low as
-    $n = 400$. $CI_{BCA, \hat{\theta}_{n}}$ under-covers $\sigma$, but there
-    is no clear pattern of deterioration of coverage, so one can expect that
-    increasing $n$ will eventually result in proper coverage of $\sigma$.
-    $CI_{\hat{\theta}_{n}}$ covers $\phi$ well with no deterioration, and this
-    is true as low as $n = 200$. $CI_{BCA, \hat{\theta}_{n}}$ greatly
-    under-covers $\phi$, and there is a clear pattern of deterioration of
-    coverage.}
-  \label{fig:plot_n.4}
+  \includegraphics[width=\textwidth]{figures/plot_mu}
+  \caption{At $\phi = -.4, -.2$, all intervals seem to cover $\mu$ correctly
+    as low as $n = 100$. At $\phi = 0$, an $n$ of 500 seems large enough to
+    cover $\mu$ acceptably regardless of interval type. At $\phi = .2$,
+    $n = 300$ seems to be sufficient to appropriately recover $\mu$ for all
+    intervals. A much larger $n$ seems to be necessary to recover $\mu$ at a
+    $\phi$ as high as $.4$.}
+  \label{fig:plot_mu}
 \end{figure}
 
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_n.2}
-  \caption{At $\phi = -.2$, both intervals covered $\mu$ correctly as low as
-    $n = 100$. Both intervals seem to cover $\sigma$ generally well, although
-    $CI_{BCA, \hat{\theta}_{n}}$ has somewhat lower coverage rates.
-    $CI_{\hat{\theta}_{n}}$ covers $\phi$ well with no deterioration of
-    coverage, and this is true as low as $n = 200$.
-    $CI_{BCA, \hat{\theta}_{n}}$ greatly under-covers $\phi$, and there is a
-    clear coverage deterioration trend as $n$ increases.}
-  \label{fig:plot_n.2}
+  \includegraphics[width=\textwidth]{figures/plot_sigma}
+  \caption{At $\phi = -.4$, the percentile and the
+    $\hat{\theta}_{n}$-centered intervals recovered $\mu$ well as low as
+    $n = 400$, whereas the $BC_a$ interval undercovered $\mu$ for all $n$
+    observed. At $\phi = -.2$, the percentile and the
+    $\hat{\theta}_{n}$-centered intervals recovered $\mu$ well as low as
+    $n = 500$, but the $BC_a$ coverage rates were lower.}
+  \label{fig:plot_sigma}
 \end{figure}
 
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_0}
-  \caption{At $\phi = 0$, both intervals covered $\mu$ correctly as low as
-    $n = 500$. $CI_{\hat{\theta}_{n}}$ seems to cover $\sigma$ well as low as 
-    $n = 400$. $CI_{BCA, \hat{\theta}_{n}}$ slightly under-covers $\sigma$, but
-    there is no clear pattern of deterioration of coverage, so one can expect
-    that increasing $n$ will eventually result in proper coverage of $\sigma$.
-    $CI_{\hat{\theta}_{n}}$ seems to cover $\phi$ generally well at $n = 400$,
-    but $CI_{BCA, \hat{\theta}_{n}}$ under-covers $\phi$, although the
-    method's performance seems to improve as $n$ increases.}
-  \label{fig:plot_0}
+  \includegraphics[width=\textwidth]{figures/plot_phi}
+  \caption{}
+  \label{fig:plot_phi}
 \end{figure}
 
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_.2}
-  \caption{At $\phi = .2$, both intervals covered $\mu$ correctly as low as
-    $n = 300$. Both intervals seem to cover $\sigma$ generally well, although
-    $CI_{BCA, \hat{\theta}_{n}}$ has somewhat lower coverage rates.
-    $CI_{\hat{\theta}_{n}}$ covers $\phi$ well with no deterioration of
-    coverage, and this is true as low as $n = 200$.
-    $CI_{BCA, \hat{\theta}_{n}}$ greatly under-covers $\phi$, but there is no
-    clear coverage deterioration trend as $n$ increases.}
-  \label{fig:plot_.2}
-\end{figure}
-
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_.4}
-  \caption{At $\phi = .4$, both intervals seem to cover $\mu$ generally well
-    as low as $n = 400$. $CI_{\hat{\theta}_{n}}$ covers $\sigma$ well as low
-    as $n = 400$. $CI_{BCA, \hat{\theta}_{n}}$ under-covers $\sigma$, but
-    there is no clear sign of coverage deterioration, so one can expect that
-    increasing $n$ will eventually result in proper coverage of $\sigma$.
-    $CI_{\hat{\theta}_{n}}$ covers $\phi$ well with no deterioration of
-    coverage, and this is true as low as $n = 200$.
-    $CI_{BCA, \hat{\theta}_{n}}$ greatly under-covers $\phi$ with a clear
-    coverage deterioration trend as $n$ increases.}
-  \label{fig:plot_.4}
-\end{figure}
-
-
-As shown in the above figures, only $CI_{\hat{\theta}_{n}}$ managed to solve
-the deterioration problem with respect to recovering $\phi$, indicating that
-this interval should be used as opposed to the more complex
-$CI_{BCA, \hat{\theta}_{n}}$ when estimating $\phi$. Increasing $n$ will not
-fix the performance of $CI_{BCA, \hat{\theta}_{n}}$ because the assumption that
-the coverage rate will approach an upper limit of .95 as $n$ increases is
-invalid. As expected for $CI_{\hat{\theta}_{n}}$, a higher $\phi$ demands a
+As shown in the above figures, only $\hat{\theta}_{n}$-centered intervals
+managed to solve the deterioration problem with respect to recovering $\phi$,
+indicating that this interval should be used as opposed to the uncentered
+percentile interval or the more complex $BC_a$ interval when estimating
+$\phi$. Increasing $n$ will not fix the performance of either of these
+intervals because the assumption that the coverage rate will approach an upper
+limit of .95 as $n$ increases is invalid. As expected for
+$\hat{\theta}_{n}$-centered intervals, a higher positive $\phi$ demands a
 larger $n$ to estimate all parameters, but a negative $\phi$ may require a
 lesser $n$. For example, for both $\phi = 0.2$ and $0.4$, $n = 100$ was
 sufficient to recover $\mu$ at a rate of approximately 95\%.
@@ -422,17 +388,17 @@ time series at an acceptable rate. Again, this relies on the assumption that
 there is a size $n$ large enough for the method to work: that is, the method's
 performance improves as $n$ increases. Out of the two types of intervals used
 in this study, this assumption was found to hold true with respect to
-estimating $\phi$ only for $CI_{\hat{\theta}_{n}}$, whereas
-$CI_{BCA, \hat{\theta}_{n}}$ exhibited coverage deterioration as $n$
-increased. When using $CI_{\hat{\theta}_{n}}$ and $\phi$ is unknown, the
-results of this study suggest that an $n$ of around 500 may be necessary to
-estimate $\mu$, and an $n$ of around 400 may be necessary to estimate
-$\sigma$. If $\phi$ is already known, a lesser $n$ may be adequate to estimate
-these parameters. When $\phi$ was negative, a $n$ of around 100 was sufficient
-to estimate $\mu$. However, in real world applications, $\phi$ is more
-commonly found to be positive, so a larger $n$ is more likely to be necessary.
-Lastly, to estimate $\phi$, an $n$ of around 400 may be necessary. This
-information could prove to be useful for researching using block bootstrap
+estimating $\phi$ only for $\hat{\theta}_{n}$-centered intervals, whereas both
+percentile $BC_a$ intervals exhibited coverage deterioration as $n$
+increased. When using $\hat{\theta}_{n}$-centered intervals and $\phi$ is
+unknown, the results of this study suggest that an $n$ of around 500 may be
+necessary to estimate $\mu$, and an $n$ of around 400 may be necessary to
+estimate $\sigma$. If $\phi$ is already known, a lesser $n$ may be adequate to
+estimate these parameters. When $\phi$ was negative, a $n$ of around 100 was
+sufficient to estimate $\mu$. However, in real world applications, $\phi$ is
+more commonly found to be positive, so a larger $n$ is more likely to be
+necessary. Lastly, to estimate $\phi$, an $n$ of around 400 may be necessary.
+This information could prove to be useful for researching using block bootstrap
 estimation of time series in domains such as econometrics. Future studies
 could investigate if there are types of block bootstrap intervals
 constructions that would more appropriately recover the parameters of a time
