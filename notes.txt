@@ -167,4 +167,10 @@
 • Three figures, one for mu, one for sigma, one for phi
 • 3 columns for levels of phi, and 5 rows for method
 
+3/9 Notes
+• Captions should say what the graphs are, not takeaways
+• Say what each figure is for and what is it supposed to show
+• Series X_1 to X_n, then set up blocks
+• Two references in citep
+• Don't include the book
 
