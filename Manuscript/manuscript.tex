@@ -297,42 +297,41 @@ and $BC_a$.
 \section{Simulation Study}
 \label{sec:simstudy}
 
-
-The Base R stats package has a built in function arima.sim that allows one to
-simulate an AR(1) process, for which one can set the theoretical $\phi$
-\citep{R}. By default, the mean of the process $\mu$ is 0 and the standard
-deviation of the error term $\sigma_{\epsilon}$ is 1. For the purposes of this
-study, the standard deviation of the process $\sigma_{x}$ should be controlled
-at 1. The observations can be multiplied by $\sqrt{1 - \phi^2}$ so that the new
-theoretical $\sigma_{x}$ is equivalent to 1, as shown below:
-\begin{align}
-X_{t} &= \epsilon_{t} + \phi X_{t-1};\\
-Var(X_{t}) &= Var(\epsilon_{t} + \phi X_{t-1});\\
-\sigma^2_{x} &= \sigma^2_{\epsilon} + \phi^2 \sigma^2_{x};\\
-\sigma^2_{x}(1 - \phi^2) &= 1;\\
-\sigma_{x}\sqrt{1 - \phi^2} &= 1.
-\end{align}
-The experimental factor of this study was $\phi$, as the temporal dependence
-affects the performance of block bootstrap.
-$\phi \in \{-0.4 -0.2, 0, 0.2, 0.4\}$.
+We designed a simulation study to compare the performance of the different block
+bootstrap confidence intervals. In particular, we generated time series $X_t$
+from a 1st order auto-regressive (AR1) process:
+\[
+X_t = \phi X_{t-1} + \epsilon_t,
+\]
+where $\phi$ is an auto-regressive coefficient, and $\epsilon_t$ is a series of
+independent errors from a normal distribution with mean zero and variance
+$\sigma_{\epsilon}^2$. The strength of the serial dependence is controlled by
+$\phi$, which was set to five levels: $\{-0.4, -0.2, 0.0, 0.2, 0.4\}$.
+The series $X_t$ has mean zero and variance
+$\sigma_x^2 = (1 - \phi^2) \sigma_{\epsilon}^2$, so for each value of $\phi$, we
+set $\sigma_{\epsilon}^2 = 1 / (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
 
 
-As described in the last section, the block bootstrap method can be used to
-estimate a parameter $\theta$ of an AR(1) process. This method can be
-simulated with the tsboot function from the R boot package \citep{boot}
-\citep{davison1997bootstrap}. In this study, $\theta$ is composed of the target parameters
-$\mu = 0$, $\sigma_{x}$, and $\phi$. The sample mean $\bar{x}$ can be used as
-the statistic to estimate $\mu$, the sample standard deviation $S_x$ can be
-used as the statistic to estimate $\sigma$, and the autocorrelation function
-of the sample at lag 1 $\rho_1$ can be used as the statistic to estimate
-$\phi$. In the R implementation, these three statistics are incorporated into
-a function that will apply each statistic to the original sample and to each
-bootstrapped pseudo-sample. From a sample of length $n$, three types of block
-bootstrap 95\% confidence intervals can be constructed for each target
-parameter:
-Percentile, $\hat{\theta}_{n}$-Centered,
-and $BC_a$.
+Three target parameters of $X_t$ were considered:
+1) $\mu = 0$, the mean of $X_t$;
+2) $\sigma_x^2 = 1$, the variance of $X_t$; and
+2) $\phi$, the lag-1 auto-correlation coefficient.
+To investigate the effect of sample size~$n$, we considered an array of values
+$n \in \{100, 200, \ldots, 1000\}$. In each configuration, we genrated 1000
+replicates. For each replicate, we constructed three 95\% block bootstrap
+confidence intervals for each parameter as described in the last section, and
+estimated their actual coverage rates along with their 95\% confidence
+intervals from the 1000 replicates. The block bootstrap sampling step was done
+with function \texttt{tsboot} from R package \textsl{boot} \citep{boot}, with
+block size \jy{size? also it was overlapping blocks. Describe the details here.}
+The results are graphically displayed in Figures~\ref{fig:mu}--\ref{fig:phi}.
 
+
+
+\jy{One paragraph for each parameter; write down your observations in bullet
+  points and then organize them into a logically flowing paragraph.}
+
+\jy{One summary paragraph at the end.}
 
 
 Each of these 9 intervals either recovers $\theta$ or does not. Remember that
@@ -412,6 +411,14 @@ sufficient to recover $\mu$ at a rate of approximately 95\%.
 \section{Concluding Remarks}
 \label{sec:conremarks}
 
+\jy{Discussion points:
+  1) common practice on block bootstrap even for simple parameter such as the
+  mean;
+  2) further investigation needed for phi;
+  3) impact on applied statsitics courses; student reactions (Dr. Schifano).
+}
+
+
 The motivation for the study is the idea that block bootstrap procedure will
 perfectly estimate a parameter of a time series given an infinitely large
 sample. The goal for this study was to find what is a good enough finite
@@ -439,7 +446,7 @@ other forms of serially dependent data such as an MA process.
 
 
 \bibliographystyle{chicago}
-\bibliography{citations}[tp]
+\bibliography{citations}
 
 \end{document}
 
