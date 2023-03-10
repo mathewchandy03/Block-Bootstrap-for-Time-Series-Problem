@@ -47,14 +47,13 @@
 \newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
 
 
-\title{How Large a Sample Size is Needed for Block Bootstrap Confidence
-  Intervals
-  to Have Desired Coverage Rates?}
+\title{On Sample Size for Block Bootstrap Confidence Intervals 
+  to Have Desired Coverage Rates}
 
 \author{Mathew Chandy
 %   \href{mailto:mathew.chandy@uconn.edu}
 % {\nolinkurl{mathew.chandy@uconn.edu}}\\
-  \and Jun Yan\\[1ex]
+  and Jun Yan\\[1ex]
   Department of Statistics, University of Connecticut\\
 }
 \date{}
@@ -132,9 +131,9 @@ necessary sample size for block bootstrap with dependent data. We consider a
 simple situation of a stationary time series, where the parameters of
 interests are the mean, standard deviation, and the first-order
 autocorrelation coefficient. We compare three variants of block bootstrap
-confidence intervals from the literature \citep{diciccio1996bootstrap}
-\citep{rice2006mathematical}: a basic percentile interval, a percentile
-interval centered around the original estimate, and a bias-corrected and
+confidence intervals from the literature \citep{diciccio1996bootstrap,
+  rice2006mathematical}: a basic percentile interval, a percentile
+interval centered around the estimate, and a bias-corrected and
 accelerated ($BC_a$) interval also centered around the original estimate. Their
 empirical coverage rates at different sample sizes and dependence levels are
 compared in a simulation study. The results of this study suggest that
@@ -154,15 +153,48 @@ useful, and possible future explorations.
 \section{Block Bootstrap Confidence Intervals}
 \label{sec:blkbootreview}
 
-\jy{set up notations for sample; give the algorithm to perform bootstrap
-  procedure}
+Consider a stationary time series $\{X_t: t = 1, \ldots, n\}$ with length~$n$.
+Our goal is to construct a confidence intervals for a parameter $\theta$ in the
+data generating model of the series. Suppose that $\hat\theta_n$ is a point
+estimator of~$\theta$ based on the observed series. Bootstrap is a powerful
+approach to construct confidence intervals. If the observations in the series
+were independent, a standard nonparametric bootstrap procedure would draw a
+large number~$B$ bootstrap copies of the observed data, and calculate an
+estimate $\hat\theta_n^{(b)}$ for each copy $b = 1, \ldots, B$. The uncertainty
+of $\hat\theta_n$ is then estimated by the empirical uncertainty of the
+$\hat\theta_n^{(b)}$'s. When serial dependence is present, the bootstrap
+procedure needs to preserve the serial dependence. Block bootstrap was motivated
+for this situation.
 
-\jy{two subsections: 1) block bootstrap basics; 2) bootstrap CIs. The different
-  CIs should each take a paragraph.}
+\subsection{Draw a Block Bootstrap Sample}
 
-\jy{Needs to distinguish the basic percentile bootstrap and corrected percentile
-  bootstrap. Recall that we had trouble covering phi using the basic percentile
-  method.}
+\jy{Paragraph: describe how to construct one non-overlapping block bootstrap
+  sample.}
+
+\jy{Paragraph: describe how to construct one overlapping block bootstrap.}
+
+\jy{Paragraph: comment on selection block size;
+  mention that the two procedures are both valid with similar performance (cite
+  references to support the claim).}
+
+\subsection{Construct Confidence Intervals}
+
+Suppose that we have repeated the steps in the last subsection $B$ times, and
+that for $b \in \{1, \ldots, B\}$, we have obtained an estimator
+$\hat\theta_n^{(b)}$ based on the $b$th bootstrap sample using the same method
+that was applied to $\{X_t: t = 1, \ldots, n\}$ to obtain $\hat\theta_n$.
+Now the question is, how to construct confidence intervals for $\theta$
+using the $B$ bootstrap point estimates
+$\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$.
+
+
+\jy{Paragraph: bascic percentiles; use the terminologies in the literature.}
+
+\jy{Paragraph: centered.}
+
+\jy{Paragraph: BCa}
+
+
 
 
 Block bootstrap is a method that can be used to estimate a parameter of
