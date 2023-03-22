@@ -67,3 +67,35 @@ hist(data$mv.stat, main = 'Distribution of Sample Means from Moving Block Bootst
 dev.off()
 ```
 
+```{r}
+plot(c(0, 1200), c(600, 1400), type= "n", xlab = "", ylab = "")
+xleft = rep(c(200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100), times = 4)
+ybottom = rep(c(1200, 900, 600, 0), each = 10)
+xright = rep(c(300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200), times = 4)
+ytop = rep(c(1400, 1100, 800, 200), each = 10)
+rect(xleft = xleft, ybottom = ybottom, xright = xright, ytop = ytop)
+rect(xleft = c(200, 500, 900), ybottom = c(1200, 900, 600), xright = c(500, 800, 1200), 
+     ytop = c(1400, 1100, 800), col= rgb(1,0,0,alpha=0.25))
+x = rep(c(250, 350, 450, 550, 650, 750, 850, 950, 1050, 1150), times = 4)
+y = rep(c(1300, 1000, 700, 100), each = 10)
+labels = rep(c('X1', 'X2', 'X3', 'X4', 'X5', 'X6', '...', 'Xn-2', 'Xn-1', 'Xn'), times = 4)
+text(x=x, y=y, labels=labels)
+text(x=100, y=1300, labels='Block 1')
+text(x=100, y=1000, labels='Block 2')
+text(x=100, y=700, labels='Block n/l')
+```
+
+
+
+```{r}
+plot(c(0, 1200), c(0, 1400), type= "n", xlab = "", ylab = "")
+rect(xleft = xleft, ybottom = ybottom, xright = xright, ytop = ytop)
+rect(xleft = c(200, 300, 400, 200, 1100), ybottom = c(1200, 900, 600, 0, 0), xright = c(500, 600, 700, 400, 1200), ytop = c(1400, 1100, 800, 200, 200), col= rgb(1,0,0,alpha=0.25))
+labels = rep(c('X1', 'X2', 'X3', 'X4', 'X5', 'X6', '...', 'Xn-2', 'Xn-1', 'Xn'), times = 4)
+text(x=x, y=y, labels=labels)
+text(x=100, y=1300, labels='Block 1')
+text(x=100, y=1000, labels='Block 2')
+text(x=100, y=700, labels='Block 3')
+text(x=100, y=100, labels='Block n')
+```
+
