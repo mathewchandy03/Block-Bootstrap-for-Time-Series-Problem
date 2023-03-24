@@ -88,31 +88,29 @@ dependent data; gsimulation
 https://statds.github.io/stat-writing/using-the-right-tools-for-writing.html},
   chapter 2}
 
-\jy{turn on the column number mode of your editor. Keep the width to under 80.}
-
 
 \section{Introduction}
 \label{sec:intro}
 
-Block bootstrap is a powerful tool for constructing confidence intervals when
-making inferences about dependent data. Early ideas were developed
+Block bootstrap is a powerful tool for constructing confidence intervals (CI)
+when making inferences about dependent data. Early ideas were developed
 independently by \citet{hall1985resampling}, \citet{carlstein1986use}, and 
 \citet{kunsch1989jackknife}.
 It has since been applied in various fields such as econometrics
 \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}.
 Block bootstrap is particularly useful for serially dependent
 data when the serial dependence is not specified or not of primary interest.
-The method is expected to produce confidence intervals with coverage rates
+The method is expected to produce CIs with coverage rates
 matching their nominal levels as the sample size grows to infinity. However,
 when dealing with finite sample sizes, an important question is how large the
-sample size needs to be for block bootstrap confidence intervals to have the
+sample size needs to be for block bootstrap CIs to have the
 desired coverage rates.
 
 
 The necessary sample size for bootstrap standard errors to provide valid
 uncertainty measures in practice has not been extensively studied. For
 independent data and non-block bootstrap, \citet{hesterberg2015teachers} notes
-that while percentile-based confidence intervals from nonparametric bootstrap
+that while percentile-based CIs from nonparametric bootstrap
 are more accurate than $t$-intervals for larger sample sizes, they are
 less accurate for smaller sample sizes. In the contect of structural equation
 modeling, \citet{nevitt2001performance} find
@@ -122,7 +120,7 @@ size for block bootstrap is even less clear. In a linear regression setting with
 dependent data, \citet{goncalves2005bootstrap} find that, standard error
 estimates from block bootstrap in small samples may be more accurate than
 inference from closed-form asymptotic estimates, but block bootstrap percentile
-confidence intervals still do not have sufficient coverage even for sample size
+CIs still do not have sufficient coverage even for sample size
 $n = 1024$.
 
 
@@ -131,7 +129,7 @@ necessary sample size for block bootstrap with dependent data. We consider a
 simple situation of a stationary time series, where the parameters of
 interests are the mean, standard deviation, and the first-order
 autocorrelation coefficient. We compare three variants of block bootstrap
-confidence intervals from the literature \citep{diciccio1996bootstrap,
+CIs from the literature \citep{diciccio1996bootstrap,
   rice2006mathematical}: a basic percentile interval, a percentile
 interval centered around the estimate, and a bias-corrected and
 accelerated ($BC_a$) interval also centered around the original estimate. Their
@@ -142,7 +140,7 @@ the type of interval used.
 
 
 The remainder of the papers is organized as follows:
-The Block Bootstrap Confidence Intervals section reviews how these intervals
+The Block Bootstrap CIs section reviews how these intervals
 are constructed as well as the general procedure for block bootstrap parameter
 estimation. The Simulation Study section offers an explanation of the
 simulation design and results. Finally, the Concluding Remarks section
@@ -150,14 +148,14 @@ discusses the main takeaways from the results, how these findings could be
 useful, and possible future explorations.
 
 
-\section{Block Bootstrap Confidence Intervals}
+\section{Block Bootstrap CIs}
 \label{sec:blkbootreview}
 
 Consider a stationary time series $\{X_t: t = 1, \ldots, n\}$ with length~$n$.
-Our goal is to construct a confidence intervals for a parameter $\theta$ in the
+Our goal is to construct a CIs for a parameter $\theta$ in the
 data generating model of the series. Suppose that $\hat\theta_n$ is a point
 estimator of~$\theta$ based on the observed series. Bootstrap is a powerful
-approach to construct confidence intervals. If the observations in the series
+approach to construct CIs. If the observations in the series
 were independent, a standard nonparametric bootstrap procedure would draw a
 large number~$B$ bootstrap copies of the observed data, and calculate an
 estimate $\hat\theta_n^{(b)}$ for each copy $b = 1, \ldots, B$. The uncertainty
@@ -167,104 +165,88 @@ procedure needs to preserve the serial dependence. Block bootstrap was
 motivated for this situation. 
 
 
-\subsection{Draw a Block Bootstrap Sample}
+\subsection{Block Bootstrap Sample}
 
-\jy{Paragraph: describe how to construct one non-overlapping block bootstrap
-  sample.}
+Block bootstrap preserves the serial dependence in the observed data by
+partitioning the data into blocks and perform bootstrap on the blocks.
+In particular, consider block size~$l$ and, for convenience, suppose that
+$n$ is a multiple of $l$ such that there are $k = n / l$ blocks. Each block~$j$
+is $Y_j = \{X_{(j - 1) * l + 1}, \ldots, X_{(j - 1) * l + l}\}$,
+$j = 1, \ldots,   k$.  Then, we sample $k$ blocks of $Y_j$'s from the set 
+$\{Y_1, \ldots, Y_k\}$ with replacement and concatenate the $k$ sampled blocks
+in the order they are picked to form a bootstrap sample of the data. The
+formation of the bootstrap sample ensures that the between-block dependence is
+week and that the within-block serial dependence is preserved. Because the
+blocks here are non-overlapping, this bootstrap approach is known as
+non-overlapping block bootstrap, or simple block bootstrap.
 
-The designer of the study can choose whether the blocks overlap or not. If the
-blocks do not overlap, it is called non-overlapping or non-moving block
-bootstrap. In this case, blocks are resample randomly from the set of all
-non-overlapping blocks of size $l$. For non-moving block bootstrap, $l \vert n$
-must always be true. In this case, a set of $n / l$ non-overlapping blocks of
-size $l$ is constructed from the original sample. The set would take the form:
-$\{[X_1, ..., X_l], [X_{l+1}, ..., X_{2l}], ..., [X_{n-l+1}, X_n]\}$. Each
-bootstrapped pseudo-sample is created by sampling $n / l$ blocks with
-replacement from the same set.
 
-
-\jy{Paragraph: describe how to construct one overlapping block bootstrap.}
-
-If the blocks do overlap, it is called overlapping or moving block bootstrap.
-In this case, blocks are resampled randomly from the set of all possible
-blocks of size $l$. For moving block bootstrap, $l \vert n$ is not a necessary
-condition. The set of available blocks is created by iterating through each
-observation $i$ in the original sample and adding to the set the block of size
-$l$ that begins with $i$. This set can limited to blocks that end with an
-$i <= n$, meaning that $n - l + 1$ blocks are available to resample from. This
-set takes the form:
-$\{[X_1, ..., X_l], [X_2, ..., X_{l+1}], ..., [X_{n-l+1}, X_n]\}$. 
-The set can also include blocks that ``wrap around'': in
-other words, blocks that end with a lesser index than the index they began
-with, meaning that $n$ blocks are available to resample from. This set takes
-the form:
-$\{[X_1, ..., X_l], [X_2, ..., X_{l+1}], ..., [X_n, X_{l-1}]\}$.
-If $l \vert n$,
-a bootstrapped pseudo-sample is created by taking a sample of $n / l$ blocks
-from the set with replacement to create a new pseudo-sample of size $n$. If
-$l does not divide n$, the last block selected will be reduced in size so that
-the final size of the pseudo-sample is $n$. Moving block bootstrap was used in
+Alternatively, block-bootstrap can be done with overlapping or moving blocks.
+Define moving blocks $Z_j = \{X_j, \ldots, X_{j + l - 1}\}$,
+$j = 1, \ldots, n - b + 1$. Now we draw $k$ blocks from the $(n - b + 1)$ blocks
+of $Z_j$'s with replacement and then aligning them in the order they were picked
+to form a block bootstrap sample. If $n$ is not a multiple of~$l$, the last
+block selected will be reduced in size so that the final size of the
+block bootstrap sample is $n$. Moving block bootstrap was used in
 this study as it has been found to yield the lowest error in general
-\citep{radovanov2014comparison}. The larger set of available blocks was used. 
+\citep{radovanov2014comparison}. The larger set of available blocks was used.
+\jy{what does the last sentence mean?}
 
-\jy{Paragraph: comment on selection block size;
-  mention that the two procedures are both valid with similar performance (cite
-  references to support the claim).}
 
-The block should be of size $l$ large enough for each
-pseudo-sample to exhibit some temporal dependence, yet small enough for there
-to be some variability between each pseudo-sample. Ideally, as $n$ increases,
+The block size~$l$ needs to chosen with care. It needs to be large enough for
+each bootstrap sample to preserve the serial dependence, yet small enough for
+there to be some variability between each bootstrap sample. As $n$ increases,
 $l$ should also increase, but $l / n$ should decrease. To achieve this, $l$ is
 often assigned a value as a function of $n$. A common function that is
 considered the best by much previous literature is $l = \lceil n^{1/3} \rceil$
 \citep{buhlmann1999block}.
 
 
-\subsection{Construct Confidence Intervals}
+\subsection{Construct CIs}
 
 Suppose that we have repeated the steps in the last subsection $B$ times, and
 that for $b \in \{1, \ldots, B\}$, we have obtained an estimator
 $\hat\theta_n^{(b)}$ based on the $b$th bootstrap sample using the same method
 that was applied to $\{X_t: t = 1, \ldots, n\}$ to obtain $\hat\theta_n$.
-Now the question is, how to construct confidence intervals for $\theta$
+Now the question is, how to construct CIs for $\theta$
 using the $B$ bootstrap point estimates
 $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$.
+We consider three kinds of CIs.
 
 
-\jy{Paragraph: basic percentiles; use the terminologies in the literature.}
-
-In this study, 1000 $\hat\theta_n^{(b)}$ were created for one simulation of
-block bootstrap estimation. Using this distribution of $\hat\theta_n^{(b)}$,
-several variants of a $1 - \alpha$/2 \% confidence interval for the parameter
-can be constructed. The most simplistic method for constructing this interval
-is the basic percentile confidence interval. For a parameter $\theta$, the
-percentile $1 - \alpha$/2 \% confidence interval takes the form:
-\[ [\hat\theta_{n, \alpha/2}^{(b)}, \hat\theta_{n, 1 - \alpha/2}^{(b)}].\]
-
-This interval works well when attempting to recover the mean and
-standard deviation of a temporally dependent process, but its coverage of
-the temporal dependence deteriorates as $n$ increases.
-
-
-\jy{Paragraph: centered.}
-
-A potential solution to
-this issue is to center the intervals around $\hat{\theta}_{n}$. To do this,
-the distribution of $\delta^*$ should be considered. For a parameter $\theta$,
-the $\hat{\theta}_{n}$-centered $1 - \alpha$/2 \% confidence interval takes
-the form:
-\[ [\hat{\theta}_{n} + \delta^*_{\alpha/2},
-  \hat{\theta}_{n} + \delta^*_{1 - \alpha/2}].\]
+\paragraph{Percentile CI}
+Let $\hat\theta_{n, B, \alpha}$ be the empirical $100\alpha$th percentile of
+$\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. The $(1 - \alpha)$
+empirical percentile CI is
+\[
+(\hat\theta_{n, \alpha/2}^{(b)}, \hat\theta_{n, 1 - \alpha/2}^{(b)}).
+\]
+This CI is not necessarily centered by the point estimator $\hat\theta_n$.
+%% Not the right place
+%% This interval works well when attempting to recover the mean and
+%% standard deviation of a temporally dependent process, but its coverage of
+%% the temporal dependence deteriorates as $n$ increases.
 
 
-\jy{Paragraph: BCa}
+\paragraph{Centered Percentile CI}
+Centered percentile CI is centered at the point estimator and uses the variation
+in the bootstrap estimates to construct the error bound. A $(1 - \alpha)$ CI is
+\[
+(\hat{\theta}_{n} + \delta^*_{\alpha/2},
+\hat{\theta}_{n} + \delta^*_{1 - \alpha/2}).
+\]
+\jy{Define $\delta^*$?}
+\jy{Say a few words about its properties}
 
-An alternative method is a $BC_a$ interval centered around $\hat{\theta}_{n}$.
-For a parameter $\theta$, the $BC_a$ $1 - \alpha$/2 \% confidence interval
-takes the form:
-\[ [\hat{\theta}_{n} + \delta^*_{\alpha_1},
-  \hat{\theta}_{n} + \delta^*_{\alpha_2}].\]
-$\alpha_{1}$ and $\alpha_{2}$ are the cumulative probability of $z_{1}$ and
+
+\paragraph{Bias Corrected and Accelerated (BCA) Bootstrap CI}
+The $1 - \alpha$ \% BCA CI takes the form:
+\[
+(\hat{\theta}_{n} + \delta^*_{\alpha_1},
+\hat{\theta}_{n} + \delta^*_{\alpha_2}),
+\]
+\jy{Not clear and not flowing well. Restructure the writing. Practice my writing tips.}
+where $\alpha_{1}$ and $\alpha_{2}$ are the cumulative probability of $z_{1}$ and
 $z_{2}$, respectively, where:
 \[z_{1} = \frac{z_{0} - z_{1 - \alpha/2}}{1 - a(z_{0} - z_{1 - \alpha/2})} +
 z_{0}\] and
@@ -276,11 +258,7 @@ using
 the skewness function from the R e1071 package \citep{e1071}) of
 $\hat{\theta}_{n, -i}$, where $\hat{\theta}_{n, -i}$ is the statistic of the
 original sample computed without the $i^{th}$ block.
-
-
-Thus, there are three types of intervals that can be constructed for block
-bootstrap estimation in this study: Percentile, $\hat{\theta}_{n}$-Centered,
-and $BC_a$.
+\jy{Say a few words about its properties.}
 
 
 \section{Simulation Study}
@@ -288,7 +266,7 @@ and $BC_a$.
 
 We designed a simulation study to compare the performance of the different
 block
-bootstrap confidence intervals. In particular, we generated time series $X_t$
+bootstrap CIs. In particular, we generated time series $X_t$
 from a 1st order auto-regressive (AR1) process:
 \[
 X_t = \phi X_{t-1} + \epsilon_t,
@@ -310,25 +288,27 @@ Three target parameters of $X_t$ were considered:
 To investigate the effect of sample size~$n$, we considered an array of values
 $n \in \{100, 200, \ldots, 1000\}$. In each configuration, we generated 1000
 replicates. For each replicate, we constructed three 95\% block bootstrap
-confidence intervals for each parameter as described in the last section, and
+CIs for each parameter as described in the last section, and
 estimated their actual coverage rates along with their 95\% confidence
 intervals from the 1000 replicates. The block bootstrap sampling step was done
 with function \texttt{tsboot} from R package \textsl{boot} \citep{boot}, with
 block size $\lceil n / l \rceil$. This function by default is an implementation
 of moving block bootstrap as described in the previous section.
 \jy{size? also it was overlapping blocks. Describe the details here.}
-The results are graphically displayed in Figures~\ref{fig:mu}--\ref{fig:phi};
-these figures were generated using the using
-the R ggplot2 package \citep{ggplot2}.
 
 
+\jy{Explain what metric was used to compare their performances. That is, the
+  coverage rates and how it was calculated. If a CI is valid, then the coverages
+  rate is expected to match its nominal level.}
+
+\jy{Make it flow better and conciser}
 Each interval either recovers $\theta$ or does not. Remember that
-95\% of many of a certain type of 95\% confidence intervals constructed from
+95\% of many of a certain type of 95\% CIs constructed from
 samples of the same $n$ should recover $\theta$. To see if this is
 approximately the case, one can run 1000 replications of the block bootstrap
 procedure, and for each interval-$\theta$ pair, the rate at which that type of
 interval recovers $\theta$ can be recorded. The coverage rate is, of course, a
-point estimate of a proportion, so a 95\% confidence interval of this coverage
+point estimate of a proportion, so a 95\% CI of this coverage
 proportion (with $n_{CI} = 1000$) can be constructed, and if the proportion
 .95 is included in the interval, the block bootstrap method is likely working
 well. If all values in the interval are below .95, the results suggest that the
@@ -342,6 +322,12 @@ necessary, assuming that performance will improve as $n$ is increased. $n =$
 100, 200, 300, 400, and 500, 600, 700 were used in this study. Remember that
 the goal of this study is to find the smallest $n$ which is sufficient for
 proper coverage.
+
+
+The results are graphically displayed in Figures~\ref{fig:mu}--\ref{fig:phi};
+these figures were generated using the using
+the R ggplot2 package \citep{ggplot2}.
+
 
 
 \jy{One paragraph for each parameter; write down your observations in bullet
@@ -428,7 +414,7 @@ $\phi$, $n = 200$ is large enough when using the correct type of interval.
   \includegraphics[width=\textwidth]{figures/plot_mu}
   \caption{Plots of $\mu$ coverage rates for each interval type and $\phi$
     combination. The orange dotted line represents the 95\% nominal coverage
-    rate. The error bars represent a 95\% confidence interval for the coverage
+    rate. The error bars represent a 95\% CI for the coverage
     proportion out of 1000 replications for each $n$. Results from $n$
     ranging from 100-700 were recorded.}
   \label{fig:mu}
@@ -440,7 +426,7 @@ $\phi$, $n = 200$ is large enough when using the correct type of interval.
   \includegraphics[width=\textwidth]{figures/plot_sigma}
   \caption{Plots of $\sigma$ coverage rates for each interval type and $\phi$
     combination. The orange dotted line represents the 95\% nominal coverage
-    rate. The error bars represent a 95\% confidence interval for the coverage
+    rate. The error bars represent a 95\% CI for the coverage
     proportion out of 1000 replications for each $n$. Results from $n$
     ranging from 100-700 were recorded.}
   \label{fig:sigma}
@@ -452,7 +438,7 @@ $\phi$, $n = 200$ is large enough when using the correct type of interval.
   \includegraphics[width=\textwidth]{figures/plot_phi}
   \caption{Plots of $\phi$ coverage rates for each interval type and $\phi$
     combination. The orange dotted line represents the 95\% nominal coverage
-    rate. The error bars represent a 95\% confidence interval for the coverage
+    rate. The error bars represent a 95\% CI for the coverage
     proportion out of 1000 replications for each $n$. Results from $n$
     ranging from 100-700 were recorded.}
   \label{fig:phi}
