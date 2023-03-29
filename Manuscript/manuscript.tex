@@ -183,13 +183,15 @@ non-overlapping block bootstrap, or simple block bootstrap.
 
 Alternatively, block-bootstrap can be done with overlapping or moving blocks.
 Define moving blocks $Z_j = \{X_j, \ldots, X_{j + l - 1}\}$,
-$j = 1, \ldots, n - b + 1$. Now we draw $k$ blocks from the $(n - b + 1)$ blocks
-of $Z_j$'s with replacement and then aligning them in the order they were picked
+$j = 1, \ldots, n - b + 1$. Now we draw $k$ blocks from the $(n - b + 1)$
+blocks
+of $Z_j$'s with replacement and then aligning them in the order they were
+picked
 to form a block bootstrap sample. If $n$ is not a multiple of~$l$, the last
 block selected will be reduced in size so that the final size of the
 block bootstrap sample is $n$. Moving block bootstrap was used in
 this study as it has been found to yield the lowest error in general
-\citep{radovanov2014comparison}. The larger set of available blocks was used.
+\citep{radovanov2014comparison}.  
 \jy{what does the last sentence mean?}
 
 
@@ -229,35 +231,51 @@ This CI is not necessarily centered by the point estimator $\hat\theta_n$.
 
 
 \paragraph{Centered Percentile CI}
-Centered percentile CI is centered at the point estimator and uses the variation
-in the bootstrap estimates to construct the error bound. A $(1 - \alpha)$ CI is
+Centered percentile CI is centered at the point estimator and uses the
+variation
+in the bootstrap estimates to construct the error bound. This interval is
+dependent on $\delta^{(b)}$, or the difference between a bootstrap point
+estimate $\hat\theta_n^{(b)}$ and
+the mean of all bootstrap point estimates.
+ A $(1 - \alpha)$ CI is
 \[
-(\hat{\theta}_{n} + \delta^*_{\alpha/2},
-\hat{\theta}_{n} + \delta^*_{1 - \alpha/2}).
+(\hat{\theta}_{n} + \delta^{(b)}_{\alpha/2},
+\hat{\theta}_{n} + \delta^{(b)}_{1 - \alpha/2}).
 \]
+This CI is asymmetric, as different critical values are used to compute
+the lower and upper bounds.
 \jy{Define $\delta^*$?}
 \jy{Say a few words about its properties}
 
 
 \paragraph{Bias Corrected and Accelerated (BCA) Bootstrap CI}
-The $1 - \alpha$ \% BCA CI takes the form:
-\[
-(\hat{\theta}_{n} + \delta^*_{\alpha_1},
-\hat{\theta}_{n} + \delta^*_{\alpha_2}),
-\]
-\jy{Not clear and not flowing well. Restructure the writing. Practice my writing tips.}
-where $\alpha_{1}$ and $\alpha_{2}$ are the cumulative probability of $z_{1}$ and
-$z_{2}$, respectively, where:
-\[z_{1} = \frac{z_{0} - z_{1 - \alpha/2}}{1 - a(z_{0} - z_{1 - \alpha/2})} +
-z_{0}\] and
-\[z_{2} = \frac{z_{0} + z_{1 - \alpha/2}}{1 - a(z_{0} + z_{1 - \alpha/2})} +
-z_{0}.\]
-Where $z_0$ is the quantile function of the proportion of
-$\hat\theta_n^{(b)} < \bar\theta_n^{(b)}$, and $a$ is the skewness (computed
+In this study, the BCA CI is an interval centered at the point estimator.
+However, unlike the Centered Percentile CI, which uses the simpler $\alpha/2$
+and $1 - \alpha/2$ critical values, a more complex procedure is used to get
+the critical values for the BCA CI. The first step is to compute $z_0$, the
+quantile function of the proportion of 
+$\hat\theta_n^{(b)} < \hat\theta_n$, and $a$, the skewness (computed
 using
 the skewness function from the R e1071 package \citep{e1071}) of
 $\hat{\theta}_{n, -i}$, where $\hat{\theta}_{n, -i}$ is the statistic of the
-original sample computed without the $i^{th}$ block.
+original sample computed without the $i^{th}$ block. From these two values,
+\[z_{1} = \frac{z_{0} - z_{1 - \alpha/2}}{1 - a(z_{0} - z_{1 - \alpha/2})} +
+z_{0}\] and
+\[z_{2} = \frac{z_{0} + z_{1 - \alpha/2}}{1 - a(z_{0} + z_{1 - \alpha/2})} +
+z_{0}\] can be computed. 
+
+The $1 - \alpha$ \% BCA CI takes the form:
+\[
+(\hat{\theta}_{n} + \delta^{(b)}_{\alpha_1},
+\hat{\theta}_{n} + \delta^{(b)}_{\alpha_2}),
+\]
+\jy{Not clear and not flowing well. Restructure the writing. Practice my
+  writing tips.}
+where $\alpha_{1}$ and $\alpha_{2}$ are the cumulative probability of $z_{1}$
+and
+$z_{2}$, respectively.
+Like the Centered CI, the BCA CI is asymmetric. 
+
 \jy{Say a few words about its properties.}
 
 
@@ -302,15 +320,25 @@ of moving block bootstrap as described in the previous section.
   rate is expected to match its nominal level.}
 
 \jy{Make it flow better and conciser}
-Each interval either recovers $\theta$ or does not. Remember that
-95\% of many of a certain type of 95\% CIs constructed from
-samples of the same $n$ should recover $\theta$. To see if this is
+The coverage rates of the CIs were used to compare the performance of CIs. To
+compute a CI's coverage rate of a target parameter for a certain interval,
+the coverage for each replicate CI must be recorded. If the true value of the
+parameter is greater than the lower bound of the CI and lesser than the upper
+bound, then the CI's coverage for that parameter is assigned a value of 1. If
+this is false, then the CI's coverage for that parameter is assigned a value
+of 0.
+
+
+Remember that 95\% of many of a certain type of 95\% CIs constructed from
+samples of the same $n$ should recover a target $\theta$. To see if this is
 approximately the case, one can run 1000 replications of the block bootstrap
-procedure, and for each interval-$\theta$ pair, the rate at which that type of
-interval recovers $\theta$ can be recorded. The coverage rate is, of course, a
+procedure, and the proportion of replicate CIs that recover $\theta$ - or the
+mean of the coverages for each replicate CI - can be
+recorded as the coverage rate. The coverage rate is, of course, a
 point estimate of a proportion, so a 95\% CI of this coverage
-proportion (with $n_{CI} = 1000$) can be constructed, and if the proportion
-.95 is included in the interval, the block bootstrap method is likely working
+proportion (with $n_{CI} = 1000$) can be constructed. If the proportion
+.95 is included in the interval, the block bootstrap method is likely
+performing
 well. If all values in the interval are below .95, the results suggest that the
 method either is providing an inaccurate estimation, is underestimating the
 process' variability, or a combination of both. If all values in the interval
@@ -399,7 +427,7 @@ in a decline in performance.
 
 \jy{One summary paragraph at the end.}
 
-To summarize, the interval type chosen should be based on the target parameter.
+To summarize, the CI type chosen should be based on the target parameter.
 For estimating $\mu$, any of the three interval types can be used, but for
 $\sigma$, only $\hat{\theta}_{n}$-centered and basic percentile intervals
 should be used, and only $\hat{\theta}_{n}$-centered intervals should be used

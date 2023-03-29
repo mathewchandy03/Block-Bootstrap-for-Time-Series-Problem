@@ -87,10 +87,16 @@ mychk <- function(sim, target) {
   ret
 }
 
-df_bts <- function(cov, nrep = 1000, phis = c(-0.4, -0.2, 0, 0.2, 0.4), sizes = c(100, 200, 300, 400, 500, 600, 700), types = c('pctCI', 'estCI', 'bcaCIest'), parameters = c('mu', 'sigma', 'phi')) {
-  phi <- rep(phis, each = length(sizes) * length(types) * length(parameters))
-  n <- rep(sizes, times = length(phis), each = length(types) * length(parameters))
-  CI <- rep(types, times = length(phis) * length(sizes), each = length(parameters))
+df_bts <- function(cov, nrep = 1000, phis = c(-0.4, -0.2, 0, 0.2, 0.4), 
+                   sizes = c(100, 200, 300, 400, 500, 600, 700), 
+                   types = c('pctCI', 'estCI', 'bcaCIest'), 
+                   parameters = c('mu', 'sigma', 'phi')) {
+  phi <- 
+    rep(phis, each = length(sizes) * length(types) * length(parameters))
+  n <- 
+    rep(sizes, times = length(phis), each = length(types) * length(parameters))
+  CI <- 
+    rep(types, times = length(phis) * length(sizes), each = length(parameters))
   t <- rep(parameters, times = length(phis) * length(types) * length(sizes))
   LB <- sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[1])
   UB <- sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[2])
@@ -103,10 +109,14 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   library(latex2exp)
   library(ggplot2)
   
+  data$CI <- factor(data$CI, levels = c("pctCI", "estCI", "bcaCIest"), 
+                    labels = c("Percentile", "Centered", "BCA"))
+  
   ggplot(data, aes(x = n, y = cov)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
     geom_line() +
     geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width) +
-    facet_grid(factor(phi) ~ factor(CI), labeller = label_parsed) +
+    facet_grid(factor(phi) ~ CI) +
     scale_y_continuous(trans=trans)
+  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''))
 }

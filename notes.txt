@@ -174,3 +174,7 @@
 • Two references in citep
 • Don't include the book
 
+3/23 Notes
+• Percentile left most, BCa right most
+• Use literature for terminology and notation
+
