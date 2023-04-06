@@ -178,3 +178,18 @@
 • Percentile left most, BCa right most
 • Use literature for terminology and notation
 
+4/6 Notes
+• Mention wrapping around
+• Use placeholder for reference
+• define delta, delta (b) for each bootstrap sample
+• Get average of bootstraps, center around average, then get percentiles of all these
+• Properties: asymmetric, centered at observed estimate
+• Work on definitions for BCA interval
+• In theory, we expect that coverage rates approach .95 as sample size gets larger, but what sample size is necessary?
+• Is truth recovered or not?
+• As dependence gets stronger, a larger sample size is really necessary
+• For mu, all 3 are working asymptotically but for finite sizes, they more or less need about the same sample size to have the correct coverage.
+• 10000 replicate data
+• BCA and Percentile approach don't work for positive or negative sides
+• Find reference for BCA
+• Break Concluding Remarks into paragraphs
