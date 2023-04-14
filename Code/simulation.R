@@ -1,4 +1,4 @@
-nrep <- 1000
+nrep <- 10000
 
 n <- 100
 blksize <- 5

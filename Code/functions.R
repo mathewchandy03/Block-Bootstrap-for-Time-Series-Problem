@@ -45,16 +45,16 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   
   ## BCa interval
   z0 <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
-  thetajack <- sapply(1: (n / blksize), 
-                      function(i) 
+  thetajack <- sapply(1: (n / blksize),
+                      function(i)
                         statistic(x[ - ((i - 1) * blksize + 1:blksize)]))
   a <- apply(thetajack, 1, e1071::skewness) / 6
   alpha1 <- pnorm(
     z0 + (z0 + qnorm(alpha/2)) / (1 - a * (z0 + qnorm(alpha/2))))
   alpha2 <- pnorm(
     z0 + (z0 + qnorm(1 - alpha/2)) / (1 - a * (z0 + qnorm(1 - alpha/2))))
-  crit3 <- sapply(1:length(bts$t0), function(i) 
-    quantile(t(t(bts$t[,i]) - mbts[i]), prob = c(alpha1[i], alpha2[i]))) 
+  # crit3 <- sapply(1:length(bts$t0), function(i) 
+  #   quantile(t(t(bts$t[,i]) - mbts[i]), prob = c(alpha1[i], alpha2[i]))) 
   ## alpha1 and alpha2 critical values 
   ## of pseudo-estimate - mean of pseudo-estimates
   # crit4 <- sapply(1:length(bts$t0), function(i) 
@@ -63,7 +63,7 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   ## of pseudo-estimate - original estimate
   
   ## interval centered around...
-  bcaCIest <- sweep(crit3, 2, bts$t0, FUN = '+') # original estimate
+  # bcaCIest <- sweep(crit3, 2, bts$t0, FUN = '+') # original estimate
   ## LB: bts$t0 + alpha1 crit3, UB: bts$t0 + alpha2 crit3
   # bcaCImbt <- sweep(crit4, 2, mbts, FUN = '+') # mean of pseudo-estimates
   ## LB: mbts + alpha1 crit4, UB: mbts + alpha2 crit4
@@ -71,9 +71,12 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   ## LB: bts$t0 - alpha2 crit3, UB: bts$t0 - alpha1 crit3 and
   ## LB: mbts - alpha2 crit4, UB: mbts - alpha1 crit4
   
-  
+  ## BCa interval
+  bcaCI <- sapply(1:length(bts$t0),
+                  function(i) quantile(bts$t[,i], prob = c(alpha1[i], alpha2[i])))
   ## return all intervals
-  c(pctCI, estCI, bcaCIest)
+  
+  c(pctCI, estCI, bcaCI)
 }
 
 mychk <- function(sim, target) {
@@ -89,7 +92,7 @@ mychk <- function(sim, target) {
 
 df_bts <- function(cov, nrep = 1000, phis = c(-0.4, -0.2, 0, 0.2, 0.4), 
                    sizes = c(100, 200, 300, 400, 500, 600, 700), 
-                   types = c('pctCI', 'estCI', 'bcaCIest'), 
+                   types = c('pctCI', 'estCI', 'bcaCI'), 
                    parameters = c('mu', 'sigma', 'phi')) {
   phi <- 
     rep(phis, each = length(sizes) * length(types) * length(parameters))
@@ -109,7 +112,7 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   library(latex2exp)
   library(ggplot2)
   
-  data$CI <- factor(data$CI, levels = c("pctCI", "estCI", "bcaCIest"), 
+  data$CI <- factor(data$CI, levels = c("pctCI", "estCI", 'bcaCI'), 
                     labels = c("Percentile", "Centered", "BCA"))
   
   ggplot(data, aes(x = n, y = cov)) +
