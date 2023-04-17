@@ -270,8 +270,8 @@ the lower and upper bounds.
 
 \paragraph{Bias Corrected and Accelerated (BCA) Bootstrap CI}
 In this study, the BCA CI is an interval centered at the point estimator.
-Let $\hat{G}(c) = \#\{\hat\theta_n^{(b)} < c\}/B$, let
-$z_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$, let
+Let $\hat{G}(c) = \#\{\hat\theta_n^{(b)} < c\}/B$ for $b \in \{1, \ldots, B\}$, let
+$z_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for $b \in \{1, \ldots, B\}$, let
 $\hat{\theta}_{n, -i}$ be the statistic of the sample without the $i^{th}$
 block, and let $a$ be $SKEW\{\hat{\theta}_{n, -i}\} / 6$. Then
  $\hat\theta_{BCA}[\alpha] = \hat{G}^{-1}\Phi(z_0 + \frac{z_{0} + z_{\alpha}}{1 - a(z_{0} + z_{\alpha})}).$
@@ -307,11 +307,11 @@ Three target parameters of $X_t$ were considered:
 2) $\sigma_x^2 = 1$, the variance of $X_t$; and
 2) $\phi$, the lag-1 auto-correlation coefficient.
 To investigate the effect of sample size~$n$, we considered an array of values
-$n \in \{100, 200, \ldots, 1000\}$. In each configuration, we generated 1000
+$n \in \{100, 200, \ldots, 1000\}$. In each configuration, we generated 10000
 replicates. For each replicate, we constructed three 95\% block bootstrap
 CIs for each parameter as described in the last section, and
 estimated their actual coverage rates along with their 95\% confidence
-intervals from the 1000 replicates. The block bootstrap sampling step was done
+intervals from the 10000 replicates. The block bootstrap sampling step was done
 with function \texttt{tsboot} from R package \textsl{boot} \citep{boot}, with
 block size $\lceil n / l \rceil$. This function by default is an implementation
 of moving block bootstrap as described in the previous section.
@@ -323,23 +323,15 @@ of moving block bootstrap as described in the previous section.
   rate is expected to match its nominal level.}
 
 \jy{Make it flow better and conciser}
-The coverage rates of the CIs were used to compare the performance of CIs. To
-compute a CI's coverage rate of a target parameter for a certain interval,
-the coverage for each replicate CI must be recorded. If the true value of the
-parameter is greater than the lower bound of the CI and lesser than the upper
-bound, then the CI's coverage for that parameter is assigned a value of 1. If
-this is false, then the CI's coverage for that parameter is assigned a value
-of 0.
-
-
-Remember that 95\% of many of a certain type of 95\% CIs constructed from
-samples of the same $n$ should recover a target $\theta$. To see if this is
-approximately the case, one can run 1000 replications of the block bootstrap
-procedure, and the proportion of replicate CIs that recover $\theta$ - or the
-mean of the coverages for each replicate CI - can be
-recorded as the coverage rate. The coverage rate is, of course, a
+The coverage rates of the CIs were used to compare the performance of CIs. Let
+$\hat\theta_{L, CI}$ and $\hat\theta_{U, CI}$ be the lower bound and upper bound,
+respectively, $ for $CI \in \{1, \ldots, n_{CI}\}$, where $n_{CI} is the number of 
+CIs.
+Then $cov = \#\{$\hat\theta_{L, CI}$ < \theta < $\hat\theta_{U, CI}$ \}/n_{CI}$, $ 
+for $CI \in \{1, \ldots, n_{CI}\}$.
+The coverage rate is, of course, a
 point estimate of a proportion, so a 95\% CI of this coverage
-proportion (with $n_{CI} = 1000$) can be constructed. If the proportion
+proportion (with $n_{CI} = 10000$) can be constructed. If the proportion
 .95 is included in the interval, the block bootstrap method is likely
 performing
 well. If all values in the interval are below .95, the results suggest that the
@@ -428,7 +420,7 @@ $\phi$, $n = 200$ is large enough when using the correct type of interval.
   \caption{Plots of $\mu$ coverage rates for each interval type and $\phi$
     combination. The orange dotted line represents the 95\% nominal coverage
     rate. The error bars represent a 95\% CI for the coverage
-    proportion out of 1000 replications for each $n$. Results from $n$
+    proportion out of 10000 replications for each $n$. Results from $n$
     ranging from 100-700 were recorded.}
   \label{fig:mu}
 \end{figure}
@@ -440,7 +432,7 @@ $\phi$, $n = 200$ is large enough when using the correct type of interval.
   \caption{Plots of $\sigma$ coverage rates for each interval type and $\phi$
     combination. The orange dotted line represents the 95\% nominal coverage
     rate. The error bars represent a 95\% CI for the coverage
-    proportion out of 1000 replications for each $n$. Results from $n$
+    proportion out of 10000 replications for each $n$. Results from $n$
     ranging from 100-700 were recorded.}
   \label{fig:sigma}
 \end{figure}
@@ -452,7 +444,7 @@ $\phi$, $n = 200$ is large enough when using the correct type of interval.
   \caption{Plots of $\phi$ coverage rates for each interval type and $\phi$
     combination. The orange dotted line represents the 95\% nominal coverage
     rate. The error bars represent a 95\% CI for the coverage
-    proportion out of 1000 replications for each $n$. Results from $n$
+    proportion out of 10000 replications for each $n$. Results from $n$
     ranging from 100-700 were recorded.}
   \label{fig:phi}
 \end{figure}
