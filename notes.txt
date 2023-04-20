@@ -193,3 +193,9 @@
 • BCA and Percentile approach don't work for positive or negative sides
 • Find reference for BCA
 • Break Concluding Remarks into paragraphs
+
+4/20 Notes
+• Moving block bootstrap is available from the boot package and it is easier to use because l does not need to divide n
+• n is number of blocks bootstrap student's t method
+• try z and as well as t
+• Cite original sources
