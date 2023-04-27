@@ -320,7 +320,9 @@ with function \texttt{tsboot} from R package \textsl{boot} \citep{boot}, with
 block size $\lceil n / l \rceil$. This function by default is an implementation
 of moving block bootstrap as described in the previous section.
 \jy{size? also it was overlapping blocks. Describe the details here.}
-
+\eds{Is $l = \lceil n^{1/3} \rceil$? Is it also worth investigating different 
+choices of $l$ for fixed (large) $n$?}
+\eds{how did you estimate $\mu$, $\sigma_x$ and $\phi$?}
 
 \jy{Explain what metric was used to compare their performances. That is, the
   coverage rates and how it was calculated. If a CI is valid, then the coverages
@@ -328,17 +330,19 @@ of moving block bootstrap as described in the previous section.
 
 \jy{Make it flow better and conciser}
 The coverage rates of the CIs were used to compare the performance of CIs. Let
-$\hat\theta_{L, CI}$ and $\hat\theta_{U, CI}$ be the lower bound and upper bound,
-respectively,  for $CI \in \{1, \ldots, n_{CI}\}$, where $n_{CI}$ is the number of 
-CIs.
+$\hat\theta_{L, CI}$ and $\hat\theta_{U, CI}$ be the lower and upper bound,
+respectively,  for $CI \in \{1, \ldots, n_{CI}\}$, where $n_{CI}$ is the number 
+of CIs.
 Then $cov = \#\{\hat\theta_{L, CI} < \theta < \hat\theta_{U, CI} \}/n_{CI}$,  
 for $CI \in \{1, \ldots, n_{CI}\}$.
+\eds{this notation is a bit sloppy, as it implies $n_{CI}$ changes for each 
+value of $CI$; consider using a summation of indicators with a different index}
 The coverage rate is, of course, a
 point estimate of a proportion, so a 95\% CI of this coverage
 proportion (with $n_{CI} = 10000$) can be constructed. If the proportion
-.95 is included in the interval, the block bootstrap method is likely
+0.95 is included in the interval, the block bootstrap method is likely
 performing
-well. If all values in the interval are below .95, the results would suggest 
+well. If all values in the interval are below 0.95, the results would suggest 
 that the
 method either is providing inaccurate estimation, is underestimating the
 process' variability, or a combination of both. If all values in the interval
@@ -378,17 +382,27 @@ for adequate performance, and when $\phi = 0.4$, an even larger $n$ appeared
 to be necessary to properly cover $\mu$. It is rare for $\phi$ to be so high,
 so in most cases, if $\phi$ is unknown, a sample of $n \geq 500$ should be
 used when the target parameter is $\mu$. \eds{I would argue that none of the 
-sample sizes considered work well for $\phi=0.2$ or $\phi=0.2$ based on 
-Figure~\ref{fig:mu}}
+sample sizes considered work well for $\phi=0.2$ or $\phi=0.4$ based on 
+Figure~\ref{fig:mu} and your criteria above (``If all values in the interval are
+ below 0.95, the results would suggest that the
+method either is providing inaccurate estimation, is underestimating the
+process' variability, or a combination of both.")}
 
 
-Based on \ref{fig:sigma}, coverage is
-notably lower for $BC_a$ intervals, but $\hat{\theta}_{n}$-centered intervals
+Based on Figure~\ref{fig:sigma}, coverage is
+notably lower for $BC_a$ intervals \eds{use consistent notation for this}, 
+but $\hat{\theta}_{n}$-centered intervals
 and basic intervals have similar performance. For these two interval types,
-$n = 500$ seems to be necessary to cover $\sigma$ at the nominal rate when
+$n = 500$ seems to be necessary to cover $\sigma$ 
+\eds{use $\sigma_x$ instead of $\sigma$} at the nominal rate when
 $\phi < 0$. If $\phi = 0$, $n = 400$ seems to large enough to cover $\sigma$ at
 the nominal rate. If $\phi = 0.2$, $n = 300$ seems large enough, but if the
-process has a greater $\phi$ of $0.4$, $n = 400$ may be necessary. It is more
+process has a greater $\phi$ of $0.4$, $n = 400$ may be necessary. 
+\eds{$n=400$ does not appear to be enough to me. I would also argue larger $n$
+is needed for the other values of $\phi$ unless the curves asymptote at a value
+lower than 0.95. Do the point estimates eventually get closer to the nominal 
+level with larger $n$?}  
+It is more
 common for $\phi$ to be $> 0$ in applied analysis, so in most cases, if $\phi$
 is unknown, using a sample of $n \geq 400$ should be sufficient for estimation
 of $\sigma$. Based on our results, $BC_a$ intervals should not be used to 
@@ -397,18 +411,21 @@ estimate $\sigma$.
 
 When block bootstrap is used to estimate $\phi$ using $BC_a$ and percentile
 intervals, the assumption that coverage rates asymptotically approach the
-nominal rate as $n$ increases appears to be invalid based on \ref{fig:sigma}.
-The $BC_a$ interval performs very poorly and deteriorates more noticeable
+nominal rate as $n$ increases appears to be invalid based on 
+Figure~\ref{fig:sigma}.
+\eds{Figure~\ref{fig:phi}?}
+The $BC_a$ interval performs very poorly and deteriorates more noticeably
 when the absolute value $\phi$ gets
-higher, but even when $\phi = 0$, $\phi$ is still undercovered for $n$ as high
+higher. Even when $\phi = 0$, $\phi$ is still undercovered for $n$ as high
 as $700$. Like the $BC_a$ interval, the percentile interval deteriorates in
 coverage when $\phi$ is high, although the coverage is not as low.
 Interestingly, when $\phi = 0$, the percentile interval appears to actually
-over-cover $\phi$. Regardless of whether $\phi$ is positive or negative, these two 
-intervals do not perform wellThese results suggest that $BC_a$ and basic percentile
+over-cover $\phi$. Regardless of whether $\phi$ is positive or negative, these 
+two intervals do not perform well. These results suggest that $BC_a$ and basic 
+percentile
 block bootstrap intervals should not be used estimate temporal dependence
 factors of time series. On the other hand, $\hat{\theta}_{n}$-centered
-intervals seem to recover $\phi$ correctly as long as $n >= 200$, and this
+intervals seem to recover $\phi$ correctly as long as $n \geq 200$, and this
 appears to be true regardless of $\phi$, although a greater $\phi$ may result
 in a decline in performance.
 
@@ -471,7 +488,8 @@ $\hat{\theta}_{n}$-centered intervals, a higher positive $\phi$ demands a
 larger $n$ to estimate all parameters, but a negative $\phi$ may require a
 lesser $n$. For example, for both $\phi = 0.2$ and $0.4$, $n = 100$ was
 sufficient to recover $\mu$ at a rate of approximately 95\%.
-
+\eds{not sure if above paragraph is needed - seems to repeat information in the 
+previous two paragraphs}
 
 \section{Discussion}
 \label{sec:disc}
@@ -484,21 +502,27 @@ sufficient to recover $\mu$ at a rate of approximately 95\%.
 }
 
 
-Block bootstrap method is a useful method for estimating parameters of a time
-series: from simple parameters like the mean to temporal dependence factors.
-The motivation for the study is the idea that block bootstrap procedure will
-perfectly estimate a parameter of a time series given an infinitely large
-sample. The goal for this study was to find what is a good enough finite
-sample length for block bootstrap estimation to recover the parameter of a
-time series at an acceptable rate.
+Block bootstrap is a useful method for estimating parameters of a time
+series, from simple parameters like the mean to more complicated temporal
+ dependence factors.
+%The motivation for the study is the idea that block bootstrap procedure will
+%perfectly estimate a parameter of a time series given an infinitely large
+%sample. The goal for this study was to find what is a good enough finite
+%sample length for block bootstrap estimation to recover the parameter of a
+%time series at an acceptable rate.
+We know theoretically that the block bootstrap procedure will
+perfectly estimate \eds{? interval will correctly cover?  What does the theory 
+actually say?} a parameter of a time series given an infinitely large
+sample, so the goal for this study was to find the smallest finite
+sample length $n$ of a time series in order for the block bootstrap procedure to 
+recover its associated parameters at an acceptable rate.
 
-
-Again, this relies on the assumption that
+Again, this \eds{what?} relies on the assumption that
 there is a size $n$ large enough for the method to work: that is, the method's
 performance improves as $n$ increases. Out of the two types of intervals used
 in this study, this assumption was found to hold true with respect to
 estimating $\phi$ only for $\hat{\theta}_{n}$-centered intervals, whereas both
-percentile $BC_a$ intervals exhibited coverage deterioration as $n$
+percentile and $BC_a$ intervals exhibited coverage deterioration as $n$
 increased.
 
 
@@ -518,12 +542,13 @@ corrections that fix the coverage deterioration problem for $\phi$.
 This study could be used as a guide for applied statistics courses for students
 to generally understand how large of a sample size is sufficient for block
 bootstrap to be used versus other inference methods.
-This information could prove to be useful for researching using block bootstrap
+This information could also prove to be useful for research using block bootstrap
 estimation of time series in domains such as econometrics. Future studies
-could investigate if there are types of block bootstrap intervals
-constructions that would more appropriately recover the parameters of a time
-series. One could also investigate the $n$ needed to make inferences about
-other forms of serially dependent data such as an MA process.
+could investigate if there are types of block bootstrap interval
+construction that would more appropriately recover the parameters of a time
+series. \eds{are there other methods that you know of?} 
+One could also investigate the $n$ needed to make inferences about
+other forms of serially dependent data such as a moving average process.
 
 
 \bibliographystyle{chicago}
