@@ -46,7 +46,7 @@
 
 \newcommand{\jy}[1]{\textcolor{blue}{JY: #1}}
 \newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
-
+\newcommand{\mc}[1]{\textcolor{green}{MC: (#1)}}
 
 \title{On Sample Size for Block Bootstrap Confidence Intervals 
   to Have Desired Coverage Rates}
@@ -190,25 +190,29 @@ to form a block bootstrap sample. If $n$ is not a multiple of~$l$, the last
 block selected will be reduced in size so that the final size of the
 block bootstrap sample is $n$. It is also possible to implement moving block
 bootstrap while allowing blocks to wrap around the end of the series. In other
-words, define moving blocks (assuming $l > 1$):
+words, define moving blocks (assuming $l > 1$) as:
 \jy{Any equation must be a part of a sentence and should be punctuated.}
 \jy{Recall a blank line means a new paragraph.}
 \jy{Define your response command with color and respond}
-
+\mc{addressed above comments}
 \begin{equation}
 Z_j =
     \begin{cases}
         \{X_j, \ldots, X_{j + l - 1}\} & \text{if } j = 1, \dots, n - l + 1\\
-        \{X_j, \ldots, X_n, X_1, \ldots, X_{l - 1}\} & \text{if } j = n - l + 2 ,\dots, n
+        \{X_j, \ldots, X_n, X_1, \ldots, X_{j-n+l-1}\} & \text{if } j = n - l
+        + 2 ,\dots, n.
     \end{cases}
 \end{equation}
 \jy{The ending index does not seem right}
-The second implementation of moving block bootstrap was used in
-this study, and moving block bootstrap in general had been found to yield the 
-lowest error \jy{state we use it because it is implemented in package boot and
-  cite boot}
-\citep{radovanov2014comparison}.  
-\jy{This reference is from a low-tier journal. Find something from a stronger journal?}
+\mc{addressed above}
+The second version of moving block bootstrap was used in
+this study because it is the implementation provided in the function
+\texttt{tsboot} from R package \textsl{boot} \citep{boot}, and it is easier
+overall because $l$ need not divide $n$.
+\jy{state we use it because it is implemented in package boot and cite boot}  
+\jy{This reference is from a low-tier journal. Find something from a stronger
+  journal?}
+\mc{addressed above comments}
 The block size~$l$ needs to chosen with care. It needs to be large enough for
 each bootstrap sample to preserve the serial dependence, yet small enough for
 there to be some variability between each bootstrap sample. As $n$ increases,
@@ -267,23 +271,28 @@ asymmetric, as different critical values are used to compute
 the lower and upper bounds.
 
 
-\paragraph{Bias Corrected and Accelerated (BCA) Bootstrap CI}
-In this study, the BCA CI is an interval centered at the point estimator.
+\paragraph{Bias Corrected and Accelerated ($BC_a$) Bootstrap CI}
+In this study, the $BC_a$ CI is an interval centered at the point estimator.
 \eds{a different abbrevation/notation was used for this in the introduction}
+\mc{used $BC_a$}
 \jy{Isn't this just the empirical CDF? We just need the sample quantile functon.
   What is your reference for this description?}
 Let $\hat{G}(c) = \#\{\hat\theta_n^{(b)} < c\}/B$ for $b \in \{1, \ldots, B\}$, let
 $z_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for $b \in \{1, \ldots, B\}$, let
 $\hat{\theta}_{n, -i}$ be the statistic of the sample without the $i^{th}$
 block, and let $a$ be $SKEW\{\hat{\theta}_{n, -i}\} / 6$. Then
- $\hat\theta_{BCA}[\alpha] = \hat{G}^{-1}\Phi(z_0 + \frac{z_{0} + z_{\alpha}}{1 - a(z_{0} + z_{\alpha})}).$ \eds{notation will need to be cleaned and clarified}
-A $(1 - \alpha)$ centered percentile \eds{BCA?} CI is
+ $\hat\theta_{BC_a}[\alpha] = \hat{G}^{-1}\Phi(z_0 + \frac{z_{0} + z_{\alpha}}{1 - a(z_{0} + z_{\alpha})}).$ \eds{notation will need to be cleaned and clarified}
+A $(1 - \alpha)$ centered $BC_a$ CI is
 \[
-(\hat\theta_{BCA}[\alpha/2], \quad
-\hat\theta_{BCA}[1 - \alpha/2]).
+(\hat\theta_{BC_a}[\alpha/2], \quad
+\hat\theta_{BC_a}[1 - \alpha/2]).
 \]
-This CI is not necessarily centered by the point estimator $\hat\theta_n$.
+This CI is not necessarily centered by the point estimator $\hat\theta_n$. The
+$BC_a$ method corrects for bias and skewness of the $B$ bootstrap point
+estimates $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$ by including
+bias-correction and acceleration factors. 
 \jy{why is it called BCA?}
+\mc{addressed}
 
 
 \section{Simulation Study}
@@ -330,13 +339,15 @@ choices of $l$ for fixed (large) $n$?}
 
 \jy{Make it flow better and conciser}
 The coverage rates of the CIs were used to compare the performance of CIs. Let
-$\hat\theta_{L, CI}$ and $\hat\theta_{U, CI}$ be the lower and upper bound,
-respectively,  for $CI \in \{1, \ldots, n_{CI}\}$, where $n_{CI}$ is the number 
-of CIs.
-Then $cov = \#\{\hat\theta_{L, CI} < \theta < \hat\theta_{U, CI} \}/n_{CI}$,  
-for $CI \in \{1, \ldots, n_{CI}\}$.
+$\hat\theta_{L, r}$ and $\hat\theta_{U, r}$ be the lower and upper bound,
+respectively, for the confidence interval constructed for each replicate
+$r \in \{1, \ldots, R\}$, where $R$ is the
+number of replicates.
+Then $cov = \#\{\hat\theta_{L, r} < \theta < \hat\theta_{U, r} \}/R$,  
+for $r \in \{1, \ldots, R\}$.
 \eds{this notation is a bit sloppy, as it implies $n_{CI}$ changes for each 
 value of $CI$; consider using a summation of indicators with a different index}
+\mc{replaced $CI$ with $r$, and $n_{CI}$ with $R$}
 The coverage rate is, of course, a
 point estimate of a proportion, so a 95\% CI of this coverage
 proportion (with $n_{CI} = 10000$) can be constructed. If the proportion
@@ -510,14 +521,17 @@ series, from simple parameters like the mean to more complicated temporal
 %sample. The goal for this study was to find what is a good enough finite
 %sample length for block bootstrap estimation to recover the parameter of a
 %time series at an acceptable rate.
-We know theoretically that the block bootstrap procedure will
-perfectly estimate \eds{? interval will correctly cover?  What does the theory 
-actually say?} a parameter of a time series given an infinitely large
+ We know theoretically that the block bootstrap procedure will cover
+ \eds{? interval will correctly cover?  What does the theory  actually say?}
+ \mc{addressed} a
+ parameter of a time series at the nominal level given an
+ infinitely large
 sample, so the goal for this study was to find the smallest finite
-sample length $n$ of a time series in order for the block bootstrap procedure to 
+sample length $n$ of a time series in order for the block bootstrap procedure
+to 
 recover its associated parameters at an acceptable rate.
 
-Again, this \eds{what?} relies on the assumption that
+Again, this analysis \eds{what?} \mc{addressed} relies on the assumption that
 there is a size $n$ large enough for the method to work: that is, the method's
 performance improves as $n$ increases. Out of the two types of intervals used
 in this study, this assumption was found to hold true with respect to
