@@ -199,3 +199,8 @@
 • n is number of blocks bootstrap student's t method
 • try z and as well as t
 • Cite original sources
+
+5/4 Notes
+• 10000 replicates
+• 100, 200, 400, 800, 1600 (log scale)
+• Try new intervals
