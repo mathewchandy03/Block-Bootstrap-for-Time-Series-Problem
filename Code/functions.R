@@ -34,14 +34,13 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   ## of pseudo-estimate - original estimate
   
   ## interval centered around...
-  estCI <- sweep(crit, 2, bts$t0, FUN = '+') # original estimate
+  ctrCI <- sweep(crit, 2, bts$t0, FUN = '+') # original estimate
   ## LB: bts$t0 + alpha/2 crit, UB: bts$t0 + (1 - alpha/2) crit
   # mbtCI <- sweep(crit2, 2, mbts, FUN = '+') # mean of pseudo-estimates
   ## LB: mbts + alpha/2 crit2, UB: mbts + (1 - alpha/2) crit2
   # altCI <- sweep(-crit[order(2:1),], 2, bts$t0, FUN = '+') # both
   ## LB: bts$t0 - (1 - alpha/2) crit, UB: bts$t0 - alpha/2 crit and
   ## LB: mbts - (1 - alpha/2) crit2, UB: mbts - alpha/2 crit2
-  
   
   ## BCa interval
   z0 <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
@@ -53,6 +52,9 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
     z0 + (z0 + qnorm(alpha/2)) / (1 - a * (z0 + qnorm(alpha/2))))
   alpha2 <- pnorm(
     z0 + (z0 + qnorm(1 - alpha/2)) / (1 - a * (z0 + qnorm(1 - alpha/2))))
+  bcaCI <- sapply(1:length(bts$t0),
+                  function(i) quantile(bts$t[,i], prob = c(alpha1[i], alpha2[i])))
+  
   # crit3 <- sapply(1:length(bts$t0), function(i) 
   #   quantile(t(t(bts$t[,i]) - mbts[i]), prob = c(alpha1[i], alpha2[i]))) 
   ## alpha1 and alpha2 critical values 
@@ -71,12 +73,20 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   ## LB: bts$t0 - alpha2 crit3, UB: bts$t0 - alpha1 crit3 and
   ## LB: mbts - alpha2 crit4, UB: mbts - alpha1 crit4
   
-  ## BCa interval
-  bcaCI <- sapply(1:length(bts$t0),
-                  function(i) quantile(bts$t[,i], prob = c(alpha1[i], alpha2[i])))
+  ## Standard interval
+  se <- apply(bts$t, 2, sd)
+  stdCI <- sapply(1:length(bts$t0),
+                  function(i) c(bts$t0[i] - qnorm(1-alpha/2)*se[i], bts$t0[i] - 
+                                  qnorm(alpha/2)*se[i]))
+  
+  ## Student's t interval
+  stuCI <- sapply(1:length(bts$t0),
+                  function(i) c(bts$t0[i] - qt(1-alpha/2, n/blksize)*se[i], 
+                                bts$t0[i] - qt(alpha/2, n/blksize)*se[i]))
+  
   ## return all intervals
   
-  c(pctCI, estCI, bcaCI)
+  c(pctCI, ctrCI, bcaCI, stdCI, stuCI)
 }
 
 mychk <- function(sim, target) {
@@ -90,9 +100,9 @@ mychk <- function(sim, target) {
   ret
 }
 
-df_bts <- function(cov, nrep = 1000, phis = c(-0.4, -0.2, 0, 0.2, 0.4), 
-                   sizes = c(100, 200, 300, 400, 500, 600, 700), 
-                   types = c('pctCI', 'estCI', 'bcaCI'), 
+df_bts <- function(cov, nrep = 10000, phis = c(-0.4, -0.2, 0, 0.2, 0.4), 
+                   sizes = c(100, 200, 400, 800, 1600), 
+                   types = c('pctCI', 'ctrCI', 'bcaCI', 'stdCI', 'stuCI'), 
                    parameters = c('mu', 'sigma', 'phi')) {
   phi <- 
     rep(phis, each = length(sizes) * length(types) * length(parameters))
@@ -109,11 +119,10 @@ df_bts <- function(cov, nrep = 1000, phis = c(-0.4, -0.2, 0, 0.2, 0.4),
 
 graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
-  library(latex2exp)
   library(ggplot2)
   
-  data$CI <- factor(data$CI, levels = c("pctCI", "estCI", 'bcaCI'), 
-                    labels = c("Percentile", "Centered", "BCA"))
+  data$CI <- factor(data$CI, levels = c("pctCI", "ctrCI", 'bcaCI', 'stdCI', 'stuCI'), 
+                    labels = c("Percentile", "Centered", "BCA", "Standard", 'Student\'s t'))
   
   ggplot(data, aes(x = n, y = cov)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
