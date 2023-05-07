@@ -238,6 +238,7 @@ We consider three kinds of CIs.
 
 
 \paragraph{Percentile CI}
+The percentile interval was first suggested in \citet{efron1979bootstrap}.
 Let $\hat\theta_{n, \alpha}^{(b)}$ be the empirical $100\alpha$th percentile of
 $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. The $(1 - \alpha)$
 empirical percentile CI is
@@ -272,7 +273,7 @@ the lower and upper bounds.
 
 
 \paragraph{Bias Corrected and Accelerated ($BC_a$) Bootstrap CI}
-In this study, the $BC_a$ CI is an interval centered at the point estimator.
+The $BC_a$ CI was first suggested in \citet{efron1987better}.
 \eds{a different abbrevation/notation was used for this in the introduction}
 \mc{used $BC_a$}
 \jy{Isn't this just the empirical CDF? We just need the sample quantile functon.
@@ -293,6 +294,12 @@ estimates $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$ by including
 bias-correction and acceleration factors. 
 \jy{why is it called BCA?}
 \mc{addressed}
+
+
+\paragraph{Standard Normal CI}
+
+
+\paragraph{Student's t CI}
 
 
 \section{Simulation Study}
