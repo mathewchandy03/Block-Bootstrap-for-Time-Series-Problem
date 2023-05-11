@@ -129,6 +129,8 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
     geom_line() +
     geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width) +
     facet_grid(factor(phi) ~ CI) +
+    scale_x_continuous(breaks = c(100, 200, 400, 800, 1600), trans='log2') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     scale_y_continuous(trans=trans)
   ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''))
 }
