@@ -204,3 +204,12 @@
 • 10000 replicates
 • 100, 200, 400, 800, 1600 (log scale)
 • Try new intervals
+
+5/12 Notes
+• Coverage Rate
+• Sample size
+• Try n = 3200
+• Move Standard, Student's t, Percentile, Centered, BCA
+• Remove stars
+• Upper case se
+• Refer to sections in book for standard and student's t
