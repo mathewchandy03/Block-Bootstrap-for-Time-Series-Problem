@@ -174,7 +174,7 @@ Block bootstrap preserves the serial dependence in the observed data by
 partitioning the data into blocks and performing bootstrap on the blocks.
 In particular, consider block size~$l$ and, for convenience, suppose that
 $n$ is a multiple of $l$ such that there are $k = n / l$ blocks. Each block~$j$
-is $Y_j = \{X_{(j - 1) * l + 1}, \ldots, X_{(j - 1) * l + l}\}$,
+is $Y_j = \{X_{(j - 1) l + 1}, \ldots, X_{(j - 1) l + l}\}$,
 $j = 1, \ldots,   k$.  Then, we sample $k$ blocks of $Y_j$'s from the set 
 $\{Y_1, \ldots, Y_k\}$ with replacement and concatenate the $k$ sampled blocks
 in the order they are picked to form a bootstrap sample of the data. The
@@ -195,38 +195,29 @@ block selected will be reduced in size so that the final size of the
 block bootstrap sample is $n$. It is also possible to implement moving block
 bootstrap while allowing blocks to wrap around the end of the series. In other
 words, define moving blocks (assuming $l > 1$) as:
-\jy{Any equation must be a part of a sentence and should be punctuated.}
-\jy{Recall a blank line means a new paragraph.}
-\jy{Define your response command with color and respond}
-\mc{addressed above comments}
 \begin{equation}
 Z_j =
     \begin{cases}
-        \{X_j, \ldots, X_{j + l - 1}\} & \text{if } j = 1, \dots, n - l + 1\\
-        \{X_j, \ldots, X_n, X_1, \ldots, X_{j-n+l-1}\} & \text{if } j = n - l
+        \{X_j, \ldots, X_{j + l - 1}\}, & \text{if } j = 1, \dots, n - l + 1,\\
+        \{X_j, \ldots, X_n, X_1, \ldots, X_{j-n+l-1}\}, & \text{if } j = n - l
         + 2 ,\dots, n.
     \end{cases}
 \end{equation}
-\jy{The ending index does not seem right}
-\mc{addressed above}
-The second version of moving block bootstrap was used in
-this study because it is the implementation provided in the function
-\texttt{tsboot} from R package \textsl{boot} \citep{boot}, and it is easier
-overall because $l$ need not divide $n$.
-\jy{state we use it because it is implemented in package boot and cite boot}  
-\jy{This reference is from a low-tier journal. Find something from a stronger
-  journal?}
-\mc{addressed above comments}
-The block size~$l$ needs to chosen with care. It needs to be large enough for
+The wrap-around version does not require that $n/l$ be an integer.
+We used this version in this study as implemented in the function
+\texttt{tsboot} from R package \textsl{boot} \citep{boot}.
+
+
+The block size~$l$ needs to be chosen with care. It should be large enough for
 each bootstrap sample to preserve the serial dependence, yet small enough for
-there to be some variability between each bootstrap sample. As $n$ increases,
-$l$ should also increase, but $l / n$ should decrease. To achieve this, $l$ is
+there to be a large number of blocks to give sufficient variability between
+each bootstrap sample. As $n$ increases, both~$l$
+and $n / l$ should also increase. To achieve this, $l$ is
 often assigned a value as a function of $n$. A common function that is
-considered the best by much previous literature is $l = \lceil n^{1/3} \rceil$
-\citep{buhlmann1999block}, which is how the value of $l$ was determined for
-this
+considered optimal is $l = \lceil n^{1/3} \rceil$
+\citep{buhlmann1999block}, which was adopted in this
 study. It may be worth investigating in a future study if another block size
-scheme is 
+scheme is \jy{Seems out of place. Maybe in the discussion section.}
 optimal for the context of a time series by comparing different block sizes
 whilst keeping the sample size fixed.
 
@@ -242,10 +233,7 @@ using the $B$ bootstrap point estimates
 $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$.
 We consider five kinds of CIs.
 
-\jy{can we give references to each of the method? How about the review paper in
-  Statistical Science?}
-\mc{references for percentile and BCA, couldn't find for centered, standard,
-  or student's t}
+\jy{order them as we discussed.}
 
 
 \paragraph{Percentile CI}
