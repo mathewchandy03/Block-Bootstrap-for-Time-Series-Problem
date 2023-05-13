@@ -100,36 +100,19 @@ mychk <- function(sim, target) {
   ret
 }
 
-df_bts <- function(cov, nrep = 10000, phis = c(-0.4, -0.2, 0, 0.2, 0.4), 
-                   sizes = c(100, 200, 400, 800, 1600), 
-                   types = c('pctCI', 'ctrCI', 'bcaCI', 'stdCI', 'stuCI'), 
-                   parameters = c('mu', 'sigma', 'phi')) {
-  phi <- 
-    rep(phis, each = length(sizes) * length(types) * length(parameters))
-  n <- 
-    rep(sizes, times = length(phis), each = length(types) * length(parameters))
-  CI <- 
-    rep(types, times = length(phis) * length(sizes), each = length(parameters))
-  t <- rep(parameters, times = length(phis) * length(types) * length(sizes))
-  LB <- sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[1])
-  UB <- sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[2])
-  
-  c(data.frame(phi, n, CI, t, cov, LB, UB))
-}
-
 graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
   library(ggplot2)
   
-  data$CI <- factor(data$CI, levels = c("pctCI", "ctrCI", 'bcaCI', 'stdCI', 'stuCI'), 
-                    labels = c("Percentile", "Centered", "BCA", "Standard", 'Student\'s t'))
+  data$CI <- factor(data$CI, levels = c("stdCI", "stuCI", 'pctCI', 'ctrCI', 'bcaCI'), 
+                    labels = c("Standard", "Student\'s t", "Percentile", "Centered", 'BCA'))
   
   ggplot(data, aes(x = n, y = cov)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
     geom_line() +
     geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width) +
     facet_grid(factor(phi) ~ CI) +
-    scale_x_continuous(breaks = c(100, 200, 400, 800, 1600), trans='log2') +
+    scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     scale_y_continuous(trans=trans)
   ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''))
