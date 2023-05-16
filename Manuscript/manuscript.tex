@@ -135,7 +135,7 @@ autocorrelation coefficient. We compare five variants of block bootstrap
 CIs from the literature \citep{diciccio1996bootstrap,
   rice2006mathematical}: a basic percentile interval, a percentile
 interval centered around the estimate, a bias-corrected and
-accelerated ($BC_a$) interval, a standard normal interval, and a student's $t$
+accelerated ($BC_a$) interval, a standard normal interval, and a Student's $t$
 interval. Their
 empirical coverage rates at different sample sizes and dependence levels are
 compared in a simulation study. The results of this study suggest that
@@ -216,11 +216,7 @@ and $n / l$ should also increase. To achieve this, $l$ is
 often assigned a value as a function of $n$. A common function that is
 considered optimal is $l = \lceil n^{1/3} \rceil$
 \citep{buhlmann1999block}, which was adopted in this
-study. It may be worth investigating in a future study if another block size
-scheme is \jy{Seems out of place. Maybe in the discussion section.}
-optimal for the context of a time series by comparing different block sizes
-whilst keeping the sample size fixed.
-
+study.
 
 \subsection{Bootstrap CIs}
 
@@ -234,7 +230,41 @@ $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$.
 We consider five kinds of CIs.
 
 \jy{order them as we discussed.}
+\mc{addressed}
+\paragraph{Standard Normal CI}
+The procedure for constructing a Standard Normal CI is described in 
+\citet{efron1993introduction}.
+A $(1 - \alpha$ standard normal CI depends on the standard error $\hat{SE}$
+for each of the
+$B$ bootstrap point estimates
+$\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. 
+\[
+(\hat{\theta}_{n} - z_{(1-\alpha/2)}\hat{SE}, \hat{\theta}_{n} -
+z_{(\alpha/2)}\hat{SE}).
+\]
+This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
+The standard
+normal CI is a table-based bootstrap interval approach, which is to say that
+it relies on the 
+assumption that $\hat\theta_n$ is normally distributed and the expected value
+of $\hat\theta_n$
+is $\theta$.
 
+\paragraph{Student's $t$ CI}
+The procedure for constructing a Student's $t$ CI is described in 
+\citet{efron1993introduction}.
+A $(1 - \alpha$ Student's $t$ CI is
+\[
+(\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}\hat{SE}, \hat{\theta}_{n} -
+t_{(\alpha/2), k -1}\hat{SE}),
+\]
+where $k$ is the number of blocks.
+This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
+Like the standard 
+normal interval, the Student's $t$ CI is a table-based bootstrap interval
+approach. In this case,
+we assume that $\hat\theta_n$ follows the $t_{k-1}$ distribution with an
+expected value of $\theta$.
 
 \paragraph{Percentile CI}
 The percentile interval was first suggested in \citet{efron1979bootstrap}.
@@ -301,40 +331,6 @@ $\theta$.
 \jy{why is it called BCA?}
 \mc{addressed}
 
-
-\paragraph{Standard Normal CI}
-
-A $(1 - \alpha$ standard normal CI depends on the standard error $\hat{se}$
-for each of the
-$B$ bootstrap point estimates
-$\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. 
-\[
-(\hat{\theta}_{n} - z_{(1-\alpha/2)}*\hat{se}, \hat{\theta}_{n} -
-z_{(\alpha/2)}*\hat{se}).
-\]
-This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
-The standard
-normal CI is a table-based bootstrap interval approach, which is to say that
-it relies on the 
-assumption that $\hat\theta_n$ is normally distributed and the expected value
-of $\hat\theta_n$
-is $\theta$.
-
-\paragraph{Student's $t$ CI}
-A $(1 - \alpha$ student's $t$ CI is
-\[
-(\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}*\hat{se}, \hat{\theta}_{n} -
-t_{(\alpha/2), k -1}*\hat{se}),
-\]
-where k is the number of blocks.
-This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
-Like the standard 
-normal interval, the student's t CI is a table-based bootstrap interval
-approach. In this case,
-we assume that $\hat\theta_n$ follows the $t_{k-1}$ distribution with an
-expected value of $\theta$.
-
-
 \section{Simulation Study}
 \label{sec:simu}
 
@@ -360,7 +356,7 @@ Three target parameters of $X_t$ were considered:
 2) $\sigma_x = 1$, the standard deviation of $X_t$; and
 2) $\phi$, the lag-1 auto-correlation coefficient.
 To investigate the effect of sample size~$n$, we considered an array of values
-$n \in \{100, 200, 400, 800, 1600\}$. In each configuration, we generated 10000
+$n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 10000
 replicates. For each replicate, we constructed three 95\% block bootstrap
 CIs for each parameter as described in the last section. We can estimate 
 $\mu$, $\sigma_x$, and $\phi$ by computing the sample mean, sample 
@@ -430,53 +426,40 @@ these figures were generated using the R \textsl{ggplot2} package
 \mc{paragraphs below}
 
 Based on Figure~\ref{fig:mu}, 
-the performance is about the same for Percentile, Centered, BCA, and 
-Standard CIs with respect to estimating $\mu$. They more or less need
-about the same sample size to have the correct coverage. For $\phi = -0.4$, 
-they slightly over-cover $\mu$ for all sample sizes, but the error bars generally 
-hover around the $95\%$ line. For $\phi = -0.2$, all four cover $\mu$ at the nominal 
-rate when $n = 400$, and when $n = 1600$, although there seems to be a dip in 
-coverage for $n = 800$. However, this deviation in trend can most likely be 
-attributed to noise. Besides that, the coverage rates remain above $.9375$ 
-for all sample sizes for this level of $\phi$. For $\phi = 0$, or when the 
-sample is independently normally distributed, $n = 1600$ seems to 
-be enough to recover $\mu$. For $\phi = 0.2$, the coverage rates are above 
-$.9375$ when $n = 800$ and $n = 1600$, but the coverage intervals do not contain
-$95\%$. Interestingly, there seems to be a drop in coverage rate from 
-$n = 800$ to $n = 1600$. For $\phi = 0.4$, the coverage rates are above $.925$
-when $n = 800$ and $n = 1600$, and there is a more noticeable downward 
-trend from $n = 800$ to $n = 1600$. Student's $t$ CI has noticeably higher coverage
-than the other CIs. For $\phi = -0.4$, the Student's $t$ CI actually 
-over-covers $\mu$ for all sample sizes, and the lower error bars
-are above the $95\%$ line for all sample sizes. For $\phi = -0.2$, it still slightly 
-over-covers $\mu$ for all sample sizers, but the error bars generally hover
-lower and around the $95\%$ line. For $\phi = 0$, the interval for the 
-coverage rate contains $.95$ for all sample sizes. For $\phi = 0.2$ and 
-$\phi = 0.4$, the trend in coverage is similar to the other CIs, but 
-the overall coverage rates are higher, although they still do not reach the $95\%$
-line. 
+Student's $t$ CIs appear to have the greatest coverage rates with respect 
+to estimating $\mu$. In fact, for $\phi = -0.4$, Student's $t$ CIs over-cover $\mu$
+for all sample sizes, whereas other CIs have coverage rates that
+hover around the $95\%$ line at this level of $\phi$. For $\phi = -0.2$, 
+Standard, Percentile, Centered, and $BC_a$ CIs cover $\mu$ at the nominal 
+rate when $n \geq 400$. Student's $t$ CIs either recover or over-cover $\mu$
+for $n \geq 100$. For $\phi = 0$, or when the 
+sample is independently normally distributed, $n = 800$ seems to 
+be enough to recover $\mu$ when using Standard, Percentile, Centered, or $BC_a$ 
+CIs. Student's $t$ CIs cover $\mu$ at the nominal rate for $n \geq 100$
+For $\phi = 0.2$, $n = 3200$ seems to be large enough when using
+Standard, Student's $t$, or Centered CIs, but Percentile and $BC_a$ CIs undercover
+$\mu$ for all sample sizes at this level of $\phi$.
+For $\phi = 0.4$, the Student's $t$ is the only type of CI that is able to recover $\mu$
+for a sample as large as $n = 3200$. The other CIs undercover $\mu$ for all sample 
+sizes at this level of $\phi$. Unsurprisingly, a greater level of $\phi$ demands a 
+larger $n$ to recover $\mu$ at the nominal rate.
 
 Based on Figure~\ref{fig:sigma}, 
 $BC_a$ CIs greatly undercover $\sigma_x$ for all sample sizes, although
 there is no trend of coverage deterioration, indicating that there may eventually
-a sample size large enough for $\sigma_x$ to be covered at the nominal level.
-However, because it's performance is so much poorer than the other CIs,
-$BC_a$ should not be used. Percentile, Centered, and Standard CIs perform similarly,
-with respect to estimating $\sigma_x$. For $\phi = -0.4$, $\phi = -0.2$, and $\phi = 0$, 
-$n = 1600$ seems to be large enough to cover $\sigma_x$ at the nominal level
-when using the Standard Normal CI interval, while the others are very close, hovering
-around $.945$ for $n = 1600$. For $\phi > 0$, a larger sample size does seem
-to be necessary to cover $\sigma_x$ at the nominal rate. However, for $\phi = 0.2$, 
-when $n \geq 400$, coverage is above $.93$ for all three of these CIs. For $\phi = 0.4$,
-when $n = 1600$, coverage is above $.93$ for all three of these CIs.
-Like for $\mu$, Student's $t$ CIs have the highest overall coverage of $\sigma_x$.
-Additionally, the Student's $t$ method does not over-cover $\sigma_x$ for any $n$.
-For $\phi = -0.4$, $\sigma_x$ is covered at the nominal rate for $n \geq 1600$.
-For $\phi = -0.2$ and $\phi = 0$, $\sigma_x$ is covered at the nominal rate for $n \geq 400$.
-For $\phi = 0.2$, although the coverage does not reach the $95\%$ line by $n = 1600$, 
-it seems to be around $.945$ for $n \geq 400$
-For $\phi = 0.4$, although the coverage does not reach the $95\%$ line by $n = 1600$, 
-it seems to be above $.93$ for $n \geq 400$
+be a sample size large enough for $\sigma_x$ to be covered at the nominal level.
+For $\phi = -0.4$, Standard Normal and Student's $t$ CIs recover $\sigma$ when 
+$n = 3200$, whereas as the other CIs undercover $\sigma$ for all sample sizes.
+For $\phi  = -0.2$, all CIs except for $BC_a$ are able to cover $\sigma$ at the 
+nominal rate for $n \geq 1600$, and Student's $t$ CIs cover $\sigma$ at the 
+nominal rate when $n \geq 800$. When $\phi = 0$, $n \geq 1600$ seems to 
+be large enough if Standard and Student's $t$ CIs are used. For $\phi = 0.2$, 
+consistent coverage of $\sigma$ at the nominal level appears to only be true
+for Student's $t$ CIs for $n \geq 1600$. For $\phi = 0.4$, the Student's $t$ CI is 
+able to reach nominal coverage of $\sigma$ when $n = 1600$, although in 
+our results, coverage appears to drop below the nominal rate for $n = 3200$, 
+indicating that perhaps an even larger $n$ is needed to recover $\sigma$ at
+this level of $\phi$.
 
 Based on Figure~\ref{fig:phi}, 
 Percentile and $BC_a$ CIs deteriorate clearly for any level of temporal correlation,
@@ -487,31 +470,32 @@ a sample size of $n = 800$ appears to be sufficient to recover $\phi$ at the
 nominal level when using either of these two CIs. 
 Student's $t$ CIs appear to recover $\phi$ at the nominal level for $n \geq 100$ for all 
 $\phi$.
+
 \jy{One summary paragraph at the end.}
 \mc{paragraph below}
 
 To summarize, the CI type chosen should be based on the target parameter. 
-When estimating $\mu$, the Student's t CI seems to have the highest coverage
+When estimating $\mu$, the Student's $t$ CI seems to have the highest coverage
 overall, although that leads to over-coverage when $\phi$ is -0.4. For a
-sample with no temporal dependence, the Student's t CI cover $\mu$ perfectly
+sample with no temporal dependence, the Student's $t$ CI cover $\mu$ perfectly
 at the nominal rate even for small sample sizes. For positive $\phi$, a larger
 sample size appears to be necessary regardless of the CI used. In the case
-that $\phi$ is unknown and expected to be greater than $0$, $n > 1600$ may be
-necessary for block bootstrap interval estimation of $\mu$. If that is not the
-case, a lesser sample size is likely sufficient. When estimating $\sigma$,
-$BC_a$ should not be used, and Student's t again has the greatest coverage
+that $\phi$ is unknown and expected to be greater than $0$, $n = 3200$ may be
+necessary for block bootstrap interval estimation of $\mu$. If $\phi$ is known,
+a lesser sample size may be sufficient. When estimating $\sigma$,
+$BC_a$ should not be used, and Student's $t$ again has the greatest coverage
 rates. In the case that $\phi$ is unknown and expected to be greater than $0$,
-$n > 1600$ may be necessary for block bootstrap interval estimation of
-$\sigma$. If that is not the case, a lesser sample size is likely sufficent.
+$n > 3200$ may be necessary for block bootstrap interval estimation of
+$\sigma$. Again, if $\phi$ is known, a lesser sample size may be enough.
 When estimating $\phi$, Percentile and $BC_a$ CIs 
 deteriorate in coverage, indicating they should not be used in this context. 
-Increasing n will not fix the performance of either of these intervals 
+Increasing $n$ will not fix the performance of either of these intervals 
 because the assumption that the coverage rate will approach the nominal level
-as n increases is invalid. Centered and Standard CIs managed to fix the
-deterioration problem, and they perform similarly, but Student's t covers
+as $n$ increases is invalid. Centered and Standard CIs managed to fix the
+deterioration problem, and they perform similarly, but Student's $t$ covers
 $\phi$ at the nominal rate for small sample sizes regardless of the absolute
 value or sign of $\phi$. Interestingly, $n = 100$ seems to be large enough to
-recover $\phi$ when using the Student's t method.
+recover $\phi$ when using the Student's $t$ method.
 
 \begin{figure}[tbp]
   \centering
@@ -520,7 +504,7 @@ recover $\phi$ when using the Student's t method.
     combination. The orange dotted line represents the 95\% nominal coverage
     rate. The error bars represent a 95\% CI for the coverage
     proportion out of 10000 replications for each $n$. Results for 
-    $n = 100, 200, 400, 800, 1600$ were recorded.}
+    $n = 100, 200, 400, 800, 1600, 3200$ were recorded.}
   \label{fig:mu}
 \end{figure}
 
@@ -532,7 +516,7 @@ recover $\phi$ when using the Student's t method.
     combination. The orange dotted line represents the 95\% nominal coverage
     rate. The error bars represent a 95\% CI for the coverage
     proportion out of 10000 replications for each $n$. Results for 
-    $n = 100, 200, 400, 800, 1600$ were recorded.}
+    $n = 100, 200, 400, 800, 1600, 3200$ were recorded.}
   \label{fig:sigma}
 \end{figure}
 
@@ -544,7 +528,7 @@ recover $\phi$ when using the Student's t method.
     combination. The orange dotted line represents the 95\% nominal coverage
     rate. The error bars represent a 95\% CI for the coverage
     proportion out of 10000 replications for each $n$. Results for 
-    $n = 100, 200, 400, 800, 1600$ were recorded.}
+    $n = 100, 200, 400, 800, 1600, 3200$ were recorded.}
   \label{fig:phi}
 \end{figure}
 
@@ -590,13 +574,14 @@ increased.
 
 
 When using $\hat{\theta}_{n}$-centered intervals and $\phi$ is
-unknown, the results of this study suggest that an $n$ of around $1600$ may be
+unknown, the results of this study suggest that an $n$ of around $3200$ may be
 necessary for common practice to estimate a simple parameters like $\mu$ 
 or $\sigma_x$. If $\phi$ is already known, a lesser $n$ may be adequate
 to
 estimate these parameters. ... However, in real world applications, $\phi$ is
 more commonly found to be positive, so a larger $n$ is more likely to be
-necessary. Lastly, to estimate $\phi$, an $n$ of around $100$ using the Student's $t$ method
+necessary. Lastly, to estimate $\phi$, an $n$ of around $100$ using the 
+Student's $t$ method
  may be sufficient
 Further investigation may be necessary to see if there are other interval
 corrections that fix the coverage deterioration problem for $\phi$.
@@ -613,7 +598,7 @@ construction such as $ABC$ or bootstrap-t intervals
 that would more appropriately recover the parameters of a time
 series. \eds{are there other methods that you know of?} 
 One could also investigate the $n$ needed to make inferences about
-other forms of serially dependent data such as a moving average process.
+other forms of serially dependent data such as a moving average process. 
 
 
 \bibliographystyle{chicago}
