@@ -51,7 +51,7 @@
 \title{On Sample Size for Block Bootstrap Confidence Intervals 
   to Have Desired Coverage Rates}
 
-\author{Mathew Chandy
+\author{Mathew Chandy, Elizabeth Schifano,
 %   \href{mailto:mathew.chandy@uconn.edu}
 % {\nolinkurl{mathew.chandy@uconn.edu}}\\
   and Jun Yan\\[1ex]
@@ -63,17 +63,18 @@
 \maketitle
 
 \begin{abstract}
-Block bootstrap is a method that is useful for estimating a parameter of a time
-series. Theoretically, the method will work perfectly given an infinitely
-large sample of the time series. It is necessary to know how large of a finite
-sample is required for block bootstrap estimation to work. Before this study,
-there have been no investigations into this problem within the literature. The
-aim of this study is to answer this question by simulating replications of
-block bootstrap interval estimations of a parameter of a time series, and
-recording the rate at which the parameter is recovered by each replicate
-interval. The sample length required for acceptable performance is
-unsurprisingly found to be dependent on the type of interval construction and
-the series' level of temporal dependence.
+Block bootstrap is widely used in constructing confidence intervals for
+parameters estimated from stationary time series. Theoretically, the method
+should provide valid confidence intervals as the length of the time series goes
+to infinity. In practice, however, it is necessary to know how large of a finite
+sample is required for block bootstrap confidence intervals to work well. This
+study aims to answer this question in a simple simulation setting where the data
+are generated from an autoregressive process of order~1. The empirical coverage
+rates of several commonly used bootstrap confidence intervals for the mean,
+standard deviation, and the lag-1 autocorrelation are compared. \jy{put most
+  notable findings here. Possibly 1) large sample is needed; percentile
+  bootstrap is not working well for rho (can we offer some explanation?).}
+
 
 
 \bigskip
@@ -82,13 +83,6 @@ dependent data; resampling; simulation; time series
 \end{abstract}
 
 \doublespace
-
-\jy{Practice my writing tips on latex (e.g., keep line width under 80; use
-  double blank lines to separate paragraphs; etc.):
-  \url{
-https://statds.github.io/stat-writing/using-the-right-tools-for-writing.html},
-  chapter 2}
-
 
 \section{Introduction}
 \label{sec:intro}
@@ -123,6 +117,7 @@ with
 dependent data, \citet{goncalves2005bootstrap} find that standard error
 estimates from block bootstrap in small samples may be more accurate than
 inference from closed-form asymptotic estimates, but block bootstrap percentile
+\jy{did they do block or standard bootstrap?}
 CIs still do not have sufficient coverage even for sample size
 $n = 1024$.
 
