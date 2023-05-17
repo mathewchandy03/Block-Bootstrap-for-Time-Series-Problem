@@ -71,7 +71,12 @@ sample is required for block bootstrap confidence intervals to work well. This
 study aims to answer this question in a simple simulation setting where the data
 are generated from a first-order autoregressive process. The empirical coverage
 rates of several commonly used bootstrap confidence intervals for the mean,
-standard deviation, and the lag-1 autocorrelation are compared. \jy{put most
+standard deviation, and the lag-1 autocorrelation are compared. In this 
+study, we find that a large sample is needed to recover even a simple
+parameter like the mean, and that the selection of interval type is very
+important, especially in the case of $\phi$, for which the coverage deteriorates
+as the sample size increases.
+\jy{put most
   notable findings here. Possibly 1) large sample is needed; percentile
   bootstrap is not working well for rho (can we offer some explanation?).}
 
@@ -89,8 +94,7 @@ dependent data; resampling; simulation; time series
 
 Block bootstrap is a powerful tool for constructing confidence intervals (CI)
 when making inferences about dependent data. Early ideas were developed
-independently by \citet{hall1985resampling}, \citet{carlstein1986use}, and 
-\citet{kunsch1989jackknife}.
+independently by \citet{hall1985resampling, carlstein1986use, kunsch1989jackknife}.
 It has since been applied in various fields such as econometrics
 \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}.
 Block bootstrap is particularly useful for serially dependent
@@ -114,20 +118,37 @@ using standard nonparametric bootstrap. For dependent data, the necessary
 sample
 size for block bootstrap is even less clear. In a linear regression setting
 with
-dependent data, \citet{goncalves2005bootstrap} find that standard error
-estimates from block bootstrap in small samples may be more accurate than
-inference from closed-form asymptotic estimates, but block bootstrap percentile
+dependent data where the
+regression errors are generated from a homoscedastic AR(1) process, 
+\citet{goncalves2005bootstrap} find that standard error
+estimates from bootstrap in small samples may be more accurate than
+inference from closed-form asymptotic estimates, but moving block bootstrap 
 \jy{did they do block or standard bootstrap?}
-CIs still do not have sufficient coverage even for sample size
+\mc{moving block bootstrap}
+CIs still do not have sufficient coverage of the target parameter even for sample size
 $n = 1024$.
-
-
+Also in the setting of linear regression, but focused on estimating the proportion of 
+variation attributable to a certain variable, \citet{burch2012nonparametric} finds
+that three nonparametric bootstrap methods (Standard, Percentile, and Bias-Corrected and
+Accelerated) approach the coverage of a pivotal quantity as $n$ gets larger for an
+underlying normal distribution. However, they find that for other distributions, 
+coverage may deteriorate as $n$ increases.
+\citet{chernick2009revisiting} finds that the the best choice of method for estimating
+the parameter of a distribution is dependent on the sample size, the number of
+bootstrap resamples, and the confidence level.
+When attempting to create interval estimations for the Pearson correlation 
+coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
+methods to be less accurate than the Fisher's transformation method even 
+for a sample of size $n = 100$ and correlation coefficient equivalent to 0.
 \jy{I added more references to the reference folder that studied coverage of
   bootstrap CIs but not block bootstrap CIs.}
+  
+
 
 
 The goal of this paper is to provide some practical recommendations on
-necessary sample size for block bootstrap with dependent data. We consider a
+necessary sample size for block bootstrap with dependent data, similar to what 
+was done for basic bootstrap in \citet{hesterberg2015teachers}. We consider a
 simple situation of a stationary time series, where the parameters of
 interests are the mean, standard deviation, and the first-order
 autocorrelation coefficient. We compare five variants of block bootstrap
@@ -242,7 +263,7 @@ A $(1 - \alpha)$ standard normal CI is
 \hat{\theta}_{n} - z_{(\alpha/2)}\widehat{\text{SE}}).
 \]
 This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
-Its validity relies on whether the distribution of $\hat\theta_n$ is reasonaly
+Its validity relies on whether the distribution of $\hat\theta_n$ is reasonably
 well approximated by its asymptotic normal distribution and whether the
 bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
 
@@ -261,8 +282,10 @@ This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
 Like the standard 
 normal interval, the Student's $t$ CI is a table-based bootstrap interval
 approach. In this case,
-we assume that $\hat\theta_n$ follows the $t_{k-1}$ distribution with an
-expected value of $\theta$.
+its validity relies on whether the distribution of $\hat\theta_n$ is
+reasonably well approximation by the $t_{k-1}$ distribution with an
+expected value of $\theta$, and whether the bootstrap 
+$\widehat{\text{SE}}$ approximates the true standard error.
 
 \paragraph{Percentile CI}
 The percentile interval was first suggested in \citet{efron1979bootstrap}.
