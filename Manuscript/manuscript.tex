@@ -69,7 +69,7 @@ should provide valid confidence intervals as the length of the time series goes
 to infinity. In practice, however, it is necessary to know how large of a finite
 sample is required for block bootstrap confidence intervals to work well. This
 study aims to answer this question in a simple simulation setting where the data
-are generated from an autoregressive process of order~1. The empirical coverage
+are generated from a first-order autoregressive process. The empirical coverage
 rates of several commonly used bootstrap confidence intervals for the mean,
 standard deviation, and the lag-1 autocorrelation are compared. \jy{put most
   notable findings here. Possibly 1) large sample is needed; percentile
@@ -122,6 +122,10 @@ CIs still do not have sufficient coverage even for sample size
 $n = 1024$.
 
 
+\jy{I added more references to the reference folder that studied coverage of
+  bootstrap CIs but not block bootstrap CIs.}
+
+
 The goal of this paper is to provide some practical recommendations on
 necessary sample size for block bootstrap with dependent data. We consider a
 simple situation of a stationary time series, where the parameters of
@@ -163,7 +167,7 @@ procedure needs to preserve the serial dependence. Block bootstrap was
 motivated for this situation. 
 
 
-\subsection{Block Bootstrap Sample}
+\subsection{Block Bootstrap}
 
 Block bootstrap preserves the serial dependence in the observed data by
 partitioning the data into blocks and performing bootstrap on the blocks.
@@ -198,7 +202,7 @@ Z_j =
         + 2 ,\dots, n.
     \end{cases}
 \end{equation}
-The wrap-around version does not require that $n/l$ be an integer.
+This version does not require that $n/l$ be an integer.
 We used this version in this study as implemented in the function
 \texttt{tsboot} from R package \textsl{boot} \citep{boot}.
 
@@ -210,8 +214,8 @@ each bootstrap sample. As $n$ increases, both~$l$
 and $n / l$ should also increase. To achieve this, $l$ is
 often assigned a value as a function of $n$. A common function that is
 considered optimal is $l = \lceil n^{1/3} \rceil$
-\citep{buhlmann1999block}, which was adopted in this
-study.
+\citep{buhlmann1999block}, which was adopted in this study.
+
 
 \subsection{Bootstrap CIs}
 
@@ -224,26 +228,25 @@ using the $B$ bootstrap point estimates
 $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$.
 We consider five kinds of CIs.
 
-\jy{order them as we discussed.}
-\mc{addressed}
+\jy{Read carpenter2000bootstrap and cite it; quite useful in sorting the literature}
+
 \paragraph{Standard Normal CI}
-The procedure for constructing a Standard Normal CI is described in 
-\citet{efron1993introduction}.
-A $(1 - \alpha$ standard normal CI depends on the standard error $\hat{SE}$
-for each of the
-$B$ bootstrap point estimates
-$\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. 
+Assuming that $\hat\theta_n$ is asymptotically normally distributed with
+$\theta$ as the mean, we just need an estimate of the standard error to
+construct an approximate CI \citep[p.168]{efron1993introduction}.
+Let $\widehat{\text{SE}}$ be the empirical standard error of the block bootstrap
+copies of $\hat\theta_n^{(b)}$, $b = 1, \ldots, B$.
+A $(1 - \alpha)$ standard normal CI is
 \[
-(\hat{\theta}_{n} - z_{(1-\alpha/2)}\hat{SE}, \hat{\theta}_{n} -
-z_{(\alpha/2)}\hat{SE}).
+(\hat{\theta}_{n} - z_{(1-\alpha/2)}\widehat{\text{SE}}, \quad
+\hat{\theta}_{n} - z_{(\alpha/2)}\widehat{\text{SE}}).
 \]
 This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
-The standard
-normal CI is a table-based bootstrap interval approach, which is to say that
-it relies on the 
-assumption that $\hat\theta_n$ is normally distributed and the expected value
-of $\hat\theta_n$
-is $\theta$.
+Its validity relies on whether the distribution of $\hat\theta_n$ is reasonaly
+well approximated by its asymptotic normal distribution and whether the
+bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
+
+
 
 \paragraph{Student's $t$ CI}
 The procedure for constructing a Student's $t$ CI is described in 
@@ -323,8 +326,7 @@ bias-correction and acceleration factors. The acceleration factor refers to
 the 
 rate of change of of the standard error of $\hat\theta_n$ with respect to
 $\theta$.
-\jy{why is it called BCA?}
-\mc{addressed}
+
 
 \section{Simulation Study}
 \label{sec:simu}
@@ -365,8 +367,7 @@ with function \texttt{tsboot} from R package \textsl{boot} \citep{boot}, with
 block size $\lceil n / l \rceil$. This function by default is an implementation
 of moving block bootstrap as described in the previous section, meaning that
 that blocks are allowed to wrap around, and $l = \lceil n^{1/3} \rceil$.
-\jy{size? also it was overlapping blocks. Describe the details here.}
-\mc{addressed}
+
 \eds{Is $l = \lceil n^{1/3} \rceil$? Is it also worth investigating different 
 choices of $l$ for fixed (large) $n$?}
 \mc{Addressed in the Block Bootstrap Sample subsection}
@@ -410,15 +411,53 @@ the goal of this study is to find the smallest $n$ which is sufficient for
 proper coverage.
 
 
+
+
 The results are graphically displayed in Figures~\ref{fig:mu}--\ref{fig:phi};
 these figures were generated using the R \textsl{ggplot2} package
 \citep{ggplot2}.
 
 
 
-\jy{One paragraph for each parameter; write down your observations in bullet
-  points and then organize them into a logically flowing paragraph.}
-\mc{paragraphs below}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/plot_mu}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal mean $\mu$ of an AR(1) process with AR coefficient
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates.
+    The error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:mu}
+\end{figure}
+
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/plot_sigma}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal standard deviation $\sigma$ of an AR(1) process with AR
+    coefficient $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates.
+    The error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:sigma}
+\end{figure}
+
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/plot_phi}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the first-order autocorrelation coefficient $\phi$ of an AR(1) process with
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates.
+    The error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:phi}
+\end{figure}
+
+\jy{I'm curiouss why the coverge is so poor for the percentile method. Could
+  plot 50 intervals for phi using different sample sizes?}
+
 
 Based on Figure~\ref{fig:mu}, 
 Student's $t$ CIs appear to have the greatest coverage rates with respect 
@@ -466,8 +505,6 @@ nominal level when using either of these two CIs.
 Student's $t$ CIs appear to recover $\phi$ at the nominal level for $n \geq 100$ for all 
 $\phi$.
 
-\jy{One summary paragraph at the end.}
-\mc{paragraph below}
 
 To summarize, the CI type chosen should be based on the target parameter. 
 When estimating $\mu$, the Student's $t$ CI seems to have the highest coverage
@@ -491,42 +528,6 @@ deterioration problem, and they perform similarly, but Student's $t$ covers
 $\phi$ at the nominal rate for small sample sizes regardless of the absolute
 value or sign of $\phi$. Interestingly, $n = 100$ seems to be large enough to
 recover $\phi$ when using the Student's $t$ method.
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_mu}
-  \caption{Plots of $\mu$ coverage rates for each interval type and $\phi$
-    combination. The orange dotted line represents the 95\% nominal coverage
-    rate. The error bars represent a 95\% CI for the coverage
-    proportion out of 10000 replications for each $n$. Results for 
-    $n = 100, 200, 400, 800, 1600, 3200$ were recorded.}
-  \label{fig:mu}
-\end{figure}
-
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_sigma}
-  \caption{Plots of $\sigma_x$ coverage rates for each interval type and $\phi$
-    combination. The orange dotted line represents the 95\% nominal coverage
-    rate. The error bars represent a 95\% CI for the coverage
-    proportion out of 10000 replications for each $n$. Results for 
-    $n = 100, 200, 400, 800, 1600, 3200$ were recorded.}
-  \label{fig:sigma}
-\end{figure}
-
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_phi}
-  \caption{Plots of $\phi$ coverage rates for each interval type and $\phi$
-    combination. The orange dotted line represents the 95\% nominal coverage
-    rate. The error bars represent a 95\% CI for the coverage
-    proportion out of 10000 replications for each $n$. Results for 
-    $n = 100, 200, 400, 800, 1600, 3200$ were recorded.}
-  \label{fig:phi}
-\end{figure}
-
 
 
 
