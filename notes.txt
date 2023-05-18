@@ -213,3 +213,11 @@
 • Remove stars
 • Upper case se
 • Refer to sections in book for standard and student's t
+
+5/18 Notes
+• Separate scales for each interval type
+• Bias correction is working well
+• Acceleration is not
+• Try other centered interval
+• Double check BCA
+• Reorganize structure of intro
