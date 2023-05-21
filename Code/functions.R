@@ -109,7 +109,7 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
     geom_line() +
     geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width) +
-    facet_grid(factor(phi) ~ CI) +
+    facet_grid(factor(CI) ~ factor(phi), scales = 'free') +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +

@@ -111,38 +111,39 @@ uncertainty measures in practice has not been extensively studied. For
 independent data and non-block bootstrap, \citet{hesterberg2015teachers} notes
 that while percentile-based CIs from nonparametric bootstrap
 are more accurate than $t$-intervals for larger sample sizes, they are
-less accurate for smaller sample sizes. In the context of structural equation
+less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds that the the best choice of method for estimating
+the parameter of a distribution is dependent on the sample size, the number of
+bootstrap resamples, and the confidence level. In the context of structural equation
 modeling, \citet{nevitt2001performance} find
 that a sample size of 200--1000 is usually sufficient for interval estimation
 using standard nonparametric bootstrap. For dependent data, the necessary
 sample
-size for block bootstrap is even less clear. In a linear regression setting
+size for bootstrap is even less clear. In the setting of linear regression and focused on estimating the proportion of 
+variation attributable to a certain variable, \citet{burch2012nonparametric} finds
+that three nonparametric bootstrap methods (Standard, Percentile, and Bias-Corrected and
+Accelerated) approach the coverage of a pivotal quantity as $n$ gets larger for an
+underlying normal distribution. However, they find that for other distributions, 
+coverage may deteriorate as $n$ increases. 
+When attempting to create interval estimations for the Pearson correlation 
+coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
+methods to be less accurate than the Fisher's transformation method even 
+for a sample of size $n = 100$ and correlation coefficient equivalent to 0.
+Few studies have provided a practical guide on what size is needed
+for block bootstrap inference for dependent data.
+In a linear regression setting
 with
 dependent data where the
 regression errors are generated from a homoscedastic AR(1) process, 
 \citet{goncalves2005bootstrap} find that standard error
-estimates from bootstrap in small samples may be more accurate than
+estimates from moving 
+block bootstrap in small samples may be more accurate than
 inference from closed-form asymptotic estimates, but moving block bootstrap 
 \jy{did they do block or standard bootstrap?}
 \mc{moving block bootstrap}
 CIs still do not have sufficient coverage of the target parameter even for sample size
 $n = 1024$.
-Also in the setting of linear regression, but focused on estimating the proportion of 
-variation attributable to a certain variable, \citet{burch2012nonparametric} finds
-that three nonparametric bootstrap methods (Standard, Percentile, and Bias-Corrected and
-Accelerated) approach the coverage of a pivotal quantity as $n$ gets larger for an
-underlying normal distribution. However, they find that for other distributions, 
-coverage may deteriorate as $n$ increases.
-\citet{chernick2009revisiting} finds that the the best choice of method for estimating
-the parameter of a distribution is dependent on the sample size, the number of
-bootstrap resamples, and the confidence level.
-When attempting to create interval estimations for the Pearson correlation 
-coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
-methods to be less accurate than the Fisher's transformation method even 
-for a sample of size $n = 100$ and correlation coefficient equivalent to 0.
 \jy{I added more references to the reference folder that studied coverage of
   bootstrap CIs but not block bootstrap CIs.}
-  
 
 
 
@@ -303,8 +304,6 @@ contrary to what one would expect.
 
 
 \paragraph{Centered Percentile CI}
-The procedure for constructing a Centered Percentile CI - referred to as
-a Non-Studentized pivotal method - is described in \citet{carpenter2000bootstrap}.
 Centered percentile CI is centered at the point estimator and uses the
 variation
 in the bootstrap estimates to construct the error bound. This interval requires
@@ -524,11 +523,17 @@ Based on Figure~\ref{fig:phi},
 Percentile and $BC_a$ CIs deteriorate clearly for any level of temporal correlation,
 so they should not be used. The deterioration becomes more evident
 as the absolute value of $\phi$ increases, regardless of whether $\phi$ is 
-negative or positive. Centered and Standard CIs perform similarly;
-a sample size of $n = 800$ appears to be sufficient to recover $\phi$ at the 
-nominal level when using either of these two CIs. 
-Student's $t$ CIs appear to recover $\phi$ at the nominal level for $n \geq 100$ for all 
-$\phi$.
+negative or positive. When $\phi = -0.4$, Standard and Centered CIs 
+recover $\phi$ at the nominal rate for $n \geq 400$. At this $\phi$ level,
+Student's $t$ CIs either recover or over-cover $\phi$ for $n \geq 100$. When
+$\phi = -0.2$, Standard and Centered CIs recover $\phi$ at $n = 800$, whereas 
+Student's $t$ CIs recover $\phi$ for $n \geq 100$. When
+$\phi = 0$, Standard and Centered CIs recover $\phi$ at $n = 3200$, and 
+$n = 800$ seems to be sufficient for Student's $t$ CIs. For $\phi = 0.2$, Standard
+and Centered CIs cover $\phi$ at the nominal rate for $n \geq 800$, whereas 
+Student's $t$ CIs can accomplish this at $n \geq 400$. For $\phi = 0.4$, $n \geq 
+800$ is large enough for Standard and Centered CIs. Student's $t$ CIs either
+recover or over-cover $\phi$ for all $n \geq 100$.
 
 
 To summarize, the CI type chosen should be based on the target parameter. 
@@ -550,8 +555,8 @@ Increasing $n$ will not fix the performance of either of these intervals
 because the assumption that the coverage rate will approach the nominal level
 as $n$ increases is invalid. Centered and Standard CIs managed to fix the
 deterioration problem, and they perform similarly, but Student's $t$ covers
-$\phi$ at the nominal rate for small sample sizes regardless of the absolute
-value or sign of $\phi$. Interestingly, $n = 100$ seems to be large enough to
+$\phi$ at the nominal rate for much smaller sample sizes. It seems that 
+$n = 800$ is large enough to
 recover $\phi$ when using the Student's $t$ method.
 
 
@@ -587,23 +592,34 @@ recover its associated parameters at an acceptable rate.
 
 Again, this analysis \eds{what?} \mc{addressed} relies on the assumption that
 there is a size $n$ large enough for the method to work: that is, the method's
-performance improves as $n$ increases. Out of the two types of intervals used
+performance improves as $n$ increases. Out of the five types of intervals used
 in this study, this assumption was found to hold true with respect to
-estimating $\phi$ only for $\hat{\theta}_{n}$-centered intervals, whereas both
-percentile and $BC_a$ intervals exhibited coverage deterioration as $n$
-increased.
+estimating $\phi$ only for Standard, Student's $t$, and Centered CIs, whereas both
+Percentile and $BC_a$ intervals exhibited coverage deterioration as $n$
+increased. The Percentile CI's coverage deterioration can be attributed to
+bias that is not corrected as $n$ increases. Specifically, as $n$ increases, 
+the width of the CI decreases, but because the Percentile CI
+underestimates $\phi$, the coverage decreases. The $BC_a$ CI does seem to correct the bias, but the acceleration factor seems to fail, as the width of the CI
+seems to be inconsistent.
 
 
-When using $\hat{\theta}_{n}$-centered intervals and $\phi$ is
+When using Student's $t$ centered intervals and $\phi$ is
 unknown, the results of this study suggest that an $n$ of around $3200$ may be
-necessary for common practice to estimate a simple parameters like $\mu$ 
+necessary for common practice to estimate simpler parameters like $\mu$ 
 or $\sigma_x$. If $\phi$ is already known, a lesser $n$ may be adequate
 to
-estimate these parameters. ... However, in real world applications, $\phi$ is
-more commonly found to be positive, so a larger $n$ is more likely to be
-necessary. Lastly, to estimate $\phi$, an $n$ of around $100$ using the 
+estimate these parameters. For lower absolute values of $\phi$, a smaller
+$n$ is sufficient when estimating $\mu$ or $\sigma$. For negative
+values of $\phi$, coverage of $\mu$ is higher in general. In fact, 
+Student's $t$ seems to over-cover $\mu$ for $\phi = 0.4$, 
+meaning that if $\phi$ is known to have a very negative value, another CI
+should be used.
+$However, in real world applications, $\phi$ is
+more commonly found to be positive, so Student's $t$ should still be used
+if $\phi$ is unknown.
+Lastly, to estimate $\phi$, an $n$ of around $800$ using the 
 Student's $t$ method
- may be sufficient
+ may be sufficient.
 Further investigation may be necessary to see if there are other interval
 corrections that fix the coverage deterioration problem for $\phi$.
 
