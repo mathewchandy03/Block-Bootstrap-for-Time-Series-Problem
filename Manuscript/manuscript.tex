@@ -332,17 +332,26 @@ The $BC_a$ CI was first suggested in \citet{efron1987better}.
   What is your reference for this description?}
 Let $\hat{z}_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$
 for $b \in \{1, \ldots, B\}$. 
-Let $Z_{(i)}$ be the original sample without the $i$th block $z_i$, and let
-$\hat{\theta}_{n, -i}$ be the jackknife values of $Z_{(i)}$
+Let $Z_{(i)}$ be the original sample without the $i$th block $z_i$, let
+$\hat{\theta}_{(i)}$ be the jackknife values of $Z_{(i)}$
 for $i \in \{1, \ldots, n\}$, 
-and let $a$ be $SKEW\{\hat{\theta}_{n, -i}\} / 6$. Then
-$\hat\theta_{BC_a}[\alpha] = \hat{G}^{-1}\Phi(z_0 + \frac{z_{0} +
-  z_{\alpha}}{1 - a(z_{0} + z_{\alpha})}).$
-\eds{notation will need to be cleaned and clarified}
-A $(1 - \alpha)$ centered $BC_a$ CI is
+and let $\hat{\theta}_{(.)} = \sum_{i=1}^{k} \hat{\theta}_{(i)} / k$. 
+Let 
 \[
-(\hat\theta_{BC_a}[\alpha/2], \quad
-\hat\theta_{BC_a}[1 - \alpha/2]).
+\hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} - \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} - \hat{\theta}_{(i)})^2\}^{3/2}}
+.\] For a $1 - \alpha$ CI, let
+\[
+\alpha_1 = \Phi(z_0 + \frac{z_{0} +
+  z_{\alpha/2}}{1 - \hat{a}(z_{0} + z_{\alpha/2})}).
+\]
+\[
+\alpha_2 = \Phi(z_0 + \frac{z_{0} +
+  z_{1 - \alpha/2}}{1 - \hat{a}(z_{0} + z_{1 - \alpha/2})}).
+\]
+\eds{notation will need to be cleaned and clarified}
+A $(1 - \alpha) BC_a$ CI is
+\[
+(\hat\theta_{n, \alpha_1}^{(b)}, \quad \hat\theta_{n, \alpha_2}^{(b)}).
 \]
 This CI is not necessarily centered by the point estimator $\hat\theta_n$. The
 $BC_a$ method corrects for bias and skewness of the $B$ bootstrap point
