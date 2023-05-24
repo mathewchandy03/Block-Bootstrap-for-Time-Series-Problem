@@ -303,6 +303,17 @@ marginal mean and standard deviation of a serially dependent process, but its
 coverage of the temporal dependence deteriorates as $n$ increases, which is
 contrary to what one would expect.
 
+\paragraph{Centered Bootstrap Percentile CI}
+The procedure for constructing a Centered Bootstrap Percentile CI based on standard bootstrap is
+described in \citet{singh2008bootstrap}.
+The $(1 - \alpha)$ Centered Bootstrap Percentile CI is
+\[
+(2\hat{\theta}_{n} - \hat\theta_{n, 1 - \alpha/2}^{(b)}, \quad
+2\hat{\theta}_{n} - \hat\theta_{n, \alpha/2}^{(b)})).
+\]
+This CI is necessarily centered around the point estimator $\hat\theta_n$ and
+is asymmetric, as different critical values are used to compute
+the lower and upper bounds.
 
 \paragraph{Centered Percentile CI}
 Centered percentile CI is centered at the point estimator and uses the
@@ -323,6 +334,22 @@ This CI is necessarily centered around the point estimator $\hat\theta_n$ and
 is asymmetric, as different critical values are used to compute
 the lower and upper bounds.
 
+\paragraph{Bias Corrected Bootstrap CI}
+The procedure for constructing a Bias Corrected Bootstrap CI based on standard bootstrap is
+described in \citet{carpenter2000bootstrap}.
+Let $b = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$
+for $b \in \{1, \ldots, B\}$. 
+For a $1 - \alpha$ CI, let
+\[
+\alpha_1 = \Phi(2b - z_{\alpha/2}).
+\]
+\[
+\alpha_2 = \Phi(2b - z_{1 - \alpha/2}).
+\]
+A $(1 - \alpha) BC_a$ CI is
+\[
+(\hat\theta_{n, \alpha_1}^{(b)}, \quad \hat\theta_{n, \alpha_2}^{(b)}).
+\]
 
 \paragraph{Bias Corrected and Accelerated ($BC_a$) Bootstrap CI}
 The $BC_a$ CI was first suggested in \citet{efron1987better}.
