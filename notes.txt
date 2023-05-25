@@ -221,3 +221,9 @@
 • Try other centered interval
 • Double check BCA
 • Reorganize structure of intro
+
+5/25 Notes
+• 20 intervals (Percentile, Our approach, BC) 
+• Proposed bootstrap
+• Bias is theta_bar - theta_hat
+• Try 100 intervals
