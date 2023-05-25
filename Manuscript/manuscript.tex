@@ -524,51 +524,59 @@ Based on Figure~\ref{fig:mu},
 Student's $t$ CIs appear to have the greatest coverage rates with respect 
 to estimating $\mu$. In fact, for $\phi = -0.4$, Student's $t$ CIs over-cover $\mu$
 for all sample sizes, whereas other CIs have coverage rates that
-hover around the $95\%$ line at this level of $\phi$. For $\phi = -0.2$, 
-Standard, Percentile, Centered, and $BC_a$ CIs cover $\mu$ at the nominal 
+hover around the $95\%$ line at this level of $\phi$. For $\phi \geq -0.2$,
+$BC_a$ CIs undercover $\mu$ for all $n$ observed. For $\phi = -0.2$, 
+Standard, Percentile, CBP, Centered, and $BC$ CIs seem to 
+generally cover $\mu$ at the nominal 
 rate when $n \geq 400$. Student's $t$ CIs either recover or over-cover $\mu$
 for $n \geq 100$. For $\phi = 0$, or when the 
-sample is independently normally distributed, $n = 800$ seems to 
-be enough to recover $\mu$ when using Standard, Percentile, Centered, or $BC_a$ 
-CIs. Student's $t$ CIs cover $\mu$ at the nominal rate for $n \geq 100$
-For $\phi = 0.2$, $n = 3200$ seems to be large enough when using
-Standard, Student's $t$, or Centered CIs, but Percentile and $BC_a$ CIs undercover
-$\mu$ for all sample sizes at this level of $\phi$.
-For $\phi = 0.4$, the Student's $t$ is the only type of CI that is able to recover $\mu$
-for a sample as large as $n = 3200$. The other CIs undercover $\mu$ for all sample 
-sizes at this level of $\phi$. Unsurprisingly, a greater level of $\phi$ demands a 
-larger $n$ to recover $\mu$ at the nominal rate.
+sample is independently normally distributed, $n = 1600$ seems to 
+be enough to recover $\mu$ when using Standard, Percentile, CBP, Centered, or $BC$ 
+CIs. Student's $t$ CIs cover $\mu$ at the nominal rate for $n \geq 100$ at 
+$\phi = 0$.
+For $\phi = 0.2$, $n > 3200$ seems to be necessary to recover $\mu$
+at the nominal level when using
+any of the CIs, although some CIs, such as Student's $t$, are much closer to the
+$95\%$ line than others, most notably $BC_a$.
+For $\phi = 0.4$, a much larger sample size appears to be necessary. Once again,
+Student's $t$ CIs are the closest to $95\%$ coverage, and $BC_a$ CIs are the furthest.
 
 Based on Figure~\ref{fig:sigma}, 
-$BC_a$ CIs greatly undercover $\sigma_x$ for all sample sizes, although
+$BC_a$ CIs greatly undercover $\sigma_x$ for every combination of $n$ and 
+$\phi$, observed, although
 there is no trend of coverage deterioration, indicating that there may eventually
 be a sample size large enough for $\sigma_x$ to be covered at the nominal level.
 For $\phi = -0.4$, Standard Normal and Student's $t$ CIs recover $\sigma$ when 
-$n = 3200$, whereas as the other CIs undercover $\sigma$ for all sample sizes.
+$n = 1600$, but undercover $\sigma$ for $n = 3200$, indicating
+that a larger $n$ is most likely necessary to consistently cover $\sigma$ at the 
+nominal rate.
+The other CI types undercover $\sigma$ for all sample sizes at $\phi = 0.4$.
 For $\phi  = -0.2$, all CIs except for $BC_a$ are able to cover $\sigma$ at the 
-nominal rate for $n \geq 1600$, and Student's $t$ CIs cover $\sigma$ at the 
-nominal rate when $n \geq 800$. When $\phi = 0$, $n \geq 1600$ seems to 
-be large enough if Standard and Student's $t$ CIs are used. For $\phi = 0.2$, 
-consistent coverage of $\sigma$ at the nominal level appears to only be true
-for Student's $t$ CIs for $n \geq 1600$. For $\phi = 0.4$, the Student's $t$ CI is 
-able to reach nominal coverage of $\sigma$ when $n = 1600$, although in 
-our results, coverage appears to drop below the nominal rate for $n = 3200$, 
-indicating that perhaps an even larger $n$ is needed to recover $\sigma$ at
-this level of $\phi$.
+nominal rate for $n \geq 3200$, and Student's $t$ CIs cover $\sigma$ at the 
+nominal rate when $n \geq 400$. When $\phi = 0$, $n \geq 1600$ seems to 
+be large enough if Standard CIs are used, and $n \geq 400$ is fine is
+Student's $t$ CIs are used. $n \geq 3200$ appears necessary 
+for other CIs. For $\phi = 0.2$, 
+comfortable coverage of $\sigma$ at the nominal level appears to only be true
+for Student's $t$ CIs for $n \geq 3200$, although Standard and CBP CIs. For $\phi = 0.4$, a much larger sample size appears to be necessary. Student's $t$ CIs are the closest to $95\%$ coverage, and $BC_a$ CIs are the furthest.
 
 Based on Figure~\ref{fig:phi}, 
-Percentile and $BC_a$ CIs deteriorate clearly for any level of temporal correlation,
+Percentile, CBP, $BC$, and $BC_a$ CIs deteriorate clearly for any level of temporal correlation,
 so they should not be used. The deterioration becomes more evident
 as the absolute value of $\phi$ increases, regardless of whether $\phi$ is 
 negative or positive. When $\phi = -0.4$, Standard and Centered CIs 
 recover $\phi$ at the nominal rate for $n \geq 400$. At this $\phi$ level,
 Student's $t$ CIs either recover or over-cover $\phi$ for $n \geq 100$. When
-$\phi = -0.2$, Standard and Centered CIs recover $\phi$ at $n = 800$, whereas 
-Student's $t$ CIs recover $\phi$ for $n \geq 100$. When
-$\phi = 0$, Standard and Centered CIs recover $\phi$ at $n = 3200$, and 
+$\phi = -0.2$, Standard and Centered CIs recover $\phi$ at $n = 800$ and 
+$n = 1600$, 
+although they undercover $\phi$ at $n = 3600$, indicating that 
+perhaps a larger $n$ is needed if these CIs are uses. However,
+Student's $t$ CIs cover $\phi$ at the nominal level for $n \geq 400$. When
+$\phi = 0$, Standard and Centered CIs recover $\phi$ relatively comfortably 
+at $n = 3200$, and 
 $n = 800$ seems to be sufficient for Student's $t$ CIs. For $\phi = 0.2$, Standard
-and Centered CIs cover $\phi$ at the nominal rate for $n \geq 800$, whereas 
-Student's $t$ CIs can accomplish this at $n \geq 400$. For $\phi = 0.4$, $n \geq 
+and Centered CIs cover $\phi$ at the nominal rate for $n \geq 1600$, whereas 
+Student's $t$ CIs can accomplish this at $n \geq 100$. For $\phi = 0.4$, $n \geq 
 800$ is large enough for Standard and Centered CIs. Student's $t$ CIs either
 recover or over-cover $\phi$ for all $n \geq 100$.
 
@@ -579,7 +587,7 @@ overall, although that leads to over-coverage when $\phi$ is -0.4. For a
 sample with no temporal dependence, the Student's $t$ CI cover $\mu$ perfectly
 at the nominal rate even for small sample sizes. For positive $\phi$, a larger
 sample size appears to be necessary regardless of the CI used. In the case
-that $\phi$ is unknown and expected to be greater than $0$, $n = 3200$ may be
+that $\phi$ is unknown and expected to be greater than $0$, $n > 3200$ may be
 necessary for block bootstrap interval estimation of $\mu$. If $\phi$ is known,
 a lesser sample size may be sufficient. When estimating $\sigma$,
 $BC_a$ should not be used, and Student's $t$ again has the greatest coverage
@@ -631,17 +639,17 @@ Again, this analysis \eds{what?} \mc{addressed} relies on the assumption that
 there is a size $n$ large enough for the method to work: that is, the method's
 performance improves as $n$ increases. Out of the five types of intervals used
 in this study, this assumption was found to hold true with respect to
-estimating $\phi$ only for Standard, Student's $t$, and Centered CIs, whereas both
-Percentile and $BC_a$ intervals exhibited coverage deterioration as $n$
+estimating $\phi$ only for Standard, Student's $t$, and Centered CIs, whereas 
+Percentile, CBP, $BC$, and $BC_a$ intervals exhibited coverage deterioration as $n$
 increased. The Percentile CI's coverage deterioration can be attributed to
 bias that is not corrected as $n$ increases. Specifically, as $n$ increases, 
 the width of the CI decreases, but because the Percentile CI
 underestimates $\phi$, the coverage decreases. The $BC_a$ CI does seem to correct the bias, but the acceleration factor seems to fail, as the width of the CI
-seems to be inconsistent.
+seems to be inconsistent. 
 
 
 When using Student's $t$ centered intervals and $\phi$ is
-unknown, the results of this study suggest that an $n$ of around $3200$ may be
+unknown, the results of this study suggest that an $n > 3200$ may be
 necessary for common practice to estimate simpler parameters like $\mu$ 
 or $\sigma_x$. If $\phi$ is already known, a lesser $n$ may be adequate
 to
