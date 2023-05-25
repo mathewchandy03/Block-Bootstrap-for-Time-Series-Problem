@@ -1,3 +1,4 @@
+.libPaths("~/rlibs")
 ## This note checks the empirical coverage rate of CIs constructed from
 ## block bootstrap with series generated from an AR process
 
@@ -6,6 +7,13 @@ mystat <- function(x) {
     sd(x),
     cor(x[-1], x[-length(x)]))
   # acf(x, lag.max = 1, plot = FALSE)$acf[2])
+}
+
+calculate_a_hat <- function(row) {
+  tj_mean <- mean(row)
+  numerator <- sum((tj_mean - row)^3)
+  denominator <- 6 * sum((tj_mean - row)^2)^(3/2)
+  c(numerator / denominator)
 }
 
 do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
@@ -17,7 +25,7 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   }
   bts <- boot::tsboot(x, statistic, l = blksize, sim = "fixed", R = R)
   alpha <- 1 - level
-
+  
   
   ## Standard interval
   se <- apply(bts$t, 2, sd)
@@ -42,14 +50,14 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   crit2 <- 
     apply(t(t(bts$t) - mbts), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
   ourctrCI <- sweep(crit2, 2, bts$t0, FUN = '+') # original estimate
-
+  
   ## Carpenter et al 2000, p. 1153
   b <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
   qup <- pnorm(2 * b - qnorm(alpha / 2))
   qlo <- pnorm(2 * b - qnorm(1 - alpha / 2))
   bcCI <- sapply(1:length(bts$t0),
                  function(i) quantile(bts$t[,i], prob=c(qlo[i], qup[i])))
-
+  
   ## LB: bts$t0 + alpha/2 crit, UB: bts$t0 + (1 - alpha/2) crit
   # mbtCI <- sweep(crit2, 2, mbts, FUN = '+') # mean of pseudo-estimates
   ## LB: mbts + alpha/2 crit2, UB: mbts + (1 - alpha/2) crit2
@@ -62,7 +70,8 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   thetajack <- sapply(1: (n / blksize),
                       function(i)
                         statistic(x[ - ((i - 1) * blksize + 1:blksize)]))
-  a <- apply(thetajack, 1, e1071::skewness, type = 1) / 6 ## * (n / blksize)^-0.5???
+  a_hat <- apply(thetajack, 1, calculate_a_hat)
+  ## a <- apply(thetajack, 1, e1071::skewness, type = 1) / 6 ## * (n / blksize)^-0.5???
   alpha1 <- pnorm(
     z0 + (z0 + qnorm(alpha/2)) / (1 - a * (z0 + qnorm(alpha/2))))
   alpha2 <- pnorm(
@@ -88,11 +97,11 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   ## LB: bts$t0 - alpha2 crit3, UB: bts$t0 - alpha1 crit3 and
   ## LB: mbts - alpha2 crit4, UB: mbts - alpha1 crit4
   
-
+  
   
   ## return all intervals
   
-  c(stdCI, stuCI, pctCI, ctrCI, ourctrCI, bcaCI)
+  c(stdCI, stuCI, pctCI, ctrCI, ourctrCI, bcCI, bcaCI)
 }
 
 mychk <- function(sim, target) {
@@ -110,8 +119,8 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
   library(ggplot2) # put package loading outside of the function
   
-  data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'ctrCI', 'ourctrCI', 'bcaCI'), 
-                    labels = c('Standard', 'Student\'s t', 'Percentile', 'Centered', 'Our Centered', 'BCA'))
+  data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'ctrCI', 'ourctrCI', 'bcCI', 'bcaCI'), 
+                    labels = c('Standard', 'Student\'s t', 'Percentile', 'Centered', 'Our Centered', 'BC', 'BCA'))
   
   ggplot(data, aes(x = n, y = cov)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 

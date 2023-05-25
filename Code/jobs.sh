@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=general
 #SBATCH --output=../out/ja_%A_%a.out
-#SBATCH --constraint="cpuonly" ## avoiding gpu (preventing waste of resources)
 #SBATCH --array=1-100%100
 #SBATCH --ntasks=1 ## OBS 1
 #SBATCH --cpus-per-task=1 ## OBS 2
