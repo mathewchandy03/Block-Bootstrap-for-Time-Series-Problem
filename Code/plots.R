@@ -1,3 +1,4 @@
+source("functions.R")
 df_mu <- read.csv("../Data/df_mu.csv")
 df_sigma <- read.csv("../Data/df_sigma.csv")
 df_phi <- read.csv("../Data/df_phi.csv")

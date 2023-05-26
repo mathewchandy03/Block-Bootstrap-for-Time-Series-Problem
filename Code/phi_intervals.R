@@ -1,48 +1,25 @@
-results_1 <- readRDS('../Data/results_1.rds')
-mtrx <- c()
-for(i in names(results_1)) {
-  toadd <- results_1[[i]][c(5,6,17,18),]
-  toadd <- cbind(rep(i, nrow(toadd)), rep(c('PCT', 'BCA'), each = 2, length.out = nrow(toadd)), toadd)
-  mtrx <- rbind(mtrx, toadd)
-}
-# Assuming your matrix is named 'data_matrix'
-# 'data_matrix' is a 120x100 matrix with title in the first column
+source("functions.R")
+sim <- replicate(100, do1rep(800, 0.4, mystat, 10))
+new_sim <- sim[c(3, 6, 23, 24, 35, 36, 41, 42), ]
 
-# Set the number of plots and intervals
-num_plots <- nrow(mtrx) / 2
-num_intervals <- ncol(mtrx) - 2
+file_titles <- c("pct", "prop", "bc")
 
-# Iterate over each plot
-for (i in 1:num_plots) {
-  # Calculate the row indices for the current plot
-  pdf(paste('../Manuscript/figures/', plot_title, '.pdf'))
-  start_row <- (i - 1) * 2 + 1
-  end_row <- start_row + 1
+for (i in 1:3) {
+  pdf(paste('../Manuscript/figures/', file_titles[i], '.pdf', sep = ''))
+  lower_bound <- new_sim[(2 * i + 1), ]
+  upper_bound <- new_sim[(2 * i + 2), ]
+  point_estimate <- new_sim[1, ]
+  bts_mean <- new_sim[2, ]
   
-  # Extract the data for the current plot
-  interval_data <- mtrx[start_row:end_row, 3:ncol(mtrx)]
-  interval_data <- apply(interval_data, c(1, 2), as.numeric)
-  plot_title <- paste(mtrx[start_row, 1], mtrx[start_row, 2])
+  x_values <- 1:100
   
-  # Create a new plot
-  plot(x = 1:num_intervals,
-       y = NULL,
-       xlim = c(1, num_intervals),
-       ylim = range(-.75, .75),
-       type = 'n',
-       xlab = 'Interval',
-       ylab = 'Confidence Interval',
-       main = plot_title,
-       yaxt = 'n')
+  plot(x_values, point_estimate, type = 'l', ylim = range(lower_bound, upper_bound),
+       xlab = 'Replication', ylab = 'Value', main = '', col = 'blue')
   
-  # Add lower and upper bounds as line segments
-  for (j in 1:num_intervals) {
-    lower_bound <- interval_data[1, j]
-    upper_bound <- interval_data[2, j]
-    
-    lines(c(j, j), c(lower_bound, upper_bound), type = 'l', col = 'blue')
+  lines(x_values, bts_mean, col = 'red')
+  # Add confidence intervals
+  for (j in 1:100) {
+    segments(x_values[j], lower_bound[j], x_values[j], upper_bound[j])
   }
-  
-  axis(2, at = c(-0.4, -0.2, 0, 0.2, 0.4))
   dev.off()
 }

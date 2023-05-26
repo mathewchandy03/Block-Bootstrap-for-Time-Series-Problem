@@ -101,16 +101,17 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   
   ## return all intervals
   
-  c(stdCI, stuCI, pctCI, ctrCI, ourctrCI, bcCI, bcaCI)
+  c(bts$t0, mbts, stdCI, stuCI, pctCI, ctrCI, ourctrCI, bcCI, bcaCI)
 }
 
 mychk <- function(sim, target) {
-  p <- nrow(sim) / length(target) / 2
+  new_sim <- sim[7:nrow(sim), ]
+  p <- nrow(new_sim) / length(target) / 2
   target <- rep(target, p)
   ret <- rep(NA, length(target))
   for (i in seq_along(ret)) {
     ii <- (i - 1) * 2
-    ret[i] <- mean(sim[ii + 1,] < target[i] & target[i] < sim[ii + 2,])
+    ret[i] <- mean(new_sim[ii + 1,] < target[i] & target[i] < new_sim[ii + 2,])
   }
   ret
 }
