@@ -1,4 +1,5 @@
 source("functions.R")
+set.seed(1234)
 sim <- replicate(100, do1rep(800, 0.4, mystat, 10))
 new_sim <- sim[c(3, 6, 23, 24, 35, 36, 41, 42), ]
 
@@ -18,8 +19,10 @@ for (i in 1:3) {
   
   lines(x_values, bts_mean, col = 'red')
   # Add confidence intervals
-  for (j in 1:100) {
-    segments(x_values[j], lower_bound[j], x_values[j], upper_bound[j])
-  }
+  lines(x_values, lower_bound, col = "gray")
+  lines(x_values, upper_bound, col = "gray")
+  abline(h = 0.4, lty = "dotted")
+  legend("topright", legend = c("Point Estimate", "Bootstrap Mean", "Interval Bounds"),
+         col = c('blue', 'red', 'gray'), lty = c(1, 1, 1), bty = "n")
   dev.off()
 }
