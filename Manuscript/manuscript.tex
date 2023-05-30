@@ -127,7 +127,7 @@ coverage may deteriorate as $n$ increases.
 When attempting to create interval estimations for the Pearson correlation 
 coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
 methods to be less accurate than the Fisher's transformation method even 
-for a sample of size $n = 100$ and correlation coefficient equivalent to 0.
+for a sample of size $n = 100$ and correlation coefficient equivalent to $0$.
 Few studies have provided a practical guide on what size is needed
 for block bootstrap inference for dependent data.
 In a linear regression setting
@@ -315,20 +315,7 @@ This CI is necessarily centered around the point estimator $\hat\theta_n$ and
 is asymmetric, as different critical values are used to compute
 the lower and upper bounds.
 
-\paragraph{Proposed Method CI}
-Our Proposed Method CI is centered at the point estimator and uses the
-variation
-in the bootstrap estimates to construct the error bound. This interval requires
-the computation of $\bar\theta_n^{(b)}$, the mean of all bootstrap point
-estimates, and $\hat{bias} = \bar\theta_n^{(b)} - \hat\theta_n$.
-A $(1 - \alpha)$ CI using our Proposed Method is
-\[
-(\hat\theta_{n, \alpha/2}^{(b)} - \hat{bias}, \quad
-\hat\theta_{n, 1 - \alpha/2}^{(b)} - \hat{bias}).
-\]
-This CI is necessarily centered around .... and
-is asymmetric, as different critical values are used to compute
-the lower and upper bounds.
+
 
 \paragraph{Bias Corrected Bootstrap CI}
 The procedure for constructing a Bias Corrected Bootstrap CI based on standard bootstrap is
@@ -384,6 +371,21 @@ the
 rate of change of of the standard error of $\hat\theta_n$ with respect to
 $\theta$.
 
+\paragraph{Proposed Method CI}
+Our Proposed Method CI is centered at the point estimator and uses the
+variation
+in the bootstrap estimates to construct the error bound. This interval requires
+the computation of $\bar\theta_n^{(b)}$, the mean of all bootstrap point
+estimates, and $\hat{bias} = \bar\theta_n^{(b)} - \hat\theta_n$.
+A $(1 - \alpha)$ CI using our Proposed Method is
+\[
+(\hat\theta_{n, \alpha/2}^{(b)} - \hat{bias}, \quad
+\hat\theta_{n, 1 - \alpha/2}^{(b)} - \hat{bias}).
+\]
+This CI is necessarily centered around .... and
+is asymmetric, as different critical values are used to compute
+the lower and upper bounds.
+
 
 \section{Simulation Study}
 \label{sec:simu}
@@ -391,7 +393,7 @@ $\theta$.
 We designed a simulation study to compare the performance of the different
 block
 bootstrap CI methods. In particular, we generated time series $X_t$
-from a 1st order auto-regressive (AR1) process:
+from a 1st order auto-regressive (AR(1)) process:
 \[
 X_t = \phi X_{t-1} + \epsilon_t,
 \]
@@ -600,28 +602,36 @@ $\phi$ at the nominal rate for much smaller sample sizes. It seems that
 $n = 800$ is large enough to
 recover $\phi$ when using the Student's $t$ method.
 
+These results beg the question of why certain methods perform poorly. To address this question, plots of 100 CIs using each of the Percentile, $BC$, and Proposed methods were constructed. 
+
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/pct}
-  \caption{}
+  \caption{100 replicate Percentile Bootstrap CIs for samples of $n = 800$ for
+  an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$. }
   \label{fig:pct}
 \end{figure}
-
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/prop}
-  \caption{}
-  \label{fig:prop}
-\end{figure}
-
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/bc}
-  \caption{}
+  \caption{100 replicate Bias-Corrected Bootstrap CIs for samples of $n = 800$ for
+  an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
   \label{fig:bc}
 \end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/prop}
+  \caption{100 replicate Proposed Method CIs for samples of $n = 800$ for
+  an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
+  \label{fig:prop}
+\end{figure}
+
+As shown in Figure~\ref{fig:phi}, Percentile CIs appear to suffer from bias; specifically, they seem to heavily underestimate $\phi$. As shown in Figure~\ref{fig:bc, $BC$ CIs do seem to correct this bias on average, but the width of the 
+CIs is very inconsistent. From Figure~\ref{fig:prop, we can see that 
+$prop$ CIs correct the bias using $\hat{bias} = \bar\theta_n^{(b)} - \hat\theta_n$, which seems to usually be negative, indicating a positive correction from
+interval construction in \ref{sec:bbci}.
 
 \section{Discussion}
 \label{sec:disc}
@@ -661,7 +671,8 @@ Percentile, CBP, $BC$, and $BC_a$ intervals exhibited coverage deterioration as 
 increased. The Percentile CI's coverage deterioration can be attributed to
 bias that is not corrected as $n$ increases. Specifically, as $n$ increases, 
 the width of the CI decreases, but because the Percentile CI
-underestimates $\phi$, the coverage decreases. The $BC_a$ CI does seem to correct the bias, but the acceleration factor seems to fail, as the width of the CI
+underestimates $\phi$, the coverage decreases. The $BC$ CI seems to correct the bias, but the width of the CI seems to be inconsistent. The acceleration 
+factor of the $BC_a$ CI seems to fail, as the width of the CI
 seems to be inconsistent. 
 
 
