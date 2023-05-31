@@ -74,13 +74,14 @@ rates of several commonly used bootstrap confidence intervals for the mean,
 standard deviation, and the lag-1 autocorrelation are compared. In this 
 study, we find that a large sample is needed to recover even a simple
 parameter like the mean, and that the selection of interval type is very
-important, especially in the case of $\phi$, for which the coverage deteriorates
-as the sample size increases.
+important, especially in the case of the lag-1 autocorrelation, for which the coverage
+deteriorates as the sample size increases when using Percentile, 
+%Centered Bootstrap Percentile,
+Bias-Corrected, or Bias-Corrected and Accelerated Bootstrap intervals.
+
 \jy{put most
   notable findings here. Possibly 1) large sample is needed; percentile
   bootstrap is not working well for rho (can we offer some explanation?).}
-
-
 
 \bigskip
 \noindent{\sc Keywords}:
@@ -105,29 +106,31 @@ when dealing with finite sample sizes, an important question is how large the
 sample size needs to be for block bootstrap CIs to have the
 desired coverage rates.
 
-
 The necessary sample size for bootstrap standard errors to provide valid
 uncertainty measures in practice has not been extensively studied. For
 independent data and non-block bootstrap, \citet{hesterberg2015teachers} notes
 that while percentile-based CIs from nonparametric bootstrap
 are more accurate than $t$-intervals for larger sample sizes, they are
-less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds that the the best choice of method for estimating
+less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds that the
+the best choice of method for estimating
 the parameter of a distribution is dependent on the sample size, the number of
 bootstrap resamples, and the confidence level. In the context of structural equation
 modeling, \citet{nevitt2001performance} find
 that a sample size of 200--1000 is usually sufficient for interval estimation
 using standard nonparametric bootstrap. For dependent data, the necessary
 sample
-size for bootstrap is even less clear. In the setting of linear regression and focused on estimating the proportion of 
+size for bootstrap is even less clear. In the setting of linear regression with a
+focus on estimating the proportion of 
 variation attributable to a certain variable, \citet{burch2012nonparametric} finds
-that three nonparametric bootstrap methods (Standard, Percentile, and Bias-Corrected and
+that three nonparametric bootstrap methods (Standard, Percentile, and Bias-Corrected
+and
 Accelerated) approach the coverage of a pivotal quantity as $n$ gets larger for an
 underlying normal distribution. However, they find that for other distributions, 
 coverage may deteriorate as $n$ increases. 
 When attempting to create interval estimations for the Pearson correlation 
 coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
 methods to be less accurate than the Fisher's transformation method even 
-for a sample of size $n = 100$ and correlation coefficient equivalent to $0$.
+for a sample of size $n = 100$ and correlation coefficient equivalent to 0.
 Few studies have provided a practical guide on what size is needed
 for block bootstrap inference for dependent data.
 In a linear regression setting
@@ -145,24 +148,22 @@ $n = 1024$.
 \jy{I added more references to the reference folder that studied coverage of
   bootstrap CIs but not block bootstrap CIs.}
 
-
-
 The goal of this paper is to provide some practical recommendations on
 necessary sample size for block bootstrap with dependent data, similar to what 
 was done for basic bootstrap in \citet{hesterberg2015teachers}. We consider a
 simple situation of a stationary time series, where the parameters of
 interests are the mean, standard deviation, and the first-order
-autocorrelation coefficient. We compare five variants of block bootstrap
+autocorrelation coefficient. We compare six variants of block bootstrap
 CIs from the literature \citep{diciccio1996bootstrap,
-  rice2006mathematical}: a basic percentile interval, a percentile
-interval centered around the estimate, a bias-corrected and
-accelerated ($BC_a$) interval, a standard normal interval, and a Student's $t$
-interval. Their
+  rice2006mathematical}: a Standard Normal CI, and a Student's $t$ CI, a Percentile
+Interval CI, 
+%a Centered Bootstrap Percentile Interval, 
+a Bias-Corrected CI, a Bias-Correct and Accelerated($BC_a$) CI, and a CI using a new
+Proposed Method. Their
 empirical coverage rates at different sample sizes and dependence levels are
 compared in a simulation study. The results of this study suggest that
 appropriate recovery of temporal dependence parameters is heavily dependent on
 the type of interval used.
-
 
 The remainder of the paper is organized as follows.
 Section~\ref{sec:bbci} reviews block bootstrap procedures and how to use block
@@ -170,7 +171,6 @@ bootstrap estimates to construct CIs. Section~\ref{sec:simu} reports a
 simulation
 study comparing the coverage rates of the block bootstrap CIs. A discussion
 concludes in Section~\ref{sec:disc}.
-
 
 \section{Block Bootstrap CIs}
 \label{sec:bbci}
@@ -188,7 +188,6 @@ $\hat\theta_n^{(b)}$'s. When serial dependence is present, the bootstrap
 procedure needs to preserve the serial dependence. Block bootstrap was
 motivated for this situation. 
 
-
 \subsection{Block Bootstrap}
 
 Block bootstrap preserves the serial dependence in the observed data by
@@ -203,7 +202,6 @@ formation of the bootstrap sample ensures that the between-block dependence is
 weak and that the within-block serial dependence is preserved. Because the
 blocks here are non-overlapping, this bootstrap approach is known as
 non-overlapping block bootstrap, or simple block bootstrap.
-
 
 Alternatively, block-bootstrap can be done with overlapping or moving blocks.
 Define moving blocks $Z_j = \{X_j, \ldots, X_{j + l - 1}\}$,
@@ -228,7 +226,6 @@ This version does not require that $n/l$ be an integer.
 We used this version in this study as implemented in the function
 \texttt{tsboot} from R package \textsl{boot} \citep{boot}.
 
-
 The block size~$l$ needs to be chosen with care. It should be large enough for
 each bootstrap sample to preserve the serial dependence, yet small enough for
 there to be a large number of blocks to give sufficient variability between
@@ -237,7 +234,6 @@ and $n / l$ should also increase. To achieve this, $l$ is
 often assigned a value as a function of $n$. A common function that is
 considered optimal is $l = \lceil n^{1/3} \rceil$
 \citep{buhlmann1999block}, which was adopted in this study.
-
 
 \subsection{Bootstrap CIs}
 
@@ -267,8 +263,6 @@ This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
 Its validity relies on whether the distribution of $\hat\theta_n$ is reasonably
 well approximated by its asymptotic normal distribution and whether the
 bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
-
-
 
 \paragraph{Student's $t$ CI}
 The procedure for constructing a Student's $t$ CI based on standard bootstrap is
@@ -303,22 +297,23 @@ marginal mean and standard deviation of a serially dependent process, but its
 coverage of the temporal dependence deteriorates as $n$ increases, which is
 contrary to what one would expect.
 
-\paragraph{Centered Bootstrap Percentile CI}
-The procedure for constructing a Centered Bootstrap Percentile CI based on standard bootstrap is
-described in \citet{singh2008bootstrap}.
-The $(1 - \alpha)$ Centered Bootstrap Percentile CI is
-\[
-(2\hat{\theta}_{n} - \hat\theta_{n, 1 - \alpha/2}^{(b)}, \quad
-2\hat{\theta}_{n} - \hat\theta_{n, \alpha/2}^{(b)})).
-\]
-This CI is necessarily centered around the point estimator $\hat\theta_n$ and
-is asymmetric, as different critical values are used to compute
-the lower and upper bounds.
-
-
+%\paragraph{Centered Bootstrap Percentile CI}
+%The procedure for constructing a Centered Bootstrap Percentile CI based on
+%standard
+%bootstrap is
+%described in \citet{singh2008bootstrap}.
+%The $(1 - \alpha)$ Centered Bootstrap Percentile CI is
+%\[
+%(2\hat{\theta}_{n} - \hat\theta_{n, 1 - \alpha/2}^{(b)}, \quad
+%2\hat{\theta}_{n} - \hat\theta_{n, \alpha/2}^{(b)})).
+%\]
+%This CI is necessarily centered around the point estimator $\hat\theta_n$ and
+%is asymmetric, as different critical values are used to compute
+%the lower and upper bounds.
 
 \paragraph{Bias Corrected Bootstrap CI}
-The procedure for constructing a Bias Corrected Bootstrap CI based on standard bootstrap is
+The procedure for constructing a Bias Corrected Bootstrap CI based on standard
+bootstrap is
 described in \citet{carpenter2000bootstrap}.
 Let $b = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$
 for $b \in \{1, \ldots, B\}$. 
@@ -348,7 +343,9 @@ for $i \in \{1, \ldots, n\}$,
 and let $\hat{\theta}_{(.)} = \sum_{i=1}^{k} \hat{\theta}_{(i)} / k$. 
 Let 
 \[
-\hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} - \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} - \hat{\theta}_{(i)})^2\}^{3/2}}
+\hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
+  \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
+  \hat{\theta}_{(i)})^2\}^{3/2}}
 .\] For a $1 - \alpha$ CI, let
 \[
 \alpha_1 = \Phi(z_0 + \frac{z_{0} +
@@ -376,16 +373,15 @@ Our Proposed Method CI is centered at the point estimator and uses the
 variation
 in the bootstrap estimates to construct the error bound. This interval requires
 the computation of $\bar\theta_n^{(b)}$, the mean of all bootstrap point
-estimates, and $\hat{bias} = \bar\theta_n^{(b)} - \hat\theta_n$.
+estimates, and $\widehat{\text{bias}} = \bar\theta_n^{(b)} - \hat\theta_n$.
 A $(1 - \alpha)$ CI using our Proposed Method is
 \[
-(\hat\theta_{n, \alpha/2}^{(b)} - \hat{bias}, \quad
-\hat\theta_{n, 1 - \alpha/2}^{(b)} - \hat{bias}).
+(\hat\theta_{n, \alpha/2}^{(b)} - \widehat{\text{bias}}, \quad
+\hat\theta_{n, 1 - \alpha/2}^{(b)} - \widehat{\text{bias}}).
 \]
 This CI is necessarily centered around .... and
 is asymmetric, as different critical values are used to compute
 the lower and upper bounds.
-
 
 \section{Simulation Study}
 \label{sec:simu}
@@ -405,7 +401,6 @@ The series $X_t$ has mean zero and variance
 $\sigma_x^2 = (1 - \phi^2) \sigma_{\epsilon}^2$, so for each value of $\phi$,
 we
 set $\sigma_{\epsilon}^2 = 1 / (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
-
 
 Three target parameters of $X_t$ were considered:
 1) $\mu = 0$, the mean of $X_t$;
@@ -469,15 +464,9 @@ Remember that
 the goal of this study is to find the smallest $n$ which is sufficient for
 proper coverage.
 
-
-
-
 The results are graphically displayed in Figures~\ref{fig:mu}--\ref{fig:phi};
 these figures were generated using the R \textsl{ggplot2} package
 \citep{ggplot2}.
-
-
-
 
 \begin{figure}[tbp]
   \centering
@@ -490,7 +479,6 @@ these figures were generated using the R \textsl{ggplot2} package
   \label{fig:mu}
 \end{figure}
 
-
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/plot_sigma}
@@ -501,7 +489,6 @@ these figures were generated using the R \textsl{ggplot2} package
     The error bars represent 95\% CIs of the real coverage rates.}
   \label{fig:sigma}
 \end{figure}
-
 
 \begin{figure}[tbp]
   \centering
@@ -517,19 +504,21 @@ these figures were generated using the R \textsl{ggplot2} package
 \jy{I'm curiouss why the coverge is so poor for the percentile method. Could
   plot 50 intervals for phi using different sample sizes?}
 
-
 Based on Figure~\ref{fig:mu}, 
 Student's $t$ CIs appear to have the greatest coverage rates with respect 
 to estimating $\mu$. In fact, for $\phi = -0.4$, Student's $t$ CIs over-cover $\mu$
 for all sample sizes, whereas other CIs have coverage rates that
 hover around the $95\%$ line at this level of $\phi$. For $\phi \geq -0.2$,
 $BC_a$ CIs undercover $\mu$ for all $n$ observed. For $\phi = -0.2$, 
-Standard, Percentile, CBP, Proposed Method, and $BC$ CIs seem to 
+Standard, Percentile, %CBP, 
+Proposed Method, and $BC$ CIs seem to 
 generally cover $\mu$ at the nominal 
 rate when $n \geq 400$. Student's $t$ CIs either recover or over-cover $\mu$
 for $n \geq 100$. For $\phi = 0$, or when the 
 sample is independently normally distributed, $n = 1600$ seems to 
-be enough to recover $\mu$ when using Standard, Percentile, CBP, Proposed Method, or $BC$ 
+be enough to recover $\mu$ when using Standard, Percentile, 
+%CBP, 
+Proposed Method, or $BC$ 
 CIs. Student's $t$ CIs cover $\mu$ at the nominal rate for $n \geq 100$ at 
 $\phi = 0$.
 For $\phi = 0.2$, $n > 3200$ seems to be necessary to recover $\mu$
@@ -556,10 +545,14 @@ be large enough if Standard CIs are used, and $n \geq 400$ is fine is
 Student's $t$ CIs are used. $n \geq 3200$ appears necessary 
 for other CIs. For $\phi = 0.2$, 
 comfortable coverage of $\sigma$ at the nominal level appears to only be true
-for Student's $t$ CIs for $n \geq 3200$, although Standard and CBP CIs. For $\phi = 0.4$, a much larger sample size appears to be necessary. Student's $t$ CIs are the closest to $95\%$ coverage, and $BC_a$ CIs are the furthest.
+for Student's $t$ CIs for $n \geq 3200$, although Standard %and CBP% 
+CIs do reach the nominal level in our simulation results. For $\phi = 0.4$, a much
+larger sample size appears to be necessary. Student's $t$ CIs are the closest to
+$95\%$ coverage, and $BC_a$ CIs are the furthest.
 
 Based on Figure~\ref{fig:phi}, 
-Percentile, CBP, $BC$, and $BC_a$ CIs deteriorate clearly for any level of temporal correlation,
+Percentile, %CBP, %
+$BC$, and $BC_a$ CIs deteriorate clearly for any level of temporal correlation,
 so they should not be used. The deterioration becomes more evident
 as the absolute value of $\phi$ increases, regardless of whether $\phi$ is 
 negative or positive. When $\phi = -0.4$, Standard and Proposed Method CIs 
@@ -567,7 +560,7 @@ recover $\phi$ at the nominal rate for $n \geq 400$. At this $\phi$ level,
 Student's $t$ CIs either recover or over-cover $\phi$ for $n \geq 100$. When
 $\phi = -0.2$, Standard and Proposed Method CIs recover $\phi$ at $n = 800$ and 
 $n = 1600$, 
-although they undercover $\phi$ at $n = 3600$, indicating that 
+although they undercover $\phi$ at $n = 3200$, indicating that 
 perhaps a larger $n$ is needed if these CIs are uses. However,
 Student's $t$ CIs cover $\phi$ at the nominal level for $n \geq 400$. When
 $\phi = 0$, Standard and Proposed Method CIs recover $\phi$ relatively comfortably 
@@ -577,7 +570,6 @@ and Proposed Method CIs cover $\phi$ at the nominal rate for $n \geq 1600$, wher
 Student's $t$ CIs can accomplish this at $n \geq 100$. For $\phi = 0.4$, $n \geq 
 800$ is large enough for Standard and Proposed Method CIs. Student's $t$ CIs either
 recover or over-cover $\phi$ for all $n \geq 100$.
-
 
 To summarize, the CI type chosen should be based on the target parameter. 
 When estimating $\mu$, the Student's $t$ CI seems to have the highest coverage
@@ -602,13 +594,16 @@ $\phi$ at the nominal rate for much smaller sample sizes. It seems that
 $n = 800$ is large enough to
 recover $\phi$ when using the Student's $t$ method.
 
-These results beg the question of why certain methods perform poorly. To address this question, plots of 100 CIs using each of the Percentile, $BC$, and Proposed methods were constructed. 
+These results beg the question of why certain methods perform poorly. To address this
+question, plots of 100 CIs using each of the Percentile, $BC$, and Proposed methods
+were constructed. 
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/pct}
   \caption{100 replicate Percentile Bootstrap CIs for samples of $n = 800$ for
-  an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$. }
+    an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
+    of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$. }
   \label{fig:pct}
 \end{figure}
 
@@ -616,7 +611,8 @@ These results beg the question of why certain methods perform poorly. To address
   \centering
   \includegraphics[width=\textwidth]{figures/bc}
   \caption{100 replicate Bias-Corrected Bootstrap CIs for samples of $n = 800$ for
-  an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
+    an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
+    of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
   \label{fig:bc}
 \end{figure}
 
@@ -624,13 +620,19 @@ These results beg the question of why certain methods perform poorly. To address
   \centering
   \includegraphics[width=\textwidth]{figures/prop}
   \caption{100 replicate Proposed Method CIs for samples of $n = 800$ for
-  an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
+    an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
+    of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
   \label{fig:prop}
 \end{figure}
 
-As shown in Figure~\ref{fig:phi}, Percentile CIs appear to suffer from bias; specifically, they seem to heavily underestimate $\phi$. As shown in Figure~\ref{fig:bc, $BC$ CIs do seem to correct this bias on average, but the width of the 
-CIs is very inconsistent. From Figure~\ref{fig:prop, we can see that 
-$prop$ CIs correct the bias using $\hat{bias} = \bar\theta_n^{(b)} - \hat\theta_n$, which seems to usually be negative, indicating a positive correction from
+As shown in Figure~\ref{fig:phi}, Percentile CIs appear to suffer from bias;
+specifically, they seem to heavily underestimate $\phi$. As shown in
+Figure~\ref{fig:bc}, $BC$ CIs do seem to correct this bias on average, but the width of
+  the 
+CIs is very inconsistent. From Figure~\ref{fig:prop}, we can see that 
+  $prop$ CIs correct the bias using $\widehat{\text{bias}} = \bar\theta_n^{(b)} -
+  \hat\theta_n$, which seems to usually be negative, indicating a positive correction
+  from
 interval construction in \ref{sec:bbci}.
 
 \section{Discussion}
@@ -642,7 +644,6 @@ interval construction in \ref{sec:bbci}.
   2) further investigation needed for phi;
   3) impact on applied statsitics courses; student reactions (Dr. Schifano).
 }
-
 
 Block bootstrap is a useful method for estimating parameters of a time
 series, from simple parameters like the mean to more complicated temporal
@@ -667,16 +668,18 @@ there is a size $n$ large enough for the method to work: that is, the method's
 performance improves as $n$ increases. Out of the five types of intervals used
 in this study, this assumption was found to hold true with respect to
 estimating $\phi$ only for Standard, Student's $t$, and Proposed Method CIs, whereas 
-Percentile, CBP, $BC$, and $BC_a$ intervals exhibited coverage deterioration as $n$
+Percentile, 
+%CBP, 
+$BC$, and $BC_a$ intervals exhibited coverage deterioration as $n$
 increased. The Percentile CI's coverage deterioration can be attributed to
 bias that is not corrected as $n$ increases. Specifically, as $n$ increases, 
 the width of the CI decreases, but because the Percentile CI
-underestimates $\phi$, the coverage decreases. The $BC$ CI seems to correct the bias, but the width of the CI seems to be inconsistent. The acceleration 
+underestimates $\phi$, the coverage decreases. The $BC$ CI seems to correct the bias,
+but the width of the CI seems to be inconsistent. The acceleration 
 factor of the $BC_a$ CI seems to fail, as the width of the CI
 seems to be inconsistent. 
 
-
-When using Student's $t$ centered intervals and $\phi$ is
+When using Student's $t$ intervals and $\phi$ is
 unknown, the results of this study suggest that an $n > 3200$ may be
 necessary for common practice to estimate simpler parameters like $\mu$ 
 or $\sigma_x$. If $\phi$ is already known, a lesser $n$ may be adequate
@@ -696,7 +699,6 @@ Student's $t$ method
 Further investigation may be necessary to see if there are other interval
 corrections that fix the coverage deterioration problem for $\phi$.
 
-
 This study could be used as a guide for applied statistics courses for students
 to generally understand how large of a sample size is sufficient for block
 bootstrap to be used versus other inference methods.
@@ -709,7 +711,6 @@ that would more appropriately recover the parameters of a time
 series. \eds{are there other methods that you know of?} 
 One could also investigate the $n$ needed to make inferences about
 other forms of serially dependent data such as a moving average process. 
-
 
 \bibliographystyle{chicago}
 \bibliography{citations}

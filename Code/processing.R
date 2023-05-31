@@ -17,7 +17,7 @@ for(i in names(combined_matrices)) {
   phi <- as.numeric(strsplit(i, '_')[[1]][1])
   n <- as.integer(strsplit(i, '_')[[1]][2])
   cov <- mychk(combined_matrices[[i]], c(0, 1, phi))
-  types <- c('stdCI', 'stuCI', 'pctCI', 'ctrCI', 'ourctrCI', 'bcCI', 'bcaCI')
+  types <- c('stdCI', 'stuCI', 'pctCI', 'ctrCI', 'bcCI', 'bcaCI', 'propCI')
   CI <- rep(types, each = length(cov) / length(types))
   parameters <- c('mu', 'sigma', 'phi')
   target <- rep(parameters, length(cov) / length(parameters))

@@ -1,4 +1,5 @@
 .libPaths("~/rlibs")
+library(ggplot2) # put package loading outside of the function
 ## This note checks the empirical coverage rate of CIs constructed from
 ## block bootstrap with series generated from an AR process
 
@@ -26,7 +27,6 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   bts <- boot::tsboot(x, statistic, l = blksize, sim = "fixed", R = R)
   alpha <- 1 - level
   
-  
   ## Standard interval
   se <- apply(bts$t, 2, sd)
   stdCI <- sapply(1:length(bts$t0),
@@ -37,6 +37,7 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   stuCI <- sapply(1:length(bts$t0),
                   function(i) c(bts$t0[i] - qt(1-alpha/2, n/blksize)*se[i], 
                                 bts$t0[i] - qt(alpha/2, n/blksize)*se[i]))
+  
   ## Percentile interval
   pctCI <- apply(bts$t, 2, quantile, prob = c(alpha/2, 1 - alpha/2))
   
@@ -46,12 +47,7 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   mbts <- apply(bts$t, 2, mean)
   ctrCI <- -sweep(crit, 2, bts$t0, FUN = '-')
   
-  ## Our Centered interval
-  crit2 <- 
-    apply(t(t(bts$t) - mbts), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
-  ourctrCI <- sweep(crit2, 2, bts$t0, FUN = '+') # original estimate
-  
-  ## Carpenter et al 2000, p. 1153
+  ## Bias-Corrected interval (Carpenter et al 2000, p. 1153)
   b <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
   qup <- pnorm(2 * b - qnorm(alpha / 2))
   qlo <- pnorm(2 * b - qnorm(1 - alpha / 2))
@@ -97,11 +93,13 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
   ## LB: bts$t0 - alpha2 crit3, UB: bts$t0 - alpha1 crit3 and
   ## LB: mbts - alpha2 crit4, UB: mbts - alpha1 crit4
   
-  
+  ## Proposed interval
+  crit2 <- 
+    apply(t(t(bts$t) - mbts), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
+  propCI <- sweep(crit2, 2, bts$t0, FUN = '+') # original estimate
   
   ## return all intervals
-  
-  c(bts$t0, mbts, stdCI, stuCI, pctCI, ctrCI, ourctrCI, bcCI, bcaCI)
+  c(bts$t0, mbts, stdCI, stuCI, pctCI, ctrCI, bcCI, bcaCI, propCI)
 }
 
 mychk <- function(sim, target) {
@@ -118,10 +116,8 @@ mychk <- function(sim, target) {
 
 graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
-  library(ggplot2) # put package loading outside of the function
-  
-  data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'ctrCI', 'ourctrCI', 'bcCI', 'bcaCI'), 
-                    labels = c('Standard', 'Student\'s t', 'Percentile', 'Centered', 'Our Centered', 'BC', 'BCA'))
+  data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'ctrCI', 'bcCI', 'bcaCI', 'propCI'), 
+                    labels = c('Standard', 'Student\'s t', 'Percentile', 'Centered', 'BC', 'BCA', 'Proposed'))
   
   ggplot(data, aes(x = n, y = cov)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
