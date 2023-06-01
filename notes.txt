@@ -227,3 +227,10 @@
 • Proposed bootstrap
 • Bias is theta_bar - theta_hat
 • Try 100 intervals
+
+6/4 Notes
+• 3 panels in one figure, change to segments, and just do 50
+• This CI can also be rewritten as theta_hat_n + ...
+• Book page/section
+• For undergrad or graduate, results can be easily demonstrated
+• Go through comments
