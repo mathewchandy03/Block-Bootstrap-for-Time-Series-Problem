@@ -109,10 +109,11 @@ desired coverage rates.
 The necessary sample size for bootstrap standard errors to provide valid
 uncertainty measures in practice has not been extensively studied. For
 independent data and non-block bootstrap, \citet{hesterberg2015teachers} notes
-that while percentile-based CIs from nonparametric bootstrap
+that while percentile-based CIs \eds{for the mean? differences in means?} from 
+nonparametric bootstrap
 are more accurate than $t$-intervals for larger sample sizes, they are
-less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds that the
-the best choice of method for estimating
+less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds 
+that the best choice of method for estimating
 the parameter of a distribution is dependent on the sample size, the number of
 bootstrap resamples, and the confidence level. In the context of structural equation
 modeling, \citet{nevitt2001performance} find
@@ -254,11 +255,12 @@ $\theta$ as the mean, we just need an estimate of the standard error to
 construct an approximate CI \citep[p.168]{efron1993introduction}.
 Let $\widehat{\text{SE}}$ be the empirical standard error of the block bootstrap
 copies of $\hat\theta_n^{(b)}$, $b = 1, \ldots, B$.
-A $(1 - \alpha)$ standard normal CI is
+A $(1 - \alpha)100\%$ standard normal CI is
 \[
 (\hat{\theta}_{n} - z_{(1-\alpha/2)}\widehat{\text{SE}}, \quad
 \hat{\theta}_{n} - z_{(\alpha/2)}\widehat{\text{SE}}).
 \]
+\eds{define $z_{(.)}$ and check the signs}
 This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
 Its validity relies on whether the distribution of $\hat\theta_n$ is reasonably
 well approximated by its asymptotic normal distribution and whether the
@@ -268,11 +270,12 @@ bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
 The procedure for constructing a Student's $t$ CI based on standard bootstrap is
 described in \citet{efron1993introduction}. \jy{give page or section number when
   citing a book}
-With block bootstrapping, a $(1 - \alpha)$ Student's $t$ CI is
+With block bootstrapping, a $(1 - \alpha)100\%$ Student's $t$ CI is
 \[
 (\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}\hat{\text{SE}}, \quad
 \hat{\theta}_{n} - t_{(\alpha/2), k -1}\hat{\text{SE}}),
 \]
+\eds{define $t_{(.)}$ and check the signs}
 where $k$ is the number of blocks.
 This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
 Like the standard 
@@ -286,7 +289,7 @@ $\widehat{\text{SE}}$ approximates the true standard error.
 \paragraph{Percentile CI}
 The percentile CI was first suggested in \citet{efron1979bootstrap}.
 Let $\hat\theta_{n, \alpha}^{(b)}$ be the empirical $100\alpha$th percentile of
-$\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. The $(1 - \alpha)$
+$\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. The $(1 - \alpha)100\%$
 empirical percentile CI is
 \[
 (\hat\theta_{n, \alpha/2}^{(b)}, \quad \hat\theta_{n, 1 - \alpha/2}^{(b)}).
@@ -311,28 +314,26 @@ contrary to what one would expect.
 %is asymmetric, as different critical values are used to compute
 %the lower and upper bounds.
 
-\paragraph{Bias Corrected Bootstrap CI}
+\paragraph{Bias Corrected ($BC$) Bootstrap CI}
 The procedure for constructing a Bias Corrected Bootstrap CI based on standard
 bootstrap is
 described in \citet{carpenter2000bootstrap}.
 Let $b = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$
 for $b \in \{1, \ldots, B\}$. 
-For a $1 - \alpha$ CI, let
+For a $(1 - \alpha)100\%$ CI, let
 \[
 \alpha_1 = \Phi(2b - z_{\alpha/2}).
 \]
 \[
 \alpha_2 = \Phi(2b - z_{1 - \alpha/2}).
 \]
-A $(1 - \alpha) BC_a$ CI is
+A $(1 - \alpha)100\%~BC$ CI is
 \[
 (\hat\theta_{n, \alpha_1}^{(b)}, \quad \hat\theta_{n, \alpha_2}^{(b)}).
 \]
 
 \paragraph{Bias Corrected and Accelerated ($BC_a$) Bootstrap CI}
 The $BC_a$ CI was first suggested in \citet{efron1987better}.
-\eds{a different abbrevation/notation was used for this in the introduction}
-\mc{used $BC_a$}
 \jy{Isn't this just the empirical CDF? We just need the sample quantile functon.
   What is your reference for this description?}
 Let $\hat{z}_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$
@@ -346,17 +347,16 @@ Let
 \hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^2\}^{3/2}}
-.\] For a $1 - \alpha$ CI, let
+.\] For a $(1 - \alpha)100\%$ CI, let
 \[
-\alpha_1 = \Phi(z_0 + \frac{z_{0} +
-  z_{\alpha/2}}{1 - \hat{a}(z_{0} + z_{\alpha/2})}).
+\alpha_1 = \Phi\left(z_0 + \frac{z_{0} +
+  z_{\alpha/2}}{1 - \hat{a}(z_{0} + z_{\alpha/2})}\right).
 \]
 \[
-\alpha_2 = \Phi(z_0 + \frac{z_{0} +
-  z_{1 - \alpha/2}}{1 - \hat{a}(z_{0} + z_{1 - \alpha/2})}).
+\alpha_2 = \Phi\left(z_0 + \frac{z_{0} +
+  z_{1 - \alpha/2}}{1 - \hat{a}(z_{0} + z_{1 - \alpha/2})}\right).
 \]
-\eds{notation will need to be cleaned and clarified}
-A $(1 - \alpha) BC_a$ CI is
+A $(1 - \alpha)100\%~BC_a$ CI is
 \[
 (\hat\theta_{n, \alpha_1}^{(b)}, \quad \hat\theta_{n, \alpha_2}^{(b)}).
 \]
@@ -374,7 +374,7 @@ variation
 in the bootstrap estimates to construct the error bound. This interval requires
 the computation of $\bar\theta_n^{(b)}$, the mean of all bootstrap point
 estimates, and $\widehat{\text{bias}} = \bar\theta_n^{(b)} - \hat\theta_n$.
-A $(1 - \alpha)$ CI using our Proposed Method is
+A $(1 - \alpha)100\%$ CI using our Proposed Method is
 \[
 (\hat\theta_{n, \alpha/2}^{(b)} - \widehat{\text{bias}}, \quad
 \hat\theta_{n, 1 - \alpha/2}^{(b)} - \widehat{\text{bias}}).
@@ -407,26 +407,20 @@ Three target parameters of $X_t$ were considered:
 2) $\sigma_x = 1$, the standard deviation of $X_t$; and
 2) $\phi$, the lag-1 auto-correlation coefficient.
 To investigate the effect of sample size~$n$, we considered an array of values
-$n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 10000
-replicates. For each replicate, we constructed three 95\% block bootstrap
+$n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 
+10000 replicates. For each replicate, we constructed seven 95\% block bootstrap
 CIs for each parameter as described in the last section. We can estimate 
 $\mu$, $\sigma_x$, and $\phi$ by computing the sample mean, sample 
 standard deviation,
 and lag-1 auto-correlation, respectively, of each bootstrap sample, and then 
-constructing intervals for each parameter using the appropriate procedures
-described in Section~\ref{sec:bbci} .
+construct intervals for each parameter using the appropriate procedures
+described in Section~\ref{sec:bbci}.
 Then we estimated their actual coverage rates along with their 95\% confidence
 intervals from the 10000 replicates. The block bootstrap sampling step was done
 with function \texttt{tsboot} from R package \textsl{boot} \citep{boot}, with
 block size $\lceil n / l \rceil$. This function by default is an implementation
 of moving block bootstrap as described in the previous section, meaning that
 that blocks are allowed to wrap around, and $l = \lceil n^{1/3} \rceil$.
-
-\eds{Is $l = \lceil n^{1/3} \rceil$? Is it also worth investigating different 
-choices of $l$ for fixed (large) $n$?}
-\mc{Addressed in the Block Bootstrap Sample subsection}
-\eds{how did you estimate $\mu$, $\sigma_x$ and $\phi$?}
-\mc{addressed}
 
 \jy{Explain what metric was used to compare their performances. That is, the
   coverage rates and how it was calculated. If a CI is valid, then the coverages
@@ -440,15 +434,13 @@ $r \in \{1, \ldots, R\}$, where $R$ is the
 number of replicates.
 Then $cov = \#\{\hat\theta_{L, r} < \theta < \hat\theta_{U, r} \}/R$,  
 for $r \in \{1, \ldots, R\}$.
-\eds{this notation is a bit sloppy, as it implies $n_{CI}$ changes for each 
-value of $CI$; consider using a summation of indicators with a different index}
-\mc{replaced $CI$ with $r$, and $n_{CI}$ with $R$}
 If a CI method is valid, then the coverage rate is expected to match the
 nominal 
 level. Because it is unlikely for the coverage to exactly match the nominal
 level,
 we can construct a 95\% CI of the coverage
-rate (which is an estimate of a proportion with $n = 10000$). If the proportion
+rate (which is an estimate of a proportion with $n = 10000$ \eds{R?}). If the
+proportion
 0.95 is included in the interval, the block bootstrap method is likely
 performing
 well. If all values in the interval are below 0.95, the results would suggest 
@@ -483,7 +475,8 @@ these figures were generated using the R \textsl{ggplot2} package
   \centering
   \includegraphics[width=\textwidth]{figures/plot_sigma}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal standard deviation $\sigma$ of an AR(1) process with AR
+    the marginal standard deviation $\sigma_x$ of an AR(1) 
+		process with AR
     coefficient $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
     $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates.
     The error bars represent 95\% CIs of the real coverage rates.}
@@ -505,9 +498,10 @@ these figures were generated using the R \textsl{ggplot2} package
   plot 50 intervals for phi using different sample sizes?}
 
 Based on Figure~\ref{fig:mu}, 
-Student's $t$ CIs appear to have the greatest coverage rates with respect 
-to estimating $\mu$. In fact, for $\phi = -0.4$, Student's $t$ CIs over-cover $\mu$
-for all sample sizes, whereas other CIs have coverage rates that
+Student's $t$ CIs appear to have the greatest \eds{largest?} coverage rates with 
+respect 
+to estimating $\mu$. In fact, for $\phi = -0.4$, Student's $t$ CIs over-cover 
+$\mu$ for all sample sizes, whereas other CIs have coverage rates that
 hover around the $95\%$ line at this level of $\phi$. For $\phi \geq -0.2$,
 $BC_a$ CIs undercover $\mu$ for all $n$ observed. For $\phi = -0.2$, 
 Standard, Percentile, %CBP, 
@@ -526,25 +520,26 @@ at the nominal level when using
 any of the CIs, although some CIs, such as Student's $t$, are much closer to the
 $95\%$ line than others, most notably $BC_a$.
 For $\phi = 0.4$, a much larger sample size appears to be necessary. Once again,
-Student's $t$ CIs are the closest to $95\%$ coverage, and $BC_a$ CIs are the furthest.
+Student's $t$ CIs are the closest to $95\%$ coverage, and $BC_a$ CIs are the 
+furthest.
 
 Based on Figure~\ref{fig:sigma}, 
 $BC_a$ CIs greatly undercover $\sigma_x$ for every combination of $n$ and 
-$\phi$, observed, although
-there is no trend of coverage deterioration, indicating that there may eventually
+$\phi$ observed, although there is no trend of coverage deterioration, 
+indicating that there may eventually
 be a sample size large enough for $\sigma_x$ to be covered at the nominal level.
-For $\phi = -0.4$, Standard Normal and Student's $t$ CIs recover $\sigma$ when 
-$n = 1600$, but undercover $\sigma$ for $n = 3200$, indicating
-that a larger $n$ is most likely necessary to consistently cover $\sigma$ at the 
-nominal rate.
-The other CI types undercover $\sigma$ for all sample sizes at $\phi = 0.4$.
-For $\phi  = -0.2$, all CIs except for $BC_a$ are able to cover $\sigma$ at the 
-nominal rate for $n \geq 3200$, and Student's $t$ CIs cover $\sigma$ at the 
+For $\phi = -0.4$, Standard Normal and Student's $t$ CIs recover $\sigma_x$ when 
+$n = 1600$, but undercover $\sigma_x$ for $n = 3200$, indicating
+that a larger $n$ is most likely necessary to consistently cover $\sigma_x$ at 
+the nominal rate.
+The other CI types undercover $\sigma_x$ for all sample sizes at $\phi = 0.4$.
+For $\phi  = -0.2$, all CIs except for $BC_a$ are able to cover $\sigma_x$ at 
+the nominal rate for $n \geq 3200$, and Student's $t$ CIs cover $\sigma$ at the 
 nominal rate when $n \geq 400$. When $\phi = 0$, $n \geq 1600$ seems to 
 be large enough if Standard CIs are used, and $n \geq 400$ is fine is
 Student's $t$ CIs are used. $n \geq 3200$ appears necessary 
 for other CIs. For $\phi = 0.2$, 
-comfortable coverage of $\sigma$ at the nominal level appears to only be true
+comfortable coverage of $\sigma_x$ at the nominal level appears to only be true
 for Student's $t$ CIs for $n \geq 3200$, although Standard %and CBP% 
 CIs do reach the nominal level in our simulation results. For $\phi = 0.4$, a much
 larger sample size appears to be necessary. Student's $t$ CIs are the closest to
@@ -561,10 +556,10 @@ Student's $t$ CIs either recover or over-cover $\phi$ for $n \geq 100$. When
 $\phi = -0.2$, Standard and Proposed Method CIs recover $\phi$ at $n = 800$ and 
 $n = 1600$, 
 although they undercover $\phi$ at $n = 3200$, indicating that 
-perhaps a larger $n$ is needed if these CIs are uses. However,
+perhaps a larger $n$ is needed if these CIs are used. However,
 Student's $t$ CIs cover $\phi$ at the nominal level for $n \geq 400$. When
-$\phi = 0$, Standard and Proposed Method CIs recover $\phi$ relatively comfortably 
-at $n = 3200$, and 
+$\phi = 0$, Standard and Proposed Method CIs recover $\phi$ relatively 
+comfortably at $n = 3200$, and 
 $n = 800$ seems to be sufficient for Student's $t$ CIs. For $\phi = 0.2$, Standard
 and Proposed Method CIs cover $\phi$ at the nominal rate for $n \geq 1600$, whereas 
 Student's $t$ CIs can accomplish this at $n \geq 100$. For $\phi = 0.4$, $n \geq 
@@ -579,11 +574,12 @@ at the nominal rate even for small sample sizes. For positive $\phi$, a larger
 sample size appears to be necessary regardless of the CI used. In the case
 that $\phi$ is unknown and expected to be greater than $0$, $n > 3200$ may be
 necessary for block bootstrap interval estimation of $\mu$. If $\phi$ is known,
-a lesser sample size may be sufficient. When estimating $\sigma$,
-$BC_a$ should not be used, and Student's $t$ again has the greatest coverage
+a lesser sample size may be sufficient. When estimating $\sigma_x$,
+$BC_a$ should not be used, and Student's $t$ again has the greatest 
+\eds{highest?} coverage
 rates. In the case that $\phi$ is unknown and expected to be greater than $0$,
 $n > 3200$ may be necessary for block bootstrap interval estimation of
-$\sigma$. Again, if $\phi$ is known, a lesser sample size may be enough.
+$\sigma_x$. Again, if $\phi$ is known, a lesser sample size may be enough.
 When estimating $\phi$, Percentile and $BC_a$ CIs 
 deteriorate in coverage, indicating they should not be used in this context. 
 Increasing $n$ will not fix the performance of either of these intervals 
@@ -594,9 +590,9 @@ $\phi$ at the nominal rate for much smaller sample sizes. It seems that
 $n = 800$ is large enough to
 recover $\phi$ when using the Student's $t$ method.
 
-These results beg the question of why certain methods perform poorly. To address this
-question, plots of 100 CIs using each of the Percentile, $BC$, and Proposed methods
-were constructed. 
+These results beg the question of why certain methods perform poorly. To address 
+this question, plots of 100 CIs using each of the Percentile, $BC$, and Proposed 
+methods were constructed. 
 
 \begin{figure}[tbp]
   \centering
@@ -629,11 +625,11 @@ As shown in Figure~\ref{fig:phi}, Percentile CIs appear to suffer from bias;
 specifically, they seem to heavily underestimate $\phi$. As shown in
 Figure~\ref{fig:bc}, $BC$ CIs do seem to correct this bias on average, but the width of
   the 
-CIs is very inconsistent. From Figure~\ref{fig:prop}, we can see that 
-  $prop$ CIs correct the bias using $\widehat{\text{bias}} = \bar\theta_n^{(b)} -
-  \hat\theta_n$, which seems to usually be negative, indicating a positive correction
-  from
-interval construction in \ref{sec:bbci}.
+CIs is very inconsistent. From Figure~\ref{fig:prop}, we can see that the 
+Proposed Method CIs correct the bias using 
+$\widehat{\text{bias}} = \bar\theta_n^{(b)} -
+  \hat\theta_n$, which seems to usually be negative, indicating a positive 
+	correction from interval construction in Section~\ref{sec:bbci}.
 
 \section{Discussion}
 \label{sec:disc}
@@ -654,28 +650,26 @@ series, from simple parameters like the mean to more complicated temporal
 %sample length for block bootstrap estimation to recover the parameter of a
 %time series at an acceptable rate.
  We know theoretically that the block bootstrap procedure will cover
- \eds{? interval will correctly cover?  What does the theory  actually say?}
- \mc{addressed} a
- parameter of a time series at the nominal level given an
+  parameter of a time series at the nominal level given an
  infinitely large
 sample, so the goal for this study was to find the smallest finite
 sample length $n$ of a time series in order for the block bootstrap procedure
 to 
 recover its associated parameters at an acceptable rate.
 
-Again, this analysis \eds{what?} \mc{addressed} relies on the assumption that
+Again, this analysis relies on the assumption that
 there is a size $n$ large enough for the method to work: that is, the method's
 performance improves as $n$ increases. Out of the five types of intervals used
 in this study, this assumption was found to hold true with respect to
-estimating $\phi$ only for Standard, Student's $t$, and Proposed Method CIs, whereas 
-Percentile, 
+estimating $\phi$ only for Standard, Student's $t$, and Proposed Method CIs, 
+whereas Percentile, 
 %CBP, 
 $BC$, and $BC_a$ intervals exhibited coverage deterioration as $n$
 increased. The Percentile CI's coverage deterioration can be attributed to
 bias that is not corrected as $n$ increases. Specifically, as $n$ increases, 
 the width of the CI decreases, but because the Percentile CI
-underestimates $\phi$, the coverage decreases. The $BC$ CI seems to correct the bias,
-but the width of the CI seems to be inconsistent. The acceleration 
+underestimates $\phi$, the coverage decreases. The $BC$ CI seems to correct the 
+bias, but the width of the CI seems to be inconsistent. The acceleration 
 factor of the $BC_a$ CI seems to fail, as the width of the CI
 seems to be inconsistent. 
 
