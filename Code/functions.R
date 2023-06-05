@@ -10,6 +10,12 @@ mystat <- function(x) {
   # acf(x, lag.max = 1, plot = FALSE)$acf[2])
 }
 
+expstat <- function(x) {
+  c(1 / mean(x),
+    cor(x[-1], x[-length(x)]))
+  # acf(x, lag.max = 1, plot = FALSE)$acf[2])
+}
+
 calculate_a_hat <- function(row) {
   tj_mean <- mean(row)
   numerator <- sum((tj_mean - row)^3)
@@ -17,13 +23,14 @@ calculate_a_hat <- function(row) {
   c(numerator / denominator)
 }
 
-do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
+do1rep <- function(n, phi, statistic, blksize, dstr = qnorm, R = 1000, level = .95) {
   if (phi == 0) {
     x <- rnorm(n)
   }
   else {
     x <- arima.sim(list(ar = phi), n = n) * sqrt(1 - phi^2)
   }
+  x <- dstr(pnorm(x))
   bts <- boot::tsboot(x, statistic, l = blksize, sim = "fixed", R = R)
   alpha <- 1 - level
   
@@ -103,7 +110,8 @@ do1rep <- function(n, phi, statistic, blksize, R = 1000, level = .95) {
 }
 
 mychk <- function(sim, target) {
-  new_sim <- sim[7:nrow(sim), ]
+  start <- length(target) * 2 + 1
+  new_sim <- sim[start:nrow(sim), ]
   p <- nrow(new_sim) / length(target) / 2
   target <- rep(target, p)
   ret <- rep(NA, length(target))
