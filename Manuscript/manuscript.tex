@@ -268,8 +268,8 @@ bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
 
 \paragraph{Student's $t$ CI}
 The procedure for constructing a Student's $t$ CI based on standard bootstrap is
-described in \citet{efron1993introduction}. \jy{give page or section number when
-  citing a book}
+described in \citet[p.158]{efron1993introduction}. \jy{give page or section number when
+  citing a book} \mc{addressed}
 With block bootstrapping, a $(1 - \alpha)100\%$ Student's $t$ CI is
 \[
 (\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}\hat{\text{SE}}, \quad
@@ -379,8 +379,13 @@ A $(1 - \alpha)100\%$ CI using our Proposed Method is
 (\hat\theta_{n, \alpha/2}^{(b)} - \widehat{\text{bias}}, \quad
 \hat\theta_{n, 1 - \alpha/2}^{(b)} - \widehat{\text{bias}}).
 \]
-This CI is necessarily centered around .... and
-is asymmetric, as different critical values are used to compute
+This CI is necessarily centered around $\hat\theta_n$ and can also be rewritten
+as 
+\[
+(\hat\theta_n + \hat\theta_{n, \alpha/2}^{(b)} - \bar\theta_n^{(b)}, \quad
+\hat\theta_n + \hat\theta_{n, 1 - \alpha/2}^{(b)} - \bar\theta_n^{(b)}).
+\]
+and is asymmetric, as different critical values are used to compute
 the lower and upper bounds.
 
 \section{Simulation Study}
@@ -676,7 +681,10 @@ corrections that fix the coverage deterioration problem for $\phi$.
 
 This study could be used as a guide for applied statistics courses for students
 to generally understand how large of a sample size is sufficient for block
-bootstrap to be used versus other inference methods.
+bootstrap to be used versus other inference methods. For undergraduate or
+graduate students, block bootstrap is not typically a part of curriculum, but the 
+results of this study can easily be used to demonstrate when it is practical to use 
+this method.
 This information could also prove to be useful for research using block
 bootstrap
 estimation of time series in domains such as econometrics. Future studies
