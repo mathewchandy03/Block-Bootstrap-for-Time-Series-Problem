@@ -76,9 +76,9 @@ do1rep <- function(n, phi, statistic, blksize, dstr = qnorm, R = 1000, level = .
   a_hat <- apply(thetajack, 1, calculate_a_hat)
   ## a <- apply(thetajack, 1, e1071::skewness, type = 1) / 6 ## * (n / blksize)^-0.5???
   alpha1 <- pnorm(
-    z0 + (z0 + qnorm(alpha/2)) / (1 - a * (z0 + qnorm(alpha/2))))
+    z0 + (z0 + qnorm(alpha/2)) / (1 - a_hat * (z0 + qnorm(alpha/2))))
   alpha2 <- pnorm(
-    z0 + (z0 + qnorm(1 - alpha/2)) / (1 - a * (z0 + qnorm(1 - alpha/2))))
+    z0 + (z0 + qnorm(1 - alpha/2)) / (1 - a_hat * (z0 + qnorm(1 - alpha/2))))
   bcaCI <- sapply(1:length(bts$t0),
                   function(i) quantile(bts$t[,i], prob = c(alpha1[i], alpha2[i])))
   
