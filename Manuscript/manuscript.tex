@@ -596,36 +596,17 @@ methods were constructed.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/pct}
-  \caption{100 replicate Percentile Bootstrap CIs for samples of $n = 800$ for
+  \includegraphics[width=\textwidth]{figures/norm_phi_intervals}
+  \caption{100 replicate Percentile, Bias-Corrected, and Proposed Method Bootstrap CIs for samples of $n = 800$ for
     an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
     of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$. }
-  \label{fig:pct}
+  \label{fig:npi}
 \end{figure}
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/bc}
-  \caption{100 replicate Bias-Corrected Bootstrap CIs for samples of $n = 800$ for
-    an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
-    of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
-  \label{fig:bc}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/prop}
-  \caption{100 replicate Proposed Method CIs for samples of $n = 800$ for
-    an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
-    of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$.}
-  \label{fig:prop}
-\end{figure}
-
-As shown in Figure~\ref{fig:phi}, Percentile CIs appear to suffer from bias;
-specifically, they seem to heavily underestimate $\phi$. As shown in
-Figure~\ref{fig:bc}, $BC$ CIs do seem to correct this bias on average, but the width of
+As shown in Figure~\ref{fig:npi}, Percentile CIs appear to suffer from bias;
+specifically, they seem to heavily underestimate $\phi$. $BC$ CIs do seem to correct this bias on average, but the width of
   the 
-CIs is very inconsistent. From Figure~\ref{fig:prop}, we can see that the 
+CIs is very inconsistent. We can see that the 
 Proposed Method CIs correct the bias using 
 $\widehat{\text{bias}} = \bar\theta_n^{(b)} -
   \hat\theta_n$, which seems to usually be negative, indicating a positive 
