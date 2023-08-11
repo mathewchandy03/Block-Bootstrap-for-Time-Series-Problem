@@ -20,8 +20,8 @@ plot_data <- data.frame(replication = 1:50,
 # Create facet plot using ggplot2
 ggplot(plot_data, aes(x = replication, y = point_estimate)) +
   geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound), width = 0.5, color = 'gray') +
-  geom_line(color = 'blue') +
-  geom_line(aes(y = bts_mean), color = 'red') +
+  geom_point(color = 'blue') +
+  geom_point(aes(y = bts_mean), color = 'red') +
   geom_hline(yintercept = 0.4, linetype = "dotted") +
   facet_wrap(~ custom_title, ncol = 1) +
   labs(x = 'Replication', y = 'Value') +

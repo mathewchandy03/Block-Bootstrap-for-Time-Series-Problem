@@ -109,7 +109,7 @@ desired coverage rates.
 The necessary sample size for bootstrap standard errors to provide valid
 uncertainty measures in practice has not been extensively studied. For
 independent data and non-block bootstrap, \citet{hesterberg2015teachers} notes
-that while percentile-based CIs \eds{for the mean? differences in means?} from 
+that while percentile-based CIs for the mean \eds{for the mean? differences in means?} \mc{addressed} from 
 nonparametric bootstrap
 are more accurate than $t$-intervals for larger sample sizes, they are
 less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds 
@@ -254,13 +254,13 @@ Assuming that $\hat\theta_n$ is asymptotically normally distributed with
 $\theta$ as the mean, we just need an estimate of the standard error to
 construct an approximate CI \citep[p.168]{efron1993introduction}.
 Let $\widehat{\text{SE}}$ be the empirical standard error of the block bootstrap
-copies of $\hat\theta_n^{(b)}$, $b = 1, \ldots, B$.
+copies of $\hat\theta_n^{(b)}$, $b = 1, \ldots, B$. Let $z_{(\alpha)}$ be the critical value for the $100\alpha$th percentile of the standard normal distribution.
 A $(1 - \alpha)100\%$ standard normal CI is
 \[
 (\hat{\theta}_{n} - z_{(1-\alpha/2)}\widehat{\text{SE}}, \quad
 \hat{\theta}_{n} - z_{(\alpha/2)}\widehat{\text{SE}}).
 \]
-\eds{define $z_{(.)}$ and check the signs}
+\eds{define $z_{(.)}$ and check the signs} \mc{addressed}
 This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
 Its validity relies on whether the distribution of $\hat\theta_n$ is reasonably
 well approximated by its asymptotic normal distribution and whether the
@@ -269,13 +269,13 @@ bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
 \paragraph{Student's $t$ CI}
 The procedure for constructing a Student's $t$ CI based on standard bootstrap is
 described in \citet[p.158]{efron1993introduction}. \jy{give page or section number when
-  citing a book} \mc{addressed}
+  citing a book} \mc{addressed} Let $t_{(\alpha, k)}$ be the critical value for the $100\alpha$th percentile of the student's $t$ distribution with $k$ degrees of freedom.
 With block bootstrapping, a $(1 - \alpha)100\%$ Student's $t$ CI is
 \[
 (\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}\hat{\text{SE}}, \quad
 \hat{\theta}_{n} - t_{(\alpha/2), k -1}\hat{\text{SE}}),
 \]
-\eds{define $t_{(.)}$ and check the signs}
+\eds{define $t_{(.)}$ and check the signs}  \mc{addressed}
 where $k$ is the number of blocks.
 This CI is centered by the point estimator $\hat\theta_n$ and is symmetric.
 Like the standard 
@@ -444,7 +444,7 @@ nominal
 level. Because it is unlikely for the coverage to exactly match the nominal
 level,
 we can construct a 95\% CI of the coverage
-rate (which is an estimate of a proportion with $n = 10000$ \eds{R?}). If the
+rate (which is an estimate of a proportion with $R = 10000$ \eds{R?} \mc{addressed}). If the
 proportion
 0.95 is included in the interval, the block bootstrap method is likely
 performing
@@ -503,7 +503,7 @@ these figures were generated using the R \textsl{ggplot2} package
   plot 50 intervals for phi using different sample sizes?}
 
 Based on Figure~\ref{fig:mu}, 
-Student's $t$ CIs appear to have the greatest \eds{largest?} coverage rates with 
+Student's $t$ CIs appear to have the highest \eds{largest?} \mc{addressed} coverage rates with 
 respect 
 to estimating $\mu$. In fact, for $\phi = -0.4$, Student's $t$ CIs over-cover 
 $\mu$ for all sample sizes, whereas other CIs have coverage rates that
@@ -580,8 +580,8 @@ sample size appears to be necessary regardless of the CI used. In the case
 that $\phi$ is unknown and expected to be greater than $0$, $n > 3200$ may be
 necessary for block bootstrap interval estimation of $\mu$. If $\phi$ is known,
 a lesser sample size may be sufficient. When estimating $\sigma_x$,
-$BC_a$ should not be used, and Student's $t$ again has the greatest 
-\eds{highest?} coverage
+$BC_a$ should not be used, and Student's $t$ again has the highest
+\eds{highest?} \mc{addressed} coverage
 rates. In the case that $\phi$ is unknown and expected to be greater than $0$,
 $n > 3200$ may be necessary for block bootstrap interval estimation of
 $\sigma_x$. Again, if $\phi$ is known, a lesser sample size may be enough.
@@ -604,7 +604,7 @@ methods were constructed.
   \includegraphics[width=\textwidth]{figures/norm_phi_intervals}
   \caption{100 replicate Percentile, Bias-Corrected, and Proposed Method Bootstrap CIs for samples of $n = 800$ for
     an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
-    of the CIs are displayed, as well as $\hat\theta_n$ and $\bar\theta_n^{(b)}$. }
+    of the CIs are displayed, as well as $\hat\theta_n$ (blue) and $\bar\theta_n^{(b)}$ (red). }
   \label{fig:npi}
 \end{figure}
 
