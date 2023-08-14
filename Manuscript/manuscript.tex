@@ -254,7 +254,7 @@ Assuming that $\hat\theta_n$ is asymptotically normally distributed with
 $\theta$ as the mean, we just need an estimate of the standard error to
 construct an approximate CI \citep[p.168]{efron1993introduction}.
 Let $\widehat{\text{SE}}$ be the empirical standard error of the block bootstrap
-copies of $\hat\theta_n^{(b)}$, $b = 1, \ldots, B$. Let $z_{(\alpha)}$ be the critical value for the $100\alpha$th percentile of the standard normal distribution.
+copies of $\hat\theta_n^{(b)}$, $b = 1, \ldots, B$. Let $z_{(\alpha)}$ be the $100\alpha$th percentile of the standard normal distribution.
 A $(1 - \alpha)100\%$ standard normal CI is
 \[
 (\hat{\theta}_{n} - z_{(1-\alpha/2)}\widehat{\text{SE}}, \quad
@@ -269,7 +269,7 @@ bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
 \paragraph{Student's $t$ CI}
 The procedure for constructing a Student's $t$ CI based on standard bootstrap is
 described in \citet[p.158]{efron1993introduction}. \jy{give page or section number when
-  citing a book} \mc{addressed} Let $t_{(\alpha, k)}$ be the critical value for the $100\alpha$th percentile of the student's $t$ distribution with $k$ degrees of freedom.
+  citing a book} \mc{addressed} Let $t_{(\alpha, k)}$ be the $100\alpha$th percentile of the student's $t$ distribution with $k$ degrees of freedom.
 With block bootstrapping, a $(1 - \alpha)100\%$ Student's $t$ CI is
 \[
 (\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}\hat{\text{SE}}, \quad
@@ -467,7 +467,7 @@ these figures were generated using the R \textsl{ggplot2} package
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_mu}
+  \includegraphics[width=\textwidth]{figures/plot_norm_mu}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal mean $\mu$ of an AR(1) process with AR coefficient
     $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
@@ -478,7 +478,7 @@ these figures were generated using the R \textsl{ggplot2} package
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_sigma}
+  \includegraphics[width=\textwidth]{figures/plot_norm_sigma}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal standard deviation $\sigma_x$ of an AR(1) 
 		process with AR
@@ -490,7 +490,7 @@ these figures were generated using the R \textsl{ggplot2} package
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_phi}
+  \includegraphics[width=\textwidth]{figures/plot_norm_phi}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the first-order autocorrelation coefficient $\phi$ of an AR(1) process with
     $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
