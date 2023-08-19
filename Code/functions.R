@@ -42,8 +42,8 @@ do1rep <- function(n, phi, statistic, blksize, dstr = qnorm, R = 1000, level = .
   
   ## Student's t interval
   stuCI <- sapply(1:length(bts$t0),
-                  function(i) c(bts$t0[i] - qt(1-alpha/2, n/blksize)*se[i], 
-                                bts$t0[i] - qt(alpha/2, n/blksize)*se[i]))
+                  function(i) c(bts$t0[i] - qt(1-alpha/2, n/blksize - 1)*se[i], 
+                                bts$t0[i] - qt(alpha/2, n/blksize - 1)*se[i]))
   
   ## Percentile interval
   pctCI <- apply(bts$t, 2, quantile, prob = c(alpha/2, 1 - alpha/2))
