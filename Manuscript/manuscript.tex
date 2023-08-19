@@ -97,44 +97,44 @@ dependent data; resampling; simulation; time series
 \label{sec:intro}
 
 
-Block bootstrap is a powerful tool for constructing confidence intervals (CI)
-when making inferences about dependent data. Early ideas were developed
+Block bootstrap is a tool to construct confidence intervals (CI)
+to make inferences about dependent data. Early ideas were developed
 independently by 
 \citet{hall1985resampling, carlstein1986use,ckunsch1989jackknife}.
 It has since been applied in various fields such as econometrics
 \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}.
-Block bootstrap is particularly useful for serially dependent
+Block bootstrap is useful for serially dependent
 data when the serial dependence is not specified or not of primary interest.
 The method is expected to produce CIs with coverage rates
-matching their nominal levels as the sample size grows to infinity. However,
+matching their nominal levels as the sample size grows. However,
 when dealing with finite sample sizes, an important question is how large the
-sample size needs to be for block bootstrap CIs to have the
+sample size must be for block bootstrap CIs to have the
 desired coverage rates.
 
 
-\jy{too wordy; do some condensing}
+\jy{too wordy; do some condensing} \mc{condensed a little bit}
 The performance of bootstrap standard errors with independent data
 in providing valid uncertainty measures has been extensively studied.
 For example, for non-block bootstrap, \citet{hesterberg2015teachers} notes
 that while percentile-based CIs for the mean from nonparametric bootstrap
 are more accurate than $t$-intervals for larger sample sizes, they are
 less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds 
-that the best choice of method for estimating
-the parameter of a distribution is dependent on the sample size, the number of
+that the best method to estimate
+the parameter of a distribution depends on the sample size, the number of
 bootstrap resamples, and the confidence level. In the context of structural
 equation modeling, \citet{nevitt2001performance} find
-that a sample size of 200--1000 is usually sufficient for interval estimation
+that a sample size of 200--1000 is sufficient for interval estimation
 using standard nonparametric bootstrap. In estimating the proportion of 
-variation attributable to certain variable, \citet{burch2012nonparametric} finds
+variation attributable to a certain variable, \citet{burch2012nonparametric} finds
 that three nonparametric bootstrap methods (standard, percentile, and 
 bias-corrected
 and accelerated) approach the coverage of a pivotal quantity as the sample size
 gets larger for an underlying normal distribution, but for other distributions, 
-coverage may deteriorate even as the sample size increases.
+coverage may deteriorate as the sample size increases.
 When attempting to create interval estimations for the Pearson correlation 
 coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
 methods to be less accurate than the Fisher's transformation method even 
-for a sample of size of 100 and the correlation coefficient is equivalent to 0.
+for a sample with size~$100$ and correlation coefficient equal to 0.
 The general consensus is that a big sample size is necessary.
 
 
@@ -149,7 +149,7 @@ CIs still do not have sufficient coverage of the target parameter even for
 sample size~$1024$.
 
 
-The goal of this paper is to provide some practical recommendations on
+The goal of this paper is to provide recommendations on
 necessary sample size for block bootstrap with dependent data, similar to what 
 was done for basic bootstrap in \citet{hesterberg2015teachers}. We consider a
 simple situation of a stationary time series, where the parameters of
@@ -160,8 +160,7 @@ CIs from the literature \citep{diciccio1996bootstrap,
 a percentile CI, a bias-corrected CI, a bias-correct and accelerated ($BC_a$)
 CI, and a CI proposed in this article. Their
 empirical coverage rates at different sample sizes and dependence levels are
-compared in a simulation study. The results of this study suggest that
-appropriate recovery of temporal dependence parameters is heavily dependent
+compared in a simulation study. The results of this study suggest that recovery of temporal dependence parameters is reliant
 on the type of interval used.
 
 
