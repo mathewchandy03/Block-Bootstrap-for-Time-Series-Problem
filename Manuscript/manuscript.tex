@@ -48,8 +48,10 @@
 \newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
 \newcommand{\mc}[1]{\textcolor{green}{MC: (#1)}}
 
+
 \title{On Sample Size for Block Bootstrap Confidence Intervals 
   to Have Desired Coverage Rates}
+
 
 \author{Mathew Chandy, Elizabeth Schifano,
 %   \href{mailto:mathew.chandy@uconn.edu}
@@ -59,8 +61,10 @@
 }
 \date{}
 
+
 \begin{document} 
 \maketitle
+
 
 \begin{abstract}
 Block bootstrap is widely used in constructing confidence intervals for
@@ -73,25 +77,30 @@ are generated from a first-order autoregressive process. The empirical coverage
 rates of several commonly used bootstrap confidence intervals for the mean,
 standard deviation, and the lag-1 autocorrelation coefficient are compared.
 A quite large sample is found necessary for the intervals to have the right
-coverage rates even when estimaiting a simple parameter like the mean. Some
+coverage rates even when estimating a simple parameter like the mean. Some
 block bootstrap methods could fail when estimating the lag-1 autocorrelation.
 It is surprising that the coverage property even deteriorates as the sample size
-increases with some commonly used block bootstrap confidence intervals including
-the percentile intervals and Bias-Corrected intervals.
+increases with some commonly used block bootstrap confidence intervals
+including the percentile intervals and Bias-Corrected intervals.
+
 
 \bigskip
 \noindent{\sc Keywords}:
 dependent data; resampling; simulation; time series
 \end{abstract}
 
+
 \doublespace
+
 
 \section{Introduction}
 \label{sec:intro}
 
+
 Block bootstrap is a powerful tool for constructing confidence intervals (CI)
 when making inferences about dependent data. Early ideas were developed
-independently by \citet{hall1985resampling, carlstein1986use, kunsch1989jackknife}.
+independently by 
+\citet{hall1985resampling, carlstein1986use,ckunsch1989jackknife}.
 It has since been applied in various fields such as econometrics
 \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}.
 Block bootstrap is particularly useful for serially dependent
@@ -117,16 +126,16 @@ equation modeling, \citet{nevitt2001performance} find
 that a sample size of 200--1000 is usually sufficient for interval estimation
 using standard nonparametric bootstrap. In estimating the proportion of 
 variation attributable to certain variable, \citet{burch2012nonparametric} finds
-that three nonparametric bootstrap methods (standard, percentile, and bias-corrected
+that three nonparametric bootstrap methods (standard, percentile, and 
+bias-corrected
 and accelerated) approach the coverage of a pivotal quantity as the sample size
 gets larger for an underlying normal distribution, but for other distributions, 
 coverage may deteriorate even as the sample size increases.
 When attempting to create interval estimations for the Pearson correlation 
 coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
 methods to be less accurate than the Fisher's transformation method even 
-for a sample of size of 100 and the correlation coefficientis equivalent to 0.
+for a sample of size of 100 and the correlation coefficient is equivalent to 0.
 The general consensus is that a big sample size is necessary.
-
 
 
 Few studies have provided a practical guide on what size is needed
@@ -152,8 +161,8 @@ a percentile CI, a bias-corrected CI, a bias-correct and accelerated ($BC_a$)
 CI, and a CI proposed in this article. Their
 empirical coverage rates at different sample sizes and dependence levels are
 compared in a simulation study. The results of this study suggest that
-appropriate recovery of temporal dependence parameters is heavily dependent on
-the type of interval used.
+appropriate recovery of temporal dependence parameters is heavily dependent
+on the type of interval used.
 
 
 The remainder of the paper is organized as follows.
@@ -161,15 +170,17 @@ Section~\ref{sec:bbci} reviews block bootstrap procedures and how to use block
 bootstrap estimates to construct CIs; a simple CI obtained by recentering at the
 point estimate is proposed for comparison. Section~\ref{sec:simu} reports a
 simulation
-study comparing the coverage rates of six???block bootstrap CIs. A discussion
+study comparing the coverage rates of six block bootstrap CIs. A discussion
 concludes in Section~\ref{sec:disc}.
+
 
 \section{Block Bootstrap CIs}
 \label{sec:bbci}
 
 
 \jy{Practice my writing style guidelines. Use two blank lines to separate
-  paragraphs.}
+  paragraphs.} \mc{addressed}
+
 
 Consider a stationary time series $\{X_t: t = 1, \ldots, n\}$ with length~$n$.
 Our goal is to construct a CI for a parameter $\theta$ in the
@@ -184,7 +195,9 @@ $\hat\theta_n^{(b)}$'s. When serial dependence is present, the bootstrap
 procedure needs to preserve the serial dependence. Block bootstrap was
 motivated for this situation. 
 
+
 \subsection{Block Bootstrap}
+
 
 Block bootstrap preserves the serial dependence in the observed data by
 partitioning the data into blocks and performing bootstrap on the blocks.
@@ -194,8 +207,8 @@ is $Y_j = \{X_{(j - 1) l + 1}, \ldots, X_{(j - 1) l + l}\}$,
 $j = 1, \ldots,   k$.  Then, we sample $k$ blocks of $Y_j$'s from the set 
 $\{Y_1, \ldots, Y_k\}$ with replacement and concatenate the $k$ sampled blocks
 in the order they are picked to form a bootstrap sample of the data. The
-formation of the bootstrap sample ensures that the between-block dependence is
-weak and that the within-block serial dependence is preserved. Because the
+formation of the bootstrap sample ensures that the between-block dependence
+is weak and that the within-block serial dependence is preserved. Because the
 blocks here are non-overlapping, this bootstrap approach is known as
 non-overlapping block bootstrap, or simple block bootstrap.
 
@@ -231,11 +244,14 @@ often assigned a value as a function of $n$. A common function that is
 considered optimal is $l = \lceil n^{1/3} \rceil$
 \citep{buhlmann1999block}, which was adopted in this study.
 
+
 \subsection{Bootstrap CIs}
+
 
 Suppose that we have repeated the steps in the last subsection $B$ times, and
 that for $b \in \{1, \ldots, B\}$, we have obtained an estimator
-$\hat\theta_n^{(b)}$ based on the $b$th bootstrap sample using the same method
+$\hat\theta_n^{(b)}$ based on the $b$th bootstrap sample using the same
+method
 that was applied to $\{X_t: t = 1, \ldots, n\}$ to obtain $\hat\theta_n$.
 Now the question is, how to construct a CI for $\theta$
 using the $B$ bootstrap point estimates
@@ -262,8 +278,8 @@ bootstrap $\widehat{\text{SE}}$ approximates the true standard error.
 
 
 \paragraph{Student's $t$ CI}
-The procedure for constructing a Student's $t$ CI based on standard bootstrap is
-described in \citet[p.158]{efron1993introduction}. Let $t_{(\alpha, k)}$ be the
+The procedure for constructing a Student's $t$ CI based on standard bootstrap
+is described in \citet[p.158]{efron1993introduction}. Let $t_{(\alpha, k)}$ be the
 upper $\alpha$ quantile of a $t$ distribution with $k$ degrees of freedom.
 With block bootstrapping, a $(1 - \alpha)100\%$ Student's $t$ CI is
 \[
@@ -345,7 +361,6 @@ rate of change of the standard error of $\hat\theta_n$ with respect to
 $\theta$.
 
 
-
 \paragraph{A Proposed CI}
 We propose a CI that is centered at the point estimator and uses the variation
 in the bootstrap estimates to construct the error bound. This interval requires
@@ -366,8 +381,10 @@ It is asymmetric, as different critical values are used to compute
 the lower and upper bounds.
 \jy{Double check}
 
+
 \section{Simulation Study}
 \label{sec:simu}
+
 
 We designed a simulation study to compare the performance of the different
 block
@@ -392,9 +409,10 @@ Three target parameters of $X_t$ were considered:
 2) $\phi$, the lag-1 auto-correlation coefficient.
 To investigate the effect of sample size~$n$, we considered an array of values
 $n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 
-10000 replicates. For each replicate, we constructed seven 95\% block bootstrap
-CIs for each parameter as described in the last section. We can estimate 
-$\mu$, $\sigma_x$, and $\phi$ by computing the sample mean, sample 
+10000 replicates. For each replicate, we constructed seven 95\% block
+bootstrap CIs for each parameter as described in the last section. We can
+estimate $\mu$, $\sigma_x$, and $\phi$ by computing the sample mean,
+sample 
 standard deviation,
 and lag-1 auto-correlation, respectively, of each bootstrap sample, and then 
 construct intervals for each parameter using the appropriate procedures
@@ -407,8 +425,8 @@ of moving block bootstrap as described in the previous section, meaning that
 that blocks are allowed to wrap around, and $l = \lceil n^{1/3} \rceil$.
 
 
-The coverage rates of the CIs were used to compare the performance of CIs. Let
-$\hat\theta_{L, r}$ and $\hat\theta_{U, r}$ be the lower and upper bound,
+The coverage rates of the CIs were used to compare the performance of CIs.
+Let $\hat\theta_{L, r}$ and $\hat\theta_{U, r}$ be the lower and upper bound,
 respectively, for the confidence interval constructed for each replicate
 $r \in \{1, \ldots, R\}$, where $R$ is the
 number of replicates.
@@ -445,6 +463,7 @@ the 95\% confidence intervals of the real coverage, generated using the R
   \label{fig:mu}
 \end{figure}
 
+
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/plot_norm_sigma}
@@ -456,6 +475,7 @@ the 95\% confidence intervals of the real coverage, generated using the R
     The error bars represent 95\% CIs of the real coverage rates.}
   \label{fig:sigma}
 \end{figure}
+
 
 \begin{figure}[tbp]
   \centering
@@ -469,7 +489,6 @@ the 95\% confidence intervals of the real coverage, generated using the R
 \end{figure}
 
 
-<<<<<<< HEAD
 Based on Figure~\ref{fig:mu}, Student's $t$ seems to generally
 be the best method for estimating $\mu$.
 For $\phi = -0.4$, Student's $t$ CIs over-cover 
@@ -489,6 +508,7 @@ For $\phi = 0.4$, $n \geq 3200$ seems to be large enough to recover $\mu$
 at the nominal level when using
 any CIs besides Student's $t$ CIS, which seem to recover $\mu$ at the nominal
  rate for all $n \geq 800$.
+
 
 Based on Figure~\ref{fig:sigma}, Student's $t$ also seems to generally
 be the best method for estimating $\sigma$.
@@ -532,35 +552,41 @@ very close to the nominal rate even for small sample sizes. For positive $\phi$,
 larger sample size appears to be necessary regardless of the CI used. In the
 case that $\phi$ is unknown and expected to be greater than $0$, $n > 800$
 may be
-necessary for block bootstrap interval estimation of $\mu$ when using the Student's $t$ CI. If $\phi$ is known,
+necessary for block bootstrap interval estimation of $\mu$ when using the
+Student's $t$ CI. If $\phi$ is known,
 a lesser sample size may be sufficient. When estimating $\sigma_x$,
 Student's $t$ again has the highest coverage
 rates. In the case that $\phi$ is unknown and expected to be greater than $0$,
 $n > 400$ may be necessary for block bootstrap interval estimation of
-$\sigma_x$ when using the Student's $t$ CI. Again, if $\phi$ is known, a lesser sample size may be enough.
+$\sigma_x$ when using the Student's $t$ CI. Again, if $\phi$ is known, a lesser
+sample size may be enough.
 When estimating $\phi$, Percentile, $BC$, and $BC_a$ CIs 
 deteriorate in coverage, indicating they should not be used in this context. 
 Increasing $n$ will not fix the performance of either of these intervals 
 because the assumption that the coverage rate will approach the nominal level
-as $n$ increases is invalid. Standard and Proposed Method CIs managed to fix the
+as $n$ increases is invalid. Standard and Proposed Method CIs managed to fix
+the
 deterioration problem, and they perform similarly, but Student's $t$ covers
 $\phi$ at the nominal rate for much smaller sample sizes. It seems that 
 $n = 100$ is certainly large enough to
 recover $\phi$ when using the Student's $t$ method.
 
 
-
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/norm_phi_intervals}
-  \caption{100 replicate Percentile, Bias-Corrected, and Proposed Method Bootstrap CIs for samples of $n = 800$ for
-    an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper bounds
-    of the CIs are displayed, as well as $\hat\theta_n$ (blue) and $\bar\theta_n^{(b)}$ (red). }
+  \caption{100 replicate Percentile, Bias-Corrected, and Proposed Method
+  Bootstrap CIs for samples of $n = 800$ for
+    an AR(1) process with $\phi = 0.4$. For each replicate, the lower and upper
+    bounds
+    of the CIs are displayed, as well as $\hat\theta_n$ (blue) and $
+    \bar\theta_n^{(b)}$ (red). }
   \label{fig:npi}
 \end{figure}
 
 
-These results beg the question of why certain methods perform poorly. To address 
+These results beg the question of why certain methods perform poorly. To
+address 
 this question, plots of 100 CIs using each of the Percentile, $BC$, and Proposed 
 methods were constructed. As shown in Figure~\ref{fig:npi}, Percentile CIs
 appear to suffer from bias; specifically, they seem to heavily underestimate
@@ -574,17 +600,13 @@ correction from interval construction in Section~\ref{sec:bbci}.
 \section{Discussion}
 \label{sec:disc}
 
+
 \jy{Keep the tex source tidy. Clean it up.}
 
 
 Block bootstrap is a useful method for estimating parameters of a time
 series, from simple parameters like the mean to more complicated temporal
  dependence factors.
-%The motivation for the study is the idea that block bootstrap procedure will
-%perfectly estimate a parameter of a time series given an infinitely large
-%sample. The goal for this study was to find what is a good enough finite
-%sample length for block bootstrap estimation to recover the parameter of a
-%time series at an acceptable rate.
  We know theoretically that the block bootstrap procedure will cover
   parameter of a time series at the nominal level given an
  infinitely large
@@ -593,21 +615,23 @@ sample length $n$ of a time series in order for the block bootstrap procedure
 to 
 recover its associated parameters at an acceptable rate.
 
+
 Again, this analysis relies on the assumption that
 there is a size $n$ large enough for the method to work: that is, the method's
 performance improves as $n$ increases. Out of the five types of intervals used
 in this study, this assumption was found to hold true with respect to
 estimating $\phi$ only for Standard, Student's $t$, and Proposed Method CIs, 
 whereas Percentile, 
-%CBP, 
 $BC$, and $BC_a$ intervals exhibited coverage deterioration as $n$
 increased. The Percentile CI's coverage deterioration can be attributed to
 bias that is not corrected as $n$ increases. Specifically, as $n$ increases, 
 the width of the CI decreases, but because the Percentile CI
-underestimates $\phi$, the coverage decreases. The $BC$ CI seems to correct the 
+underestimates $\phi$, the coverage decreases. The $BC$ CI seems to correct
+the 
 bias, but the width of the CI seems to be inconsistent. The acceleration 
 factor of the $BC_a$ CI seems to fail, as the width of the CI
 seems to be inconsistent. 
+
 
 When using Student's $t$ intervals and $\phi$ is
 unknown, the results of this study suggest that an $n \geq 800$ may be
@@ -630,6 +654,7 @@ Student's $t$ method
 Further investigation may be necessary to see if there are other interval
 corrections that fix the coverage deterioration problem for $\phi$.
 
+
 This study could be used as a guide for applied statistics courses for students
 to generally understand how large of a sample size is sufficient for block
 bootstrap to be used versus other inference methods. For undergraduate or
@@ -645,6 +670,7 @@ that would more appropriately recover the parameters of a time
 series. \eds{are there other methods that you know of?} 
 One could also investigate the $n$ needed to make inferences about
 other forms of serially dependent data such as a moving average process. 
+
 
 \bibliographystyle{chicago}
 \bibliography{citations}
