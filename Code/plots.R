@@ -1,7 +1,11 @@
+library(tidyverse)
 source("functions.R")
-norm_mu <- read.csv("../Data/norm_mu.csv")
-norm_sigma <- read.csv("../Data/norm_sigma.csv")
-norm_phi <- read.csv("../Data/norm_phi.csv")
+norm_mu <- read.csv("../Data/norm_mu.csv") %>% 
+  filter(CI != 'ctrCI')
+norm_sigma <- read.csv("../Data/norm_sigma.csv") %>% 
+  filter(CI != 'ctrCI')
+norm_phi <- read.csv("../Data/norm_phi.csv") %>% 
+  filter(CI != 'ctrCI')
 
 t <- 'norm_mu'
 width <- .2
@@ -16,9 +20,12 @@ width <- .2
 graph_bts(t, width, norm_phi)
 
 source("functions.R")
-exp_mu <- read.csv("../Data/exp_mu.csv")
-exp_sigma <- read.csv("../Data/exp_sigma.csv")
-exp_rho <- read.csv("../Data/exp_rho.csv")
+exp_mu <- read.csv("../Data/exp_mu.csv") %>% 
+  filter(CI != 'ctrCI')
+exp_sigma <- read.csv("../Data/exp_sigma.csv") %>% 
+  filter(CI != 'ctrCI')
+exp_rho <- read.csv("../Data/exp_rho.csv") %>% 
+  filter(CI != 'ctrCI')
 
 t <- 'exp_mu'
 width <- .2

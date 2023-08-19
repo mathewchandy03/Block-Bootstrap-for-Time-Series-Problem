@@ -363,7 +363,7 @@ $BC_a$ method corrects for bias and skewness of the $B$ bootstrap point
 estimates $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$ by including
 bias-correction and acceleration factors. The acceleration factor refers to
 the 
-rate of change of of the standard error of $\hat\theta_n$ with respect to
+rate of change of the standard error of $\hat\theta_n$ with respect to
 $\theta$.
 
 \paragraph{Proposed Method CI}
@@ -500,97 +500,83 @@ these figures were generated using the R \textsl{ggplot2} package
 \jy{I'm curiouss why the coverge is so poor for the percentile method. Could
   plot 50 intervals for phi using different sample sizes?}
 
-Based on Figure~\ref{fig:mu}, 
-Student's $t$ CIs appear to have the highest \eds{largest?} \mc{addressed} coverage rates with 
-respect 
-to estimating $\mu$. In fact, for $\phi = -0.4$, Student's $t$ CIs over-cover 
-$\mu$ for all sample sizes, whereas other CIs have coverage rates that
-hover around the $95\%$ line at this level of $\phi$. For $\phi \geq -0.2$,
-$BC_a$ CIs undercover $\mu$ for all $n$ observed. For $\phi = -0.2$, 
-Standard, Percentile, %CBP, 
-Proposed Method, and $BC$ CIs seem to 
-generally cover $\mu$ at the nominal 
-rate when $n \geq 400$. Student's $t$ CIs either recover or over-cover $\mu$
-for $n \geq 100$. For $\phi = 0$, or when the 
-sample is independently normally distributed, $n = 1600$ seems to 
-be enough to recover $\mu$ when using Standard, Percentile, 
-%CBP, 
-Proposed Method, or $BC$ 
-CIs. Student's $t$ CIs cover $\mu$ at the nominal rate for $n \geq 100$ at 
-$\phi = 0$.
-For $\phi = 0.2$, $n > 3200$ seems to be necessary to recover $\mu$
+Based on Figure~\ref{fig:mu}, Student's $t$ seems to generally
+be the best method for estimating $\mu$.
+For $\phi = -0.4$, Student's $t$ CIs over-cover 
+$\mu$ for smaller $n$, whereas other CIs recover $\mu$ at the
+nominal rate for all $n$ observed. For 
+$\phi = -0.2$, 
+all CIs recover $\mu$ at the nominal rate for all $n$. For $\phi = 0$, or when the 
+sample is independently normally distributed, $n \geq 200$ seems to 
+be large enough to recover $\mu$ at the nominal rate when using any CIs
+ besides Student's $t$ CIs, which seem to recover $\mu$ at the nominal rate for
+  all $n$.
+For $\phi = 0.2$, $n \geq 800$ seems to be sufficient to recover $\mu$
 at the nominal level when using
-any of the CIs, although some CIs, such as Student's $t$, are much closer to the
-$95\%$ line than others, most notably $BC_a$.
-For $\phi = 0.4$, a much larger sample size appears to be necessary. Once again,
-Student's $t$ CIs are the closest to $95\%$ coverage, and $BC_a$ CIs are the 
-furthest.
+any CIs besides Student's $t$ CIS, which recover $\mu$ at the nominal
+ rate for all $n \geq 200$.
+For $\phi = 0.4$, $n \geq 3200$ seems to be large enough to recover $\mu$
+at the nominal level when using
+any CIs besides Student's $t$ CIS, which seem to recover $\mu$ at the nominal
+ rate for all $n \geq 800$.
 
-Based on Figure~\ref{fig:sigma}, 
-$BC_a$ CIs greatly undercover $\sigma_x$ for every combination of $n$ and 
-$\phi$ observed, although there is no trend of coverage deterioration, 
-indicating that there may eventually
-be a sample size large enough for $\sigma_x$ to be covered at the nominal level.
-For $\phi = -0.4$, Standard Normal and Student's $t$ CIs recover $\sigma_x$ when 
-$n = 1600$, but undercover $\sigma_x$ for $n = 3200$, indicating
-that a larger $n$ is most likely necessary to consistently cover $\sigma_x$ at 
-the nominal rate.
-The other CI types undercover $\sigma_x$ for all sample sizes at $\phi = 0.4$.
-For $\phi  = -0.2$, all CIs except for $BC_a$ are able to cover $\sigma_x$ at 
-the nominal rate for $n \geq 3200$, and Student's $t$ CIs cover $\sigma$ at the 
-nominal rate when $n \geq 400$. When $\phi = 0$, $n \geq 1600$ seems to 
-be large enough if Standard CIs are used, and $n \geq 400$ is fine is
-Student's $t$ CIs are used. $n \geq 3200$ appears necessary 
-for other CIs. For $\phi = 0.2$, 
-comfortable coverage of $\sigma_x$ at the nominal level appears to only be true
-for Student's $t$ CIs for $n \geq 3200$, although Standard %and CBP% 
-CIs do reach the nominal level in our simulation results. For $\phi = 0.4$, a much
-larger sample size appears to be necessary. Student's $t$ CIs are the closest to
-$95\%$ coverage, and $BC_a$ CIs are the furthest.
+Based on Figure~\ref{fig:sigma}, Student's $t$ also seems to generally
+be the best method for estimating $\sigma$.
+for $\phi = -0.4$, $n \geq 1600$ is sufficient to recover $\sigma$
+at the nominal level when using
+any CIs besides Standard CIs, which seem to recover $\sigma$ at the nominal 
+rate for all $n \geq 800$, and Student's $t$ CIs, which seem to recover $\sigma$
+at the nominal rate for all $n \geq 400$. For $\phi = -0.2$, $n \geq 200$ is 
+adequate to recover $\sigma$ at the nominal rate with Student $t$ CIs, 
+but other CIs seem to require $n \geq 800$. For $\phi = 0$, or when the sample
+is independently normally distributed, $n \geq 400$ seems to be about enough
+to recover $\sigma$ for all CIs, but Student's $t$ CIs can recover $\sigma$ for
+$n \geq 100$. For $\phi = 0.2$, $n \geq 800$ is adequate for CIs besides the
+Student's $t$ CI, which recovers $\sigma$ well for $n \geq 200$. For 
+$\phi  = 0.4$, $n \geq 1600$ seems necessary for CIs other that Student's $t$ 
+CIs, which recover $\sigma$ at the nominal level for $n \geq 400$.
 
-Based on Figure~\ref{fig:phi}, 
-Percentile, %CBP, %
-$BC$, and $BC_a$ CIs deteriorate clearly for any level of temporal correlation,
-so they should not be used. The deterioration becomes more evident
-as the absolute value of $\phi$ increases, regardless of whether $\phi$ is 
-negative or positive. When $\phi = -0.4$, Standard and Proposed Method CIs 
-recover $\phi$ at the nominal rate for $n \geq 400$. At this $\phi$ level,
-Student's $t$ CIs either recover or over-cover $\phi$ for $n \geq 100$. When
-$\phi = -0.2$, Standard and Proposed Method CIs recover $\phi$ at $n = 800$ and 
-$n = 1600$, 
-although they undercover $\phi$ at $n = 3200$, indicating that 
-perhaps a larger $n$ is needed if these CIs are used. However,
-Student's $t$ CIs cover $\phi$ at the nominal level for $n \geq 400$. When
-$\phi = 0$, Standard and Proposed Method CIs recover $\phi$ relatively 
-comfortably at $n = 3200$, and 
-$n = 800$ seems to be sufficient for Student's $t$ CIs. For $\phi = 0.2$, Standard
-and Proposed Method CIs cover $\phi$ at the nominal rate for $n \geq 1600$, whereas 
-Student's $t$ CIs can accomplish this at $n \geq 100$. For $\phi = 0.4$, $n \geq 
-800$ is large enough for Standard and Proposed Method CIs. Student's $t$ CIs either
-recover or over-cover $\phi$ for all $n \geq 100$.
+
+
+Based on Figure~\ref{fig:phi}, Student's $t$ again seems to generally
+be the best method for estimating $\phi$. For high absolute values of $\phi$, 
+Percentile, $BC$, and $BC_a$ CIs
+deteriorate in coverage as $n$ increases. For $\phi = -0.4$, Standard, Student's
+$t$, and Proposed CIs recover $\phi$ for $n \geq 100$. For $\phi = -0.2$, 
+Standard and Proposed CIs recover $\phi$ at the nominal rate for $n \geq 200$, 
+whereas this can be done for $n \geq 100$ with Student's $t$ CIs. For $\phi = 
+0$, or when the sample
+is independently normally distributed, Standard and Proposed CIs recover 
+$\phi$ at the nominal level  for $n \geq 400$, and this is achievable for 
+$n \geq 100$ with Student's $t$ CIs. For $\phi = 0.2$ and $\phi = 0.4$, Standard 
+and Proposed CIs recover $\phi$ for $n \geq 200$, and Student's $t$ CIs 
+recover $\phi$ for all $n \geq 100$.
+
 
 To summarize, the CI type chosen should be based on the target parameter. 
-When estimating $\mu$, the Student's $t$ CI seems to have the highest coverage
-overall, although that leads to over-coverage when $\phi$ is -0.4. For a
-sample with no temporal dependence, the Student's $t$ CI cover $\mu$ perfectly
-at the nominal rate even for small sample sizes. For positive $\phi$, a larger
-sample size appears to be necessary regardless of the CI used. In the case
-that $\phi$ is unknown and expected to be greater than $0$, $n > 3200$ may be
-necessary for block bootstrap interval estimation of $\mu$. If $\phi$ is known,
+When estimating $\mu$, the Student's $t$ CI seems to have the highest
+ coverage
+overall, although that leads to over-coverage for small sample sizes when $\phi$
+ is -0.4. For a
+sample with no temporal dependence, the Student's $t$ CI recover $\mu$ 
+very close to the nominal rate even for small sample sizes. For positive $\phi$, a
+larger sample size appears to be necessary regardless of the CI used. In the
+case that $\phi$ is unknown and expected to be greater than $0$, $n > 800$
+may be
+necessary for block bootstrap interval estimation of $\mu$ when using the Student's $t$ CI. If $\phi$ is known,
 a lesser sample size may be sufficient. When estimating $\sigma_x$,
-$BC_a$ should not be used, and Student's $t$ again has the highest
-\eds{highest?} \mc{addressed} coverage
+Student's $t$ again has the highest coverage
 rates. In the case that $\phi$ is unknown and expected to be greater than $0$,
-$n > 3200$ may be necessary for block bootstrap interval estimation of
-$\sigma_x$. Again, if $\phi$ is known, a lesser sample size may be enough.
-When estimating $\phi$, Percentile and $BC_a$ CIs 
+$n > 400$ may be necessary for block bootstrap interval estimation of
+$\sigma_x$ when using the Student's $t$ CI. Again, if $\phi$ is known, a lesser sample size may be enough.
+When estimating $\phi$, Percentile, $BC$, and $BC_a$ CIs 
 deteriorate in coverage, indicating they should not be used in this context. 
 Increasing $n$ will not fix the performance of either of these intervals 
 because the assumption that the coverage rate will approach the nominal level
 as $n$ increases is invalid. Standard and Proposed Method CIs managed to fix the
 deterioration problem, and they perform similarly, but Student's $t$ covers
 $\phi$ at the nominal rate for much smaller sample sizes. It seems that 
-$n = 800$ is large enough to
+$n = 100$ is certainly large enough to
 recover $\phi$ when using the Student's $t$ method.
 
 These results beg the question of why certain methods perform poorly. To address 
@@ -658,20 +644,21 @@ factor of the $BC_a$ CI seems to fail, as the width of the CI
 seems to be inconsistent. 
 
 When using Student's $t$ intervals and $\phi$ is
-unknown, the results of this study suggest that an $n > 3200$ may be
+unknown, the results of this study suggest that an $n \geq 800$ may be
 necessary for common practice to estimate simpler parameters like $\mu$ 
 or $\sigma_x$. If $\phi$ is already known, a lesser $n$ may be adequate
 to
 estimate these parameters. For lower absolute values of $\phi$, a smaller
 $n$ is sufficient when estimating $\mu$ or $\sigma$. For negative
 values of $\phi$, coverage of $\mu$ is higher in general. In fact, 
-Student's $t$ seems to over-cover $\mu$ for $\phi = 0.4$, 
+Student's $t$ seems to over-cover $\mu$ for $\phi = 0.4$ when using smaller
+sample sizes, 
 meaning that if $\phi$ is known to have a very negative value, another CI
-should be used.
+may be required.
 However, in real world applications, $\phi$ is
 more commonly found to be positive, so Student's $t$ should still be used
 if $\phi$ is unknown.
-Lastly, to estimate $\phi$, an $n$ of around $800$ using the 
+Lastly, to estimate $\phi$, $n \geq 100$ using the 
 Student's $t$ method
  may be sufficient.
 Further investigation may be necessary to see if there are other interval
