@@ -1,4 +1,5 @@
 source("functions.R")
+library(copula)
 setwd("../Data")
 file_names <- list.files(pattern = "^exp_results")
 all_lists <- lapply(file_names, function(x) {
