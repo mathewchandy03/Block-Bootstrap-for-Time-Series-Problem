@@ -98,12 +98,12 @@ dependent data; resampling; simulation; time series
 
 
 Block bootstrap is a tool to construct confidence intervals (CI)
-to make inferences about dependent data. Early ideas were developed
-independently by 
-\citet{hall1985resampling, carlstein1986use,kunsch1989jackknife}.
-It has since been applied in various fields such as econometrics
+to make inferences about dependent data. Essentially, it depends on correct
+estimation of the uncertainty in the estimation. Early ideas were developed
+by \citet{hall1985resampling, carlstein1986use,kunsch1989jackknife}.
+It has since been applied in various fields, for instance, econometrics
 \citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}.
-Block bootstrap is useful for serially dependent
+Block bootstrap is especially useful for serially dependent
 data when the serial dependence is not specified or not of primary interest.
 The method is expected to produce CIs with coverage rates
 matching their nominal levels as the sample size grows. However,
@@ -112,41 +112,41 @@ sample size must be for block bootstrap CIs to have the
 desired coverage rates.
 
 
-\jy{too wordy; do some condensing} \mc{condensed a little bit}
-The performance of bootstrap standard errors with independent data
-in providing valid uncertainty measures has been extensively studied.
-For example, for non-block bootstrap, \citet{hesterberg2015teachers} notes
-that while percentile-based CIs for the mean from nonparametric bootstrap
-are more accurate than $t$-intervals for larger sample sizes, they are
-less accurate for smaller sample sizes. \citet{chernick2009revisiting} finds 
-that the best method to estimate
-the parameter of a distribution depends on the sample size, the number of
-bootstrap resamples, and the confidence level. In the context of structural
+For independent data, extensive research has explored the effectiveness of
+bootstrap standard errors in providing accurate uncertainty measures.
+For example, \citet{hesterberg2015teachers} observes
+that while percentile-based CIs for the mean parameter
+are more accurate than $t$-intervals for larger sample sizes, they accuracy
+diminishes for smaller sample sizes. The optimal parameter estimation of a
+distribution, according to \citet{chernick2009revisiting},
+depends on the sample size, the number of
+bootstrap replicates, and the confidence level. In structural
 equation modeling, \citet{nevitt2001performance} find
 that a sample size of 200--1000 is sufficient for interval estimation
-using standard nonparametric bootstrap. In estimating the proportion of 
-variation attributable to a certain variable, \citet{burch2012nonparametric} finds
-that three nonparametric bootstrap methods (standard, percentile, and 
-bias-corrected
-and accelerated) approach the coverage of a pivotal quantity as the sample size
-gets larger for an underlying normal distribution, but for other distributions, 
-coverage may deteriorate as the sample size increases.
-When attempting to create interval estimations for the Pearson correlation 
-coefficient of bivariate normal data, \citet{puth2015variety} find bootstrap 
-methods to be less accurate than the Fisher's transformation method even 
-for a sample with size~$100$ and correlation coefficient equal to 0.
-The general consensus is that a big sample size is necessary.
+using standard nonparametric bootstrap. Estimating variance component,
+\citet{burch2012nonparametric} report that as the sample size increases under a
+normal distribution, nonparametric bootstrap methods approach the coverage of a
+pivotal quantity as the sample size, but for other distributions, the coverage
+can deteriorate. In estimating the correlation coefficient of bivariate normal
+data, \citet{puth2015variety} note that even for a sample size of~$100$ with
+true correlation coefficient~0, bootstrap methods are less accurate than the
+Fisher's transformation. The prevailing consensus highlights the necessity of a
+substantial sample size for bootstrap CIs to attain the desired coverage.
 
 
-Few studies have provided a practical guide on what size is needed
-for block bootstrap inference for dependent data.
-In a linear regression setting with dependent data where the
-regression errors are generated from a homoscedastic AR(1) process, 
-\citet{goncalves2005bootstrap} find that the standard error estimates from
-moving block bootstrap in small samples may be more accurate than those
-from closed-form asymptotic estimates, but moving block bootstrap 
-CIs still do not have sufficient coverage of the target parameter even for
-sample size~$1024$.
+Limited research has offered practical guidance concerning the requisite sample
+size for employing block bootstrap inference with dependent data. In the context
+of linear regression involving dependent data, where regression errors stem from
+a homoscedastic autoregressive process of order-1, the investigation conducted
+by \citet{goncalves2005bootstrap} reveals that, in cases of small sample sizes,
+standard error estimates derived from the moving block bootstrap approach may
+demonstrate greater accuracy than those based on closed-form asymptotic
+estimates. Nonetheless, even when considering a substantial sample size of
+~$1024$, confidence intervals generated through the moving block bootstrap
+method still fail to adequately encompass the target parameter. The scarcity of
+existing literature addressing the necessary sample sizes conducive to the
+efficacy of block bootstrap techniques has spurred the initiation of the present
+study.
 
 
 The goal of this paper is to provide recommendations on
@@ -160,7 +160,8 @@ CIs from the literature \citep{diciccio1996bootstrap,
 a percentile CI, a bias-corrected CI, a bias-correct and accelerated ($BC_a$)
 CI, and a CI proposed in this article. Their
 empirical coverage rates at different sample sizes and dependence levels are
-compared in a simulation study. The results of this study suggest that recovery of temporal dependence parameters is reliant
+compared in a simulation study. The results of this study suggest that recovery
+of temporal dependence parameters is reliant
 on the type of interval used.
 
 
@@ -175,10 +176,6 @@ concludes in Section~\ref{sec:disc}.
 
 \section{Block Bootstrap CIs}
 \label{sec:bbci}
-
-
-\jy{Practice my writing style guidelines. Use two blank lines to separate
-  paragraphs.} \mc{addressed}
 
 
 Consider a stationary time series $\{X_t: t = 1, \ldots, n\}$ with length~$n$.
@@ -380,8 +377,6 @@ as
 \]
 It is asymmetric, as different critical values are used to compute
 the lower and upper bounds.
-\jy{Double check} \mc{changed BCA, had to rerun simulations because I did k
-degrees of freedom instead of k - 1}
 
 
 \section{Simulation Study}
