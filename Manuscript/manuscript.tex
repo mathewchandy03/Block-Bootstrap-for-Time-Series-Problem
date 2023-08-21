@@ -342,8 +342,11 @@ the rate of change of the standard error of $\hat\theta_n$ with respect to
 $\theta$.
 
 
-\jy{Can we come up with a good name for the proposed method? Other people may cite this.}\mc{bias-centered? i'm not sure}
 \paragraph{A Proposed CI}
+\jy{Can we come up with a good name for the proposed method? Other people may cite this.}\mc{bias-centered? i'm not sure}
+\jy{How about ``recentered percentile''? It has the same length as the
+  percentile approach but is centered at the point estimate.}
+
 We propose a CI that is centered at the point estimator and uses the variation
 in the bootstrap estimates to construct the error bound. This interval requires
 the computation of $\bar\theta_n^{(b)}$, the mean of all bootstrap point
@@ -366,7 +369,7 @@ the lower and upper bounds.
 \section{Simulation Study}
 \label{sec:simu}
 
-
+\subsection{Design}
 We designed a simulation study to compare the performance of the different
 block bootstrap CI methods. In particular, we generated time series $X_t$ from
 a 1st order auto-regressive (AR(1)) process:
@@ -458,23 +461,16 @@ the real coverage, generated using the R \textsl{ggplot2} package
 \end{figure}
 
 
-\jy{The results discussion need to be streamlined. The three paragraphs are too
-  similar, and only student's ci is discussed. Questions to consider:
-  1) which methods give the right coverage as sample size increases?
-  2) which methods needs smaller sample sizes to get the right coverage?
-  3) what's the difference between the results in positive and negative
-  dependence?
-  4) how does the result change as dependence gets stronger?
-  } \mc{addressed}
+\subsection{Results}
 
 For estimating the mean parameter~$\mu$, Figure~\ref{fig:mu} suggests that all
 methods eventually approach correct coverage of $\mu$ as sample size
-increases. Student's $t$ CIs generally does not need relatively large sample
-sizes to achieve correct coverage, except for samples with strong negative
+increases. Student's $t$ CIs appear to need the smallest sample size
+to achieve correct coverage, except for samples with strong negative
 dependence, in which case, they actually over-cover $\mu$ for smaller sample
 sizes. For instance, for a sample with $n = 100$ and $\phi = -0.4$, the lower
 bound for a Students $t$ CIs coverage of $\mu$ is greater than 95\%, whereas
-the coverage intervals for other methods contain 95\%. In fact, Standard,
+the coverage intervals for other methods contain 95\%. The standard,
 Percentile, $BC$, and $BC_a$, and Proposed Method CIs require similar sample
 sizes to to recover $\mu$ at the nominal level for all combinations of $n$ and
 $\phi$. All methods seem to require a smaller sample to recover $\mu$ at the
@@ -484,20 +480,22 @@ they only recover $\mu$ for $n \geq 800$ when $\phi = 0.2$. In addition, as a
 negative dependence gets stronger, holding everything else equal, coverage
 increases, which lead to the Student $t$ CI's aforementioned over-coverage. As
 a positive dependence gets stronger, holding everything else equal, coverage
-decreases, and a larger sample is necessary to recover $\mu$.
+decreases, and a larger sample is necessary to recover~$\mu$.
 
 
 For estimating the standard deviation parameter~$\sigma_x$,
-Figure~\ref{fig:sigma} suggests that each method can reach nominal coverage of
+Figure~\ref{fig:sigma} suggests that every method can reach nominal coverage of
 $\sigma_x$ if the sample is large enough, but for a given $n$ and $\phi$,
 coverage of $\sigma_x$ will be lower than coverage of $\mu$ in general. Like
 $\mu$, $\sigma_x$ can be covered by Student $t$ CIs with smaller sample sizes
 when compared to other methods, and there is no over-coverage issue for
-$\phi = -0.4$. Standard, Percentile, $BC$, $BC_a$, and Proposed Method CIs
+$\phi = -0.4$. Standard, percentile, $BC$, $BC_a$, and Proposed Method CIs
 again have similar performance. All methods seem to have slightly higher
 coverage of $\sigma_x$ when $\phi$ is negative versus when $\phi$ is positive.
 Regardless of the sign, coverage of $\sigma_x$ gets worse as the strength of
 the temporal dependence increases.
+\jy{Compared to Figure 1, there is no over-coverage in this case. Say someting
+  about this observation.}
 
 
 For estimating the auto-correlation parameter~$\phi$, Figure~\ref{fig:phi}
@@ -515,17 +513,7 @@ dependence is negative rather than positive. Whether or not the dependence is
 negative or positive, coverage of $\phi$ seems to increase slightly as the
 absolute value increases.
 
-
-To summarize, the CI type chosen should be based on the target parameter. When
-estimating $\mu$ and $\sigma_x$, any CI will do, although Student's $t$ CIs
-perform noticeably better than the others. However, when estimating $\phi$,
-the choice of method is of utmost importance as to avoid coverage
-deterioration. A smaller sample size is generally required to estimate a
-parameter for a sample with a negative $\phi$ versus a positive $\phi$ of the
-same magnitude. In order to know if coverage will increase as the strength of
-the temporal dependence increases, one must know what the parameter of
-interest is, and in the case of $\mu$: $\phi$'s sign.
-
+\jy{Use cross for red. Otherwise, they are not distinguishable when printed in b/w.}
 
 \begin{figure}[tbp]
   \centering
@@ -533,29 +521,44 @@ interest is, and in the case of $\mu$: $\phi$'s sign.
   \caption{100 replicate Percentile, Bias-Corrected, and Proposed Method
     Bootstrap CIs for samples of $n = 800$ for an AR(1) process with
     $\phi = 0.4$. For each replicate, the lower and upper bounds of the CIs
-    are displayed, as well as $\hat\theta_n$ (blue) and $\bar\theta_n^{(b)}$
-    (red). }
+    are displayed, as well as $\hat\theta_n$ (blue circle) and
+    $\bar\theta_n^{(b)}$ (red cross). }
   \label{fig:npi}
 \end{figure}
 
+\jy{can you also do the same plot for sample size 1600? And then put the two
+  plots in one figure?}
 
-These results beg the question of why certain methods perform poorly. To
-address this question, plots of 100 CIs using each of the Percentile, $BC$,
-and Proposed methods were constructed. As shown in Figure~\ref{fig:npi},
-Percentile CIs appear to suffer from bias; specifically, they seem to heavily
-underestimate $\phi$. $BC$ CIs do seem to correct this bias on average, but
-the width of the CIs is very inconsistent. Our proposed CIs correct the bias
-using $\widehat{\text{bias}} = \bar\theta_n^{(b)} -  \hat\theta_n$, which
-seems to usually be negative, indicating a positive correction from interval
-construction in Section~\ref{sec:bbci}.
+The outcomes of the $\phi$ estimation raise a natural question about the
+lackluster performance of certain methodologies. To delve into this inquiry, a
+set of 100 CIs was generated for each of the percentile,
+$BC$, and Proposed techniques. Illustrated in Figure~\ref{fig:npi}, it becomes
+evident that the percentile-based CIs exhibit a notable bias, predominantly
+manifesting as a substantial underestimation of $\phi$. On the other hand, $BC$
+CIs do display a tendency to rectify this bias on average, albeit accompanied by
+a rather inconsistent width across the intervals. Our proposed CIs manage to
+effectively mitigate the bias, employing $\widehat{\text{bias}} =
+\bar\theta_n^{(b)} - \hat\theta_n$ as a corrective measure. Notably, this
+correction often takes a negative form, indicative of a positive adjustment
+arising from the interval construction detailed in Section~\ref{sec:bbci}.
+
+
+To summarize, the performance of the CIs depends on the target parameter. When
+estimating $\mu$ and $\sigma_x$, any CI will do, although Student's $t$ CIs
+perform noticeably better than the others. However, when estimating $\phi$,
+the choice of method is of utmost importance as to avoid coverage
+deterioration. A smaller sample size is generally required to estimate a
+parameter for a sample with a negative $\phi$ versus a positive $\phi$ of the
+same magnitude. In order to know if coverage will increase as the strength of
+the temporal dependence increases, one need to know what the parameter of
+interest is, and in the case of $\mu$, the direction of the serial dependence.
+\jy{The BC approach appears not correcting the bias correctly. The proposed
+  approach simply does not correct point estimate and only uses the spreadness
+  from the bootstrap to construct CIs.}
 
 
 \section{Discussion}
 \label{sec:disc}
-
-
-\jy{Keep the tex source tidy. Clean it up.}\mc{addressed}
-
 
 Block bootstrap is a useful method for estimating parameters of a time series,
 from simple parameters like the mean to more complicated temporal dependence
@@ -564,9 +567,7 @@ parameter of a time series at the nominal level given an infinitely large
 sample, so the goal for this study was to find the smallest finite sample
 length $n$ of a time series in order for the block bootstrap procedure to 
 recover its associated parameters at an acceptable rate.
-
-
-Again, this analysis relies on the assumption that there is a size $n$ large
+Our analysis relies on the assumption that there is a size $n$ large
 enough for the method to work: that is, the method's performance improves as
 $n$ increases. Out of the five types of intervals used in this study, this
 assumption was found to hold true with respect to estimating $\phi$ only for
@@ -574,12 +575,13 @@ Standard, Student's $t$, and Proposed Method CIs, whereas Percentile, $BC$,
 and $BC_a$ intervals exhibited coverage deterioration as $n$ increased. The
 Percentile CI's coverage deterioration can be attributed to bias that is not
 corrected as $n$ increases. Specifically, as $n$ increases, the width of the
-CI decreases, but because the Percentile CI underestimates $\phi$, the
+CI decreases, but because the percentile CI underestimates $\phi$, the
 coverage decreases. The $BC$ CI seems to correct the bias, but the width of
 the CI seems to be inconsistent. The acceleration factor of the $BC_a$ CI
 seems to fail, as the width of the CI seems to be inconsistent. 
 
 
+\jy{use a better topic sentence.}
 When using Student's $t$ intervals and $\phi$ is unknown, the results of this
 study suggest that an $n \geq 800$ may be necessary for common practice to
 estimate simpler parameters like $\mu$ or $\sigma_x$. If $\phi$ is already
@@ -606,6 +608,7 @@ for research using block bootstrap estimation of time series in domains such
 as econometrics. Future studies could investigate if there are types of block
 bootstrap interval construction such as $ABC$ or bootstrap-t intervals, or
 alternatives to block bootstrap such as AR-Sieve bootstrap that would more
+\jy{Cite references for AR-sieve}
 appropriately recover the parameters of a time series.
 \eds{are there other methods that you know of?} \mc{mentioned an alternative
   to block bootstrap}
