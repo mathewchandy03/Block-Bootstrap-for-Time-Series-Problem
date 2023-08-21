@@ -359,6 +359,7 @@ rate of change of the standard error of $\hat\theta_n$ with respect to
 $\theta$.
 
 
+\jy{Can we come up with a good name for the proposed method? Other people may cite this.}
 \paragraph{A Proposed CI}
 We propose a CI that is centered at the point estimator and uses the variation
 in the bootstrap estimates to construct the error bound. This interval requires
@@ -486,8 +487,17 @@ the 95\% confidence intervals of the real coverage, generated using the R
 \end{figure}
 
 
-Based on Figure~\ref{fig:mu}, Student's $t$ seems to generally
-be the best method for estimating $\mu$.
+\jy{The results discussion need to be streamlined. The three paragraphs are too
+  similar, and only student's ci is discussed. Questions to consider:
+  1) which methods give the right coverage as sample size increases?
+  2) which methods needs smaller sample sizes to get the right coverage?
+  3) what's the difference between the results in positive and negative
+  dependence?
+  4) how does the result change as dependence gets stronger?
+  }
+
+For estimating the mean parameter~$\mu$,
+Figure~\ref{fig:mu} suggests that the Student's $t$ interval is the best method.
 For $\phi = -0.4$, Student's $t$ CIs over-cover 
 $\mu$ for smaller $n$, whereas other CIs recover $\mu$ at the
 nominal rate for all $n$ observed. For 
