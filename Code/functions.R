@@ -125,7 +125,7 @@ mychk <- function(sim, target) {
 graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
   data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'bcCI', 'bcaCI', 'propCI'), 
-                    labels = c('Standard', 'Student\'s t', 'Percentile', 'BC', 'BCA', 'Proposed'))
+                    labels = c('Standard', 'Student\'s t', 'Percentile', 'BC', 'BCA', 'Recentered'))
   
   ggplot(data, aes(x = n, y = cov)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
@@ -136,5 +136,5 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     scale_y_continuous(trans=trans)
-  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), height = 5)
+  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), height = 6)
 }
