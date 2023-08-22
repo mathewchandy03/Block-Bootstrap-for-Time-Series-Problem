@@ -155,7 +155,7 @@ a stationary time series, where the parameters of interests are the mean,
 standard deviation, and the first-order autocorrelation coefficient. We
 compare six variants of block bootstrap CIs from the literature
 \citep{diciccio1996bootstrap, rice2006mathematical}: a standard normal CI, and
-a Student's $t$ CI, a percentile CI, a bias-corrected CI, a bias-correct and
+a Student's $t$ CI, a percentile CI, a bias-corrected CI, a bias-corrected and
 accelerated ($BC_a$) CI, and a CI proposed in this article. Their empirical
 coverage rates at different sample sizes and dependence levels are compared in
 a simulation study. The results of this study suggest that recovery of
@@ -273,7 +273,7 @@ With block bootstrapping, a $(1 - \alpha)100\%$ Student's $t$ CI is
 (\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}\hat{\text{SE}}, \quad
 \hat{\theta}_{n} - t_{(\alpha/2), k -1}\hat{\text{SE}}),
 \]
-\eds{define $t_{(.)}$ and check the signs}  \mc{addressed}
+%\eds{define $t_{(.)}$ and check the signs}  \mc{addressed}
 where $k$ is the number of blocks. This CI is centered by the point estimator
 $\hat\theta_n$ and is symmetric. Like the standard normal interval, the
 Student's $t$ CI is a table-based bootstrap interval approach. In this case,
@@ -310,7 +310,7 @@ $\alpha_2 = \Phi(2b - z_{1 - \alpha/2})$. A $(1 - \alpha)100\%~BC$ CI is
 
 
 \paragraph{Bias Corrected and Accelerated ($BC_a$) Bootstrap CI}
-The $BC_a$ CI was first suggested in \citet{efron1987better}.Let
+The $BC_a$ CI was first suggested in \citet{efron1987better}. Let
 $\hat{z}_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for
 $b \in \{1, \ldots, B\}$. Let $Z_{(i)}$ be the original sample without the
 $i$th block $z_i$ for $i \in \{1, \ldots, k\}$, let $\hat{\theta}_{(i)}$ be
@@ -388,7 +388,7 @@ we set $\sigma_{\epsilon}^2 = 1 / (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
 Three target parameters of $X_t$ were considered:
 1) $\mu = 0$, the mean of $X_t$;
 2) $\sigma_x = 1$, the standard deviation of $X_t$; and
-2) $\phi$, the lag-1 auto-correlation coefficient.
+3) $\phi$, the lag-1 auto-correlation coefficient.
 To investigate the effect of sample size~$n$, we considered an array of values
 $n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we
 generated 10000 replicates. For each replicate, we constructed seven 95\% block
@@ -413,7 +413,7 @@ $cov = \#\{\hat\theta_{L, r} < \theta < \hat\theta_{U, r} \}/R$, for
 $r \in \{1, \ldots, R\}$. If a CI method is valid, then the coverage rate is
 expected to match the nominal level. Because it is unlikely for the coverage
 to exactly match the nominal level, we can construct a 95\% CI of the coverage
-rate (which is an estimate of a proportion with $R = 10000$. If the proportion
+rate (which is an estimate of a proportion with $R = 10000$). If the proportion
 0.95 is included in the interval, the block bootstrap method is likely
 performing well. If all values in the interval are below 0.95, the results
 would suggest that the method either is providing inaccurate estimation, is
@@ -472,10 +472,10 @@ sizes. For instance, for a sample with $n = 100$ and $\phi = -0.4$, the lower
 bound for a Students $t$ CIs coverage of $\mu$ is greater than 95\%, whereas
 the coverage intervals for other methods contain 95\%. The standard,
 Percentile, $BC$, and $BC_a$, and Proposed Method CIs require similar sample
-sizes to to recover $\mu$ at the nominal level for all combinations of $n$ and
+sizes to recover $\mu$ at the nominal level for all combinations of $n$ and
 $\phi$. All methods seem to require a smaller sample to recover $\mu$ at the
 nominal rate when dealing with negative dependence versus positive dependence.
-For example, $BC$ CIs recovers $\mu$ for $n \geq 100$ when $\phi = -0.2$, but
+For example, $BC$ CIs recover $\mu$ for $n \geq 100$ when $\phi = -0.2$, but
 they only recover $\mu$ for $n \geq 800$ when $\phi = 0.2$. In addition, as a
 negative dependence gets stronger, holding everything else equal, coverage
 increases, which lead to the Student $t$ CI's aforementioned over-coverage. As
@@ -610,8 +610,29 @@ bootstrap interval construction such as $ABC$ or bootstrap-t intervals, or
 alternatives to block bootstrap such as AR-Sieve bootstrap that would more
 \jy{Cite references for AR-sieve}
 appropriately recover the parameters of a time series.
-\eds{are there other methods that you know of?} \mc{mentioned an alternative
-  to block bootstrap}
+
+\eds{Check out this paper:
+Peter Buhlmann. "Bootstraps for Time Series." Statist. Sci. 17(1) 52 - 72, 
+May 2002 - the conclusions of this paper are interesting in their own right:
+``Disadvantages of the [block bootstrap] method include the following.
+The block bootstrap sample should not be viewed as
+a reasonable sample mimicking the data-generating
+process: it is not stationary and exhibits artifacts where
+resampled blocks are linked together. This implies that
+the plug-in rule for bootstrapping an estimator $\hat{\theta}$ is not
+appropriate. A prevectorization of the data is highly
+recommended, but the bootstrapped estimator and its
+computing routine may then need to be redesigned. As
+a general nonparametric scheme, the block bootstrap
+may be outperformed in various niches of stationary
+time series, for example, for linear time series (see Section 3) 
+and for categorical processes (see Section 5).
+Second-order accuracy for a confidence interval has
+been justified with the approach of Studentizing and
+BCa correction (in the case of noncategorical time series); 
+the latter was found to yield marginal improvement in a 
+simulated example (we did not consider the former). }
+	
 One could also investigate the $n$ needed to make inferences about other forms
 of serially dependent data such as a moving average process. 
 
