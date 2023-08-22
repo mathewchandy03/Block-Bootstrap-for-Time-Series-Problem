@@ -344,9 +344,11 @@ $\theta$.
 
 
 \paragraph{Recentered Percentile CI}
-\jy{Can we come up with a good name for the proposed method? Other people may cite this.} \mc{bias-centered? i'm not sure}
+\jy{Can we come up with a good name for the proposed method? Other people may
+ cite this.} \mc{bias-centered? i'm not sure}
 \jy{How about ``recentered percentile''? It has the same length as the
-  percentile approach but is centered at the point estimate.} \mc{replaced "proposed
+  percentile approach but is centered at the point estimate.} \mc{replaced
+  all instances of "proposed
   method" with "recentered"}
 
 We propose a CI that is centered at the point estimator and uses the variation
@@ -592,8 +594,8 @@ the CI seems to be inconsistent. The acceleration factor of the $BC_a$ CI
 seems to fail, as the width of the CI seems to be inconsistent. 
 
 
-\jy{use a better topic sentence.}
-One of the goals of this study was to provide practical recommendations for 
+\jy{use a better topic sentence.} \mc{addressed}
+One of the goals of this study was to provide some practical recommendations for 
 necessary sample sizes when using block bootstrap to estimate parameters of 
 serially dependent data. When using Student's $t$ intervals and $\phi$ is unknown,
 the results of this study suggest that an $n \geq 800$ may be necessary for common practice to
@@ -618,11 +620,19 @@ graduate students, block bootstrap is not typically a part of curriculum, but
 the results of this study can easily be used to demonstrate when it is
 practical to use this method. This information could also prove to be useful
 for research using block bootstrap estimation of time series in domains such
-as econometrics. Future studies could investigate if there are types of block
+as econometrics. Future studies could investigate the $n$ needed to make
+inferences about other forms
+of serially dependent data such as a moving average process. One could also
+investigate if there are types of block
 bootstrap interval construction such as $ABC$ or bootstrap-t intervals, or
-alternatives to block bootstrap such as AR-Sieve bootstrap that would more
-\jy{Cite references for AR-sieve}
-appropriately recover the parameters of a time series.
+alternatives to block bootstrap, such as AR-Sieve bootstrap
+ \citep{kreiss1992bootstrap}, that would more
+\jy{Cite references for AR-sieve} \mc{addressed}
+appropriately recover the parameters of a time series. In addition, as noted by
+\citet{buhlmann2002bootstraps}, there are some 
+general drawbacks of block bootstrap - with respect to how reasonably it imitates 
+the data-generating process - which may be addressed in a future study.
+
 
 \eds{Check out this paper:
 Peter Buhlmann. "Bootstraps for Time Series." Statist. Sci. 17(1) 52 - 72, 
@@ -644,10 +654,9 @@ Second-order accuracy for a confidence interval has
 been justified with the approach of Studentizing and
 BCa correction (in the case of noncategorical time series); 
 the latter was found to yield marginal improvement in a 
-simulated example (we did not consider the former). }
+simulated example (we did not consider the former). } \mc{addressed}
 	
-One could also investigate the $n$ needed to make inferences about other forms
-of serially dependent data such as a moving average process. 
+
 
 
 \bibliographystyle{chicago}
