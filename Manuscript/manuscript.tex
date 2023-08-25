@@ -303,8 +303,6 @@ increases, which is contrary to what one would expect.
 \paragraph{Bias-Corrected (BC) CI}
 The procedure for constructing a bias-corrected Bootstrap CI based on standard
 bootstrap is described in \citet{carpenter2000bootstrap}. Let
-\jy{Use a different symbol because $b$ has been used. Isn't is the same as $\hat
-  z_0$ in the next paragraph?} \mc{addressed}
 $\hat{z}_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for
 $b \in \{1, \ldots, B\}$. Define $\alpha_1 = \Phi(2\hat{z}_0 - z_{\alpha/2})$ 
 and $\alpha_2 = \Phi(2\hat{z}_0 - z_{1 - \alpha/2})$. 
@@ -345,14 +343,11 @@ rate of change of the standard error of $\hat\theta_n$ with respect to $\theta$.
 
 
 \paragraph{Recentered Percentile CI}
-
 We propose a CI that is centered at the original point estimate and uses the 
 variation in the bootstrap estimates to construct the error bound. This interval 
 requires
 the computation of $\bar\theta_n^B = n^{-1}\sum_{b=1}^B \hat\theta_n^{(b)}$, the 
-mean of all bootstrap point estimates, and 
-$\widehat{\text{bias}} = \bar\theta_n^{B} - \hat\theta_n$. 
-A $(1 - \alpha)100\%$ CI is
+mean of all bootstrap point estimates. A $(1 - \alpha)100\%$ CI is
 centered around $\hat\theta_n$ and can be rewritten as 
 \[
 (\hat\theta_n + \hat\theta_{n, \alpha/2}^{B} - \bar\theta_n^{B}, \quad
