@@ -1,19 +1,17 @@
 .libPaths("~/rlibs")
-library(ggplot2) # put package loading outside of the function
-## This note checks the empirical coverage rate of CIs constructed from
-## block bootstrap with series generated from an AR process
+library(ggplot2) 
 
 mystat <- function(x) {
   c(mean(x),
     sd(x),
     cor(x[-1], x[-length(x)]))
-  # acf(x, lag.max = 1, plot = FALSE)$acf[2])
+    # acf(x, lag.max = 1, plot = FALSE)$acf[2])
 }
 
 expstat <- function(x) {
   c(1 / mean(x),
     cor(x[-1], x[-length(x)]))
-  # acf(x, lag.max = 1, plot = FALSE)$acf[2])
+    # acf(x, lag.max = 1, plot = FALSE)$acf[2])
 }
 
 calculate_a_hat <- function(row) {
@@ -51,30 +49,22 @@ do1rep <- function(n, phi, statistic, blksize, dstr = qnorm, R = 1000, level = .
   ## Centered Bootstrap Percentile interval (from singh2008bootstrap)
   crit <- 
     apply(t(t(bts$t) - bts$t0), 2, quantile, prob = c(1 - alpha/2, alpha/2)) 
-  mbts <- apply(bts$t, 2, mean)
+  mbts <- apply(bts$t, 2, mean) # mean of bootstrap point estimates
   ctrCI <- -sweep(crit, 2, bts$t0, FUN = '-')
   
-  ## Bias-Corrected interval (Carpenter et al 2000, p. 1153)
+  ## BC interval (Carpenter et al 2000, p. 1153)
   b <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0))
   qup <- pnorm(2 * b - qnorm(alpha / 2))
   qlo <- pnorm(2 * b - qnorm(1 - alpha / 2))
   bcCI <- sapply(1:length(bts$t0),
                  function(i) quantile(bts$t[,i], prob=c(qlo[i], qup[i])))
   
-  ## LB: bts$t0 + alpha/2 crit, UB: bts$t0 + (1 - alpha/2) crit
-  # mbtCI <- sweep(crit2, 2, mbts, FUN = '+') # mean of pseudo-estimates
-  ## LB: mbts + alpha/2 crit2, UB: mbts + (1 - alpha/2) crit2
-  # altCI <- sweep(-crit[order(2:1),], 2, bts$t0, FUN = '+') # both
-  ## LB: bts$t0 - (1 - alpha/2) crit, UB: bts$t0 - alpha/2 crit and
-  ## LB: mbts - (1 - alpha/2) crit2, UB: mbts - alpha/2 crit2
-  
-  ## BCa interval: Diciccio and Efron (1996): p.195
+  ## BCA interval (Diciccio and Efron (1996): p.195)
   z0 <- qnorm(colMeans(sweep(bts$t, 2, bts$t0) < 0)) # same as b in Carpenter 2000
   thetajack <- sapply(1: (n / blksize),
                       function(i)
                         statistic(x[ - ((i - 1) * blksize + 1:blksize)]))
   a_hat <- apply(thetajack, 1, calculate_a_hat)
-  ## a <- apply(thetajack, 1, e1071::skewness, type = 1) / 6 ## * (n / blksize)^-0.5???
   alpha1 <- pnorm(
     z0 + (z0 + qnorm(alpha/2)) / (1 - a_hat * (z0 + qnorm(alpha/2))))
   alpha2 <- pnorm(
@@ -82,28 +72,10 @@ do1rep <- function(n, phi, statistic, blksize, dstr = qnorm, R = 1000, level = .
   bcaCI <- sapply(1:length(bts$t0),
                   function(i) quantile(bts$t[,i], prob = c(alpha1[i], alpha2[i])))
   
-  # crit3 <- sapply(1:length(bts$t0), function(i) 
-  #   quantile(t(t(bts$t[,i]) - mbts[i]), prob = c(alpha1[i], alpha2[i]))) 
-  ## alpha1 and alpha2 critical values 
-  ## of pseudo-estimate - mean of pseudo-estimates
-  # crit4 <- sapply(1:length(bts$t0), function(i) 
-  #  quantile(t(t(bts$t[,i]) - bts$t0[i]), prob = c(alpha1[i], alpha2[i])))
-  ## alpha1 and alpha2 critical values 
-  ## of pseudo-estimate - original estimate
-  
-  ## interval centered around...
-  # bcaCIest <- sweep(crit3, 2, bts$t0, FUN = '+') # original estimate
-  ## LB: bts$t0 + alpha1 crit3, UB: bts$t0 + alpha2 crit3
-  # bcaCImbt <- sweep(crit4, 2, mbts, FUN = '+') # mean of pseudo-estimates
-  ## LB: mbts + alpha1 crit4, UB: mbts + alpha2 crit4
-  # bcaCIalt <- sweep(-crit3[order(2:1),], 2, bts$t0, FUN = '+') # both
-  ## LB: bts$t0 - alpha2 crit3, UB: bts$t0 - alpha1 crit3 and
-  ## LB: mbts - alpha2 crit4, UB: mbts - alpha1 crit4
-  
-  ## Proposed interval
+  ## Proposed interval (Recentered Percentile)
   crit2 <- 
     apply(t(t(bts$t) - mbts), 2, quantile, prob = c(alpha/2, 1 - alpha/2)) 
-  propCI <- sweep(crit2, 2, bts$t0, FUN = '+') # original estimate
+  propCI <- sweep(crit2, 2, bts$t0, FUN = '+') # original point estimate
   
   ## return all intervals
   c(bts$t0, mbts, stdCI, stuCI, pctCI, ctrCI, bcCI, bcaCI, propCI)

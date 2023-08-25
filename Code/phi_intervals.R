@@ -6,9 +6,8 @@ sim <- replicate(50, do1rep(800, 0.4, mystat, 10))
 new_sim <- sim[c(3, 6, 23, 24, 35, 36, 47, 48), ]
 
 file_titles <- c("pct", "bc", "prop")
-custom_titles <- c("Percentile", "Bias-Corrected", "Recentered")
+custom_titles <- c("Percentile", "BC", "Recentered")
 
-# Create a data frame for plotting
 plot_data_800 <- data.frame(replication = 1:50,
                         point_estimate = new_sim[1, ],
                         bts_mean = new_sim[2, ],
@@ -22,7 +21,6 @@ set.seed(1234)
 sim <- replicate(50, do1rep(1600, 0.4, mystat, 10))
 new_sim <- sim[c(3, 6, 23, 24, 35, 36, 47, 48), ]
 
-# Create a data frame for plotting
 plot_data_1600 <- data.frame(replication = 1:50,
                           point_estimate = new_sim[1, ],
                           bts_mean = new_sim[2, ],
@@ -34,9 +32,8 @@ plot_data_1600 <- data.frame(replication = 1:50,
 
 plot_data <- rbind(plot_data_800, plot_data_1600)
 
-# Create facet plot using ggplot2
 plot_data$custom_title <- factor(plot_data$custom_title, 
-                  levels = c("Percentile", "Bias-Corrected", "Recentered"))
+                  levels = c("Percentile", "BC", "Recentered"))
 
 plot_data$sample.size <- factor(plot_data$sample.size,
                   levels = c("n = 800", "n = 1600"))
