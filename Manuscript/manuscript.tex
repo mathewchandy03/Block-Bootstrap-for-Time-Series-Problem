@@ -287,9 +287,6 @@ error.
 
 \paragraph{Percentile CI}
 The percentile CI was first suggested in \citet{efron1979bootstrap}.
-\jy{The previous superscript does not make sense because
-  $b \in \{1, \ldots,  B\}$. Make similar changes to other places as needed.} 
-\mc{addressed}
 Let $\hat\theta_{n, \alpha}^B$ be the empirical $100\alpha$th percentile of
 $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. 
 A $(1 - \alpha)100\%$ empirical percentile CI is
@@ -306,6 +303,8 @@ increases, which is contrary to what one would expect.
 \paragraph{Bias-Corrected (BC) CI}
 The procedure for constructing a bias-corrected Bootstrap CI based on standard
 bootstrap is described in \citet{carpenter2000bootstrap}. Let
+\jy{Use a different symbol because $b$ has been used. Isn't is the same as $\hat
+  z_0$ in the next paragraph?}
 $b = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for
 $b \in \{1, \ldots, B\}$. Define $\alpha_1 = \Phi(2b - z_{\alpha/2})$ and 
 $\alpha_2 = \Phi(2b - z_{1 - \alpha/2})$. 
@@ -352,16 +351,11 @@ rate of change of the standard error of $\hat\theta_n$ with respect to $\theta$.
 We propose a CI that is centered at the original point estimate and uses the 
 variation in the bootstrap estimates to construct the error bound. This interval 
 requires
-\jy{Note the notation change and do a thorough check} \mc{addressed}
 the computation of $\bar\theta_n^B = n^{-1}\sum_{b=1}^B \hat\theta_n^{(b)}$, the 
 mean of all bootstrap point estimates, and 
 $\widehat{\text{bias}} = \bar\theta_n^{B} - \hat\theta_n$. 
 A $(1 - \alpha)100\%$ CI is
-\[
-(\hat\theta_{n, \alpha/2}^{B} - \widehat{\text{bias}}, \quad
-\hat\theta_{n, 1 - \alpha/2}^{B} - \widehat{\text{bias}}).
-\]
-This CI is centered around $\hat\theta_n$ and can also be rewritten as 
+centered around $\hat\theta_n$ and can be rewritten as 
 \[
 (\hat\theta_n + \hat\theta_{n, \alpha/2}^{B} - \bar\theta_n^{B}, \quad
 \hat\theta_n + \hat\theta_{n, 1 - \alpha/2}^{B} - \bar\theta_n^{B}).
@@ -497,8 +491,6 @@ percentile CIs again have similar performance. All methods seem to have slightly
 higher coverage of $\sigma_x$ when $\phi$ is negative versus when $\phi$ is 
 positive. Regardless of the sign, coverage of $\sigma_x$ gets worse as the 
 strength of the temporal dependence increases.
-\jy{Compared to Figure 1, there is no over-coverage in this case. Say something
-  about this observation.} \mc{addressed}
 
 
 For estimating the auto-correlation parameter~$\phi$, Figure~\ref{fig:phi}
@@ -520,8 +512,6 @@ for standard, Student's $t$, BC, BCA, or recentered percentile CIs. However,
 percentile CIs appear to over-cover $\phi$ for smaller sample sizes when 
 $\phi = -0.2$ and when $\phi = 0$, indicating again that they should not be used.
 
-\jy{check for no uppercases for recentered percentile, etc. throughout}
-\mc{addressed}
 
 \begin{figure}[tbp]
   \centering
@@ -533,16 +523,6 @@ $\phi = -0.2$ and when $\phi = 0$, indicating again that they should not be used
   \label{fig:npi}
 \end{figure}
 
-\jy{The red cross is not $\theta_n^{(b)}$, but their average over
-  $b = 1,  \ldots, B$. Define this as bootstrap point estimate in section 2.2
-  for ease of referencing in the discussion.}
-\mc{I'm not sure if I addressed this like you intended, I defined 
-$\hat\theta_n^{(b)}$ as bootstrap point estimate, and referred to 
-$\hat\theta_n$ as the original point estimate. Did you want me to define
-$\bar\theta_n^{B}$ as the bootstrap point estimate?}
-
-\jy{Keep the interval labels consistent in figure and in the text}
-\mc{is it fine to have them capitalized in the figures?}
 
 The outcomes of the $\phi$ estimation raise a natural question about the 
 lackluster performance of certain methodologies. To delve into this inquiry, a
@@ -561,8 +541,8 @@ that the autocorrelation in the block bootstrap samples is somehow smaller
 compared to that in the original sample. On the other hand, the original point 
 estimate $\hat\theta_n$ is asymptotically unbiased. Since the width is based on 
 the uncertainty in the bootstrap point estimates $\hat\theta_n^{(b)}$, 
-$b = 1, \ldots, B$, the percentile CIs recentered at the original point estimate 
-provide desired coverage.
+$b = 1, \ldots, B$, the percentile CIs recentered at the original point estimate
+$\hat\theta_n$ provide desired coverage.
 
 
 To summarize, the performance of the CIs depends on the target parameter. When
@@ -578,7 +558,6 @@ to be correcting bias appropriately when estimating $\phi$. Like the percentile
 method, the recentered percentile method uses the spread from the bootstrap to 
 construct the width of the CI. However, the recentered approach, does not 
 correct from the original point estimate $\hat\theta_n$.
-
 
 
 \section{Discussion}
@@ -604,7 +583,6 @@ bias, but the width of the CI seems to be inconsistent. The acceleration factor
 of the BCA CI seems to fail, as the width of the CI seems to be inconsistent. 
 
 
-\jy{use a better topic sentence.} \mc{addressed}
 One of the goals of this study was to provide some practical recommendations for 
 necessary sample sizes when using block bootstrap to estimate parameters of 
 serially dependent data. When using Student's $t$ intervals and $\phi$ is 
@@ -635,12 +613,16 @@ forms of serially dependent data such as a moving average process. One could
 also investigate if there are types of block bootstrap interval construction 
 such as $ABC$ or bootstrap-t intervals, or alternatives to block bootstrap, such 
 as AR-Sieve bootstrap \citep{kreiss1992bootstrap}, that could more
-\jy{Cite references for AR-sieve} \mc{addressed}
 appropriately recover the parameters of a time series. In addition, as noted by
 \citet{buhlmann2002bootstraps}, there are some general drawbacks of block 
-bootstrap - with respect to how reasonably it imitates the data-generating 
-process - which may be addressed in a future study.
+bootstrap --- with respect to how reasonably it imitates the data-generating 
+process --- which may be investigated in a future study.
 
+
+\bibliographystyle{chicago}
+\bibliography{citations}
+
+\end{document}
 
 \eds{Check out this paper:
 Peter Buhlmann. "Bootstraps for Time Series." Statist. Sci. 17(1) 52 - 72, 
@@ -663,11 +645,3 @@ been justified with the approach of Studentizing and
 BCA correction (in the case of noncategorical time series); 
 the latter was found to yield marginal improvement in a 
 simulated example (we did not consider the former). } \mc{addressed}
-	
-
-
-
-\bibliographystyle{chicago}
-\bibliography{citations}
-
-\end{document}
