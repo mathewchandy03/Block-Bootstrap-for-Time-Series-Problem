@@ -304,10 +304,10 @@ increases, which is contrary to what one would expect.
 The procedure for constructing a bias-corrected Bootstrap CI based on standard
 bootstrap is described in \citet{carpenter2000bootstrap}. Let
 \jy{Use a different symbol because $b$ has been used. Isn't is the same as $\hat
-  z_0$ in the next paragraph?}
-$b = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for
-$b \in \{1, \ldots, B\}$. Define $\alpha_1 = \Phi(2b - z_{\alpha/2})$ and 
-$\alpha_2 = \Phi(2b - z_{1 - \alpha/2})$. 
+  z_0$ in the next paragraph?} \mc{addressed}
+$\hat{z}_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for
+$b \in \{1, \ldots, B\}$. Define $\alpha_1 = \Phi(2\hat{z}_0 - z_{\alpha/2})$ 
+and $\alpha_2 = \Phi(2\hat{z}_0 - z_{1 - \alpha/2})$. 
 A $(1 - \alpha)100\%$ ~BC CI is
 \[
 (\hat\theta_{n, \alpha_1}^{B}, \quad \hat\theta_{n, \alpha_2}^{B}).
@@ -315,11 +315,9 @@ A $(1 - \alpha)100\%$ ~BC CI is
 
 
 \paragraph{Bias-Corrected and Accelerated (BCA) CI}
-The BCA CI was first suggested in \citet{efron1987better}. Let
-$\hat{z}_0 = \Phi^{-1}\{\#\{\hat\theta_n^{(b)} < \hat{\theta}_n\} / B\}$ for
-$b \in \{1, \ldots, B\}$. Let $Z_{(i)}$ be the original sample without the
-$i$th block $z_i$ for $i \in \{1, \ldots, k\}$, let $\hat{\theta}_{(i)}$ be the 
-statistic of $Z_{(i)}$, and let
+The BCA CI was first suggested in \citet{efron1987better}. Let $Z_{(i)}$ be the 
+original sample without the $i$th block $z_i$ for $i \in \{1, \ldots, k\}$, let 
+$\hat{\theta}_{(i)}$ be the statistic of $Z_{(i)}$, and let 
 $\hat{\theta}_{(.)} = k^{-1}\sum_{i=1}^{k} \hat{\theta}_{(i)}$. 
 Let 
 \[
@@ -329,10 +327,10 @@ Let
 \]
 Define
 \[
-\alpha_1 = \Phi\left(z_0 + \frac{z_{0} +
+\alpha_1 = \Phi\left(\hat{z}_{0} + \frac{\hat{z}_{0} +
   z_{\alpha/2}}{1 - \hat{a}(\hat{z}_{0} + z_{\alpha/2})}\right)
 \text{ and }
-\alpha_2 = \Phi\left(z_0 + \frac{z_{0} +
+\alpha_2 = \Phi\left(\hat{z}_{0} + \frac{\hat{z}_{0} +
   z_{1 - \alpha/2}}{1 - \hat{a}(\hat{z}_{0} + z_{1 - \alpha/2})}\right).
 \]
 A $(1 - \alpha)100\%$ ~BCA CI is
