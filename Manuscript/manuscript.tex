@@ -82,6 +82,11 @@
 \setlength{\bibsep}{0pt plus 0.3ex}
 
 
+\usepackage{xcolor}
+\newcommand{\jy}[1]{\textcolor{blue}{JY: #1}}
+\newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
+\newcommand{\mc}[1]{\textcolor{green}{MC: (#1)}}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,7 +95,7 @@
 % Limit your use of new commands and special formatting.
 
 % Place your title below. Use Title Capitalization.
-\title{On Sample Size for Block Bootstrap Confidence Intervals 
+\title{On Sample Size Needed for Block Bootstrap Confidence Intervals
   to Have Desired Coverage Rates}
 
 % Add author information below. Communicating author is indicated by an 
@@ -130,7 +135,7 @@ the percentile intervals and bias-corrected intervals.
 
 % Keywords are required.
 \section*{keywords} 
-List Eight to Ten Capitalized Keywords Separated by \ul{Semicolons}; Do Not Use Period at The End
+% List Eight to Ten Capitalized Keywords Separated by \ul{Semicolons}; Do Not Use Period at The End
 Dependent Data; Resampling; Simulation; Time Series
 
 \vspace{.12 in}
@@ -138,6 +143,15 @@ Dependent Data; Resampling; Simulation; Time Series
 % Start the main part of the manuscript here.
 % Comment out section headings if inappropriate to your discipline.
 % If you add additional section or subsection headings, use an asterisk * to avoid numbering. 
+
+\jy{Are the results from exponential margins the same? If so, we can put them in
+  an appendix; make sure we have the data generation process accurately
+  described. Then briefly summarize and refer to it at the end of the simulation
+  section.}
+
+
+\jy{The 80-width is for maximum. No need to re-wrap shorter lines because it
+  would show a lot of diff while there is no diff.}
 
 \section*{introduction}
 
@@ -453,6 +467,10 @@ the process' variability. \textbf{Figures~\ref{fig:mu}--\ref{fig:phi}}
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
 real coverage, generated using the R \textsl{ggplot2} package \citep{ggplot2}.
 
+\jy{The fonts of labels/annotatios in these figures are too big compared to the
+  captions. Try pointsize = 9. The plots also seem oversized. Generate them in R
+  with the right size in mind.}
+
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/plot_norm_mu}
@@ -554,6 +572,7 @@ should not be used.
   \label{fig:npi}
 \end{figure}
 
+\jy{Could do one for the exponential margin study too. Maybe for the negative dependence.}
 
 The outcomes of the $\phi$ estimation raise a natural question about the 
 lackluster performance of certain methodologies. To delve into this inquiry, a
@@ -647,6 +666,14 @@ appropriately recover the parameters of a time series. In addition, as noted by
 \citet{buhlmann2002bootstraps}, there are some general drawbacks of block 
 bootstrap --- with respect to how reasonably it imitates the data-generating 
 process --- which may be investigated in a future study.
+
+\appendix
+
+\section{Simulation Study with Exponential Marginal Distribution}
+
+\jy{Motivation; data generation (calibration of copula parameters to give the
+  desired rho); simulation design; plots; brief discussion of results.}
+  
 
 \bibliographystyle{chicago}
 \bibliography{citations}
