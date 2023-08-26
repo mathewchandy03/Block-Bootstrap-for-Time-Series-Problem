@@ -1,6 +1,7 @@
 ## Need packages copula and pracma
 
-myd <- dMv
+library(copula)
+
 mymvd <- copula::mvdc(normalCopula(0.4), margins = "exp", paramMargins = list(rate=1), marginsIdentical = TRUE)
 
 ## numerical integration to get 
