@@ -1,72 +1,117 @@
-\documentclass[12pt, letterpaper, titlepage]{article}
+% Created by Bonita Graham
+% Last update: December 2019 By Kestutis Bendinskas
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{booktabs}
-\usepackage{amsthm}
+% Authors: 
+% Please do not make changes to the preamble until after the solid line of %s.
+
+\documentclass[10pt]{article}
+\usepackage[explicit]{titlesec}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\usepackage{hyphenat}
+\usepackage{ragged2e}
+\RaggedRight
+
+% These commands change the font. If you do not have Garamond on your computer, you will need to install it.
+\usepackage{garamondx}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsthm}
 \usepackage{graphicx}
-\usepackage[margin=1in]{geometry}
-\usepackage{hyperref, url}
-\hypersetup{colorlinks = true, linkcolor = blue, citecolor=blue, urlcolor =
-  blue}
-\usepackage{natbib}
-\usepackage{enumitem}
-\usepackage{setspace}
 
-\usepackage[pagewise]{lineno}
-%\linenumbers*[1]
-% %% patches to make lineno work better with amsmath
-\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
- \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
- \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
- \renewenvironment{#1}%
- {\linenomath\csname old#1\endcsname}%
- {\csname oldend#1\endcsname\endlinenomath}}%
-\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
- \patchAmsMathEnvironmentForLineno{#1}%
- \patchAmsMathEnvironmentForLineno{#1*}}%
-
-\AtBeginDocument{%
- \patchBothAmsMathEnvironmentsForLineno{equation}%
- \patchBothAmsMathEnvironmentsForLineno{align}%
- \patchBothAmsMathEnvironmentsForLineno{flalign}%
- \patchBothAmsMathEnvironmentsForLineno{alignat}%
- \patchBothAmsMathEnvironmentsForLineno{gather}%
- \patchBothAmsMathEnvironmentsForLineno{multline}%
-}
-
-% control floats
-\renewcommand\floatpagefraction{.9}
-\renewcommand\topfraction{.9}
-\renewcommand\bottomfraction{.9}
-\renewcommand\textfraction{.1}
-\setcounter{totalnumber}{50}
-\setcounter{topnumber}{50}
-\setcounter{bottomnumber}{50}
-
-\newcommand{\jy}[1]{\textcolor{blue}{JY: #1}}
-\newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
-\newcommand{\mc}[1]{\textcolor{green}{MC: (#1)}}
+% This adjusts the underline to be in keeping with word processors.
+\usepackage{soul}
+\setul{.6pt}{.4pt}
 
 
+% The following sets margins to 1 in. on top and bottom and .75 in on left and right, and remove page numbers.
+\usepackage{geometry}
+\geometry{vmargin={1in,1in}, hmargin={.75in, .75in}}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\pagenumbering{gobble}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+
+% These Commands create the label style for tables, figures and equations.
+\usepackage[labelfont={footnotesize,bf} , textfont=footnotesize]{caption}
+\captionsetup{labelformat=simple, labelsep=period}
+\newcommand\num{\addtocounter{equation}{1}\tag{\theequation}}
+\renewcommand{\theequation}{\arabic{equation}}
+\makeatletter
+\renewcommand\tagform@[1]{\maketag@@@ {\ignorespaces {\footnotesize{\textbf{Equation}}} #1.\unskip \@@italiccorr }}
+\makeatother
+\setlength{\intextsep}{10pt}
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{-10pt}
+
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\floatpagefraction}{0.90}
+
+% These commands set the paragraph and line spacing
+\titleformat{\section}
+  {\normalfont}{\thesection}{1em}{\MakeUppercase{\textbf{#1}}}
+\titlespacing\section{0pt}{0pt}{-10pt}
+\titleformat{\subsection}
+  {\normalfont}{\thesubsection}{1em}{\textit{#1}}
+\titlespacing\subsection{0pt}{0pt}{-8pt}
+\renewcommand{\baselinestretch}{1.15}
+
+% This designs the title display style for the maketitle command
+\makeatletter
+\newcommand\sixteen{\@setfontsize\sixteen{17pt}{6}}
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+\sixteen\bfseries \@title
+\medskip
+\end{flushleft}
+\textit{\@author}
+\egroup}
+\makeatother
+
+% This styles the bibliography and citations.
+%\usepackage[biblabel]{cite}
+\usepackage[sort&compress]{natbib}
+\setlength\bibindent{2em}
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}\hfill}
+\makeatother
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\bibpunct{}{}{,~}{s}{,}{,}
+\setlength{\bibsep}{0pt plus 0.3ex}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Authors: Add additional packages and new commands here.  
+% Limit your use of new commands and special formatting.
+
+% Place your title below. Use Title Capitalization.
 \title{On Sample Size for Block Bootstrap Confidence Intervals 
   to Have Desired Coverage Rates}
 
-
-\author{Mathew Chandy, Elizabeth Schifano,
-%   \href{mailto:mathew.chandy@uconn.edu}
-% {\nolinkurl{mathew.chandy@uconn.edu}}\\
-  and Jun Yan\\[1ex]
-  Department of Statistics, University of Connecticut\\
+% Add author information below. Communicating author is indicated by an 
+% asterisk, the affiliation is shown by superscripted lower case letter if 
+% several affiliations need to be noted.
+\author{
+Mathew Chandy*$^{a}$, Elizabeth Schifano$^{a}$, Jun Yan$^{a}$ \\ \medskip 
+$^{a}$Department of Statistics, University of Connecticut, Storrs, CT \\ \medskip 
+Student: mathew.chandy@uconn.edu* \\
+Mentors: elizabeth.schifano@uconn.edu, jun.yan@uconn.edu
 }
-\date{}
+\pagestyle{empty}
+\begin{document}
 
-
-\begin{document} 
+% Makes the title and author information appear.
+\vspace*{.01 in}
 \maketitle
+\vspace{.12 in}
 
-
-\begin{abstract}
+% Abstracts are required.
+\section*{abstract}
 Block bootstrap is widely used in constructing confidence intervals for 
 parameters estimated from stationary time series. Theoretically, the method
 should provide valid confidence intervals as the length of the time series goes
@@ -83,19 +128,18 @@ surprising that the coverage property even deteriorates as the sample size
 increases with some commonly used block bootstrap confidence intervals including 
 the percentile intervals and bias-corrected intervals.
 
+% Keywords are required.
+\section*{keywords} 
+List Eight to Ten Capitalized Keywords Separated by \ul{Semicolons}; Do Not Use Period at The End
+Dependent Data; Resampling; Simulation; Time Series
 
-\bigskip
-\noindent{\sc Keywords}:
-dependent data; resampling; simulation; time series
-\end{abstract}
+\vspace{.12 in}
 
+% Start the main part of the manuscript here.
+% Comment out section headings if inappropriate to your discipline.
+% If you add additional section or subsection headings, use an asterisk * to avoid numbering. 
 
-\doublespace
-
-
-\section{Introduction}
-\label{sec:intro}
-
+\section*{introduction}
 
 Block bootstrap is a tool to construct confidence intervals (CI) to make
 inferences about dependent data. Essentially, it depends on correct estimation
@@ -162,17 +206,15 @@ compared in a simulation study. The results of this study suggest that recovery
 of temporal dependence parameters is reliant on the type of interval used.
 
 
-The remainder of the paper is organized as follows. Section~\ref{sec:bbci} 
+The remainder of the paper is organized as follows. The first section 
 reviews block bootstrap procedures and how to use block bootstrap estimates to
 construct CIs; a simple CI obtained by recentering at the original point 
-estimate is proposed for comparison. Section~\ref{sec:simu} reports a simulation 
+estimate is proposed for comparison. The second section reports a simulation 
 study comparing the coverage rates of six block bootstrap CIs. A discussion
-concludes in Section~\ref{sec:disc}.
+concludes in the final section.
 
-
-\section{Block Bootstrap CIs}
+\section*{block bootstrap cis}
 \label{sec:bbci}
-
 
 Consider a stationary time series $\{X_t: t = 1, \ldots, n\}$ with length~$n$. 
 Our goal is to construct a CI for a parameter $\theta$ in the data generating 
@@ -187,9 +229,7 @@ point estimates. When serial dependence is present, the bootstrap procedure
 needs to preserve the serial dependence. Block bootstrap was motivated for this 
 situation. 
 
-
-\subsection{Block Bootstrap}
-
+\subsection*{Block Bootstrap}
 
 Block bootstrap preserves the serial dependence in the observed data by 
 partitioning the data into blocks and performing bootstrap on the blocks. In
@@ -233,9 +273,7 @@ To achieve this, $l$ is often assigned a value as a function of $n$. A common
 function that is considered optimal is $l = \lceil n^{1/3} \rceil$ 
 \citep{buhlmann1999block}, which was adopted in this study.
 
-
-\subsection{Block Bootstrap CIs}
-
+\subsection*{Block Bootstrap CIs}
 
 Suppose that we have repeated the steps in the last subsection $B$ times, and
 that for $b \in \{1, \ldots, B\}$, we have obtained a bootstrap point estimate
@@ -244,7 +282,6 @@ that was applied to $\{X_t: t = 1, \ldots, n\}$ to obtain $\hat\theta_n$. Now
 the question is how to construct a CI for $\theta$ using the $B$ bootstrap point 
 estimates $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. We consider six 
 kinds of block bootstrap CIs adapted from standard bootstrap CIs.
-
 
 \paragraph{Standard Normal CI}
 Assuming that $\hat\theta_n$ is asymptotically normally distributed with 
@@ -318,19 +355,21 @@ original sample without the $i$th block $z_i$ for $i \in \{1, \ldots, k\}$, let
 $\hat{\theta}_{(i)}$ be the statistic of $Z_{(i)}$, and let 
 $\hat{\theta}_{(.)} = k^{-1}\sum_{i=1}^{k} \hat{\theta}_{(i)}$. 
 Let 
-\[
+\begin{equation}
 \hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^2\}^{3/2}}.
-\]
+\end{equation}
 Define
-\[
+\begin{equation}
 \alpha_1 = \Phi\left(\hat{z}_{0} + \frac{\hat{z}_{0} +
   z_{\alpha/2}}{1 - \hat{a}(\hat{z}_{0} + z_{\alpha/2})}\right)
-\text{ and }
+\end{equation}
+and
+\begin{equation}
 \alpha_2 = \Phi\left(\hat{z}_{0} + \frac{\hat{z}_{0} +
   z_{1 - \alpha/2}}{1 - \hat{a}(\hat{z}_{0} + z_{1 - \alpha/2})}\right).
-\]
+\end{equation}
 A $(1 - \alpha)100\%$ ~BCA CI is
 \[
 (\hat\theta_{n, \alpha_1}^{B}, \quad \hat\theta_{n, \alpha_2}^{B}).
@@ -343,12 +382,13 @@ rate of change of the standard error of $\hat\theta_n$ with respect to $\theta$.
 
 
 \paragraph{Recentered Percentile CI}
+
 We propose a CI that is centered at the original point estimate and uses the 
 variation in the bootstrap estimates to construct the error bound. This interval 
 requires
 the computation of $\bar\theta_n^B = n^{-1}\sum_{b=1}^B \hat\theta_n^{(b)}$, the 
 mean of all bootstrap point estimates. A $(1 - \alpha)100\%$ CI is
-centered around $\hat\theta_n$ and can be rewritten as 
+centered around $\hat\theta_n$ and can be written as 
 \[
 (\hat\theta_n + \hat\theta_{n, \alpha/2}^{B} - \bar\theta_n^{B}, \quad
 \hat\theta_n + \hat\theta_{n, 1 - \alpha/2}^{B} - \bar\theta_n^{B}).
@@ -356,17 +396,16 @@ centered around $\hat\theta_n$ and can be rewritten as
 It is not necessarily symmetric, as different critical values are used to 
 compute the lower and upper bounds. It has the same width as the percentile CI.
 
-
-\section{Simulation Study}
+\section*{simulation study}
 \label{sec:simu}
 
-\subsection{Design}
+\subsection*{Design}
 We designed a simulation study to compare the performance of the different block 
 bootstrap CI methods. In particular, we generated time series $X_t$ from a 1st 
 order auto-regressive (AR(1)) process:
-\[
+\begin{equation}
 X_t = \phi X_{t-1} + \epsilon_t,
-\]
+\end{equation}
 where $\phi$ is an auto-regressive coefficient, and $\epsilon_t$ is a series of
 independent errors from a normal distribution with mean zero and variance
 $\sigma_{\epsilon}^2$. The strength of the serial dependence is controlled by
@@ -387,7 +426,7 @@ CIs for each parameter as described in the last section. We can estimate $\mu$,
 $\sigma_x$, and $\phi$ by computing the sample mean, sample standard deviation, 
 and lag-1 auto-correlation, respectively, of each bootstrap sample. Then we can 
 construct intervals for each parameter using the appropriate procedures 
-described in Section~\ref{sec:bbci}. Then we estimated their actual coverage 
+described in \textit{Block Bootstrap CIs}. Then we estimated their actual coverage 
 rates along with their 95\% confidence intervals from the 10000 replicates. The 
 block bootstrap sampling step was done with function \texttt{tsboot} from R 
 package \textsl{boot} \citep{boot}, with block size $\lceil n / l \rceil$. This 
@@ -410,10 +449,9 @@ well. If all values in the interval are below 0.95, the results would suggest
 that the method either is providing inaccurate estimation, is underestimating 
 the process' variability, or a combination of both. If all values in the 
 interval are above .95, the results suggest that the method is overestimating 
-the process' variability. Figures~\ref{fig:mu}--\ref{fig:phi} summarizes the 
-empirical coverage rates and the 95\% confidence intervals of the real coverage, 
-generated using the R \textsl{ggplot2} package \citep{ggplot2}.
-
+the process' variability. \textbf{Figures~\ref{fig:mu}--\ref{fig:phi}} 
+summarizes the empirical coverage rates and the 95\% confidence intervals of the 
+real coverage, generated using the R \textsl{ggplot2} package \citep{ggplot2}.
 
 \begin{figure}[tbp]
   \centering
@@ -450,60 +488,60 @@ generated using the R \textsl{ggplot2} package \citep{ggplot2}.
   \label{fig:phi}
 \end{figure}
 
+\subsection*{Results}
 
-\subsection{Results}
-
-For estimating the mean parameter~$\mu$, Figure~\ref{fig:mu} suggests that all
-methods eventually approach correct coverage of $\mu$ as sample size increases. 
-Student's $t$ CIs appear to need the smallest sample size to achieve correct 
-coverage, except for samples with strong negative dependence, in which case, 
-they actually over-cover $\mu$ for smaller sample sizes. For instance, for a 
-sample with $n = 100$ and $\phi = -0.4$, the lower bound for a Students $t$ CI's 
-coverage of $\mu$ is greater than 95\%, whereas the coverage intervals for other 
-methods contain 95\%. The standard, percentile, BC, and BCA, and recentered 
-percentile CIs require similar sample sizes to recover $\mu$ at the nominal 
-level for all combinations of $n$ and $\phi$. All methods seem to require a 
-smaller sample to recover $\mu$ at the nominal rate when dealing with negative 
-dependence versus positive dependence. For example, BC CIs recover $\mu$ for 
-$n \geq 100$ when $\phi = -0.2$, but they only recover $\mu$ for $n \geq 800$ 
-when $\phi = 0.2$. In addition, as a negative dependence gets stronger, holding 
-everything else equal, coverage increases, which lead to the Student $t$ CI's 
-aforementioned over-coverage. As a positive dependence gets stronger, holding 
-everything else equal, coverage decreases, and a larger sample is necessary to 
-recover~$\mu$.
+For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu}} suggests 
+that all methods eventually approach correct coverage of $\mu$ as sample size 
+increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
+correct coverage, except for samples with strong negative dependence, in which 
+case, they actually over-cover $\mu$ for smaller sample sizes. For instance, for 
+a sample with $n = 100$ and $\phi = -0.4$, the lower bound for a Students $t$ 
+CI's coverage of $\mu$ is greater than 95\%, whereas the coverage intervals for 
+other methods contain 95\%. The standard, percentile, BC, and BCA, and 
+recentered percentile CIs require similar sample sizes to recover $\mu$ at the 
+nominal level for all combinations of $n$ and $\phi$. All methods seem to 
+require a smaller sample to recover $\mu$ at the nominal rate when dealing with 
+negative dependence versus positive dependence. For example, BC CIs recover 
+$\mu$ for $n \geq 100$ when $\phi = -0.2$, but they only recover $\mu$ for 
+$n \geq 800$ when $\phi = 0.2$. In addition, as a negative dependence gets 
+stronger, holding everything else equal, coverage increases, which lead to the 
+Student $t$ CI's aforementioned over-coverage. As a positive dependence gets 
+stronger, holding everything else equal, coverage decreases, and a larger sample 
+is necessary to recover~$\mu$.
 
 
 For estimating the standard deviation parameter~$\sigma_x$,
-Figure~\ref{fig:sigma} suggests that every method can reach nominal coverage of
-$\sigma_x$ if the sample is large enough, but for a given $n$ and $\phi$,
-coverage of $\sigma_x$ will be lower than coverage of $\mu$ in general. Like 
-$\mu$, $\sigma_x$ can be covered by Student $t$ CIs with smaller sample sizes
-when compared to other methods. Unlike $\mu$, there is no over-coverage issue 
-for $\sigma_x$ when $\phi = -0.4$. Standard, percentile, BC, BCA, and recentered 
-percentile CIs again have similar performance. All methods seem to have slightly 
-higher coverage of $\sigma_x$ when $\phi$ is negative versus when $\phi$ is 
-positive. Regardless of the sign, coverage of $\sigma_x$ gets worse as the 
-strength of the temporal dependence increases.
+\textbf{Figure~\ref{fig:sigma}} suggests that every method can reach nominal 
+coverage of $\sigma_x$ if the sample is large enough, but for a given $n$ and 
+$\phi$, coverage of $\sigma_x$ will be lower than coverage of $\mu$ in general.
+Like $\mu$, $\sigma_x$ can be covered by Student $t$ CIs with smaller sample 
+sizes when compared to other methods. Unlike $\mu$, there is no over-coverage 
+issue for $\sigma_x$ when $\phi = -0.4$. Standard, percentile, BC, BCA, and 
+recentered percentile CIs again have similar performance. All methods seem to 
+have slightly higher coverage of $\sigma_x$ when $\phi$ is negative versus when 
+$\phi$ is positive. Regardless of the sign, coverage of $\sigma_x$ gets worse as 
+the strength of the temporal dependence increases.
 
 
-For estimating the auto-correlation parameter~$\phi$, Figure~\ref{fig:phi}
-suggests that while standard, Student's $t$, and recentered percentile CIs do
-approach correct coverage as sample size increases, percentile, BC, and BCA CIs 
-deteriorate as sample size increases, especially as the strength of the temporal 
-dependence increases. Because of this, only standard, Student's $t$, and 
-recentered percentile CIs should be considered as effective block bootstrap 
-methods to estimate $\phi$. Student's $t$ CIs once again can achieve correct
-coverage with smaller sample sizes when compared to standard and recentered 
-percentile CIs which perform similarly. Student's $t$ CIs can can recover $\phi$ 
-at the nominal level for $n \geq 100$ when the sample's temporal dependence is 
-as strong as 0.4. Coverage appears to be higher for all methods when the
-dependence is negative rather than positive. Whether or not the dependence is
-negative or positive, coverage of $\phi$ seems to increase slightly as the
-absolute value increases for standard, Student's $t$, and recentered percentile
-CIs. For the values of $\phi$ observed, there are no examples of over-coverage 
-for standard, Student's $t$, BC, BCA, or recentered percentile CIs. However, 
-percentile CIs appear to over-cover $\phi$ for smaller sample sizes when 
-$\phi = -0.2$ and when $\phi = 0$, indicating again that they should not be used.
+For estimating the auto-correlation parameter~$\phi$, 
+\textbf{Figure~\ref{fig:phi}} suggests that while standard, Student's $t$, and 
+recentered percentile CIs do approach correct coverage as sample size increases, 
+percentile, BC, and BCA CIs deteriorate as sample size increases, especially as 
+the strength of the temporal dependence increases. Because of this, only 
+standard, Student's $t$, and recentered percentile CIs should be considered as 
+effective block bootstrap methods to estimate $\phi$. Student's $t$ CIs once 
+again can achieve correct coverage with smaller sample sizes when compared to 
+standard and recentered percentile CIs which perform similarly. Student's $t$ 
+CIs can can recover $\phi$ at the nominal level for $n \geq 100$ when the 
+sample's temporal dependence is as strong as 0.4. Coverage appears to be higher 
+for all methods when the dependence is negative rather than positive. Whether or 
+not the dependence is negative or positive, coverage of $\phi$ seems to increase 
+slightly as the absolute value increases for standard, Student's $t$, and 
+recentered percentile CIs. For the values of $\phi$ observed, there are no 
+examples of over-coverage for standard, Student's $t$, BC, BCA, or recentered 
+percentile CIs. However, percentile CIs appear to over-cover $\phi$ for smaller 
+sample sizes when $\phi = -0.2$ and when $\phi = 0$, indicating again that they 
+should not be used.
 
 
 \begin{figure}[tbp]
@@ -521,12 +559,12 @@ The outcomes of the $\phi$ estimation raise a natural question about the
 lackluster performance of certain methodologies. To delve into this inquiry, a
 set of 50 CIs was generated for each of the percentile, BC, and recentered
 percentile  approaches for samples of $n \in \{800, 1600\}$. Illustrated in 
-Figure~\ref{fig:npi}, it becomes evident that the percentile-based CIs exhibit a 
-notable bias, predominantly manifesting as a substantial underestimation of 
-$\phi$ with point estimator $\bar\theta_n^B$, that is, the average of $B$ 
-bootstrap point estimates. As the sample size increases from 800 to 1600, this 
-bias does not vanish while the uncertainty reduces, which explains why the 
-coverage rates deteriorate. The bias in $\bar\theta_n^B$ also appears to 
+\textbf{Figure~\ref{fig:npi}}, it becomes evident that the percentile-based CIs 
+exhibit a notable bias, predominantly manifesting as a substantial 
+underestimation of $\phi$ with point estimator $\bar\theta_n^B$, that is, the 
+average of $B$ bootstrap point estimates. As the sample size increases from 800 
+to 1600, this bias does not vanish while the uncertainty reduces, which explains 
+why the coverage rates deteriorate. The bias in $\bar\theta_n^B$ also appears to 
 invalidate the bias-correction in the BC bootstrap, leading to the poor 
 performance of the BC intervals. The BCA intervals have the same problem as the 
 BC intervals in the bias-correction step. The root of the issue appears to be 
@@ -552,8 +590,7 @@ method, the recentered percentile method uses the spread from the bootstrap to
 construct the width of the CI. However, the recentered approach, does not 
 correct from the original point estimate $\hat\theta_n$.
 
-
-\section{Discussion}
+\section*{discussion}
 \label{sec:disc}
 
 Block bootstrap is a useful method for estimating parameters of a time series,
@@ -611,30 +648,7 @@ appropriately recover the parameters of a time series. In addition, as noted by
 bootstrap --- with respect to how reasonably it imitates the data-generating 
 process --- which may be investigated in a future study.
 
-
 \bibliographystyle{chicago}
 \bibliography{citations}
 
 \end{document}
-
-\eds{Check out this paper:
-Peter Buhlmann. "Bootstraps for Time Series." Statist. Sci. 17(1) 52 - 72, 
-May 2002 - the conclusions of this paper are interesting in their own right:
-``Disadvantages of the [block bootstrap] method include the following.
-The block bootstrap sample should not be viewed as
-a reasonable sample mimicking the data-generating
-process: it is not stationary and exhibits artifacts where
-resampled blocks are linked together. This implies that
-the plug-in rule for bootstrapping an estimator $\hat{\theta}$ is not
-appropriate. A prevectorization of the data is highly
-recommended, but the bootstrapped estimator and its
-computing routine may then need to be redesigned. As
-a general nonparametric scheme, the block bootstrap
-may be outperformed in various niches of stationary
-time series, for example, for linear time series (see Section 3) 
-and for categorical processes (see Section 5).
-Second-order accuracy for a confidence interval has
-been justified with the approach of Studentizing and
-BCA correction (in the case of noncategorical time series); 
-the latter was found to yield marginal improvement in a 
-simulated example (we did not consider the former). } \mc{addressed}

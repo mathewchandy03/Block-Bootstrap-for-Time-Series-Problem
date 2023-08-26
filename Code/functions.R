@@ -1,5 +1,6 @@
 .libPaths("~/rlibs")
 library(ggplot2) 
+library(showtext)
 
 mystat <- function(x) {
   c(mean(x),
@@ -96,6 +97,11 @@ mychk <- function(sim, target) {
 
 graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
+  font_add_google("EB Garamond")
+#  windows()
+  
+  showtext_auto()
+  
   data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'bcCI', 'bcaCI', 'propCI'), 
                     labels = c('Standard', 'Student\'s t', 'Percentile', 'BC', 'BCA', 'Recentered'))
   
@@ -106,7 +112,8 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
     facet_grid(factor(CI) ~ factor(phi), scales = 'free') +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
+            element_text(family = "EB Garamond")) +
     scale_y_continuous(trans=trans)
   ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), height = 6)
 }

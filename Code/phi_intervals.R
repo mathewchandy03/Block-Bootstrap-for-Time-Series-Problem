@@ -1,5 +1,6 @@
 source("functions.R")
 library(ggplot2)
+library(showtext)
 
 set.seed(1234)
 sim <- replicate(50, do1rep(800, 0.4, mystat, 10))
@@ -38,6 +39,11 @@ plot_data$custom_title <- factor(plot_data$custom_title,
 plot_data$sample.size <- factor(plot_data$sample.size,
                   levels = c("n = 800", "n = 1600"))
 
+font_add_google("EB Garamond")
+#  windows()
+
+showtext_auto()
+
 ggplot(plot_data, aes(x = replication, y = point_estimate)) +
   geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound), width = 0.5, color = 'gray') +
   geom_point(color = 'blue') +
@@ -48,6 +54,7 @@ ggplot(plot_data, aes(x = replication, y = point_estimate)) +
   scale_color_manual(values = c('blue', 'red', 'gray')) +
   scale_linetype_manual(values = c(1, 1, 1)) +
   theme_minimal() + 
-  theme(strip.text=element_text(size=10))
+  theme(strip.text=element_text(size=10), text =
+          element_text(family = "EB Garamond"))
 
 ggsave('../Manuscript/figures/norm_phi_intervals.pdf', width = 10)
