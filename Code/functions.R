@@ -107,13 +107,14 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   
   ggplot(data, aes(x = n, y = cov)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
-    geom_line() +
-    geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width) +
+    geom_line(size = .2) +
+    geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width, size = .2) +
     facet_grid(factor(CI) ~ factor(phi), scales = 'free') +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
-            element_text(family = "EB Garamond")) +
+            element_text(family = "EB Garamond", size = 9),
+          strip.text.y = element_text(angle = 0, hjust = 1)) +
     scale_y_continuous(trans=trans)
-  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), height = 6)
+  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), height = 3)
 }
