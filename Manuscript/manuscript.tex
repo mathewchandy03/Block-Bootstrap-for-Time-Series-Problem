@@ -158,12 +158,16 @@ Dependent Data; Resampling; Simulation; Time Series
 
 Block bootstrap is a tool to construct confidence intervals (CI) to make
 inferences about dependent data. Essentially, it depends on correct estimation
-of the uncertainty in the estimation, similar to the standard bootstrap
-\citep{efron1979bootstrap} but for serially dependent data. Early ideas of block
-bootstrap were developed not long after the standard bootstrap 
-\citep{hall1985resampling, carlstein1986use,kunsch1989jackknife}. It has since
-been applied in various fields, for instance, econometrics
-\citep{mackinnon2006bootstrap} and meteorology \citep{varga2017generalised}.
+of the uncertainty in the estimation, similar to the standard bootstrap - 
+originated by \citet{efron1979bootstrap} - but for serially dependent data.
+\mc{style guide says to have citations after punctuation, not sure what to do 
+with textual citations}
+Early ideas of block
+bootstrap were developed not long after the standard 
+bootstrap.\citep{hall1985resampling, carlstein1986use,kunsch1989jackknife} It 
+has since
+been applied in various fields, for instance, econometrics and 
+meteorology.\citep{mackinnon2006bootstrap, varga2017generalised}
 Block bootstrap is especially useful for serially dependent data when the serial 
 dependence is not specified or not of primary interest. The method is expected 
 to produce CIs with coverage rates matching their nominal levels as the sample 
@@ -212,8 +216,9 @@ for block bootstrap with dependent data, similar to what was done for basic
 bootstrap in \citet{hesterberg2015teachers}. We consider a simple situation of 
 a stationary time series, where the parameters of interests are the mean, 
 standard deviation, and the first-order autocorrelation coefficient. We compare 
-six variants of block bootstrap CIs from the literature
-\citep{diciccio1996bootstrap, rice2006mathematical}: a standard normal CI, a 
+six variants of block bootstrap CIs from the 
+literature:\citep{diciccio1996bootstrap, rice2006mathematical} a standard normal 
+CI, a 
 Student's $t$ CI, a percentile CI, a bias-corrected CI, a bias-corrected and 
 accelerated CI, and a recentered percentile CI proposed in this article. Their 
 empirical coverage rates at different sample sizes and dependence levels are 
@@ -285,8 +290,8 @@ each bootstrap sample to preserve the serial dependence, yet small enough for
 there to be a large number of blocks to give sufficient variability between each 
 bootstrap sample. As $n$ increases, both~$l$ and $n / l$ should also increase. 
 To achieve this, $l$ is often assigned a value as a function of $n$. A common 
-function that is considered optimal is $l = \lceil n^{1/3} \rceil$ 
-\citep{buhlmann1999block}, which was adopted in this study.
+function that is considered optimal is $l = \lceil n^{1/3} \rceil$,\citep{buhlmann1999block} 
+which was adopted in this study.
 
 \subsection*{Block Bootstrap CIs}
 
@@ -301,7 +306,7 @@ kinds of block bootstrap CIs adapted from standard bootstrap CIs.
 \paragraph{Standard Normal CI}
 Assuming that $\hat\theta_n$ is asymptotically normally distributed with 
 $\theta$ as the mean, we just need an estimate of the standard error to 
-construct an approximate CI \citep[p.168]{efron1993introduction}. Let
+construct an approximate CI.\citep[p.168]{efron1993introduction} Let
 $\widehat{\text{SE}}$ be the empirical standard error of the bootstrap point 
 estimates $\hat\theta_n^{(b)}$ for $b \in \{1, \ldots, B\}$. Let $z_{(\alpha)}$ 
 be the upper $\alpha$ quantile of the standard normal distribution. 
@@ -445,7 +450,7 @@ described in \textit{Block Bootstrap CIs}.
 Then we estimated their actual coverage 
 rates along with their 95\% confidence intervals from the 10000 replicates. The 
 block bootstrap sampling step was done with function \texttt{tsboot} from R 
-package \textsl{boot} \citep{boot}, with block size $\lceil n / l \rceil$. This 
+package \textsl{boot},\citep{boot} with block size $\lceil n / l \rceil$. This 
 function by default is an implementation of moving block bootstrap as described 
 in the previous section, meaning that that blocks are allowed to wrap around, 
 and $l = \lceil n^{1/3} \rceil$.
@@ -467,7 +472,7 @@ the process' variability, or a combination of both. If all values in the
 interval are above .95, the results suggest that the method is overestimating 
 the process' variability. \textbf{Figures~\ref{fig:mu}--\ref{fig:phi}} 
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
-real coverage, generated using the R \textsl{ggplot2} package \citep{ggplot2}.
+real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
 
 \jy{The fonts of labels/annotatios in these figures are too big compared to the
   captions. Try pointsize = 9. The plots also seem oversized. Generate them in R
@@ -669,7 +674,7 @@ Future studies could investigate the $n$ needed to make inferences about other
 forms of serially dependent data such as a moving average process. One could 
 also investigate if there are types of block bootstrap interval construction 
 such as $ABC$ or bootstrap-t intervals, or alternatives to block bootstrap, such 
-as AR-Sieve bootstrap \citep{kreiss1992bootstrap}, that could more
+as AR-Sieve bootstrap,\citep{kreiss1992bootstrap} that could more
 appropriately recover the parameters of a time series. In addition, as noted by
 \citet{buhlmann2002bootstraps}, there are some general drawbacks of block 
 bootstrap --- with respect to how reasonably it imitates the data-generating 
@@ -710,7 +715,8 @@ Although we may have set $\phi$ to these five levels for $X_t$:
 $\{-0.4, -0.2, 0.0, 0.2, 0.4\}$, because of the transformation,
 the new five autocorrelation coefficients for $W_t$ will be different.
 \mc{I may need some help explaining the calibration of copula parameters}
-After calibrating the copula parameters, we can again plot empirical coverage 
+After calibrating the copula parameters using the \textsl{copula} and 
+\textsl{pracma} packages, \citep{copula, pracma} we can again plot empirical coverage 
 rates and the 95\% confidence intervals of the real coverage.
 
 \begin{figure}[tbp]
@@ -776,7 +782,7 @@ still deteriorate in coverage of $\rho$ as sample size increases. As exhibited
 in \textbf{Figure~\ref{fig:eri}}, percentile and BC CIs still have the same bias
 issue.
 
-\bibliographystyle{chicago}
+\bibliographystyle{unsrtnat}
 \bibliography{citations}
 
 \end{document}
