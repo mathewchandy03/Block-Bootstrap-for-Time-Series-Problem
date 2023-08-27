@@ -713,11 +713,18 @@ The simulation design was the same, except the target parameters of $W_t$ were:
 3) $\rho$, the lag-1 autocorrelation coefficient of $W_t$
 Although we may have set $\phi$ to these five levels for $X_t$: 
 $\{-0.4, -0.2, 0.0, 0.2, 0.4\}$, because of the transformation,
-the new five autocorrelation coefficients for $W_t$ will be different.
+the new five true autocorrelation coefficients for $W_t$ were different.
 \mc{I may need some help explaining the calibration of copula parameters}
-After calibrating the copula parameters using the \textsl{copula} and 
-\textsl{pracma} packages, \citep{copula, pracma} we can again plot empirical coverage 
-rates and the 95\% confidence intervals of the real coverage.
+To calibrate the copula parameters, we first constructed a multivariate
+exponential distribution from a normal copula using the \textsl{copula} package.
+\citep{copula} Then we computed $E[XY]$, which 
+requires double integration using the \textsl{pracma} package. \citep{pracma} 
+Finally, we obtained true $\rho = E[XY] - 1$, which was used as the target
+parameter when evaluating CI performance when estimating $\rho$.
+After this step, we again plotted empirical coverage 
+rates for $\mu$, $\sigma$, and $\rho$, as well as 95\% confidence intervals of 
+the real coverage. These are displayed in 
+\textbf{Figures~\ref{fig:exp_mu}--\ref{fig:exp_rho}}. 
 
 \begin{figure}[tbp]
   \centering
@@ -754,7 +761,7 @@ rates and the 95\% confidence intervals of the real coverage.
     $n \in \{100, 200, 400, 800, 1600, 3200\}$ transformed to
     an exponential distribution with $\lambda = 1$ based on 10,000 replicates. 
     The error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:exp_phi}
+  \label{fig:exp_rho}
 \end{figure}
 
 Additionally, another set of 50 CIs was generated for each of the percentile, 
