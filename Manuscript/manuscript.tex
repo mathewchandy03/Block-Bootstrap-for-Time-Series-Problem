@@ -144,26 +144,14 @@ Dependent Data; Resampling; Simulation; Time Series
 % Comment out section headings if inappropriate to your discipline.
 % If you add additional section or subsection headings, use an asterisk * to avoid numbering. 
 
-\jy{Are the results from exponential margins the same? If so, we can put them in
-  an appendix; make sure we have the data generation process accurately
-  described. Then briefly summarize and refer to it at the end of the simulation
-  section.} \mc{addressed}
-
-
-\jy{The 80-width is for maximum. No need to re-wrap shorter lines because it
-  would show a lot of diff while there is no diff.}
-\mc{addressed}
 
 \section*{introduction}
 
 Block bootstrap is a tool to construct confidence intervals (CI) to make
 inferences about dependent data. Essentially, it depends on correct estimation
-of the uncertainty in the estimation, similar to the standard bootstrap - 
-originated by \citet{efron1979bootstrap} - but for serially dependent data.
-\mc{style guide says to have citations after punctuation, not sure what to do 
-with textual citations}
-Early ideas of block
-bootstrap were developed not long after the standard 
+of the uncertainty in the estimation, similar to the standard bootstrap 
+\citep{efron1979bootstrap}, but for serially dependent data.
+Early ideas of block bootstrap were developed not long after the standard 
 bootstrap.\citep{hall1985resampling, carlstein1986use,kunsch1989jackknife} It 
 has since
 been applied in various fields, for instance, econometrics and 
@@ -266,22 +254,26 @@ block bootstrap.
 
 
 Alternatively, block-bootstrap can be done with overlapping or moving blocks.
-Define moving blocks $Z_j = \{X_j, \ldots, X_{j + l - 1}\}$, 
-$j = 1, \ldots, n - l + 1$. Now we draw $k$ blocks from the $(n - l + 1)$ blocks 
+Define moving blocks
+\[
+Z_j = \{X_j, \ldots, X_{j + l - 1}\}, \quad, 
+j = 1, \ldots, n - l + 1.
+\]
+Now we draw $k$ blocks from the $(n - l + 1)$ blocks 
 of $Z_j$'s with replacement and then align them in the order they were picked to 
 form a block bootstrap sample. If $n$ is not a multiple of~$l$, the last block 
 selected will be reduced in size so that the final size of the block bootstrap 
 sample is $n$. It is also possible to implement moving block bootstrap while 
 allowing blocks to wrap around the end of the series. In other words, define 
 moving blocks (assuming $l > 1$) as:
-\begin{equation}
+\begin{equation*}
 Z_j =
     \begin{cases}
         \{X_j, \ldots, X_{j + l - 1}\}, & \text{if } j = 1, \dots, n - l + 1,\\
         \{X_j, \ldots, X_n, X_1, \ldots, X_{j-n+l-1}\}, & \text{if } j = n - l
         + 2 ,\dots, n.
     \end{cases}
-\end{equation}
+\end{equation*}
 This version does not require that $n/l$ be an integer.
 
 
@@ -374,22 +366,22 @@ The BCA CI was first suggested in \citet{efron1987better}. Let $Z_{(i)}$ be the
 original sample without the $i$th block $z_i$ for $i \in \{1, \ldots, k\}$, let 
 $\hat{\theta}_{(i)}$ be the statistic of $Z_{(i)}$, and let 
 $\hat{\theta}_{(.)} = k^{-1}\sum_{i=1}^{k} \hat{\theta}_{(i)}$. 
-Let 
-\begin{equation}
+Let \jy{No need to number an equation if it is not referred to}
+\begin{equation*}
 \hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^2\}^{3/2}}.
-\end{equation}
+\end{equation*}
 Define
-\begin{equation}
+\begin{equation*}
 \alpha_1 = \Phi\left(\hat{z}_{0} + \frac{\hat{z}_{0} +
   z_{\alpha/2}}{1 - \hat{a}(\hat{z}_{0} + z_{\alpha/2})}\right)
-\end{equation}
+\end{equation*}
 and
-\begin{equation}
+\begin{equation*}
 \alpha_2 = \Phi\left(\hat{z}_{0} + \frac{\hat{z}_{0} +
   z_{1 - \alpha/2}}{1 - \hat{a}(\hat{z}_{0} + z_{1 - \alpha/2})}\right).
-\end{equation}
+\end{equation*}
 A $(1 - \alpha)100\%$ ~BCA CI is
 \[
 (\hat\theta_{n, \alpha_1}^{B}, \quad \hat\theta_{n, \alpha_2}^{B}).
@@ -423,9 +415,9 @@ compute the lower and upper bounds. It has the same width as the percentile CI.
 We designed a simulation study to compare the performance of the different block 
 bootstrap CI methods. In particular, we generated time series $X_t$ from a 1st 
 order autoregressive (AR(1)) process:
-\begin{equation}
+\begin{equation*}
 X_t = \phi X_{t-1} + \epsilon_t,
-\end{equation}
+\end{equation*}
 where $\phi$ is an autoregressive coefficient, and $\epsilon_t$ is a series of
 independent errors from a normal distribution with mean zero and variance
 $\sigma_{\epsilon}^2$. The strength of the serial dependence is controlled by
@@ -474,9 +466,6 @@ the process' variability. \textbf{Figures~\ref{fig:mu}--\ref{fig:phi}}
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
 real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
 
-\jy{The fonts of labels/annotatios in these figures are too big compared to the
-  captions. Try pointsize = 9. The plots also seem oversized. Generate them in R
-  with the right size in mind.} \mc{addressed}
 
 \begin{figure}[tbp]
   \centering
@@ -488,6 +477,13 @@ real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
     error bars represent 95\% CIs of the real coverage rates.}
   \label{fig:mu}
 \end{figure}
+
+
+\jy{I like the font size of the labels and axis of Figure 4. They are still
+  overly large in Figures 1--3. The panel head is also too wide. The axis ticks
+  look crowded. The panel
+  labels on the right also does not look pretty. I'd prefer the old version if
+  the font sizes were smaller.}
 
 
 \begin{figure}[tbp]
@@ -515,6 +511,7 @@ real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
 
 \subsection*{Results}
 
+\jy{Is textbf of Figure requried? Never manual formatting.}
 For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu}} suggests 
 that all methods eventually approach correct coverage of $\mu$ as sample size 
 increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
@@ -522,7 +519,7 @@ correct coverage, except for samples with strong negative dependence, in which
 case, they actually over-cover $\mu$ for smaller sample sizes. For instance, for 
 a sample with $n = 100$ and $\phi = -0.4$, the lower bound for a Students $t$ 
 CI's coverage of $\mu$ is greater than 95\%, whereas the coverage intervals for 
-other methods contain 95\%. The standard, percentile, BC, and BCA, and 
+other methods contain 95\%. The standard normal, percentile, BC, and BCA, and 
 recentered percentile CIs require similar sample sizes to recover $\mu$ at the 
 nominal level for all combinations of $n$ and $\phi$. All methods seem to 
 require a smaller sample to recover $\mu$ at the nominal rate when dealing with 
@@ -541,7 +538,7 @@ coverage of $\sigma_x$ if the sample is large enough, but for a given $n$ and
 $\phi$, coverage of $\sigma_x$ will be lower than coverage of $\mu$ in general.
 Like $\mu$, $\sigma_x$ can be covered by Student $t$ CIs with smaller sample 
 sizes when compared to other methods. Unlike $\mu$, there is no over-coverage 
-issue for $\sigma_x$ when $\phi = -0.4$. Standard, percentile, BC, BCA, and 
+issue for $\sigma_x$ when $\phi = -0.4$. Standard normal, percentile, BC, BCA, and 
 recentered percentile CIs again have similar performance. All methods seem to 
 have slightly higher coverage of $\sigma_x$ when $\phi$ is negative versus when 
 $\phi$ is positive. Regardless of the sign, coverage of $\sigma_x$ gets worse as 
@@ -549,11 +546,11 @@ the strength of the temporal dependence increases.
 
 
 For estimating the autocorrelation parameter~$\phi$, 
-\textbf{Figure~\ref{fig:phi}} suggests that while standard, Student's $t$, and 
+\textbf{Figure~\ref{fig:phi}} suggests that while standard normal, Student's $t$, and 
 recentered percentile CIs do approach correct coverage as sample size increases, 
 percentile, BC, and BCA CIs deteriorate as sample size increases, especially as 
 the strength of the temporal dependence increases. Because of this, only 
-standard, Student's $t$, and recentered percentile CIs should be considered as 
+standard normal, Student's $t$, and recentered percentile CIs should be considered as 
 effective block bootstrap methods to estimate $\phi$. Student's $t$ CIs once 
 again can achieve correct coverage with smaller sample sizes when compared to 
 standard and recentered percentile CIs which perform similarly. Student's $t$ 
@@ -561,9 +558,9 @@ CIs can can recover $\phi$ at the nominal level for $n \geq 100$ when the
 sample's temporal dependence is as strong as 0.4. Coverage appears to be higher 
 for all methods when the dependence is negative rather than positive. Whether or 
 not the dependence is negative or positive, coverage of $\phi$ seems to increase 
-slightly as the absolute value increases for standard, Student's $t$, and 
+slightly as the absolute value increases for standard normal, Student's $t$, and 
 recentered percentile CIs. For the values of $\phi$ observed, there are no 
-examples of over-coverage for standard, Student's $t$, BC, BCA, or recentered 
+examples of over-coverage for standard normal, Student's $t$, BC, BCA, or recentered 
 percentile CIs. However, percentile CIs appear to over-cover $\phi$ for smaller 
 sample sizes when $\phi = -0.2$ and when $\phi = 0$, indicating again that they 
 should not be used.
@@ -579,9 +576,6 @@ should not be used.
   \label{fig:npi}
 \end{figure}
 
-\jy{Could do one for the exponential margin study too. 
-Maybe for the negative dependence.}
-\mc{created negative dependence plots not included in manuscript yet}
 
 The outcomes of the $\phi$ estimation raise a natural question about the 
 lackluster performance of certain methodologies. To delve into this inquiry, a
@@ -635,7 +629,7 @@ associated parameters at an acceptable rate. Our analysis relies on the
 assumption that there is a size $n$ large enough for the method to work: that 
 is, the method's performance improves as $n$ increases. Out of the six types of 
 intervals used in this study, this assumption was found to hold true with 
-respect to estimating $\phi$ only for standard, Student's $t$, and recentered 
+respect to estimating $\phi$ only for standard normal, Student's $t$, and recentered 
 percentile CIs, whereas percentile, BC, and BCA intervals exhibited coverage 
 deterioration as $n$ increased. The percentile CI's coverage deterioration can 
 be attributed to bias that is not corrected as $n$ increases. Specifically, as 
@@ -680,17 +674,13 @@ appropriately recover the parameters of a time series. In addition, as noted by
 bootstrap --- with respect to how reasonably it imitates the data-generating 
 process --- which may be investigated in a future study.
 
-\appendix
 
-\section*{Simulation Study with Exponential Marginal Distribution}
+\section*{Appendix: Simulation Study with Exponential Marginal Distribution}
 
-\jy{Motivation; data generation (calibration of copula parameters to give the
-  desired rho); simulation design; plots; brief discussion of results.}
-\mc{addressed}
   
 This appendix concerns the performance of block bootstrap when used to estimate
 the mean, standard deviation, and the lag-1 autocorrelation coefficient of a 
-AR(1) process with an underlying exponential marginal distribution. The 
+AR(1) process with an underlying unit exponential marginal distribution. The
 motivation for this additional simulation study was to observe if the results of 
 the main simulation study will change if the underlying marginal distribution is
 not normal. 
@@ -700,9 +690,9 @@ We generated time series $X_t$ from a 1st order autoregressive
 (AR(1)) process as we did previously, but transformed the data from a standard
 normal distribution to an exponential distribution with rate $\lambda = 1$, so 
 that for $t \in \{1, \ldots, n\}$, we can define:
-\begin{equation}
+\begin{equation*}
 W_t = F^{-1}(\Phi(X_t), 1)
-\end{equation}
+\end{equation*}
 where $F^{-1}(p, \lambda)$ is the quantile function for the exponential 
 distribution with rate parameter $\lambda$. 
 
@@ -715,6 +705,7 @@ Although we may have set $\phi$ to these five levels for $X_t$:
 $\{-0.4, -0.2, 0.0, 0.2, 0.4\}$, because of the transformation,
 the new five true autocorrelation coefficients for $W_t$ were different.
 \mc{I may need some help explaining the calibration of copula parameters}
+
 To calibrate the copula parameters, we first constructed a multivariate
 exponential distribution from a normal copula using the \textsl{copula} package.
 \citep{copula} Then we computed $E[XY]$, which 
@@ -725,6 +716,17 @@ After this step, we again plotted empirical coverage
 rates for $\mu$, $\sigma$, and $\rho$, as well as 95\% confidence intervals of 
 the real coverage. These are displayed in 
 \textbf{Figures~\ref{fig:exp_mu}--\ref{fig:exp_rho}}. 
+
+\jy{Let $\rho$ and $\phi$ be the autocorrelation coefficient of $X_t$ and $W_t$,
+  respectively. There is a 1-1 map between $\rho$ to $\phi$. You already figured
+  out how to transform from $\rho$ to $\phi$. Now we want $\phi$ to be, say,
+  0.4, you can calibrate $\rho$ to give you the desired value. This only need to
+  be done once before your run your simulation. }
+
+\jy{cite the copula book instead of the package}
+
+\jy{comment on the similarity of the results with those reported in the main text.}
+
 
 \begin{figure}[tbp]
   \centering
@@ -786,7 +788,7 @@ Student's $t$ CIs still appear to yield higher coverage rates than other
 methods. Performance is still generally better when temporal dependence is 
 negative rather than positive. Most importantly, percentile, BC, and BCA CIs
 still deteriorate in coverage of $\rho$ as sample size increases. As exhibited 
-in \textbf{Figure~\ref{fig:eri}}, percentile and BC CIs still have the same bias
+in Figure~\ref{fig:eri}, percentile and BC CIs still have the same bias
 issue.
 
 \bibliographystyle{unsrtnat}
