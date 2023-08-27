@@ -367,6 +367,7 @@ original sample without the $i$th block $z_i$ for $i \in \{1, \ldots, k\}$, let
 $\hat{\theta}_{(i)}$ be the statistic of $Z_{(i)}$, and let 
 $\hat{\theta}_{(.)} = k^{-1}\sum_{i=1}^{k} \hat{\theta}_{(i)}$. 
 Let \jy{No need to number an equation if it is not referred to}
+\mc{addressed}
 \begin{equation*}
 \hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
@@ -484,7 +485,7 @@ real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
   look crowded. The panel
   labels on the right also does not look pretty. I'd prefer the old version if
   the font sizes were smaller.}
-
+\mc{addressed}
 
 \begin{figure}[tbp]
   \centering
@@ -512,6 +513,10 @@ real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
 \subsection*{Results}
 
 \jy{Is textbf of Figure requried? Never manual formatting.}
+\mc{The guide says "When you need to refer to Figure 1, Reference 1, Table 1, 
+Scheme 1, Step 1, and Equation 1 please bold those words in the text (size 10) 
+and in the title (size eight)." If I don't use textbf, the references don't get
+bolded by default.}
 For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu}} suggests 
 that all methods eventually approach correct coverage of $\mu$ as sample size 
 increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
@@ -708,7 +713,7 @@ the new five true autocorrelation coefficients for $W_t$ were different.
 
 To calibrate the copula parameters, we first constructed a multivariate
 exponential distribution from a normal copula using the \textsl{copula} package.
-\citep{copula} Then we computed $E[XY]$, which 
+\citep{nelsen2006introduction} Then we computed $E[XY]$, which 
 requires double integration using the \textsl{pracma} package. \citep{pracma} 
 Finally, we obtained true $\rho = E[XY] - 1$, which was used as the target
 parameter when evaluating CI performance when estimating $\rho$.
@@ -723,9 +728,12 @@ the real coverage. These are displayed in
   0.4, you can calibrate $\rho$ to give you the desired value. This only need to
   be done once before your run your simulation. }
 
-\jy{cite the copula book instead of the package}
+\jy{cite the copula book instead of the package} \mc{i cited the nelsen book 
+referenced in the manual}
 
-\jy{comment on the similarity of the results with those reported in the main text.}
+\jy{comment on the similarity of the results with those reported in the main 
+text.} \mc{addressed}
+
 
 
 \begin{figure}[tbp]
@@ -781,15 +789,22 @@ samples of $n \in \{800, 1600\}$.
   \label{fig:eri}
 \end{figure}
 
-Although there are differences in the ranges of sample sizes needed to cover 
-parameters of a normally distributed AR(1) process versus an exponentially 
-distributed AR(1) process, the trends and patterns are generally the same.
-Student's $t$ CIs still appear to yield higher coverage rates than other 
+Iit seems that range of sample sizes needed 
+to cover parameters of an exponentially distributed AR(1) process is generally 
+higher than that needed to cover parameters of a normally.
+distributed AR(1) process. Despite this, the trends and patterns discussed 
+previously with respect
+to the performance of different methods and with different parameters are the 
+same.
+For instance, Student's $t$ CIs still appear to yield higher coverage rates than 
+other 
 methods. Performance is still generally better when temporal dependence is 
 negative rather than positive. Most importantly, percentile, BC, and BCA CIs
 still deteriorate in coverage of $\rho$ as sample size increases. As exhibited 
 in Figure~\ref{fig:eri}, percentile and BC CIs still have the same bias
-issue.
+issue. Overall, the results with an underlying marginal exponential distribution 
+are very similar to the results with an underlying normal distribution from the
+main study. 
 
 \bibliographystyle{unsrtnat}
 \bibliography{citations}

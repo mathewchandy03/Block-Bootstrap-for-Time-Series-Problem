@@ -113,8 +113,8 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
-            element_text(family = "EB Garamond", size = 9),
-          strip.text.y = element_text(angle = 0, hjust = 1)) +
+            element_text(family = "EB Garamond", size = 10),
+          strip.text.y = element_text(angle = 270, hjust = 1)) +
     scale_y_continuous(trans=trans)
-  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), height = 3)
+  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), width = 10)
 }
