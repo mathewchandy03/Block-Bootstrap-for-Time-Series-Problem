@@ -102,7 +102,7 @@
 % asterisk, the affiliation is shown by superscripted lower case letter if 
 % several affiliations need to be noted.
 \author{
-Mathew Chandy*$^{a}$, Elizabeth Schifano$^{a}$, Jun Yan$^{a}$ \\ \medskip 
+Mathew Chandy*$^{a}$, Elizabeth D. Schifano$^{a}$, Jun Yan$^{a}$ \\ \medskip 
 $^{a}$Department of Statistics, University of Connecticut, Storrs, CT \\ \medskip 
 Student: mathew.chandy@uconn.edu* \\
 Mentors: elizabeth.schifano@uconn.edu, jun.yan@uconn.edu
@@ -162,7 +162,8 @@ to produce CIs with coverage rates matching their nominal levels as the sample
 size grows. However, when dealing with finite sample sizes, an important 
 question is how large the sample size must be for block bootstrap CIs to have 
 the desired coverage rates.
-
+\eds{I think the superscript citations need to go before the punctuation.  
+Please check in other AJUR papers and adjust throughout the paper if needed.}
 
 For independent data, extensive research has explored the effectiveness of
 bootstrap standard errors in providing accurate uncertainty measures. For 
@@ -256,7 +257,7 @@ block bootstrap.
 Alternatively, block-bootstrap can be done with overlapping or moving blocks.
 Define moving blocks
 \[
-Z_j = \{X_j, \ldots, X_{j + l - 1}\}, \quad, 
+Z_j = \{X_j, \ldots, X_{j + l - 1}\}, \quad 
 j = 1, \ldots, n - l + 1.
 \]
 Now we draw $k$ blocks from the $(n - l + 1)$ blocks 
@@ -308,6 +309,12 @@ A $(1 - \alpha)100\%$ standard normal CI is
 (\hat{\theta}_{n} - z_{(1-\alpha/2)}\widehat{\text{SE}}, \quad
 \hat{\theta}_{n} - z_{(\alpha/2)}\widehat{\text{SE}}).
 \]
+\eds{If $z_{(\alpha)}$ is the upper quantile, then $z_{(\alpha/2)}$ will be 
+positive and $z_{(1-\alpha/2)}$ will be negative for small $\alpha$ values; with
+the subtraction of the quantiles, the smaller CI endpoint would appear to
+be listed first.  Please check this notation, and the notation for Student's $t$ 
+CI, and other intervals which use the $z_{(\alpha)}$ upper standard normal 
+quantile.} 
 This CI is centered by the original point estimate $\hat\theta_n$ and is 
 symmetric. The standard CI is a table-based bootstrap interval approach. Its 
 validity relies on whether the distribution of $\hat\theta_n$ is reasonably well 
@@ -613,7 +620,9 @@ correct from the original point estimate $\hat\theta_n$.
 
 An additional simulation study in which block bootstrap is used to estimate 
 parameters of an AR(1) process with an underlying exponential marginal 
-distribution is discussed in the appendix.
+distribution is discussed in the Appendix. Overall, the results with an 
+underlying marginal exponential distribution are very similar to the results 
+with an underlying normal distribution discussed above.
 
 \section*{discussion}
 \label{sec:disc}
@@ -690,7 +699,7 @@ We generated time series $X_t$ from a 1st order autoregressive
 normal distribution to an exponential distribution with rate $\lambda = 1$, so 
 that for $t \in \{1, \ldots, n\}$, we can define:
 \begin{equation*}
-W_t = F^{-1}(\Phi(X_t), 1)
+W_t = F^{-1}(\Phi(X_t), 1),
 \end{equation*}
 where $F^{-1}(p, \lambda)$ is the quantile function for the exponential 
 distribution with rate parameter $\lambda$. 
@@ -699,7 +708,7 @@ distribution with rate parameter $\lambda$.
 The simulation design was the same, except the target parameters of $W_t$ were:
 1) $\mu = 1$, the mean of $W_t$;
 2) $\sigma_w = 1$, the standard deviation of $W_t$; and
-3) $\rho$, the lag-1 autocorrelation coefficient of $W_t$
+3) $\rho$, the lag-1 autocorrelation coefficient of $W_t$.
 Although we may have set $\phi$ to these five levels for $X_t$: 
 $\{-0.4, -0.2, 0.0, 0.2, 0.4\}$, because of the transformation,
 the new five true autocorrelation coefficients for $W_t$ were different.
@@ -714,7 +723,7 @@ requires double integration using the \textsl{pracma} package. \citep{pracma}
 Finally, we obtained true $\rho = E[XY] - 1$, which was used as the target
 parameter when evaluating CI performance when estimating $\rho$.
 After this step, we again plotted empirical coverage 
-rates for $\mu$, $\sigma$, and $\rho$, as well as 95\% confidence intervals of 
+rates for $\mu$, $\sigma_w$, and $\rho$, as well as 95\% confidence intervals of 
 the real coverage. These are displayed in 
 \textbf{Figures~\ref{fig:exp_mu}--\ref{fig:exp_rho}}. 
 
@@ -779,9 +788,9 @@ samples of $n \in \{800, 1600\}$.
   \label{fig:eri}
 \end{figure}
 
-Iit seems that range of sample sizes needed 
+It seems that range of sample sizes needed 
 to cover parameters of an exponentially distributed AR(1) process is generally 
-higher than that needed to cover parameters of a normally.
+higher than that needed to cover parameters of a normally
 distributed AR(1) process. Despite this, the trends and patterns discussed 
 previously with respect
 to the performance of different methods and with different parameters are the 
