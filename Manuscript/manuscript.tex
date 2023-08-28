@@ -295,6 +295,7 @@ the question is how to construct a CI for $\theta$ using the $B$ bootstrap point
 estimates $\{\hat\theta_n^{(1)}, \ldots, \hat\theta_n^{(B)}\}$. We consider six 
 kinds of block bootstrap CIs adapted from standard bootstrap CIs.
 
+
 \paragraph{Standard Normal CI}
 Assuming that $\hat\theta_n$ is asymptotically normally distributed with 
 $\theta$ as the mean, we just need an estimate of the standard error to 
@@ -366,8 +367,7 @@ The BCA CI was first suggested in \citet{efron1987better}. Let $Z_{(i)}$ be the
 original sample without the $i$th block $z_i$ for $i \in \{1, \ldots, k\}$, let 
 $\hat{\theta}_{(i)}$ be the statistic of $Z_{(i)}$, and let 
 $\hat{\theta}_{(.)} = k^{-1}\sum_{i=1}^{k} \hat{\theta}_{(i)}$. 
-Let \jy{No need to number an equation if it is not referred to}
-\mc{addressed}
+Let
 \begin{equation*}
 \hat{a} = \frac{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
   \hat{\theta}_{(i)})^3}{6\{\sum_{i=1}^{k} (\hat{\theta}_{(.)} -
@@ -395,7 +395,6 @@ rate of change of the standard error of $\hat\theta_n$ with respect to $\theta$.
 
 
 \paragraph{Recentered Percentile CI}
-
 We propose a CI that is centered at the original point estimate and uses the 
 variation in the bootstrap estimates to construct the error bound. This interval 
 requires
@@ -408,6 +407,7 @@ centered around $\hat\theta_n$ and can be written as
 \]
 It is not necessarily symmetric, as different critical values are used to 
 compute the lower and upper bounds. It has the same width as the percentile CI.
+
 
 \section*{simulation study}
 \label{sec:simu}
@@ -467,6 +467,13 @@ the process' variability. \textbf{Figures~\ref{fig:mu}--\ref{fig:phi}}
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
 real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
 
+\subsection*{Results}
+
+\jy{I'd slightly increase the heights of the figures such that two of them
+  would occupied a whole page. This reduces the complexity of floating in
+  finding best locations.}
+
+\jy{Clarify normal margins in captions.}
 
 \begin{figure}[tbp]
   \centering
@@ -479,13 +486,6 @@ real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
   \label{fig:mu}
 \end{figure}
 
-
-\jy{I like the font size of the labels and axis of Figure 4. They are still
-  overly large in Figures 1--3. The panel head is also too wide. The axis ticks
-  look crowded. The panel
-  labels on the right also does not look pretty. I'd prefer the old version if
-  the font sizes were smaller.}
-\mc{addressed}
 
 \begin{figure}[tbp]
   \centering
@@ -510,13 +510,7 @@ real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
   \label{fig:phi}
 \end{figure}
 
-\subsection*{Results}
 
-\jy{Is textbf of Figure requried? Never manual formatting.}
-\mc{The guide says "When you need to refer to Figure 1, Reference 1, Table 1, 
-Scheme 1, Step 1, and Equation 1 please bold those words in the text (size 10) 
-and in the title (size eight)." If I don't use textbf, the references don't get
-bolded by default.}
 For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu}} suggests 
 that all methods eventually approach correct coverage of $\mu$ as sample size 
 increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
@@ -710,6 +704,8 @@ Although we may have set $\phi$ to these five levels for $X_t$:
 $\{-0.4, -0.2, 0.0, 0.2, 0.4\}$, because of the transformation,
 the new five true autocorrelation coefficients for $W_t$ were different.
 \mc{I may need some help explaining the calibration of copula parameters}
+\jy{see demo code in \texttt{copula.R}}
+
 
 To calibrate the copula parameters, we first constructed a multivariate
 exponential distribution from a normal copula using the \textsl{copula} package.
@@ -722,19 +718,13 @@ rates for $\mu$, $\sigma$, and $\rho$, as well as 95\% confidence intervals of
 the real coverage. These are displayed in 
 \textbf{Figures~\ref{fig:exp_mu}--\ref{fig:exp_rho}}. 
 
-\jy{Let $\rho$ and $\phi$ be the autocorrelation coefficient of $X_t$ and $W_t$,
-  respectively. There is a 1-1 map between $\rho$ to $\phi$. You already figured
-  out how to transform from $\rho$ to $\phi$. Now we want $\phi$ to be, say,
-  0.4, you can calibrate $\rho$ to give you the desired value. This only need to
-  be done once before your run your simulation. }
 
 \jy{cite the copula book instead of the package} \mc{i cited the nelsen book 
 referenced in the manual}
+\jy{Cite my book on the copula package}
 
-\jy{comment on the similarity of the results with those reported in the main 
-text.} \mc{addressed}
-
-
+\jy{Let's call this process marginally transformed AR(1) proess. Itself is not
+  an AR(1) process. Correct the captions.}
 
 \begin{figure}[tbp]
   \centering
@@ -806,6 +796,10 @@ issue. Overall, the results with an underlying marginal exponential distribution
 are very similar to the results with an underlying normal distribution from the
 main study. 
 
+\jy{comment on that the recentered percentile CI for autocorrelation still works
+  as the point estimator is unbiased.}
+
+ 
 \bibliographystyle{unsrtnat}
 \bibliography{citations}
 
