@@ -85,7 +85,7 @@
 \usepackage{xcolor}
 \newcommand{\jy}[1]{\textcolor{blue}{JY: #1}}
 \newcommand{\eds}[1]{\textcolor{red}{EDS: (#1)}}
-\newcommand{\mc}[1]{\textcolor{green}{MC: (#1)}}
+\newcommand{\mc}[1]{\textcolor{orange}{MC: (#1)}}
 
 
 
@@ -483,13 +483,6 @@ real coverage, generated using the R \textsl{ggplot2} package.\citep{ggplot2}
 
 \subsection*{Results}
 
-\jy{I'd slightly increase the heights of the figures such that two of them
-  would occupied a whole page. This reduces the complexity of floating in
-  finding best locations.}
-\mc{addressed}
-
-\jy{Clarify normal margins in captions.}
-\mc{addressed}
 
 \begin{figure}[tbp]
   \centering
@@ -725,15 +718,13 @@ Let $\rho$ be the lag-1 autocorrelation coefficient of $X_t$.
 Although we may have set $\rho$ to these five levels for $X_t$: 
 $\{-0.4, -0.2, 0.0, 0.2, 0.4\}$, because of the transformation,
 the new five true autocorrelation coefficients for $W_t$ were different.
-\mc{I may need some help explaining the calibration of copula parameters}
-\jy{see demo code in \texttt{copula.R}}
 
 
 To calibrate the copula parameters, we first constructed a multivariate
 exponential distribution from a normal copula with 
-$\rho \in \{-0.4, -0.2, 0.0, 0.2, 0.4\} $using the \textsl{copula} package.
-\citep{hofert2018elements} Then we computed $E[XY]$, which 
-requires double integration using the \textsl{pracma} package. \citep{pracma} 
+$\rho \in \{-0.4, -0.2, 0.0, 0.2, 0.4\} $using the \texttt{copula} package.
+\citep{hofert2018ealements} Then we computed $E[XY]$, which 
+requires double integration using the \texttt{pracma} package. \citep{pracma} 
 Finally, we obtained true $\phi = E[XY] - 1$, which was used as the target
 parameter when evaluating CI performance when estimating $\phi$.
 After this step, we again plotted empirical coverage 
@@ -741,15 +732,6 @@ rates for $\mu$, $\sigma_w$, and $\phi$, as well as 95\% confidence intervals of
 the real coverage. These are displayed in 
 \textbf{Figures~\ref{fig:exp_mu}--\ref{fig:exp_phi}}. 
 
-
-\jy{cite the copula book instead of the package} \mc{i cited the nelsen book 
-referenced in the manual}
-\jy{Cite my book on the copula package}
-\mc{addressed}
-
-\jy{Let's call this process marginally transformed AR(1) proess. Itself is not
-  an AR(1) process. Correct the captions.}
-\mc{addressed}
 
 \begin{figure}[tbp]
   \centering
@@ -804,7 +786,8 @@ samples of $n \in \{800, 1600\}$.
   \centering
   \includegraphics[width=\textwidth]{figures/exp_pho_intervals}
   \caption{50 replicate percentile, BC, and recentered percentile CIs for 
-    samples of $n \in \{800, 1600\}$ for an AR(1) process with $\phi = 0.4$ 
+    samples of $n \in \{800, 1600\}$ for an AR(1) process with $\phi = 0.4$
+    \jy{not accurate}
     transformed to an exponential distribution iwth $\lambda = 1$. For 
     each replicate, the lower and upper bounds of the CIs are displayed, as well 
     as $\hat\theta_n$ (blue circle) and $\bar\theta_n^{B}$ (red cross).}
