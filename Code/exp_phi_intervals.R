@@ -45,20 +45,11 @@ font_add_google("EB Garamond")
 
 showtext_auto()
 
-mymvd <- copula::mvdc(normalCopula(0.4), margins = "exp", 
-                      paramMargins = list(rate=1), marginsIdentical = TRUE)
-
-## numerical integration to get 
-EXY <- pracma::dblquad(function(x, y) x * y * 
-                         copula::dMvdc(cbind(x, y), mymvd), 0, 20, 0, 20)
-## approximate true rho
-rho <- (EXY - 1) / 1
-
 ggplot(plot_data, aes(x = replication, y = point_estimate)) +
   geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound), width = 0.5, color = 'gray') +
   geom_point(color = 'blue') +
   geom_point(aes(y = bts_mean), color = 'red', shape = 'cross') +
-  geom_hline(yintercept = rho, linetype = "dotted") +
+  geom_hline(yintercept = 0.4, linetype = "dotted") +
   facet_grid(custom_title ~ sample.size) +
   labs(x = 'Replication', y = 'Value') +
   scale_color_manual(values = c('blue', 'red', 'gray')) +
@@ -67,4 +58,5 @@ ggplot(plot_data, aes(x = replication, y = point_estimate)) +
   theme(strip.text=element_text(size=10), text =
           element_text(family = "EB Garamond"))
 
-ggsave('../Manuscript/figures/exp_rho_intervals.pdf', width = 10)
+ggsave('../Manuscript/figures/exp_phi_intervals.pdf', width = 10,
+       height = 5)
