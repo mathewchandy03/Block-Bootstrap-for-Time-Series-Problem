@@ -441,7 +441,7 @@ series $X_t$ has mean zero and variance
 $\sigma_x^2 = (1 - \phi^2) \sigma_{\epsilon}^2$, so for each value of $\phi$, we 
 set $\sigma_{\epsilon}^2 = 1 / (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
 
-\jy{What was $B$?}
+\jy{What was $B$?} \mc{addressed}
 
 Three target parameters of $X_t$ were considered:
 1) $\mu = 0$, the mean of $X_t$;
@@ -450,7 +450,8 @@ Three target parameters of $X_t$ were considered:
 To investigate the effect of sample size~$n$, we considered an array of values
 $n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 
 10000 replicates. For each replicate, we constructed six 95\% block bootstrap 
-CIs for each parameter as described in the last section. We can estimate $\mu$, 
+CIs for each parameter as described in the last section with $B = 1000$. We can 
+estimate $\mu$, 
 $\sigma_x$, and $\phi$ by computing the sample mean, sample standard deviation, 
 and lag-1 autocorrelation, respectively, of each bootstrap sample. Then we can 
 construct intervals for each parameter using the appropriate procedures 
@@ -604,7 +605,7 @@ performance of the BC intervals. The BCA intervals have the same problem as the
 BC intervals in the bias-correction step. The root of the issue appears to be 
 that the autocorrelation in the block bootstrap samples is somehow smaller 
 compared to that in the original sample. On the other hand, the original point 
-estimate $\hat\theta_n$ is asymptotically unbiased. Since the width is based on 
+estimator $\hat\theta_n$ is asymptotically unbiased. Since the width is based on 
 the uncertainty in the bootstrap point estimates $\hat\theta_n^{(b)}$, 
 $b = 1, \ldots, B$, the percentile CIs recentered at the original point estimate
 $\hat\theta_n$ provide desired coverage.
@@ -626,11 +627,9 @@ correct from the original point estimate $\hat\theta_n$.
 
 
 An additional simulation study in which block bootstrap is used to estimate
-\jy{not an AR(1) process...}
-parameters of an AR(1) process with an underlying exponential marginal 
-distribution is discussed in the Appendix. Overall, the results with an 
-underlying marginal exponential distribution are very similar to the results 
-with an underlying normal distribution discussed above.
+\jy{not an AR(1) process...} \mc{addressed}
+parameters of a marginally transformed AR(1) process with an underlying 
+exponential distribution is discussed in the Appendix. 
 
 \section*{discussion}
 \label{sec:disc}
@@ -740,10 +739,10 @@ the real coverage. These are displayed in
   \centering
   \includegraphics[width=\textwidth]{figures/plot_exp_mu}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\mu$ of a marginally transformed AR(1) process with an 
-    underlying exponential distribution ($\lambda = 1$) with AR 
+    the marginal mean $\mu$ of a marginally transformed AR(1) process with AR 
     coefficient
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ with an 
+    underlying exponential distribution ($\lambda = 1$) and series length
     $n \in \{100, 200, 400, 800, 1600, 3200\}$ with
     an exponential distribution with $\lambda = 1$ based on 10,000 replicates. 
     The error bars represent 95\% CIs of the real coverage rates.}
@@ -756,11 +755,10 @@ the real coverage. These are displayed in
   \includegraphics[width=\textwidth]{figures/plot_exp_sigma}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal standard deviation $\sigma_x$ of a marginally transformed AR(1) 
-    process with an 
-    underlying exponential distribution ($\lambda = 1$) with AR 
-    coefficient $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length 
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ transformed to
-    an exponential distribution with $\lambda = 1$ based on 10,000 replicates. 
+    process with AR 
+    coefficient $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ with an 
+    underlying exponential distribution ($\lambda = 1$) and series length 
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. 
     The error bars represent 95\% CIs of the real coverage rates.}
   \label{fig:exp_sigma}
 \end{figure}
@@ -771,12 +769,11 @@ the real coverage. These are displayed in
   \includegraphics[width=\textwidth]{figures/plot_exp_phi}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for 
     the first-order autocorrelation coefficient $\phi$ of a marginally 
-    transformed AR(1) process with 
+    transformed AR(1) process with
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ with 
     an 
-    underlying exponential distribution ($\lambda = 1$) with
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ transformed to
-    an exponential distribution with $\lambda = 1$ based on 10,000 replicates. 
+    underlying exponential distribution ($\lambda = 1$) and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. 
     The error bars represent 95\% CIs of the real coverage rates.}
   \label{fig:exp_phi}
 \end{figure}
@@ -789,9 +786,10 @@ samples of $n \in \{800, 1600\}$.
   \centering
   \includegraphics[width=\textwidth]{figures/exp_pho_intervals}
   \caption{50 replicate percentile, BC, and recentered percentile CIs for 
-    samples of $n \in \{800, 1600\}$ for an AR(1) process with $\phi = 0.4$
-    \jy{not accurate}
-    transformed to an exponential distribution iwth $\lambda = 1$. For 
+    samples of $n \in \{800, 1600\}$ for a marginally transformed AR(1) process 
+    with $\phi = 0.4$
+    \jy{not accurate} \mc{is this better}
+    with an underlying exponential distribution ($\lambda = 1$). For 
     each replicate, the lower and upper bounds of the CIs are displayed, as well 
     as $\hat\theta_n$ (blue circle) and $\bar\theta_n^{B}$ (red cross).}
   \label{fig:eri}
@@ -809,13 +807,17 @@ other
 methods. Performance is still generally better when temporal dependence is 
 negative rather than positive. Most importantly, percentile, BC, and BCA CIs
 still deteriorate in coverage of $\phi$ as sample size increases. As exhibited 
-in Figure~\ref{fig:eri}, percentile and BC CIs still have the same bias
-issue. Overall, the results with an underlying marginal exponential distribution 
+in Figure~\ref{fig:eri}, percentile and BC CIs still suffer from the same bias
+issue, whereas recentered percentile CI still work when estimating $\phi$ 
+because the 
+original point estimator is unbiased. Overall, the results with an underlying 
+marginal 
+exponential distribution 
 are very similar to the results with an underlying normal distribution from the
 main study. 
 
 \jy{comment on that the recentered percentile CI for autocorrelation still works
-  as the point estimator is unbiased.}
+  as the point estimator is unbiased.} \mc{addressed}
 
  
 \bibliographystyle{unsrtnat}
