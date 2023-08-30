@@ -24,7 +24,7 @@ exp_mu <- read.csv("../Data/exp_mu.csv") %>%
   filter(CI != 'ctrCI')
 exp_sigma <- read.csv("../Data/exp_sigma.csv") %>% 
   filter(CI != 'ctrCI')
-exp_rho <- read.csv("../Data/exp_rho.csv") %>% 
+exp_phi <- read.csv("../Data/exp_phi.csv") %>% 
   filter(CI != 'ctrCI')
 
 t <- 'exp_mu'
@@ -35,6 +35,6 @@ t <- 'exp_sigma'
 width <- .2
 graph_bts(t, width, exp_sigma)
 
-t <- 'exp_rho'
+t <- 'exp_phi'
 width <- .2
-graph_bts(t, width, exp_rho)
+graph_bts(t, width, exp_phi)
