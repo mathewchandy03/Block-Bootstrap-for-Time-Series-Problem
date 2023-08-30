@@ -35,6 +35,6 @@ t <- 'exp_sigma'
 width <- .2
 graph_bts(t, width, exp_sigma)
 
-t <- 'exp_phi'
+t <- 'exp_rho'
 width <- .2
-graph_bts(t, width, exp_phi)
+graph_bts(t, width, exp_rho)

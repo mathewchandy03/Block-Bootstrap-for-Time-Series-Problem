@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1 ## OBS 1
 #SBATCH --cpus-per-task=1 ## OBS 2
 #SBATCH --mem-per-cpu=500M ## OBS 3
-#SBATCH --mail-type=ALL                       # Event(s) that triggers email notification (BEGIN,END,FAIL,ALL)
+#SBATCH --mail-type=FAIL                       # Event(s) that triggers email notification (BEGIN,END,FAIL,ALL)
 #SBATCH --mail-user=mathew.chandy@uconn.edu    
 
 module load r/4.2.2

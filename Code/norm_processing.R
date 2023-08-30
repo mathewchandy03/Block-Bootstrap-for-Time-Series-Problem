@@ -13,7 +13,6 @@ combined_matrices <- lapply(grouped_matrices, function(x) {
 df <- data.frame(phi = numeric(), n = numeric(), CI = character(), 
                  target = character(), cov = numeric(),
                  LB = numeric(), UB = numeric())
-nrep = 10000
 for(i in names(combined_matrices)) {
   phi <- as.numeric(strsplit(i, '_')[[1]][1])
   n <- as.integer(strsplit(i, '_')[[1]][2])
@@ -22,8 +21,8 @@ for(i in names(combined_matrices)) {
   CI <- rep(types, each = length(cov) / length(types))
   parameters <- c('mu', 'sigma', 'phi')
   target <- rep(parameters, length(cov) / length(parameters))
-  LB <- sapply(cov, function(j) prop.test(j*nrep, nrep)$conf.int[1])
-  UB <- sapply(cov, function(j) prop.test(j*nrep, nrep)$conf.int[2])
+  LB <- sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[1])
+  UB <- sapply(cov, function(i) prop.test(i*nrep, nrep)$conf.int[2])
   new_rows <- data.frame(phi = rep(phi, length(cov)), n = rep(n, length(cov)), CI, target, cov, LB, UB)
   df <- rbind(df, new_rows)
 }
@@ -39,5 +38,3 @@ write.csv(norm_sigma,"norm_sigma.csv", row.names = FALSE)
 t <- 'phi'
 norm_phi <- df[(df$target == t),]
 write.csv(norm_phi,"norm_phi.csv", row.names = FALSE)
-
-setwd("../Code")

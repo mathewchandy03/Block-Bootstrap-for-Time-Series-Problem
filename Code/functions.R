@@ -1,17 +1,6 @@
 .libPaths("~/rlibs")
 library(ggplot2) 
 library(showtext)
-# library(copula)
-# library(pracma)
-
-# rho2phi <- function(rho) {
-#  mymvd <- copula::mvdc(copula::normalCopula(rho), margins = "exp",
-#                        paramMargins = list(rate=1), marginsIdentical = TRUE)
-#  EXY <- pracma::dblquad(function(x, y) x * y * copula::dMvdc(cbind(x, y), mymvd),
-#                         0, 20, 0, 20)
-#  phi <- (EXY - 1) / 1
-#  phi
-# }
 
 mystat <- function(x) {
   c(mean(x),
@@ -97,11 +86,11 @@ mychk <- function(sim, target) {
   start <- length(target) * 2 + 1
   new_sim <- sim[start:nrow(sim), ]
   p <- nrow(new_sim) / length(target) / 2
-  t <- rep(target, p)
-  ret <- rep(NA, length(t))
+  target <- rep(target, p)
+  ret <- rep(NA, length(target))
   for (i in seq_along(ret)) {
     ii <- (i - 1) * 2
-    ret[i] <- mean(new_sim[ii + 1,] < t[i] & t[i] < new_sim[ii + 2,])
+    ret[i] <- mean(new_sim[ii + 1,] < target[i] & target[i] < new_sim[ii + 2,])
   }
   ret
 }
@@ -127,6 +116,5 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
             element_text(family = "EB Garamond", size = 10),
           strip.text.y = element_text(angle = 270, hjust = 1)) +
     scale_y_continuous(trans=trans)
-  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), width = 10,
-         height = 5)
+  ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), width = 10)
 }

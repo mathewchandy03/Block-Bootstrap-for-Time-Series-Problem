@@ -26,19 +26,7 @@ rho2phi <- function(rho) {
     phi
 }
 
-rho <- c()
-names(rho) <- c()
+uniroot(function(x) rho2phi(x) - 0.4, interval = c(0, 0.9))
 
-rho['-0.4'] <- uniroot(function(x) rho2phi(x) + 0.4, interval = c(-.56, 0))$root
-
-rho['-0.2'] <- uniroot(function(x) rho2phi(x) + 0.2, interval = c(-.56, 0))$root
-
-rho['0'] <- uniroot(function(x) rho2phi(x) - 0, interval = c(0, 0.9))$root
-
-rho['0.2'] <- uniroot(function(x) rho2phi(x) - 0.2, interval = c(0, 0.9))$root
-
-rho['0.4'] <- uniroot(function(x) rho2phi(x) - 0.4, interval = c(0, 0.9))$root
-
-saveRDS(rho, file = '../Data/rho')
-
+uniroot(function(x) rho2phi(x) + 0.4, interval = c(-.56, 0))
     
