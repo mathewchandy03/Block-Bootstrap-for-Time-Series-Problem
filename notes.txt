@@ -234,3 +234,13 @@
 • Book page/section
 • For undergrad or graduate, results can be easily demonstrated
 • Go through comments
+
+8/30 Notes
+• -0.4 is very close to the boundary
+• 2.6.1 in book explains
+• Rho in that normal distribution goes to -1
+• In perfectly negatively dependent case, y will be a function of x
+• We did a transformation, we know we have exponential, but autocorrelation is different
+• Find minimum autocorrelation for exponential distribution
+• F inverse of uniform random variable
+• Two u and 1 - u
