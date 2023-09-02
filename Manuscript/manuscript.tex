@@ -87,6 +87,7 @@
 \setlength{\bibsep}{0pt plus 0.3ex}
 
 \usepackage{physics} % for \dd
+\usepackage{hyperref}
 
 \usepackage{xcolor}
 \newcommand{\jy}[1]{\textcolor{blue}{JY: #1}}
@@ -718,7 +719,7 @@ transformation, \citep{hofert2018elements} but its value can be obtained by
 \int_{-\infty}^\infty \int_{-\infty}^\infty F^{-1}[\Phi(x)] F^{-1}[\Phi(y)] g_2(x, y; \phi) \dd x \dd y - 1,
 \end{equation*}
 where $g_2(x, y; \phi)$ is the density of a standard bivariate normal
-distribution with correlation~$\phi$. We kept the configuration of
+distribution with correlation parameter~$\phi$. We kept the configuration of
 $\phi \in \{-0.4, -0.2, 0.0, 0.2, 0.4\}$, and the corresponding lag-1
 autocorrelation coefficients are $\{-0.298, -0.156, 0, 0.170, 0.355\}$.
 
@@ -767,7 +768,7 @@ autocorrelation coefficients are $\{-0.298, -0.156, 0, 0.170, 0.355\}$.
   \centering
   \includegraphics[width=\textwidth]{figures/exp_phi_intervals}
   \caption{50 replicate percentile, BC, and recentered percentile CIs for the
-    mean, standard deviation, and lag-1 autocorrelation coefficient
+    lag-1 autocorrelation coefficient 0.355 ($\phi = 0.4$)
     of a stationary series with marginal exponential distribution
     obtained by transforming an AR(1) process with $\phi = 0.4$ with
     sample size $n \in \{800, 1600\}$. For 
@@ -776,15 +777,14 @@ autocorrelation coefficients are $\{-0.298, -0.156, 0, 0.170, 0.355\}$.
   \label{fig:eri}
 \end{figure}
 
-\jy{change the captions of the other three figures accordingly}
-\mc{addressed}
 
 The empirical coverage rates for $\mu$, $\sigma_w$, and $\phi$, as well as 95\%
 confidence intervals of the real coverage are displayed in 
 \textbf{Figures~\ref{fig:exp_mu}--\ref{fig:exp_phi}}. 
-Additionally, another set of 50 CIs was generated for each of the percentile, 
+Additionally, a set of 50 CIs are displayed for each of the percentile, 
 BC, and recentered percentile approaches for exponentially distributed
-samples of $n \in \{800, 1600\}$ in Figure~\ref{fig:eri}.
+samples of $n \in \{800, 1600\}$ with lag-1 autocorrelation coefficient 0.355
+($\phi = 0.4$) in Figure~\ref{fig:eri}.
 
 
 It appears that a greater sample size is generally required for the bootstrap
