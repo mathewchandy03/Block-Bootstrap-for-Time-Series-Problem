@@ -117,5 +117,5 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
           strip.text.y = element_text(angle = 270, hjust = 1)) +
     scale_y_continuous(trans=trans)
   ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), width = 10,
-         height = 5)
+         height = 5.8)
 }

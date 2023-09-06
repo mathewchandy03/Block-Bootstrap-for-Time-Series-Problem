@@ -58,4 +58,4 @@ ggplot(plot_data, aes(x = replication, y = point_estimate)) +
           element_text(family = "EB Garamond"))
 
 ggsave('../Manuscript/figures/norm_phi_intervals.pdf', width = 10,
-       height = 5)
+       height = 5.8)
