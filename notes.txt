@@ -244,3 +244,7 @@
 • Find minimum autocorrelation for exponential distribution
 • F inverse of uniform random variable
 • Two u and 1 - u
+
+9/6 Notes
+• Make plots taller
+• Check Efron book for CI notation
