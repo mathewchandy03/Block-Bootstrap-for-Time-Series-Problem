@@ -79,8 +79,6 @@ autocorrelation coefficient.
 \end{comment}
 
 
-% \jy{Confirm that all the locations mentioned really contain the stated changes.}
-% \tw{check and revise}
 
 \begin{comment}
 2. For all the figures, would it be possible to put the 6 figures in a column in 
@@ -104,11 +102,19 @@ various CI formulations for non-normal error is of central interest.
 formulas would work better. It is a bit surprising that student’s t based 
 formula works well under both normal and non-normal error structures.
 \end{comment}
-  
+
+\mc{Not sure what they mean by "non-parametric" CIs, maybe the Percentile, BC,
+and BCA, and Recentered CIs? In Figure 4, we showed that the autocorrelation in
+the bootstrap samples is generally smaller than in the original sample. 
+Percentile, BC, and BCA CIs perform better when the temporal dependence is low.
+In these circumstances, "non-parametric" CIs would work better}
 
 \begin{comment}
 5. Page 3, 2nd line after “Standard Normal CI”: “p.168” does not seem to fit?
 \end{comment}
+
+\mc{Can we include the page number in the superscript somehow? Otherwise it does
+not fit the journal's style.}
 
 \subsection*{To Referee 2}
 
@@ -119,7 +125,8 @@ values used to be listed in tables?  If that’s the case, I wouldn’t refer to
 this as a “table-based” interval. 
 \end{comment}
 
-
+\mc{The Efron book refers to such tables as "confidence intervals based on 
+bootstrap 'tables'"}
 
 
 \begin{comment}
@@ -127,7 +134,7 @@ this as a “table-based” interval.
 interval to study. 
 \end{comment}
 
-
+\mc{Maybe we can add this to future studies}
 
 \begin{comment}
 3. The sections are numbered, which makes it awkward when the authors refer back 
@@ -136,7 +143,7 @@ Bootstrap CIS.”  This would be easier to refer to if the sections were numbere
 (Is this a journal style choice?  If so, then you can ignore this comment.)
 \end{comment}
 
-
+\mc{It is a journal style choice}
 
 \begin{comment}
 4.  In Figure 1 (and all the other figures), the authors present confidence 
@@ -147,6 +154,8 @@ the Wald-type interval has undercoverage when the true proportion is near 0 or
 1, which is the case in several of these scenarios, especially when phi is -0.4. 
 \end{comment}
 
+\mc{It is the Wald-type interval, should we just mention the undercoverage in
+the design section of simulation and cite a source?}
 
 \begin{comment}
 5.  In all the figures, the y-axis is allowed to vary freely making it hard to 
@@ -154,7 +163,8 @@ compare one row directly to another.  I would suggest fixing the limits on the
 y-axis to make comparisons easier.  
 \end{comment}
 
-
+\mc{Because of the deterioration, we found it hard to fix the limits on the 
+y-axis without making the other rows look bad}
 
 \begin{comment}
 6.  Is there a reason why the coverage for mu (in Figure 1) is better for 
@@ -175,7 +185,7 @@ sample sizes to get acceptable coverage when phi is positive).  Change this
 sentence to make it more clear. 
 \end{comment}
 
-
+\mc{addressed}
 
 \begin{comment}
 8.   In the Discussion section, the authors say “We know theoretically that the 
@@ -194,6 +204,7 @@ Why did the authors choose to not also look at how the number of blocks affects
 the coverage rates?
 \end{comment}
 
+\citep{ratick2009175}
 
 \begin{comment}
 10.   Why did the authors choose to only go as high as 0.4 (and as low as -0.4) 
@@ -203,14 +214,16 @@ completely ignored here.  Can the authors justify their choice to leave it out
 of this study?
 \end{comment}
 
-
+\mc{For the higher positive autocorrelations, a very large sample size is
+required. We could try it for more extreme negative autocorrelations.}
 
 \begin{comment}
 11.    Last paragraph: The authors mention the “ABC and bootstrap-t intervals”.  
 They do not give a citation for these intervals.   Add a citation. 
 \end{comment}
 
-
+\citep[p.160]{efron1993introduction}
+\citep[p.188]{efron1993introduction}
 
 
 \begin{comment}
@@ -226,7 +239,7 @@ for our subsequent research endeavors.
 
 
 \bibliographystyle{chicago}
-\bibliography{cjiot}
+\bibliography{citations}
 
 
 \end{document}
