@@ -19,8 +19,8 @@ amssymb, enumerate}
 
 % \usepackage{xcolor}
 \newcommand{\jy}[1]{\textcolor{red}{JY: #1}}
-\newcommand{\tw}[1]{\textcolor{blue}{(TW: #1)}}
-\newcommand{\sx}[1]{\textcolor{teal}{(SX: #1)}}
+\newcommand{\eds}[1]{\textcolor{blue}{(EDS: #1)}}
+\newcommand{\mc}[1]{\textcolor{teal}{(MC: #1)}}
 
 \sloppy
 
@@ -49,522 +49,177 @@ We thank the editor and the AE for the opportunity to revise the manuscript and
 the two referees for their constructive comments. The manuscript has been
 revised accordingly with the following notable changes:
 \begin{enumerate}
-\item Newly added analyses:
+\item 
   \begin{enumerate}
-    \item chord plots visualizing the sectors' in- and out-connectivities in
-      Section~3;
-    \item key sector analysis with PageRank (PR) using export value as auxiliary
-      information in Appendix~B;
-    \item key sector analysis with hub and authority centrality in Appendix~C;
-    \item dynamics of the similarity in the sector communities within each
-      country and cross the two countries in Section~6.
+    \item 
+    \item 
+    \item 
+    \item 
     \end{enumerate}
-\item Strengthened presentations:
+\item 
   \begin{enumerate}
-  \item elaborated motivation of using network tools for the comparison of
-    sectoral structures in Section~1;
-  \item expanded interpretation of directed assortativity coefficients in the
-    context of input-output tables (IOTs) in Section~4;
-  \item clarified discussion on the PR centrality using value added as
-    auxiliary information in Section~5.
-  \item completely rewritten discussions in Section~7.
+  \item 
+  \item 
+  \item 
+  \item 
   \end{enumerate}
 \end{enumerate}
-Additionally, we undertook meticulous reviews of the entire manuscript to ensure
-clarity, coherence, and grammatical precision, aiming to present methods,
-results, and discussions in a lucid manner.
+
 
 
 Point-by-point responses to the comments are as follows, with the
 comments quoted in \emph{\color{darkblue} italic}.
 
-\subsection*{To AE}
+\subsection*{To Referee 1}
 
 \begin{comment}
-1. Strengthen the motivation, i.e., explain how the China-Japan economy
-comparison be better conducted using the methods consequently adopted in the
-paper.
+1. It would be helpful to comment on the rationale for the proposed centered CI, 
+especially in contrast to why a few others do not work for the log-1 
+autocorrelation coefficient.
 \end{comment}
-
-As suggested, we have fortified our rationale for employing network analysis
-in examining the sectoral structures of China and Japan. Specifically:
-\begin{enumerate}
-\item 
-  Network analysis introduces advanced tools for innovative visualization.
-\item
-  Network analysis provides a deeper understanding of sectoral interdependencies,
-  transcending the rudimentary summaries from the intermediate flow matrix that
-  traditional input-output analysis offers. Notably, it encompasses metrics like
-  directed strength distributions and weighted, directed assortativities, as well
-  as sector-specific centrality measures.
-\item
-  Network analysis presents novel techniques for pinpointing key
-  sectors and discerning sectoral clusters, which surpass the capabilities of
-  conventional input-output analysis.
-\end{enumerate}
-To provide clearer exposition, we have thoroughly revised paragraph~3 of
-Section 1, thus offering a compelling prelude to our analytical approach.
 
 
 % \jy{Confirm that all the locations mentioned really contain the stated changes.}
 % \tw{check and revise}
 
 \begin{comment}
-2. Perform sensitivity analysis of the PageRank-based results to the 
-selection of the value of the tuning parameter; I also like the idea of using
-the Kleinberg's hubs-and-authorities algorithm, which is a natural extension
-of the PageRank idea; the idea of studying similarities over time is an
-excellent one as well. 
+2. For all the figures, would it be possible to put the 6 figures in a column in 
+a single plot? It would also be helpful to make the figures a bit larger. Right 
+now it is hard to compare across different methods regarding their comparative 
+performance.
 \end{comment}
 
-Concurring with the suggestion for sensitivity analyses, we have expanded our
-examination to gauge the robustness of our key sector results obtained from the
-extended PR approach.
 
-
-\begin{table}[tbp]
-\centering
-\caption{The sectors with top~5 PR scores,
-based on the sensitivity analysis of the tuning parameter at the levels
-$\gamma = \{0.5, 0.85\}$ for China and Japan from 1995 to 2018
-every three years. Total value added is used as auxiliary information.}
-\label{tab:prsens}
-\resizebox{\textwidth}{!}{
-\begin{tabular}{cccccccccccccccccccc}
-\toprule
-\multirow{2}{*}{Country} & \multirow{2}{*}{Rank}
-& \multicolumn{9}{c}{$\gamma = 0.5$} & \multicolumn{9}{c}{$\gamma = 0.85$} \\
-\cmidrule(lr){3-11} \cmidrule(lr){12-20} 
-& & 1995 & 1998 & 2001 & 2004 & 2007 & 2010 & 2013 & 2016 & 2018 & 
-1995 & 1998 & 2001 & 2004 & 2007 & 2010 & 2013 & 2016 & 2018 \\ 
-\midrule
-China & 1 & 01 & 01 & 01 & 01 & 25 & 25 & 25 & 25 & 25 & 25 & 07 & 25 & 07 & 25 
-& 25 & 25 & 25 & 25 \\ 
-& 2 & 06 & 06 & 25 & 25 & 01 & 01 & 26 & 26 & 26 & 06 & 06 & 07 & 25 & 07 & 17 
-& 20 & 06 & 17 \\ 
-& 3 & 26 & 25 & 06 & 06 & 26 & 26 & 01 & 01 & 01 & 07 & 25 & 06 & 17 & 17 & 07 
-& 06 & 17 & 40 \\ 
-& 4 & 25 & 26 & 26 & 26 & 06 & 06 & 06 & 06 & 40 & 26 & 01 & 01 & 06 & 15 & 19 
-& 26 & 20 & 26 \\ 
-& 5 & 07 & 07 & 07 & 07 & 07 & 17 & 36 & 36 & 36 & 15 & 26 & 26 & 19 & 19 & 20 
-& 17 & 07 & 07 \\ [1ex]
-Japan & 1 & 26 & 26 & 26 & 26 & 26 & 26 & 26 & 26 & 26 & 26 & 26 & 26 & 26 & 26 
-& 26 & 26 & 26 & 26 \\ 
-& 2 & 25 & 25 & 37 & 37 & 37 & 37 & 37 & 37 & 37 & 25 & 25 & 25 & 20 & 20 & 42 
-& 42 & 42 & 42 \\ 
-& 3 & 37 & 37 & 25 & 42 & 42 & 42 & 42 & 42 & 42 & 42 & 42 & 42 & 42 & 42 & 20 
-& 20 & 20 & 20 \\ 
-& 4 & 42 & 42 & 42 & 25 & 25 & 25 & 25 & 25 & 25 & 20 & 20 & 20 & 25 & 37 & 37 
-& 37 & 37 & 37 \\ 
-& 5 & 36 & 36 & 36 & 36 & 20 & 20 & 20 & 20 & 20 & 37 & 37 & 37 & 37 & 25 & 25 
-& 25 & 25 & 25 \\  
-\bottomrule
-\end{tabular}}
-\end{table}
-
-We first obtained PR results, also using value added as auxiliary information,
-with $\gamma = 0.5$ and put them sides by side with those obtained with
-$\gamma = 0.85$ in Table~\ref{tab:prsens}. Within this framework, $\gamma$
-signifies the emphasis placed on the ranking from the IONs, while $1 - \gamma$
-represents the emphasis put on the ranking of the auxiliary variable. The
-widely-accepted value of $\gamma = 0.85$, as advocated by
-\citet{page1998pagerank}, affirms a reasonable inclination towards the
-importance of the IONs. The side-by-side comparison in Table~\ref{tab:prsens}
-reinforces our stance that $\gamma = 0.85$ better aligns with our objectives. A
-setting of $\gamma = 0.5$ seems to unduly accentuate the total value added,
-potentially skewing the centrality dynamics. For comprehensive scrutiny, we have
-incorporated this table and its pertinent discussion in our Supplementary
-Material. To guide readers to this additional resource, we have integrated a
-reference in the newly added paragraph~3 of Section~5.
-
-
-Kleinberg's hubs-and-authorities algorithm~\citep{kleinberg1999authoritative}
-presents an alternative approach to identifying key sectors in China and
-Japan. The sectors identified via this approach deviate from those highlighted
-by the PR method, underscoring the unique evaluative lenses inherent to each
-technique. While both methods aim to identify central nodes, the criteria and
-perspectives they adopt to discern centrality differ fundamentally. To afford
-our readers an exhaustive understanding, we juxtaposed the outcomes of both
-methods in the newly added Appendix~C.
-
-
-Studying the similarities in the cluster structures over time is indeed an
-excellent idea! To assess the resemblance between clusters, we adopted the
-adjusted mutual information (AMI) metric~\citep{vinh2009information,
-  vinh2010information}. Specifically, we have obtained the similarity of 
-community structures between the two countries for the same year, as well as 
-the dynamic similarity of community structures within a single country over 
-time. Comprehensive explanations for these analyses have been included at the 
-last paragraph of Section~6.
 
 
 \begin{comment}
-3. Improve the discussion section: better explain the assortativity analyses;
-discuss the limitations of the work - this is quite important especially 
-given that, as one of the reviewers notes, ``international input-output 
-tables involving both countries are available but not used in this study''.
+3. The Appendix should be moved to the main text? Assessing the performance of 
+various CI formulations for non-normal error is of central interest.
 \end{comment} 
 
-As suggested, we have completely rewritten the Discussion section with following
-discussion points:
-\begin{enumerate}
-\item
-  Methodological innovations in network analysis for assessing 
-  disparities in the economic structures of China and Japan.
-\item
-  Abundance of centrality measures that can be used for key sector
-  identification.
-\item
-  Availability of IOTs in national and international forms.
-\item
-  Potential followup investigation of China-Japan economic relations using
-  multi-region IOTs.
-\item
-  Impacts of global shocks such as the 2018 global financial crisis and the
-  Covid-19 pandemic.
-\end{enumerate}
-
-We acknowledge the need for a clearer interpretation of assortativity. In
-response, we have added a new paragraph dedicated to the interpretation of
-assortativity coefficients in terms of supplying sectors and receiving sectors.
-As examples, we gave explicit interpretation of positive in-in assortativity and
-negative out-out assortativity. See paragraph~2, Section~4.
-
-
-We are grateful to the reviewers for highlighting the existence of international
-IOTs encompassing both China and Japan. In the revised manuscript, we have
-reviewed the World Input-Output Database (WIOD)~\citep{timmer2015illustrated}
-and Asian Development Bank's Multiregional Input-Output Table database
-(ADB-MRIO)~\citep{ADB2023iot}, explaining why they did not serve our purpose
-well; see paragraph~3, Section~2. Further, the core emphasis of our paper is on
-internal sectoral structures within each nation rather than the inter-country
-connections. Analyzing the interconnectedness between sectors in China and Japan
-remains a compelling avenue for future research, a prospect we delve into in
-paragraph~4 of Section~7.
 
 
 \begin{comment}
-4. Expand on the insights produced; how do the reported findings compare to
-those presented in the earlier-published literature? (this is important
-since the authors state that the China-Japan economy comparison draws 
-a lot of research attention. 
+4. The authors might want to discuss in what circumstances “non-parametric” CI 
+formulas would work better. It is a bit surprising that student’s t based 
+formula works well under both normal and non-normal error structures.
 \end{comment}
   
-We realized that our prior statement was not accurate.
-While there is a significant volume of literature concentrating on the economies
-of China and Japan independently, there is indeed a palpable gap in studies
-directly juxtaposing the sectoral structures of these two major Asian
-economies. To better reflect this reality, we have revisited and amended our
-literature review in paragraph~2 of Section1. In the analysis, we undertook a
-comparative exploration, accentuating both congruences and variances in relation
-to the lone preceding study that touched on this theme, namely,
-\citet{li2017examining}. This comparison is thoroughly elucidated in the
-penultimate paragraph of Section~5.
-
-
-\subsection*{To Referee 1}
 
 \begin{comment}
-1. One of my main concerns is contribution. The contribution of the paper is
- not methodological. Instead the contribution pretends to be in terms of a
-better understanding of the differences between China and Japan's economies.
-But the analysis done does not provide a deeper understanding different from
-what one may expect. Both centrality ranking and clustering confirm what
-was suspected or known. Therefore, the paper needs to make a deeper
-network analysis and interpretation of results in order to show the
-contribution and relevance of using network tools to analyze the
-structure of economies.
+5. Page 3, 2nd line after “Standard Normal CI”: “p.168” does not seem to fit?
 \end{comment}
-
-
-We appreciate the reviewer's concern on our contributions and would like to
-clarify that our primary aim is to apply recent advancements in network analysis
-tools, including some developed by our group, to analyze the IONs of China and
-Japan's sectoral structures.
-
-
-Regarding the observation that our contribution ``pretends'' to be in terms of a
-better understanding of the differences between the two economies, we want to
-assure that our intentions have been genuine and firmly rooted in academic
-exploration. We acknowledge that sometimes, our analysis may seem to confirm
-previously suspected ideas, but we see this as an essential validation in
-research, further solidifying existing notions from a novel perspective.
-
-
-In our literature review, we found a paucity of studies on this particular
-topic, with a notable mention of \citet{li2017examining}. We would be grateful
-for any additional references the reviewers could suggest to enhance our work.
-
-
-To ensure clarity regarding our research contributions, the penultimate
-paragraph in the introduction has been revised at large. See also our summary at
-the beginning of this reply.
-
-
-\begin{comment}
-2. To study the structure of both economies authors use page rank as one of the
-centrality measures. Why page rank? This measure requieres a tuning parameter
-and therefore authors need to come up with an external measure for this. Many
-times this is a subjective measure and ends up skewing the analysis.
-\end{comment}
-
-
-The PR method employed in our paper, which allows the inclusion of
-auxiliary data, is an advancement of the standard PR traditionally used in
-ION analyses \citep{cerina2015world}. This refined approach was selected
-not only
-because our group developed it and we were keen to assess its practical
-application but also due to its alignment with our emphasis on economic
-growth. Specifically, we aimed to embed the macroeconomic metric of value added
-into the sectoral importance ranking. While we recognize in the revised
-manuscript that this method could potentially bias the analysis, we also view
-this as advantageous when the emphasis is on economic growth. This discussion
-can be found in paragraph~4, Section~5.
-
-
-We have also expanded our discussion to highlight the potential of alternative
-centrality measures for key sector identification. See paragraph~2, Section~7.
-
-
-\begin{comment}
-3. Related to my previous point, why using value added as the tuning parameter
-for page rank? As authors point out both economies are very different. Japan,
-being a services economy is expected to have lower value added and a more
-homogeneous distribution of value added across its most important sectors.
-Comparably, China is a manufacturing economy with known industrial policy that
-requieres certain amount of domestic value added, therefore is expected to have
-higher value added and a more skewed distribution of it across sectors.
-Importantly, we also have size of the economies; China is much bigger.
-Consequently, using value added may skew things.
-\end{comment}
-
-% histogram vs bar chart
-
-For our analysis, we used value added due to two primary
-reasons. Firstly, given our focus on economic growth, value added serves as a
-robust indicator of each sector's contribution to the overall economy. Secondly,
-the IOTs readily provide this metric, ensuring its accessibility, and it has not
-been utilized in the creation of the IONs.
-
-
-The homogeneity of value added across sectors in China and in Japan piques
-interest. To elucidate, we plotted bar charts of the value added data
-for both countries in 1995 and 2018 in a newly added Figure~4. The plots suggest
-marginal disparity in sectoral heterogeneity between the two countries; the
-variance is 0.0261 and 0.0214 for China, and 0.0275 and 0.0278 for Japan.
-Notably, as expected, sectors
-contributing significantly to value added differ between these countries. This
-variation underpins our motivation to integrate value added as the auxiliary
-element in the PR metric. We have embedded this perspective in
-paragraph~4, Section~5.
-
-
-On the impact of the size of an economy on PR, we would like to clarify
-that it is the composition of the auxiliary variable instead of its sizes that
-matters. Specifically, $\lambda_i / \sum_{i \in V} \lambda_i$ is scale-free and
-is only affected by the share of sector~$i$ in the whole economy. We have added
-a clarification to end of paragraph~2, Section~5.
-
-% There was no clarification before I added on Oct. 8
-
-\begin{comment}
-4. Therefore, I suggest two things. One, provide a sensitivity analysis and
-observe how the ranking and conclusions change when using other macroeconomic
-variables (or other type of variables) for the page rank tuning parameter.
-Second, compute and use authority and hub scores which are a generalization of
-eigenvector centrality for directed networks. They do not requiere a tuning
-parameter therefore authors do not need to come up with a subjective external
-measure to tune it in. These measures rank nodes according to the link
-structure of the network and this is exactly what authors write that want to do.
-\end{comment}
-
-Excellent suggestions!
-
-
-The choice of the auxiliary measure hinges upon the specific objectives 
-of the researchers. In our case, we chose value added data as the auxiliary 
-information because our focus centers on analyzing the sectoral structure, and 
-value added data provides an effective reflection of the economic significance 
-of each sector. Further, value added is conveniently available in the IOTs but
-does not contribute to the construction of the IONs. Following the suggestion,
-we performed a sensitivity analysis by using an alternative macroeconomic
-variable, and reported the top sector results in Appendix~B. The results
-referenced in the last paragraph, Section~5.
-
-
-We agree that authority and hub scores have advantages of no need for subjective
-auxiliary measures. In response, we have computed these scores and summarized
-the results in Appendix~C. As expected, these results are different from ours
-given the different focuses in the centrality measures. In fact, each of the
-hundreds of existing centrality measures has its own rationale and
-interpretation. In the paper, we kept the our results because our focus is on
-economic growth and the recently proposed PR centrality with value added
-as auxiliary variable meets our need. The results from authority and hub scores
-are referenced in the last paragraph, Section~5. 
-
-
-% obvious punctuation errors
-\begin{comment}
-5. Provide a better and more complete interpretation of assortativity. In
-particular, about what is means assortativity in-in, out-out, in-out, positive
-or negative in the context of input-output networks. Remember that links are
-supply and demand of inputs. For example interprete and discuss what does it 
-mean that there is positive assortativity for in-in but negative for out-out?
-Discussion section is poor and not precise. Actually, it is not really a
-discussion. Authors limit themselves to recapitulare main findings. Therefore I
-highly recommend to provide a complete and more profound discussion section.
-\end{comment}
-
-We agree that the interpretation of assortativitity needed to be improved. In
-response, we have added a new paragraph dedicated to the interpretation of
-assortativity coefficients in terms of supplying sectors and receiving sectors.
-As examples, we gave explicit interpretation
-of positive in-in assortativity and negative out-out assortativity. See
-paragraph~2, Section~4. 
-
-
-We also agree that the discussion section in the last version did not suit the
-journal style well. In response, we have completely rewritten the discussion
-section covering the following:
-\begin{enumerate}
-\item
-  Methodological innovations in network analysis for assessing 
-  disparities in the economic structures of China and Japan.
-\item
-  Abundance of centrality measures that can be used for key sector
-  identification.
-\item
-  Availability of IOTs in national and international forms.
-\item
-  Potential followup investigation of China-Japan economic relations using
-  multi-region IOTs.
-\item
-  Impacts of global shocks such as the 2018 global financial crisis and the
-  Covid-19 pandemic.
-\end{enumerate}
-
 
 \subsection*{To Referee 2}
 
 \begin{comment}
-1. The authors state that the economic structure comparison between China and
-Japan ``has long been of interest''. But further justification and detailed
-reasoning could be provided. The related development economics literature
-should be surveyed.
-\end{comment}
-
-% quotes
-% contractions
-% proofread
-% responsive
-
-We have recognized that the phrase ``has long been of interest'' may not have
-been entirely precise. While a plethora of studies exists on the economies of
-both China and Japan, research that specifically zeroes in on comparing their
-sectoral structures is relatively scant. Consequently, we have revised our
-literature review on this topic, which can now be found in paragraph~2 of
-Section~1.
-
-
-We have also refined our justification for contrasting the sectoral structures
-of Japan and China. This enhanced motivation can be found in the latter part of
-paragraph~1 in Section~1, complete with pertinent references for further
-clarity.
-
- 
-\begin{comment}
-2. The economic interpretations of the network measures could be strengthened.
-What are the economic implications of the findings? For example, the
-substitutes (competition) and complements (cooperation) effects between China
-and Japan from an international trade perspective can be seen in Zhu et al.
-(2014) and from a global value chain perspective can be seen in Zhu et al.
-(2018).
+1. The authors say “....the standard CI is a table-based bootstrap…..”.  
+What is meant by “table-based” here?  Is this just a reference to how critical 
+values used to be listed in tables?  If that’s the case, I wouldn’t refer to 
+this as a “table-based” interval. 
 \end{comment}
 
 
-We genuinely value the insightful feedback. Our core emphasis in this study
-revolves around the internal sectoral structures of both China and Japan. To
-reinforce the narrative and conclusions drawn from our findings, we have
-enriched discussions across Sections 3 to 6. Notably:
-\begin{enumerate}
-\item
-  We introduced chord plots in Section~3 to offer a more lucid visual
-  representation of the intricate intersectoral connections.
-\item
-  Interpretations of the weighted, directed assortativity coefficients were
-  added in paragraph~2, Section~4.
-\item  
-  Section~5 now includes an enhanced discussion on selection of auxiliary
-  information in extended PR scoring; in discussions about the top 5 sectors,
-  comparisons were made with established work by \citet{li2017examining}.
-\item
-  We have elucidated on the similarities in the community structures of sectors
-  in the last paragraph of Section~6.
-\end{enumerate}
-
-
-While exploring the interconnected dynamics between China and Japan's sectors is
-undoubtedly compelling, it remains beyond the immediate purview of this
-research. Nevertheless, inspired by prior studies~\citep{zhu2014rise,
-  zhu2018similarity}, we have alluded to the promising avenues of research in
-this direction, leveraging multi-region IOTs, in paragraph~4 of Section~7.
 
 
 \begin{comment}
-3. The dynamics of the network measures are interesting. The authors could
-apply a similarity measure (e.g., cosine similarity) for each year of the
-clusters to give an overall picture for the comparison (e.g., are China and
-Japan becoming more similar/dissimilar over time?). Then again, what might
-be the economic development drivers behind the dynamics observed? 
+2. Just a comment: The recentered percentile CI proposed here is an interesting 
+interval to study. 
 \end{comment}
 
-
-Thank you for the constructive feedback. Following your suggestion, we have
-now incorporated the AMI as a metric to evaluate the similarity between
-clusters. Our investigation compared two facets: the likeness of community
-structures between China and Japan in a specific year and the temporal
-similarity of community structures within each country. See detailed analysis in
-the last paragraph, Section~6.
-
-
-The evolving nature of community structures within both nations
-presents a captivating narrative. It is striking to observe the subtle,
-incremental modifications in Japan's sectoral makeup juxtaposed against China's
-pronounced transformations over the years. The underlying reasons for these
-pronounced shifts in China's sectoral layout are especially noteworthy. While
-the scope of this paper does not extend to examining these catalysts in depth,
-we concur that an exploration into the forces steering these dynamics would be a
-compelling topic for subsequent research endeavors. A comment has been added to
-the end of the last paragraph, Section~6.
 
 
 \begin{comment}
-4. The limitations of the current approach should be discussed further. For
-example, the current study uses national input-output tables. But
-international input-output tables involving both countries are also
-available. What would be the pros and cons using alternative IO tables
-(national versus international)? The most recent economic issues (e.g.,
-Covid) cannot be discussed as the IO tables are only available until 2018.
-Any remedy or thoughts on this? 
+3. The sections are numbered, which makes it awkward when the authors refer back 
+to a section.  For instance, they refer to “...procedures described in Block 
+Bootstrap CIS.”  This would be easier to refer to if the sections were numbered.  
+(Is this a journal style choice?  If so, then you can ignore this comment.)
 \end{comment}
 
-% \jy{are these references cited in the paper? Fix the
-% inconsistencies}\tw{delete the ucited.}.
 
 
-We have extensively revised the discussion section, Section~7, to provide a
-holistic overview of our study's limitations and potential avenues for future
-exploration. To specifically address the concerns raised:
-\begin{enumerate}
-\item
-  We discuss alternative IOT databases in paragraph~3.
-\item
-  The potential advantages of employing multi-region IOTs are highlighted in
-  paragraph~4.
-\item
-  The implications of global shocks, including the recent ramifications of the
-  Covid-19 pandemic, are pointed out as a promising direction in paragraph~5.
-\end{enumerate}
+\begin{comment}
+4.  In Figure 1 (and all the other figures), the authors present confidence 
+intervals for the real coverage rates.  The authors should specify what type of 
+CI they are using here.  I assume the authors are using a Wald-type interval for 
+this CI as this is for a proportion.  If that’s the case, it’s well known that 
+the Wald-type interval has undercoverage when the true proportion is near 0 or 
+1, which is the case in several of these scenarios, especially when phi is -0.4. 
+\end{comment}
+
+
+\begin{comment}
+5.  In all the figures, the y-axis is allowed to vary freely making it hard to 
+compare one row directly to another.  I would suggest fixing the limits on the 
+y-axis to make comparisons easier.  
+\end{comment}
+
+
+
+\begin{comment}
+6.  Is there a reason why the coverage for mu (in Figure 1) is better for 
+negative autoregressive terms when compared with the positive autoregressive 
+term? Can the authors give some intuition behind why that makes sense? 
+\end{comment}
+
+
+
+\begin{comment}
+7.  The authors say “A smaller sample size is generally required to estimate a 
+parameter for a sample with a negative phi versus a positive phi of the same 
+magnitude.”  On a quick reading of this it sounds like the authors are 
+recommending using a smaller sample size when phi is negative.  I believe what 
+you are trying to say is that coverage rates are acceptable at smaller sample 
+sizes when phi is negative versus when phi is positive (i.e. it takes larger 
+sample sizes to get acceptable coverage when phi is positive).  Change this 
+sentence to make it more clear. 
+\end{comment}
+
+
+
+\begin{comment}
+8.   In the Discussion section, the authors say “We know theoretically that the 
+block bootstrap procedure will cover the parameter of a time series given an 
+infinitely large sample.”  Essentially, you are stating that the estimator is 
+consistent.  Is there a citation that you can point to that shows that this is 
+true? 
+\end{comment}
+
+
+
+\begin{comment}
+9.   The authors studied coverage rates of the different intervals as a function 
+of sample size, but they only looked at one choice for the number of blocks.  
+Why did the authors choose to not also look at how the number of blocks affects 
+the coverage rates?
+\end{comment}
+
+
+\begin{comment}
+10.   Why did the authors choose to only go as high as 0.4 (and as low as -0.4) 
+for the autocorrelation parameter?  I would think that these correlations near 1 
+(or -1) would be some of the more interesting cases to study, but they are 
+completely ignored here.  Can the authors justify their choice to leave it out 
+of this study?
+\end{comment}
+
+
+
+\begin{comment}
+11.    Last paragraph: The authors mention the “ABC and bootstrap-t intervals”.  
+They do not give a citation for these intervals.   Add a citation. 
+\end{comment}
+
+
+
+
+\begin{comment}
+12.    The last line of the manuscript offers one line about the drawbacks of 
+the block bootstrap almost as an afterthought.  I think a discussion of the 
+drawbacks should be expanded and added to the introduction as this is an 
+important point that isn’t mentioned at all until the literal last line. 
+\end{comment}
+
 We are indebted to the reviewers for pointing out these vital discussion areas,
 which have not only enriched the current paper but also charted a clear course
 for our subsequent research endeavors.
