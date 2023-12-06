@@ -248,3 +248,13 @@
 9/6 Notes
 • Make plots taller
 • Check Efron book for CI notation
+
+10/6 Notes
+• Recentered Percentile: Bootstrap gives a good uncertainty measure but the center is at a wrong location somehow, so we use the point estimator as the center
+• We expect the parametric (table-based) CIs to work for different error structures
+• Remove page numbers
+• When there is a positive correlation, effective sample size is lesser
+• When there is a negative correlation, effective sample size is larger, meaning the coverage is better
+• Find references to back up location parameter estimation better with negative correlation
+• Repeat the study with 2 * cubic root
+• Look at Buhlmann paper
