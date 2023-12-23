@@ -119,3 +119,28 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   ggsave(paste('../Manuscript/figures/plot_', t, '.pdf', sep = ''), width = 10,
          height = 5.8)
 }
+
+alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
+{
+  font_add_google("EB Garamond")
+  #  windows()
+  
+  showtext_auto()
+  
+  data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'bcCI', 'bcaCI', 'propCI'), 
+                    labels = c('Standard', 'Student\'s t', 'Percentile', 'BC', 'BCA', 'Recentered'))
+  
+  ggplot(data, aes(x = n, y = cov, color = CI)) +
+    geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
+    geom_line(size = .2) +
+    geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2) +
+    facet_grid(. ~ factor(phi), scales = 'free') +
+    labs(x = 'Sample Size', y = 'Coverage Rate') +
+    scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
+            element_text(family = "EB Garamond", size = 10),
+          strip.text.y = element_text(angle = 270, hjust = 1)) +
+    scale_y_continuous(trans=trans)
+  ggsave(paste('../Manuscript/figures/alt_plot_', t, '.pdf', sep = ''), width = 10,
+         height = 5.8)
+}

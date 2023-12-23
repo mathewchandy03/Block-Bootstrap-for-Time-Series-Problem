@@ -77,7 +77,16 @@ especially in contrast to why a few others do not work for the log-1
 autocorrelation coefficient.
 \end{comment}
 
+After discussion of the flaws of percentile, BC, and BCA CIs at the end of the
+first paragraph of Discussion, we have included these additional comments on
+why the proposed CI performs well:
 
+The uncertainty measure from bootstrap, which is used to determine the width of
+the percentile CI, is quite consistent in comparison to that used for BC and 
+BCA CIs. However, for a percentile CI, the center seems
+to be at the wrong location but is corrected when $\hat\theta_n$ is used as the
+center. This is most likely the reason why the proposed recentered percentile CI
+perfoms so much better than percentile, BC, and BCA CIs.
 
 \begin{comment}
 2. For all the figures, would it be possible to put the 6 figures in a column in 
@@ -86,7 +95,20 @@ now it is hard to compare across different methods regarding their comparative
 performance.
 \end{comment}
 
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/alt_plot_norm_mu_1}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal mean $\mu$ of an AR(1) process with a marginal standard 
+    normal distribution with AR coefficient
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
+    error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:mu}
+\end{figure}
 
+Here is an example of what this would look like. We find that it is a little
+cluttered to make comparisons, so we will use the original format.
 
 
 \begin{comment}
@@ -94,7 +116,7 @@ performance.
 various CI formulations for non-normal error is of central interest.
 \end{comment} 
 
-
+The text from the Appendix has been moved to the Simulation Study section.
 
 \begin{comment}
 4. The authors might want to discuss in what circumstances “non-parametric” CI 
@@ -102,11 +124,10 @@ formulas would work better. It is a bit surprising that student’s t based
 formula works well under both normal and non-normal error structures.
 \end{comment}
 
-\mc{Not sure what they mean by "non-parametric" CIs, maybe the Percentile, BC,
-and BCA, and Recentered CIs? In Figure 4, we showed that the autocorrelation in
-the bootstrap samples is generally smaller than in the original sample. 
-Percentile, BC, and BCA CIs perform better when the temporal dependence is low.
-In these circumstances, "non-parametric" CIs would work better}
+The formula for the "parametric" CIs concerns the distribution of the 
+bootstrapped statistic, but we actually expect such CIs to work for different
+error structures.
+
 
 \begin{comment}
 5. Page 3, 2nd line after “Standard Normal CI”: “p.168” does not seem to fit?
