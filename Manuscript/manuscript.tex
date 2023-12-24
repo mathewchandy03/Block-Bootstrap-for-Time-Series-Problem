@@ -128,7 +128,8 @@ Mentors: elizabeth.schifano@uconn.edu, jun.yan@uconn.edu
 Block bootstrap is widely used in constructing confidence intervals for 
 parameters estimated from stationary time series. Theoretically, the method
 should provide valid confidence intervals as the length of the time series goes
-to infinity. In practice, however, it is necessary to know how large of a finite 
+to infinity. \citep{calhoun2018} In practice, however, it is necessary to know 
+how large of a finite 
 sample is required for block bootstrap confidence intervals to work well. This 
 study aims to answer this question in a simple simulation setting where the data 
 are generated from a first-order autoregressive process. The empirical coverage 
@@ -181,6 +182,20 @@ the desired coverage rates.
 %space.2} 
 %\eds{thank you for checking!}
 
+\citet{lahiri1999theoretical} finds that moving block bootstrap has better 
+performance than non-overlapping block bootstrap. Additionally, moving block 
+bootstrap with nonrandom
+block sizes results in lower mean-squared errors than moving block bootstrap
+with random block sizes. \citet{buhlmann1999block} notes that a drawback of 
+block bootstrap is that it heavily depends on block size, which has to be chosen
+by the user of the method.
+Even when using the appropriate settings, as noted by
+\citet{buhlmann2002bootstraps} notes some general drawbacks of block 
+bootstrap --- with respect to how reasonably it imitates the data-generating 
+process. In addition, although block bootstrap is primarily used for stationary 
+time series, it can be outperformed by other bootstrap schemes for linear time
+series and categorical processes.
+
 For independent data, extensive research has explored the effectiveness of
 bootstrap standard errors in providing accurate uncertainty measures. For 
 example, \citet{hesterberg2015teachers} observes that while percentile-based CIs 
@@ -229,6 +244,7 @@ accelerated CI, and a recentered percentile CI proposed in this article. Their
 empirical coverage rates at different sample sizes and dependence levels are 
 compared in a simulation study. The results of this study suggest that recovery 
 of temporal dependence parameters is reliant on the type of interval used.
+
 
 
 The remainder of the paper is organized as follows. The first section 
@@ -298,8 +314,11 @@ The block size~$l$ needs to be chosen with care. It should be large enough for
 each bootstrap sample to preserve the serial dependence, yet small enough for
 there to be a large number of blocks to give sufficient variability between each 
 bootstrap sample. As $n$ increases, both~$l$ and $n / l$ should also increase. 
-To achieve this, $l$ is often assigned a value as a function of $n$. A common 
-function that is considered optimal is $l = \lceil n^{1/3} \rceil$,\citep{buhlmann1999block} 
+To achieve this, the order of $l$ is often assigned a value as a function of 
+$n$. A common 
+expression that is considered optimal for the order of $l$ is 
+$\lceil n^{1/3} \rceil$,
+\citep{buhlmann1999block} 
 which was adopted in this study.
 
 \subsection*{Block Bootstrap CIs}
@@ -334,7 +353,8 @@ A $(1 - \alpha)100\%$ standard normal CI is
 %\mc{Replaced upper quantile with quantile function}
 
 This CI is centered by the original point estimate $\hat\theta_n$ and is 
-symmetric. The standard CI is a table-based bootstrap interval approach. Its 
+symmetric. The standard CI is classified by \citet{efron1993introduction} 
+as a confidence interval based on bootstrap "tables". Its 
 validity relies on whether the distribution of $\hat\theta_n$ is reasonably well 
 approximated by its asymptotic normal distribution and whether the bootstrap
 $\widehat{\text{SE}}$ approximates the true standard error.
@@ -354,7 +374,8 @@ a $(1 - \alpha)100\%$ Student's $t$ CI is
 %\eds{define $t_{(.)}$ and check the signs}  \mc{addressed}
 where $k$ is the number of blocks. This CI is centered by the original point 
 estimate $\hat\theta_n$ and is symmetric. Like the standard normal interval, the
-Student's $t$ CI is a table-based bootstrap interval approach. In this case, its 
+Student's $t$ CI is classified by \citet{efron1993introduction} 
+as a confidence interval based on bootstrap "tables". In this case, its 
 validity relies on whether the distribution of $\hat\theta_n$ is reasonably well 
 approximated by the $t_{k-1}$ distribution with an expected value of $\theta$ 
 and whether the bootstrap $\widehat{\text{SE}}$ approximates the true standard 
@@ -467,7 +488,15 @@ Three target parameters of $X_t$ were considered:
 3) $\phi$, the lag-1 autocorrelation coefficient.
 To investigate the effect of sample size~$n$, we considered an array of values
 $n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 
-10000 replicates. For each replicate, we constructed six 95\% block bootstrap 
+10000 replicates. The 
+block bootstrap sampling step was done with function \texttt{tsboot} from R 
+package \textsl{boot},\citep{boot} with block size $\lceil n / l \rceil$. This 
+function by default is an implementation of moving block bootstrap as described 
+in the previous section, meaning that that blocks are allowed to wrap around, 
+and we tried both $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$,
+keeping the order of the block size constant but varying the coefficient. 
+For each replicate, we constructed 
+six 95\% block bootstrap 
 CIs for each parameter as described in the last section with $B = 1000$. We can 
 estimate $\mu$, 
 $\sigma_x$, and $\phi$ by computing the sample mean, sample standard deviation, 
@@ -475,12 +504,7 @@ and lag-1 autocorrelation, respectively, of each bootstrap sample. Then we can
 construct intervals for each parameter using the appropriate procedures 
 described in \textit{Block Bootstrap CIs}. 
 Then we estimated their actual coverage 
-rates along with their 95\% confidence intervals from the 10000 replicates. The 
-block bootstrap sampling step was done with function \texttt{tsboot} from R 
-package \textsl{boot},\citep{boot} with block size $\lceil n / l \rceil$. This 
-function by default is an implementation of moving block bootstrap as described 
-in the previous section, meaning that that blocks are allowed to wrap around, 
-and $l = \lceil n^{1/3} \rceil$.
+rates along with their 95\% confidence intervals from the 10000 replicates. 
 
 
 The coverage rates of the CIs were used to compare the performance of CIs. Let
@@ -490,14 +514,17 @@ $r \in \{1, \ldots, R\}$, where $R$ is the number of replicates. Then
 $cov = \#\{\hat\theta_{L, r} < \theta < \hat\theta_{U, r} \}/R$, for
 $r \in \{1, \ldots, R\}$. If a CI method is valid, then the coverage rate is
 expected to match the nominal level. Because it is unlikely for the coverage to 
-exactly match the nominal level, we can construct a 95\% CI of the coverage rate 
+exactly match the nominal level, we can construct a 95\% Wald-type CI of the 
+coverage rate 
 (which is an estimate of a proportion with $R = 10000$). If the proportion 0.95 
 is included in the interval, the block bootstrap method is likely performing 
 well. If all values in the interval are below 0.95, the results would suggest 
 that the method either is providing inaccurate estimation, is underestimating 
 the process' variability, or a combination of both. If all values in the 
 interval are above .95, the results suggest that the method is overestimating 
-the process' variability. \textbf{Figures~\ref{fig:mu}--\ref{fig:phi}} 
+the process' variability. \citet{brown2001interval} notes that the Wald-type 
+interval has poor coverage as the proportion approaches 0 or 1.
+\textbf{Figures~\ref{fig:mu1}--\ref{fig:phi1}} 
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
 real coverage for a standard normal marginal distribution, generated using the 
 R \textsl{ggplot2} package.\citep{ggplot2}
@@ -535,44 +562,47 @@ autocorrelation coefficients are $\{-0.298, -0.156, \allowbreak 0, 0.170, 0.355\
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_norm_mu}
+  \includegraphics[width=\textwidth]{figures/plot_norm_mu_1}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal mean $\mu$ of an AR(1) process with a marginal standard 
     normal distribution with AR coefficient
     $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
+    block bootstrap with $l = \lceil n^{1/3} \rceil$. The
     error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:mu}
+  \label{fig:mu1}
 \end{figure}
 
 
 \begin{figure}[bp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_norm_sigma}
+  \includegraphics[width=\textwidth]{figures/plot_norm_sigma_1}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal standard deviation $\sigma_x$ of an AR(1) process with a
     marginal standard normal distribution with AR 
     coefficient $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length 
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The 
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
+    block bootstrap with $l = \lceil n^{1/3} \rceil$. The 
     error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:sigma}
+  \label{fig:sigma1}
 \end{figure}
 
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/plot_norm_phi}
+  \includegraphics[width=\textwidth]{figures/plot_norm_phi_1}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for 
     the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
     a marginal standard normal distribution with 
     $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
+    block bootstrap with $l = \lceil n^{1/3} \rceil$. The
     error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:phi}
+  \label{fig:phi1}
 \end{figure}
 
 
-For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu}} suggests 
+For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu1}} suggests 
 that all methods eventually approach correct coverage of $\mu$ as sample size 
 increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
 correct coverage, except for samples with strong negative dependence, in which 
@@ -593,7 +623,7 @@ is necessary to recover~$\mu$.
 
 
 For estimating the standard deviation parameter~$\sigma_x$,
-\textbf{Figure~\ref{fig:sigma}} suggests that every method can reach nominal 
+\textbf{Figure~\ref{fig:sigma1}} suggests that every method can reach nominal 
 coverage of $\sigma_x$ if the sample is large enough, but for a given $n$ and 
 $\phi$, coverage of $\sigma_x$ will be lower than coverage of $\mu$ in general.
 Like $\mu$, $\sigma_x$ can be covered by Student $t$ CIs with smaller sample 
@@ -606,7 +636,7 @@ the strength of the temporal dependence increases.
 
 
 For estimating the autocorrelation parameter~$\phi$, 
-\textbf{Figure~\ref{fig:phi}} suggests that while standard normal, Student's $t$, and 
+\textbf{Figure~\ref{fig:phi1}} suggests that while standard normal, Student's $t$, and 
 recentered percentile CIs do approach correct coverage as sample size increases, 
 percentile, BC, and BCA CIs deteriorate as sample size increases, especially as 
 the strength of the temporal dependence increases. Because of this, only 
@@ -818,12 +848,17 @@ using block bootstrap estimation of time series in domains such as econometrics.
 Future studies could investigate the $n$ needed to make inferences about other 
 forms of serially dependent data such as a moving average process. One could 
 also investigate if there are types of block bootstrap interval construction 
-such as $ABC$ or bootstrap-t intervals, or alternatives to block bootstrap, such 
-as AR-Sieve bootstrap,\citep{kreiss1992bootstrap} that could more
-appropriately recover the parameters of a time series. In addition, as noted by
-\citet{buhlmann2002bootstraps}, there are some general drawbacks of block 
-bootstrap --- with respect to how reasonably it imitates the data-generating 
-process --- which may be investigated in a future study.
+such as $ABC$ or bootstrap-t intervals \citep{efron1993introduction} that could 
+more
+appropriately recover the parameters of a time series. We discussed some
+drawbacks of block bootstrap in the introduction, which could motivate a similar
+simulation study for alternatives to block bootstrap, such 
+as AR-Sieve bootstrap, \citep{kreiss1992bootstrap} which 
+\citet{buhlmann2002bootstraps} finds to be the best for linear time series. 
+Lastly, because of its exceptional performance in comparison to the other 
+CIs that are not based on bootstrap "tables", the proposed recentered percentile 
+CI would be
+an interesting method to study further with different bootstrap schemes.
 
 
 

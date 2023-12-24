@@ -249,7 +249,7 @@
 • Make plots taller
 • Check Efron book for CI notation
 
-10/6 Notes
+12/6 Notes
 • Recentered Percentile: Bootstrap gives a good uncertainty measure but the center is at a wrong location somehow, so we use the point estimator as the center
 • We expect the parametric (table-based) CIs to work for different error structures
 • Remove page numbers
@@ -258,3 +258,16 @@
 • Find references to back up location parameter estimation better with negative correlation
 • Repeat the study with 2 * cubic root
 • Look at Buhlmann paper
+
+12/24 Notes
+• Norm sigma -> performance about the same for different block sizes, 
+coverage rates may be slightly higher for 1 for negative autocorrelations
+• Norm mu -> coverage rates are much lower for 2 for negative autocorrelations, 
+whereas a sample size of 100 or 200 would be sufficient for 1 for most CIs, 
+n = 1600 seems necessary for 2, Student's t is the exception, and it actually does not require as
+large a sample size for positive autocorrelations
+• Norm phi -> recentered CI and standardhas slightly lower coverage for negative autocorrelation 
+with 2, coverage deteriorate for BCA, BC, and Percentile not as bad, but still there
+• Exp sigma -> performance about the same for different block sizes, 
+• Exp mu -> Same patterns
+• Exp phi -> Same patterns

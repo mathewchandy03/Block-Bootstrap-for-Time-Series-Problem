@@ -19,6 +19,7 @@ graph_bts(t, width, norm_sigma %>% filter(blksize == ceiling(n^(1/3))))
 t <- 'norm_phi_1'
 width <- .2
 graph_bts(t, width, norm_phi %>% filter(blksize == ceiling(n^(1/3))))
+alt_graph_bts2(t, width, norm_phi %>% filter(blksize == ceiling(n^(1/3))))
 
 t <- 'norm_mu_2'
 width <- .2
