@@ -195,6 +195,9 @@ bootstrap --- with respect to how reasonably it imitates the data-generating
 process. In addition, although block bootstrap is primarily used for stationary 
 time series, it can be outperformed by other bootstrap schemes for linear time
 series and categorical processes.
+\eds{If we include all these drawbacks here, we need to also provide some good 
+features of block bootstrap as well, otherwise, why do we care about their CI 
+performance?}
 
 For independent data, extensive research has explored the effectiveness of
 bootstrap standard errors in providing accurate uncertainty measures. For 
@@ -450,7 +453,11 @@ rate of change of the standard error of $\hat\theta_n$ with respect to $\theta$.
 
 \paragraph{Recentered Percentile CI}
 We propose a CI that is centered at the original point estimate and uses the 
-variation in the bootstrap estimates to construct the error bound. This interval 
+variation in the bootstrap estimates to construct the error bound. 
+\eds{The motivation behind proposing such an interval was based on the 
+simulation performance of the BC and BCA intervals, which will be discussed
+further in the Results section.} 
+This interval 
 requires
 the computation of $\bar\theta_n^B = n^{-1}\sum_{b=1}^B \hat\theta_n^{(b)}$, the 
 mean of all bootstrap point estimates. A $(1 - \alpha)100\%$ CI is
@@ -467,8 +474,14 @@ compute the lower and upper bounds. It has the same width as the percentile CI.
 \label{sec:simu}
 
 \subsection*{Design}
-We designed a simulation study to compare the performance of the different block 
-bootstrap CI methods. In particular, we generated time series $X_t$ from a 1st 
+
+\eds{We compared the performance of the different block bootstrap CI methods 
+under two marginal distributions: normal and exponential.} 
+
+\paragraph{Normal Marginal Distribution}
+%We designed a simulation study to compare the performance of the different block 
+%bootstrap CI methods. In particular, 
+We generated time series $X_t$ from a 1st 
 order autoregressive (AR(1)) process:
 \begin{equation*}
 X_t = \phi X_{t-1} + \epsilon_t,
@@ -534,6 +547,8 @@ summarizes the empirical coverage rates and the 95\% confidence intervals of the
 real coverage for a standard normal marginal distribution, generated using the 
 R \textsl{ggplot2} package.\citep{ggplot2}
 
+
+\paragraph{Exponential Marginal Distribution}
 Additionally, we evaluated the performance of block bootstrap when used to 
 estimate
 the mean, standard deviation, and the lag-1 autocorrelation coefficient of a
@@ -648,7 +663,7 @@ autocorrelation coefficients are $\{-0.298, -0.156, \allowbreak 0, 0.170, 0.355\
   \label{fig:phi2}
 \end{figure}
 
-
+\paragraph{Normal Marginal Distribution}
 For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu1}} suggests 
 that all methods eventually approach correct coverage of $\mu$ as sample size 
 increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
@@ -894,7 +909,7 @@ correct from the original point estimate $\hat\theta_n$.
   \label{fig:eri}
 \end{figure}
 
-
+\paragraph{Exponential Marginal Distribution}
 For an exponential marginal distribution, the empirical coverage rates for 
 $\mu$, $\sigma_w$, %\eds{define $\sigma_w$} 
 %\mc{added definitions for $\mu$ and $\sigma_w$ in the above paragraph} 
