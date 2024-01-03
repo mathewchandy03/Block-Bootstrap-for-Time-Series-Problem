@@ -79,6 +79,12 @@ autocorrelation coefficient.
 
 \eds{Also added comment in the Recentered Percentile CI paragraph in the 
 BLOCK BOOTSTRAP CIS section. Please check and add a comment here if you like it.}
+\mc{looks good}
+
+We have added this comment to the Recentered Percentile CI paragraph:
+The motivation behind proposing such an interval was based on the 
+simulation performance of the BC and BCA intervals, which will be discussed
+further in the Results section. 
 
 After discussion of the flaws of percentile, BC, and BCA CIs at the end of the
 first paragraph of Discussion, we have included these additional comments on
@@ -132,6 +138,7 @@ sections instead of placing each as subsections of the Simulation Study section,
 or does the journal formatting prohibit this?  If you can change this, then the 
 Normal and Exponential Marginal subsubsections can be updated to subsections
 under the Simulation Study Design and Simulation Study Results sections.}  
+\mc{addressed}
 
 
 \begin{comment}
@@ -140,11 +147,26 @@ formulas would work better. It is a bit surprising that student’s t based
 formula works well under both normal and non-normal error structures.
 \end{comment}
 
-The formula for the "parametric" CIs concerns the distribution of the 
-bootstrapped statistic, but we actually expect such CIs to work for different
-error structures. \eds{you will need to add more here.  This concerns the
+We have included this comment in the Exponential Marginal Distribution 
+subsection of the Design section:
+
+It is important to note that we expect the CIs that are based on bootstrap 
+"tables" to depend on the 
+asymptotic distribution of the statistics, but we expect such CIs to 
+have similar performance for different error structures. For example, under the 
+Central
+Limit Theorem, we expect the asymptotic distribution of the sample mean to be 
+approximately 
+normal for both marginal normal distributions and marginal exponential 
+distributions. Therefore, we do not expect CIs that are not based on bootstrap
+"tables" (Percentile, BC, BCA, Recentered Percentile CI) to perform better under
+non-normal error structures.
+\eds{you will need to add more here.  This concerns the
 (asymptotic) distribution of the statistics, not the underlying error 
 structure.}
+\mc{I changed it a bit... I'm not sure what to say for circumstances in which
+“non-parametric” CI 
+formulas would work better}
 
 
 \begin{comment}
@@ -232,10 +254,12 @@ y-axis to make comparisons easier.
 
 Because of the deterioration for $\phi$, we found it hard to fix the limits on 
 the 
-y-axis without hurting the visualization for the other rows. Below is an 
+y-axis without hurting the visualization for the other rows. 
+Figure~\ref{fig:alt_phi1} is an 
 example:  \eds{refer to the Figure label, and avoid using `below' and `above'
 terminology with latex because the figures are not always positioned as we may
-have intended.} 
+have intended.}
+\mc{addressed}
 
 \begin{figure}[tbp]
   \centering
@@ -301,6 +325,7 @@ true?
 Please remove this citation from the abstract and place in the discussion 
 section where the sentence in question appears. In general,
 try to avoid placing any citations in the abstract.}
+\mc{addressed, sorry silly mistake}
 
 \begin{comment}
 9.   The authors studied coverage rates of the different intervals as a function 
@@ -733,16 +758,22 @@ block sizes results in lower mean-squared errors than moving block bootstrap
 with random block sizes. \citet{buhlmann1999block} notes that a drawback of 
 block bootstrap is that it heavily depends on block size, which has to be chosen
 by the user of the method.
-Even when using the appropriate settings, 
-\citet{buhlmann2002bootstraps} notes some general drawbacks of block 
+Even when using the appropriate settings, as noted by
+\citet{buhlmann2002bootstraps} observes some general drawbacks of block 
 bootstrap --- with respect to how reasonably it imitates the data-generating 
 process. In addition, although block bootstrap is primarily used for stationary 
 time series, it can be outperformed by other bootstrap schemes for linear time
-series and categorical processes.
+series and categorical processes. Still, \citet{buhlmann2002bootstraps}
+emphasizes that a significant advantage of block bootstrap is its simplicity.
+To be more specific, the resampling step of block bootstrap is not 
+computationally more difficult than the resampling step of basic bootstrap.
+Furthermore, block bootstrap performs better than local bootstrap in terms of
+mimicking dependence structures.
 
 \eds{If we include all these drawbacks in the intro, we need to also provide 
 some good features of block bootstrap as well, otherwise, why do we care about 
 their CI performance?}
+\mc{addressed}
 
 We also added this comment in the Discussion section:
 
