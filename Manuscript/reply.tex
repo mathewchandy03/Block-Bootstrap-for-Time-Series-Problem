@@ -128,7 +128,9 @@ various CI formulations for non-normal error is of central interest.
 \end{comment} 
 
 The text from the Appendix has been moved to the Simulation Study 
-section.
+section. The second reviewer suggested block size as an additional experimental
+factor, so the paragraphs for normal and exponential error structures have
+been adjusted accordingly.
 
 \eds{I also added subsubsections (paragraphs) for the Normal and Exponential 
 Marginal Distributions under Design and Results subsections.
@@ -229,7 +231,12 @@ the Wald-type interval has undercoverage when the true proportion is near 0 or
 
 We modified the Design section as below:
 
-If all values in the interval are below 0.95, the results would suggest 
+Because it is unlikely for the coverage to 
+exactly match the nominal level, we can construct a 95\% Wald-type CI of the 
+coverage rate 
+(which is an estimate of a proportion with $R = 10000$). If the proportion 0.95 
+is included in the interval, the block bootstrap method is likely performing 
+well. If all values in the interval are below 0.95, the results would suggest 
 that the method either is providing inaccurate estimation, is underestimating 
 the process' variability, or a combination of both. If all values in the 
 interval are above .95, the results suggest that the method is overestimating 
@@ -244,6 +251,10 @@ of the asymptotic Wald interval you are using.
 intervals for at least a few cases of undercoverage to verify it is not the Wald
 interval that is causing the undercoverage, then comment on this in at least the
 reply (and possibly also in the main paper)?}
+\mc{plot_norm_mu_1_cup.pdf (exact Clopper-Pearson) seems to have about the same 
+widths for high 
+proportions
+(especially for phi = -0.4) as plot_norm_mu_1.pdf (Wald-Type)}
 
 
 \begin{comment}
