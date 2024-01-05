@@ -550,9 +550,10 @@ the process' variability, or a combination of both. If all values in the
 interval are above .95, the results suggest that the method is overestimating 
 the process' variability. \citet{brown2001interval} notes that the Wald-type 
 interval has poor coverage as the proportion approaches 0 or 1.
-\textbf{Figures~\ref{fig:mu1}--\ref{fig:phi2}} 
+\textbf{Figures~\ref{fig:mu1}--\ref{fig:phi1}} 
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
-real coverage for a standard normal marginal distribution, generated using the 
+real coverage for a standard normal marginal distribution using block bootstrap
+with $l = \lceil n^{1/3} \rceil$, generated using the 
 R \textsl{ggplot2} package.\citep{ggplot2}
 
 
@@ -595,6 +596,12 @@ where $g_2(x, y; \phi)$ is the density of a standard bivariate normal
 distribution with correlation parameter~$\phi$. We kept the configuration of
 $\phi \in \{-0.4, -0.2, 0.0, 0.2, 0.4\}$, and the corresponding lag-1
 autocorrelation coefficients are $\{-0.298, -0.156, \allowbreak 0, 0.170, 0.355\}$.
+
+\textbf{Figures~\ref{fig:exp_mu1}--\ref{fig:exp_phi1}} 
+summarizes the empirical coverage rates and the 95\% confidence intervals of the 
+real coverage for a exponential marginal distribution using block bootstrap
+with $l = \lceil n^{1/3} \rceil$.
+
 
 \section*{simulation results}
 \label{sec:simres}
@@ -670,6 +677,28 @@ effective sample size is increased. Additionally, this seems to have a
 greater effect on the the estimation of the location parameter versus that
 of the scale parameter or temporal dependence parameter.
 
+
+CIs for $\mu$ exhibit coverage rates quite close to 1 for $\phi = -0.4$, and
+as stated before, the Wald-type CI is known to have undercoverage in such 
+situations.
+Figure~\ref{fig:norm_mu_1_cp} shows the same coverage rates using exact 
+Clopper-Pearson intervals to verify that it is the choice of Wald interval
+does not cause undercoverage of the coverage rate. Indeed, the widths of the
+exact proportion CIs do not seem to differ heavily from the Wald-type CIs.
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/plot_norm_mu_1_cp}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs 
+    for
+    the marginal mean $\mu$ of an AR(1) process with a marginal standard 
+    normal distribution with AR coefficient
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
+    block bootstrap with $l = \lceil n^{1/3} \rceil$. The
+    error bars represent 95\% exact CIs of the real coverage rates.}
+  \label{fig:norm_mu_1_cp}
+\end{figure}
 
 For estimating the standard deviation parameter~$\sigma_x$,
 \textbf{Figure~\ref{fig:sigma1}} suggests that every method can reach nominal 
@@ -852,8 +881,7 @@ due to the
 inherent unbiasedness of the original point estimator. In sum, the findings for
 series that are marginally exponentially distributed closely mirror those
 attained for series that are marginally normally distributed.
-
-
+  
 \section*{discussion}
 \label{sec:disc}
 
@@ -919,6 +947,11 @@ CI would be
 an interesting method to study further with different bootstrap schemes.
 
 \section*{Appendix: Simulation Study with $l = \lceil 2n^{1/3} \rceil$}
+
+\textbf{Figures~\ref{fig:mu2}--\ref{fig:phi2}} 
+summarizes the empirical coverage rates and the 95\% confidence intervals of the 
+real coverage for a standard normal marginal distribution using block bootstrap
+with $l = \lceil 2n^{1/3} \rceil$.
 
 \begin{figure}[tbp]
   \centering
@@ -988,6 +1021,11 @@ BC, and percentile CIs.
 Aside from these differences, the overall changes
 in performance when other experimental factors are changed are the same as
 when $l = \lceil n^{1/3} \rceil$.
+
+\textbf{Figures~\ref{fig:exp_mu2}--\ref{fig:exp_phi2}} 
+summarizes the empirical coverage rates and the 95\% confidence intervals of the 
+real coverage for a exponential marginal distribution using block bootstrap
+with $l = \lceil 2n^{1/3} \rceil$.
 
 \begin{figure}[tbp]
   \centering
