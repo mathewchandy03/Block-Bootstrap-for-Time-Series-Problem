@@ -349,12 +349,18 @@ We have now repeated the same simulation study with block size as an
 additional experimental factor. The optimal order of block size is 
 $\lceil n^{1/3} \rceil$, so we tried the same simulations using 
 $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$. We have included
-the changed Results subsection below:
+the Appendix detailing these results below (the 
+figures for 
+$l = \lceil n^{1/3} \rceil$ are included for comparison):
 
 \eds{\@ Jun: what do you think about putting the $l = \lceil 2n^{1/3} \rceil$
 results in the Appendix, but keeping the conclusions regarding how the 
 $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$ simulations differ
 in the main text?}
+\mc{I moved everything to the Appendix. if you want to change it back you can 
+revert the commit}
+
+\section*{Appendix: Simulation Study with $l = \lceil 2n^{1/3} \rceil$}
 
 \begin{figure}[tbp]
   \centering
@@ -396,189 +402,6 @@ in the main text?}
     error bars represent 95\% CIs of the real coverage rates.}
   \label{fig:phi1}
 \end{figure}
-
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_norm_mu_2}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\mu$ of an AR(1) process with a marginal standard 
-    normal distribution with AR coefficient
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
-    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. The
-    error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:mu2}
-\end{figure}
-
-
-\begin{figure}[bp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_norm_sigma_2}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal standard deviation $\sigma_x$ of an AR(1) process with a
-    marginal standard normal distribution with AR 
-    coefficient $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length 
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
-    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. The 
-    error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:sigma2}
-\end{figure}
-
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/plot_norm_phi_2}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for 
-    the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
-    a marginal standard normal distribution with 
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
-    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. The
-    error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:phi2}
-\end{figure}
-
-
-For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:mu1}} suggests 
-that all methods eventually approach correct coverage of $\mu$ as sample size 
-increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
-correct coverage, except for samples with strong negative dependence, in which 
-case, they actually over-cover $\mu$ for smaller sample sizes. For instance, for 
-a sample with $n = 100$ and $\phi = -0.4$, the lower bound for a Students $t$ 
-CI's coverage of $\mu$ is greater than 95\%, whereas the coverage intervals for 
-other methods contain 95\%. The standard normal, percentile, BC, and BCA, and 
-recentered percentile CIs require similar sample sizes to recover $\mu$ at the 
-nominal level for all combinations of $n$ and $\phi$. All methods seem to 
-require a smaller sample to recover $\mu$ at the nominal rate when dealing with 
-negative dependence versus positive dependence. For example, BC CIs recover 
-$\mu$ for $n \geq 100$ when $\phi = -0.2$, but they only recover $\mu$ for 
-$n \geq 800$ when $\phi = 0.2$. In addition, as a negative dependence gets 
-stronger, holding everything else equal, coverage increases, which lead to the 
-Student $t$ CI's aforementioned over-coverage. As a positive dependence gets 
-stronger, holding everything else equal, coverage decreases, and a larger sample 
-is necessary to recover~$\mu$.  A possible explanation for this is that if a 
-stationary series has a positive 
-autocorrelation, the effective sample
-size is decreased, whereas is a series has a negative autocorrelation, the
-effective sample size is increased. Additionally, this seems to have a 
-greater effect on the the estimation of the location parameter versus that
-of the scale parameter or temporal dependence parameter.
-
-
-For estimating the standard deviation parameter~$\sigma_x$,
-\textbf{Figure~\ref{fig:sigma1}} suggests that every method can reach nominal 
-coverage of $\sigma_x$ if the sample is large enough, but for a given $n$ and 
-$\phi$, coverage of $\sigma_x$ will be lower than coverage of $\mu$ in general.
-Like $\mu$, $\sigma_x$ can be covered by Student $t$ CIs with smaller sample 
-sizes when compared to other methods. Unlike $\mu$, there is no over-coverage 
-issue for $\sigma_x$ when $\phi = -0.4$. Standard normal, percentile, BC, BCA, and 
-recentered percentile CIs again have similar performance. All methods seem to 
-have slightly higher coverage of $\sigma_x$ when $\phi$ is negative versus when 
-$\phi$ is positive. Regardless of the sign, coverage of $\sigma_x$ gets worse as 
-the strength of the temporal dependence increases.
-
-
-For estimating the autocorrelation parameter~$\phi$, 
-\textbf{Figure~\ref{fig:phi1}} suggests that while standard normal, Student's $t$, and 
-recentered percentile CIs do approach correct coverage as sample size increases, 
-percentile, BC, and BCA CIs deteriorate as sample size increases, especially as 
-the strength of the temporal dependence increases. Because of this, only 
-standard normal, Student's $t$, and recentered percentile CIs should be considered as 
-effective block bootstrap methods to estimate $\phi$. Student's $t$ CIs once 
-again can achieve correct coverage with smaller sample sizes when compared to 
-standard and recentered percentile CIs which perform similarly. Student's $t$ 
-CIs can can recover $\phi$ at the nominal level for $n \geq 100$ when the 
-sample's temporal dependence is as strong as 0.4. Coverage appears to be higher 
-for all methods when the dependence is negative rather than positive. Whether or 
-not the dependence is negative or positive, coverage of $\phi$ seems to increase 
-slightly as the absolute value increases for standard normal, Student's $t$, and 
-recentered percentile CIs. For the values of $\phi$ observed, there are no 
-examples of over-coverage for standard normal, Student's $t$, BC, BCA, or recentered 
-percentile CIs. However, percentile CIs appear to over-cover $\phi$ for smaller 
-sample sizes when $\phi = -0.2$ and when $\phi = 0$, indicating again that they 
-should not be used.
-
-Based on \textbf{Figure~\ref{fig:mu2}}, for negative autocorrelations, the 
-coverage 
-rates of $\mu$ appear to be lower when
-using $l = \lceil 2n^{1/3} \rceil$. For example, whereas $n = 100$ or 200 
-would seem sufficient for most CIs when using $l = \lceil n^{1/3} \rceil$, 
-$n = 800$ or 1600 is necessary to capture negative autocorrelations for 
-$l = \lceil n^{1/3} \rceil$. Student's $t$ CIs do not seem to be as affected
-by this change in $l$: for $\phi = -0.4$ and -0.2, they still overcover $\mu$
-for smaller values of $n$. 
-
-\textbf{Figure~\ref{fig:sigma2}} looks very similar to 
-\textbf{Figure~\ref{fig:sigma1}}, but coverage rates of $\sigma$ do look 
-slightly lower
-especially for negative values of $\phi$, although Student's $t$ CIs are again
-not as influenced by this change in $l$. A larger sample size seems necessary
-when using other CIs to estimate $\sigma$ for $l = \lceil 2n^{1/3} \rceil$.
-
-As shown in \textbf{Figure~\ref{fig:phi2}},
-recentered percentile and standard CIs have slightly lower coverage rates when
-estimating negative values of $\phi$ with $l = \lceil 2n^{1/3} \rceil$. 
-Although it is still a problem, the coverage deterioration appears to be less 
-dramatic for BCA,
-BC, and percentile CIs.
-
-Aside from these differences, the overall changes
-in performance when other experimental factors are changed are the same.
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/norm_phi_intervals}
-  \caption{50 replicate percentile, BC, and recentered percentile CIs for 
-    samples of $n \in \{800, 1600\}$ ($l = \lceil n^{1/3} \rceil$)
-    for an AR(1) process with $\phi = 0.4$. For 
-    each replicate, the lower and upper bounds of the CIs are displayed, as well 
-    as $\hat\theta_n$ (blue circle) and $\bar\theta_n^{B}$ (red cross).}
-  \label{fig:npi}
-\end{figure}
-
-
-The outcomes of the $\phi$ estimation raise a natural question about the 
-lackluster performance of certain methodologies. To delve into this inquiry, a
-set of 50 CIs was generated for each of the percentile, BC, and recentered
-percentile  approaches for samples of $n \in \{800, 1600\}$. Illustrated in 
-\textbf{Figure~\ref{fig:npi}}, it becomes evident that the percentile-based CIs 
-exhibit a notable bias, predominantly manifesting as a substantial 
-underestimation of $\phi$ with point estimator $\bar\theta_n^B$, that is, the 
-average of $B$ bootstrap point estimates. As the sample size increases from 800 
-to 1600, this bias does not vanish while the uncertainty reduces, which explains 
-why the coverage rates deteriorate. The bias in $\bar\theta_n^B$ also appears to 
-invalidate the bias-correction in the BC bootstrap, leading to the poor 
-performance of the BC intervals. The BCA intervals have the same problem as the 
-BC intervals in the bias-correction step. The root of the issue appears to be 
-that the autocorrelation in the block bootstrap samples is somehow smaller 
-compared to that in the original sample. On the other hand, the original point 
-estimator $\hat\theta_n$ is asymptotically unbiased. Since the width is based on 
-the uncertainty in the bootstrap point estimates $\hat\theta_n^{(b)}$, 
-$b = 1, \ldots, B$, the percentile CIs recentered at the original point estimate
-$\hat\theta_n$ provide desired coverage.
-
-
-To summarize, the performance of the CIs depends on the target parameter. When
-estimating $\mu$ and $\sigma_x$, any CI will do, although Student's $t$ CIs
-perform noticeably better than the others.
-However, when estimating $\phi$, the 
-choice of method is of utmost importance as to avoid coverage deterioration. 
-In addition, choice of block size is another important parameter, as
-$l = \lceil n^{1/3} \rceil$ results in better coverage than 
-$l = \lceil 2n^{1/3} \rceil$.
-Coverage rates are acceptable at smaller sample 
-sizes when phi is positive versus when phi is negative. In
-other words, a larger sample size is generally required to estimate a 
-parameter for a sample with a negative $\phi$ versus a positive $\phi$ of the 
-same magnitude. In order 
-to know if coverage will increase as the strength of the temporal dependence 
-increases, one need to know what the parameter of interest is, and in the case 
-of $\mu$, the direction of the serial dependence. The BC approach does not seem 
-to be correcting bias appropriately when estimating $\phi$. Like the percentile 
-method, the recentered percentile method uses the spread from the bootstrap to 
-construct the width of the CI. However, the recentered approach, does not 
-correct from the original point estimate $\hat\theta_n$.
 
 
 \begin{figure}[tbp]
@@ -629,6 +452,75 @@ correct from the original point estimate $\hat\theta_n$.
 
 \begin{figure}[tbp]
   \centering
+  \includegraphics[width=\textwidth]{figures/plot_norm_mu_2}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal mean $\mu$ of an AR(1) process with a marginal standard 
+    normal distribution with AR coefficient
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
+    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. The
+    error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:mu2}
+\end{figure}
+
+
+\begin{figure}[bp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/plot_norm_sigma_2}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal standard deviation $\sigma_x$ of an AR(1) process with a
+    marginal standard normal distribution with AR 
+    coefficient $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length 
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
+    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. The 
+    error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:sigma2}
+\end{figure}
+
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/plot_norm_phi_2}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for 
+    the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
+    a marginal standard normal distribution with 
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
+    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. The
+    error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:phi2}
+\end{figure}
+
+Based on \textbf{Figure~\ref{fig:mu2}}, for negative autocorrelations, the 
+coverage 
+rates of $\mu$ appear to be lower when
+using $l = \lceil 2n^{1/3} \rceil$. For example, whereas $n = 100$ or 200 
+would seem sufficient for most CIs when using $l = \lceil n^{1/3} \rceil$, 
+$n = 800$ or 1600 is necessary to capture negative autocorrelations for 
+$l = \lceil n^{1/3} \rceil$. Student's $t$ CIs do not seem to be as affected
+by this change in $l$: for $\phi = -0.4$ and -0.2, they still overcover $\mu$
+for smaller values of $n$. 
+
+\textbf{Figure~\ref{fig:sigma2}} looks very similar to 
+\textbf{Figure~\ref{fig:sigma1}}, but coverage rates of $\sigma$ do look 
+slightly lower
+especially for negative values of $\phi$, although Student's $t$ CIs are again
+not as influenced by this change in $l$. A larger sample size seems necessary
+when using other CIs to estimate $\sigma$ for $l = \lceil 2n^{1/3} \rceil$.
+
+As shown in \textbf{Figure~\ref{fig:phi2}},
+recentered percentile and standard CIs have slightly lower coverage rates when
+estimating negative values of $\phi$ with $l = \lceil 2n^{1/3} \rceil$. 
+Although it is still a problem, the coverage deterioration appears to be less 
+dramatic for BCA,
+BC, and percentile CIs.
+
+Aside from these differences, the overall changes
+in performance when other experimental factors are changed are the same as
+when $l = \lceil n^{1/3} \rceil$.
+
+\begin{figure}[tbp]
+  \centering
   \includegraphics[width=\textwidth]{figures/plot_exp_mu_2}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal mean $\mu$ of a stationary series with marginal unit exponential
@@ -672,56 +564,9 @@ correct from the original point estimate $\hat\theta_n$.
   \label{fig:exp_phi2}
 \end{figure}
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/exp_phi_intervals}
-  \caption{50 replicate percentile, BC, and recentered percentile CIs for the
-    lag-1 autocorrelation coefficient 0.355 ($\phi = 0.4$)
-    of a stationary series with marginal exponential distribution
-    obtained by transforming an AR(1) process with $\phi = 0.4$ with
-    sample size $n \in \{800, 1600\}$ ($l = \lceil n^{1/3} \rceil$). For 
-    each replicate, the lower and upper bounds of the CIs are displayed, as well 
-    as $\hat\theta_n$ (blue circle) and $\bar\theta_n^{B}$ (red cross).}
-  \label{fig:eri}
-\end{figure}
-
-
-For an exponential marginal distribution, the empirical coverage rates for 
-$\mu$, $\sigma_w$, %\eds{define $\sigma_w$} 
-%\mc{added definitions for $\mu$ and $\sigma_w$ in the above paragraph} 
-and 
-the lag-1 autocorrelation coefficient, %\mc{replaced $\phi$ here, as I understand
-%it, we are not using $\phi$ in reference to the temporal dependence of the 
-%exponentially distributed series?}, 
-as well as 95\%
-confidence intervals of the real coverage are displayed in 
-\textbf{Figures~\ref{fig:exp_mu1}--\ref{fig:exp_phi2}}. 
-Additionally, a set of 50 CIs are displayed for each of the percentile, 
-BC, and recentered percentile approaches for exponentially distributed
-samples of $n \in \{800, 1600\}$ with lag-1 autocorrelation coefficient 0.355
-($\phi = 0.4$) in Figure~\ref{fig:eri}.
-
-
-It appears that a greater sample size is generally required for the bootstrap
-CIs to cover the mean and standard deviation parameters in the exponential
-margin case than in the normal margin case. However, the trends and patterns
-discussed in the main text regarding the performance of various methods and
-diverse parameters remain consistent. For example, Student's $t$ confidence
-intervals still exhibit higher coverage rates in comparison to alternative
-methods. Performance continues to be more favorable when temporal dependence is
-negative rather than positive. Altering the block size results in the same 
-changes in performance of different CIs. Of particular significance, the 
-percentile, BC,
-and BCA confidence intervals still display a decline in coverage accuracy for
-the lag-1 autocorrelation coefficient as sample size increases as demonstrated
-in Figure~\ref{fig:eri}. Both the percentile and BC intervals persist in
-manifesting the same bias issue. On the other hand, the recentered percentile
-confidence interval continues to be effective in estimating the temporal 
-dependence %\mc{replaced $\phi$ again here} 
-due to the
-inherent unbiasedness of the original point estimator. In sum, the findings for
-series that are marginally exponentially distributed closely mirror those
-attained for series that are marginally normally distributed.
+For a stationary series with a marginal exponential distribution, altering the 
+block size results in the same 
+changes in performance of different CIs.
 
 
 \begin{comment}
