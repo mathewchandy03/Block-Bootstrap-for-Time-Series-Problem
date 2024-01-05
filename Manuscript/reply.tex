@@ -42,6 +42,11 @@ amssymb, enumerate}
 
 % \jy{Spell check!}
 
+\jy{For each comment, response first and at the end of each response,
+  state what was done in the text. I usually don't quote text because
+  if you make changes, you need to synchronize at two locations. Learn
+  from the first version (which is a real reply letter for a paper).}
+
 \subsection*{Summary}
 
 We thank the editor and the AE for the opportunity to revise the manuscript and
@@ -104,8 +109,15 @@ now it is hard to compare across different methods regarding their comparative
 performance.
 \end{comment}
 
-Below is an example of what this would look like. We find that it is a little
+\jy{never use ``below'' because tables/figures are floats.}
+
+Figure~\ref{fig:mu} is an example of what this would look like. We find that it is a little
 cluttered to make comparisons, so we will use the original format.
+
+\jy{1. Reduce the heights; put legend at the bottom; put the
+  confidence intervals side by side for each sample size (see this
+  paper for example plot:
+  \url{https://iopscience.iop.org/article/10.1088/1748-9326/ac14ee/meta}.}
 
 \begin{figure}[tbp]
   \centering
@@ -143,6 +155,8 @@ under the Simulation Study Design and Simulation Study Results sections.}
 \mc{addressed}
 
 
+\jy{Left quote: `` (below the ESC key)}
+
 \begin{comment}
 4. The authors might want to discuss in what circumstances “non-parametric” CI 
 formulas would work better. It is a bit surprising that student’s t based 
@@ -175,7 +189,7 @@ formulas would work better}
 5. Page 3, 2nd line after “Standard Normal CI”: “p.168” does not seem to fit?
 \end{comment}
 
-Because of the style constraints for AJUR, we have removed page numbers in 
+Because of the bib style constraints for AJUR, we have removed page numbers in 
 citations.
 
 \subsection*{To Referee 2}
@@ -255,6 +269,9 @@ reply (and possibly also in the main paper)?}
 widths for high 
 proportions
 (especially for phi = -0.4) as {plot\_norm\_mu\_1.pdf} (Wald-Type)}
+\jy{I thought the CP interval is for binomial proportions. How was it
+  done here?}
+
 
 We have also included these comments and a figure in the Results section which 
 uses exact 
@@ -268,6 +285,9 @@ Clopper-Pearson intervals to verify that it is the choice of Wald interval
 does not cause undercoverage of the coverage rate. Indeed, the widths of the
 exact proportion CIs do not seem to differ heavily from the Wald-type CIs.
 
+
+
+\jy{No  need to duplicate the figures if they are already in the paper.}
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/plot_norm_mu_1_cp}
@@ -382,7 +402,8 @@ $l = \lceil n^{1/3} \rceil$ are included for comparison):
 \eds{\@ Jun: what do you think about putting the $l = \lceil 2n^{1/3} \rceil$
 results in the Appendix, but keeping the conclusions regarding how the 
 $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$ simulations differ
-in the main text?}
+in the main text?} \jy{I agree. Mention the results in the text and
+refer to the appendix.}
 \mc{I moved everything to the Appendix. if you want to change it back you can 
 revert the commit}
 
