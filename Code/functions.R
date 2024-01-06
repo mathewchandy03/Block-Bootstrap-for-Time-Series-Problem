@@ -132,17 +132,19 @@ alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   
   ggplot(data, aes(x = n, y = cov, color = CI)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
-    geom_line(size = .2) +
-    geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2) +
+    geom_line(size = .2, position = position_dodge(width = 0.5)) +
+    geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2,
+                  position = position_dodge(width = 0.5)) +
     facet_grid(. ~ factor(phi), scales = 'free') +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
             element_text(family = "EB Garamond", size = 10),
-          strip.text.y = element_text(angle = 270, hjust = 1)) +
+          strip.text.y = element_text(angle = 270, hjust = 1),
+          legend.position = "bottom") +
     scale_y_continuous(trans=trans)
   ggsave(paste('../Manuscript/figures/alt_plot_', t, '.pdf', sep = ''), width = 10,
-         height = 5.8)
+         height = 3)
 }
 
 alt_graph_bts2 <- function(t, width, data, trans = 'identity', level = .95)
