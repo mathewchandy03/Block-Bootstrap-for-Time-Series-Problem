@@ -158,6 +158,7 @@ under the Simulation Study Design and Simulation Study Results sections.}
 
 
 \jy{Left quote: `` (below the ESC key)}
+\mc{addressed in reply and manuscript}
 
 \begin{comment}
 4. The authors might want to discuss in what circumstances “non-parametric” CI 
@@ -169,7 +170,7 @@ We have included this comment in the Exponential Marginal Distribution
 subsection of the Design section:
 
 It is important to note that we expect the CIs that are based on bootstrap 
-"tables" to depend on the 
+``tables" to depend on the 
 asymptotic distribution of the statistics, but we expect such CIs to 
 have similar performance for different error structures. For example, under the 
 Central
@@ -177,7 +178,7 @@ Limit Theorem, we expect the asymptotic distribution of the sample mean to be
 approximately 
 normal for both marginal normal distributions and marginal exponential 
 distributions. Therefore, we do not expect CIs that are not based on bootstrap
-"tables" (Percentile, BC, BCA, Recentered Percentile CI) to perform better under
+``tables" (Percentile, BC, BCA, Recentered Percentile CI) to perform better under
 non-normal error structures.
 \eds{you will need to add more here.  This concerns the
 (asymptotic) distribution of the statistics, not the underlying error 
@@ -205,14 +206,16 @@ this as a “table-based” interval.
 
 Thank you for the comment.  This terminology was used because 
 \citet{efron1993introduction} refers to such CIs as 
-"confidence intervals based on 
-bootstrap 'tables'." We have changed these sentences as shown below:
+``confidence intervals based on 
+bootstrap `tables'." We have replaced all instances of the phrase 
+``table-based bootstrap CIs" to ``confidence intervals based on bootstrap 
+`tables'" for the sake of clarity.
 
-The standard CI is classified by \citet{efron1993introduction} 
-as a confidence interval based on bootstrap "tables".
-Like the standard normal interval, the
-Student's $t$ CI is classified by \citet{efron1993introduction} 
-as a confidence interval based on bootstrap "tables".
+%The standard CI is classified by \citet{efron1993introduction} 
+%as a confidence interval based on bootstrap ``tables".
+%Like the standard normal interval, the
+%Student's $t$ CI is classified by \citet{efron1993introduction} 
+%as a confidence interval based on bootstrap ``tables".
 
 
 \begin{comment}
@@ -223,7 +226,7 @@ interval to study.
 We agree. We have added this comment to the discussion:
 
 Lastly, because of its exceptional performance in comparison to the other 
-CIs that are not based on bootstrap "tables", the proposed recentered percentile 
+CIs that are not based on bootstrap ``tables", the proposed recentered percentile 
 CI would be
 an interesting method to study further with different bootstrap schemes.
 
@@ -245,7 +248,8 @@ the Wald-type interval has undercoverage when the true proportion is near 0 or
 1, which is the case in several of these scenarios, especially when phi is -0.4. 
 \end{comment}
 
-We modified the Design section as below:
+Thank you for pointing this out. We modified the Design section to include a 
+specification of the interval type for the coverage rate:
 
 Because it is unlikely for the coverage to 
 exactly match the nominal level, we can construct a 95\% Wald-type CI of the 
@@ -386,9 +390,7 @@ We have now repeated the same simulation study with block size as an
 additional experimental factor. The optimal order of block size is 
 $\lceil n^{1/3} \rceil$, so we tried the same simulations using 
 $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$. We have included
-the Appendix detailing these results below (the 
-figures for 
-$l = \lceil n^{1/3} \rceil$ are included for comparison):
+an Appendix detailing these results:
 
 \eds{\@ Jun: what do you think about putting the $l = \lceil 2n^{1/3} \rceil$
 results in the Appendix, but keeping the conclusions regarding how the 
