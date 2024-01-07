@@ -40,19 +40,20 @@ amssymb, enumerate}
 \end{center}
 
 
-% \jy{Spell check!}
 
-\jy{For each comment, response first and at the end of each response,
-  state what was done in the text. I usually don't quote text because
-  if you make changes, you need to synchronize at two locations. Learn
-  from the first version (which is a real reply letter for a paper).}
-\mc{addressed}
+We thank the editor and the AE for the opportunity to revise the manuscript. and
+the two referees for their constructive comments.
+We are indebted to the reviewers for pointing out these vital discussion areas,
+which have not only enriched the current paper but also charted a clear course
+for our subsequent research endeavors.
 
-\subsection*{Summary}
-
-We thank the editor and the AE for the opportunity to revise the manuscript and
-the two referees for their constructive comments. The manuscript has been
+The manuscript has been
 revised accordingly with the following notable changes:
+\jy{Be selective here for ``notable''. I'd not include items like `wording
+  clarification'; your could put all the clarifications as one
+  item. Keep this list short for the reviewers to have a  
+  quick idea about the major changes (e.g., additional simulation studies).}
+
 \begin{enumerate}
 \item Added clarifications of rationals for decisions regarding the experimental
 design;
@@ -84,12 +85,12 @@ autocorrelation coefficient.
 BLOCK BOOTSTRAP CIS section. Please check and add a comment here if you like it.}
 \mc{looks good}
 
-Thank you for this suggestion. The motivation behind proposing such an interval 
-was based on the 
-simulation performance of the BC and BCA intervals, which will be discussed
-further in the Results section. This has now been stated in the Recentered
-Percentile CI pargarph.
-
+Thank you for this suggestion. The motivation behind the proposed
+recentered CI is that. for the autocorrelation parameter in the
+simulation studies, the centers of the existing CIs appeared to be a
+biased estimator of the target while the spreadness of the CIs still
+provide good uncertainty measures. This has now been added in the
+Recentered Percentile CI pargarph.
 
 
 \begin{comment}
@@ -99,17 +100,17 @@ now it is hard to compare across different methods regarding their comparative
 performance.
 \end{comment}
 
-\jy{never use ``below'' because tables/figures are floats.}
-\mc{addressed}
 
 Thank you for this idea. We have provided Figure~\ref{fig:mu} as an 
 example of what this suggested figure
-would look like. 
-\jy{1. Reduce the heights; put legend at the bottom; put the
-  confidence intervals side by side for each sample size (see this
-  paper for example plot:
-  \url{https://iopscience.iop.org/article/10.1088/1748-9326/ac14ee/meta}.}
-\mc{addressed}
+would look like.
+
+
+\jy{put the legend on one line.}
+
+\jy{This plot seems fine to me. Could you make it for the other
+  parameters too? Then we can make a decision. If we use this, the
+  number of figures would be greatly reduced.}
 
 \begin{figure}[tbp]
   \centering
@@ -151,9 +152,6 @@ under the Simulation Study Design and Simulation Study Results sections.}
 \mc{addressed}
 
 
-\jy{Left quote: `` (below the ESC key)}
-\mc{addressed in reply and manuscript}
-
 \begin{comment}
 4. The authors might want to discuss in what circumstances “non-parametric” CI 
 formulas would work better. It is a bit surprising that student’s t based 
@@ -161,7 +159,8 @@ formula works well under both normal and non-normal error structures.
 \end{comment}
 
 Thank you for the comment. We expect the CIs that 
-are based on bootstrap 
+are based on bootstrap
+\jy{Need to explain ``table'' methods better in the manuscript.}
 ``tables" to depend on the 
 asymptotic distribution of the statistics, but we expect such CIs to 
 have similar performance for different error structures. For example, under the 
@@ -200,7 +199,10 @@ this as a “table-based” interval.
 \end{comment}
 
 Thank you for the comment.  This terminology was used because 
-\citet{efron1993introduction} refers to such CIs as 
+\citet{efron1993introduction} refers to such CIs as
+\jy{This is still not clear. I think they mean CIs based on asymptotic
+  distributions with estimated asymptotic variances. This is in
+  contrast to percentile based CIs.}
 ``confidence intervals based on 
 bootstrap `tables'." We have replaced all instances of the phrase 
 ``table-based bootstrap CIs" to ``confidence intervals based on bootstrap 
@@ -255,10 +257,8 @@ reply (and possibly also in the main paper)?}
 widths for high 
 proportions
 (especially for phi = -0.4) as {plot\_norm\_mu\_1.pdf} (Wald-Type)}
-\jy{I thought the CP interval is for binomial proportions. How was it
-  done here?}
-\mc{this is the interval for the coverage rate, which is a proportion}
 
+\jy{Are there big differences? We could report the CP CIs in the paper.}
 
 We have also included a figure in the Results section which 
 uses exact 
@@ -274,11 +274,6 @@ for the binomial proportion did not cause undercoverage in this case.
 %exact proportion CIs do not seem to differ heavily from the Wald-type CIs.
 
 
-
-\jy{No  need to duplicate the figures if they are already in the paper.}
-\mc{addressed}
-
-
 \begin{comment}
 5.  In all the figures, the y-axis is allowed to vary freely making it hard to 
 compare one row directly to another.  I would suggest fixing the limits on the 
@@ -286,14 +281,9 @@ y-axis to make comparisons easier.
 \end{comment}
 
 Thank you for the suggestion. However, because of the deterioration for $\phi$, 
-we found it hard to fix the limits on 
-the 
+we found it hard to fix the limits on the 
 y-axis without hurting the visualization for the other rows. 
-Figure~\ref{fig:alt_phi1} is provided as an 
-example:  \eds{refer to the Figure label, and avoid using `below' and `above'
-terminology with latex because the figures are not always positioned as we may
-have intended.}
-\mc{addressed}
+Figure~\ref{fig:alt_phi1} is provided as an example:
 
 \begin{figure}[tbp]
   \centering
@@ -307,6 +297,9 @@ have intended.}
     error bars represent 95\% CIs of the real coverage rates.}
   \label{fig:alt_phi1}
 \end{figure}
+
+\jy{I'm interested in seeing the figures overlaid as in
+  Figure~\ref{fig:mu}.}
 
 \begin{comment}
 6.  Is there a reason why the coverage for mu (in Figure 1) is better for 
@@ -351,12 +344,6 @@ true?
 Thank you for drawing this to our attention. A citation \citep{calhoun2018} has
 now been provided for that comment.
 
-\eds{I only saw this citation in the abstract, not the discussion.  
-Please remove this citation from the abstract and place in the discussion 
-section where the sentence in question appears. In general,
-try to avoid placing any citations in the abstract.}
-\mc{addressed, sorry silly mistake}
-
 \begin{comment}
 9.   The authors studied coverage rates of the different intervals as a function 
 of sample size, but they only looked at one choice for the number of blocks.  
@@ -365,14 +352,11 @@ the coverage rates?
 \end{comment}
 
 Thank you for the comment. We have now repeated the same simulation study with 
-block size as an 
+block size as an
 additional experimental factor. The optimal order of block size is 
 $\lceil n^{1/3} \rceil$, so we tried the same simulations using 
 $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$. We have included
 an Appendix detailing these results. 
-
-
-
 
 \begin{comment}
 10.   Why did the authors choose to only go as high as 0.4 (and as low as -0.4) 
@@ -388,7 +372,8 @@ establish the
 general trend as the strength of the autocorrelation 
 increases, and how it varies depending on the sign of the autocorrelation and 
 the parameter of interest. This justification has been added to the Design 
-section.
+section. \jy{Add a comment in the discussion about what'd be expected
+  with higher dependence levels.}
 
 \begin{comment}
 11.    Last paragraph: The authors mention the “ABC and bootstrap-t intervals”.  
@@ -408,11 +393,6 @@ important point that isn’t mentioned at all until the literal last line.
 Thank you for the comment. We have included a discussion of problems 
 with block bootstrap in the introduction, while also highlighting its advantages
 which motivated this investigation into their CI performance.
-
-
-We are indebted to the reviewers for pointing out these vital discussion areas,
-which have not only enriched the current paper but also charted a clear course
-for our subsequent research endeavors.
 
 
 \bibliographystyle{chicago}
