@@ -184,6 +184,7 @@ formula works well under both normal and non-normal error structures.
 Thank you for the comment. We expect the CIs that 
 are based on bootstrap
 \jy{Need to explain ``table'' methods better in the manuscript.}
+\mc{I gave it a try}
 ``tables" to depend on the 
 asymptotic distribution of the statistics, but we expect such CIs to 
 have similar performance for different error structures. For example, under the 
@@ -191,8 +192,7 @@ Central
 Limit Theorem, we expect the asymptotic distribution of the sample mean to be 
 approximately 
 normal for both marginal normal distributions and marginal exponential 
-distributions. Therefore, we do not expect CIs that are not based on bootstrap
-``tables" (Percentile, BC, BCA, Recentered Percentile CI) to perform better 
+distributions. Therefore, we do not expect percentile-based CIs (Percentile, BC, BCA, Recentered Percentile CI) to perform better 
 under
 non-normal error structures. We have called attention to this in the Exponential
 Marginal Distribution subsection of the Design section.
@@ -226,8 +226,13 @@ Thank you for the comment.  This terminology was used because
 \jy{This is still not clear. I think they mean CIs based on asymptotic
   distributions with estimated asymptotic variances. This is in
   contrast to percentile based CIs.}
+\mc{I tried to make it more clear in the manuscript, I used ``percentile-based"
+in the manuscript instead of CIs that are not based on tables}
 ``confidence intervals based on 
-bootstrap `tables'." We have replaced all instances of the phrase 
+bootstrap `tables'", which essentially means CIs based on asymptotic 
+distributions with estimated asymptotic variances (standard error), as opposed
+to CIs that are based on empirical percentiles.
+We have replaced all instances of the phrase 
 ``table-based bootstrap CIs" to ``confidence intervals based on bootstrap 
 `tables'" for the sake of clarity.
 
@@ -397,7 +402,8 @@ establish the
 general trend as the strength of the autocorrelation 
 increases, and how it varies depending on the sign of the autocorrelation and 
 the parameter of interest. This justification has been added to the Design 
-section. \jy{Add a comment in the discussion about what'd be expected
+section. We have also added a comment in the discussion regarding what would
+be expected for higher dependence levels. \jy{Add a comment in the discussion about what'd be expected
   with higher dependence levels.}
 
 \begin{comment}
