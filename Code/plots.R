@@ -1,27 +1,13 @@
 library(tidyverse)
 source("functions.R")
 norm_mu <- read.csv("../Data/norm_mu.csv") %>% 
-  filter(CI != 'ctrCI')
+  filter(CI != 'ctrCI') %>% 
+  mutate(facet_target <- c('mu')[target])
 norm_sigma <- read.csv("../Data/norm_sigma.csv") %>% 
   filter(CI != 'ctrCI')
 norm_phi <- read.csv("../Data/norm_phi.csv") %>% 
   filter(CI != 'ctrCI')
 
-t <- 'norm_mu_1'
-width <- .2
-graph_bts(t, width, norm_mu %>% filter(blksize == ceiling(n^(1/3))))
-alt_graph_bts(t, width, norm_mu %>% filter(blksize == ceiling(n^(1/3))))
-
-t <- 'norm_sigma_1'
-width <- .2
-graph_bts(t, width, norm_sigma %>% filter(blksize == ceiling(n^(1/3))))
-alt_graph_bts(t, width, norm_sigma %>% filter(blksize == ceiling(n^(1/3))))
-
-t <- 'norm_phi_1'
-width <- .2
-graph_bts(t, width, norm_phi %>% filter(blksize == ceiling(n^(1/3))))
-alt_graph_bts2(t, width, norm_phi %>% filter(blksize == ceiling(n^(1/3))))
-alt_graph_bts(t, width, norm_phi %>% filter(blksize == ceiling(n^(1/3))))
 
 t <- 'norm1'
 width <- .2

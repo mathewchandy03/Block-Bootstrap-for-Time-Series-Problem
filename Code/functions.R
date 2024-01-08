@@ -123,7 +123,7 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
   cbPalette <- 
-    c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+    c("#999999", "#E69F00", "#56B4E9", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
   font_add_google("EB Garamond")
   #  windows()
   
@@ -132,12 +132,14 @@ alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'bcCI', 'bcaCI', 'propCI'), 
                     labels = c('Standard', 'Student\'s t', 'Percentile', 'BC', 'BCA', 'Recentered'))
   
-  ggplot(data, aes(x = n, y = cov, color = CI)) +
+  
+  ggplot(data, aes(x = n, y = cov, color = CI, linetype = CI)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
     geom_line(size = .2, position = position_dodge(width = 0.5)) +
     geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2,
                   position = position_dodge(width = 0.5)) +
-    facet_grid(factor(target) ~ factor(phi), scales = 'free') +
+    facet_grid(factor(target) ~ factor(phi), scales = 'free',
+               labeller = labeller(target = as_labeller(target.labs))) +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
@@ -154,7 +156,7 @@ alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 alt_graph_bts2 <- function(t, width, data, trans = 'identity', level = .95)
 {
   cbPalette <- 
-    c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+    c("#999999", "#E69F00", "#56B4E9", "#009E73", "#0072B2", "#D55E00", "#CC79A7")
   font_add_google("EB Garamond")
   #  windows()
   

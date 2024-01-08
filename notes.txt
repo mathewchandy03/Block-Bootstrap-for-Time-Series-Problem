@@ -271,3 +271,9 @@ with 2, coverage deteriorate for BCA, BC, and Percentile not as bad, but still t
 • Exp sigma -> performance about the same for different block sizes, 
 • Exp mu -> Same patterns
 • Exp phi -> Same patterns
+
+1/8 Notes
+• Switch to Clopper-Pearson CI provide a reference
+• Reference to effective sample size mcmc book
+• Percentile-based CIs perform worse because impact of bias becomes stronger as uncertainty decreases
+• Adjusting block size would intuitively have more of an effect on temporal dependence parameter
