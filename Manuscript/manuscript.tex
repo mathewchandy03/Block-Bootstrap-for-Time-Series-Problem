@@ -921,8 +921,19 @@ $\mu$ for $\phi = - 0.4$ when using smaller sample sizes, meaning that if $\phi$
 is known to have a very negative value, another CI may be required. However, in 
 real world applications, $\phi$ is more commonly found to be positive, so 
 Student's $t$ should still be used if $\phi$ is unknown. Lastly, to estimate 
-$\phi$, $n \geq 100$ using the Student's $t$ method may be sufficient. Further
-investigation may be necessary to see if there are other interval corrections
+$\phi$, $n \geq 100$ using the Student's $t$ method may be sufficient. Although
+we have only used serial dependences as strong as 0.4, we have established the 
+trend. When estimating $\mu$, we expect coverage rates to decrease as
+$\phi$ approaches 1 - as $\phi$ approaches -1, we may observe increased 
+over-coverage. When estimating $\sigma$, we expect a larger sample size to
+be necessary as $|\phi|$ gets closer to 1. Lastly, when estimating $\phi$ for
+a marginal normal distribution, we 
+expect a larger sample size to be necessary as $|\phi|$ approaches 0. However, 
+for a marginal exponential distribution, we expect coverage rates of $\phi$ to 
+respond
+to stronger dependences similarly to coverage rates of $\mu$. Further
+investigation may be necessary to see if there are other percentile-based 
+interval corrections
 that fix the coverage deterioration problem for $\phi$.
 
 
@@ -1003,7 +1014,7 @@ using $l = \lceil 2n^{1/3} \rceil$. For example, whereas $n = 100$ or 200
 would seem sufficient for most CIs when using $l = \lceil n^{1/3} \rceil$, 
 $n = 800$ or 1600 is necessary to capture negative autocorrelations for 
 $l = \lceil n^{1/3} \rceil$. Student's $t$ CIs do not seem to be as affected
-by this change in $l$: for $\phi = -0.4$ and -0.2, they still overcover $\mu$
+by this change in $l$: for $\phi = -0.4$ and -0.2, they still over-cover $\mu$
 for smaller values of $n$. 
 
 \textbf{Figure~\ref{fig:sigma2}} looks very similar to 
