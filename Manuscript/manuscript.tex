@@ -866,8 +866,10 @@ samples of $n \in \{800, 1600\}$ with lag-1 autocorrelation coefficient 0.355
 It appears that a greater sample size is generally required for the bootstrap
 CIs to cover the mean and standard deviation parameters in the exponential
 margin case than in the normal margin case. In contrast to the marginal normal
-distribution, where coverage rates of were greater for stronger dependences 
-regardless of the sign, coverage rates seem to be greater only for stronger 
+distribution, where standard normal, Student's $t$, and 
+recentered percentile CI coverage rates were greater for stronger dependences 
+regardless of the sign, coverage rates for these CIs seem to be greater only for 
+stronger 
 negative
 dependencies and lesser for stronger positive dependences. 
 \mc{What could be an explanation for this?}
@@ -949,6 +951,8 @@ that fix the coverage deterioration problem for~$\phi$.
 
 \jy{This is for our method. Some percentile-based CIs may have coverage
   approaching zero, right?}
+\mc{addressed}
+  
 Although
 we have only used serial dependences as strong as 0.4, we have established the 
 trends as $|\phi|$ gets larger. When estimating $\mu$, we expect coverage rates 
@@ -958,11 +962,16 @@ over-coverage. When estimating the standard deviation, we expect a larger sample
 size to
 be necessary as $|\phi|$ gets closer to 1. Lastly, when estimating $\phi$ for
 a marginal normal distribution, we 
-expect a larger sample size to be necessary as $|\phi|$ approaches 0. However, 
-for a marginal exponential distribution, we expect coverage rates of the 
-first-order autocorrelation to 
+expect a larger sample size to be necessary as $|\phi|$ approaches 0, assuming
+standard normal, Student's $t$, or 
+recentered percentile CIs are used. However, 
+when estimating the first-order autocorrelation of a marginal exponential 
+distribution using the same methods, we expect coverage rates to 
 respond
-to stronger dependences in a trend similar to that of coverage rates of~$\mu$.
+to stronger dependences in a trend similar to that of coverage rates of~$\mu$. 
+We expect other percentile-based CIs, which are already inadequate for 
+relatively weak
+dependence structures, to perform even worse as $|\phi|$ approaches 1.
 
 
 This study could be used as a guide for applied statistics courses for students
