@@ -132,20 +132,22 @@ alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'bcCI', 'bcaCI', 'propCI'), 
                     labels = c('Standard', 'Student\'s t', 'Percentile', 'BC', 'BCA', 'Recentered'))
   
+  data$target <- factor(data$target, levels = c('mu', 'sigma', 'phi', 'rho'))
   
   ggplot(data, aes(x = n, y = cov, color = CI, linetype = CI)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
-    geom_line(size = .2, position = position_dodge(width = 0.5)) +
+    geom_line(linewidth = .2, position = position_dodge(width = 0.5)) +
     geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2,
                   position = position_dodge(width = 0.5)) +
     facet_grid(factor(target) ~ factor(phi), scales = 'free',
-               labeller = labeller(target = as_labeller(target.labs))) +
+               labeller = label_parsed) +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
             element_text(family = "EB Garamond", size = 10),
           strip.text.y = element_text(angle = 270, hjust = 1),
-          legend.position = "bottom") +
+          legend.position = "bottom",
+          strip.text.y.right = element_text(angle = 0)) +
     scale_y_continuous(trans=trans) +
     guides(colour = guide_legend(nrow = 1)) +
     scale_colour_manual(values=cbPalette)
