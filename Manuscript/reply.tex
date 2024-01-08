@@ -91,53 +91,35 @@ performance.
 \end{comment}
 
 
-Thank you for this idea. We have provided Figure~\ref{fig:mu} as an 
+Thank you for this idea. We have provided Figure~\ref{fig:norm1} as an 
 example of what this suggested figure
 would look like.
 
 \jy{Could you put the three plots in one? Perhaps use facet grid: phi
   by parameter (mu, sigma, phi). Then we just need one caption.}
+\mc{I think it looks good, only problem is I'm not sure how friendly it is for
+colorblind people. I used a palette which is supposed to be more colorblind
+friendly}
+
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/alt_plot_norm_mu_1}
+  \includegraphics[width=\textwidth]{figures/alt_plot_norm1}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\mu$ of an AR(1) process with a marginal standard 
+    the marginal mean $\mu$, the marginal standard deviation $\sigma_x$, and
+    the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
+    a marginal standard 
     normal distribution with AR coefficient
     $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
     $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
     error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:mu}
+  \label{fig:norm1}
 \end{figure}
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/alt_plot_norm_sigma_1}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\sigma$ of an AR(1) process with a marginal standard 
-    normal distribution with AR coefficient
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
-    error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:sigma}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/alt_plot_norm_phi_1}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\phi$ of an AR(1) process with a marginal standard 
-    normal distribution with AR coefficient
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
-    error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:phi}
-\end{figure}
-
-We find that this format
-is a little
-cluttered to make comparisons, so we have elected to remain with the original 
-format.
+%We find that this format
+%is a little
+%cluttered to make comparisons, so we have elected to remain with the original 
+%format.
 
 
 
@@ -297,21 +279,23 @@ Figure~\ref{fig:alt_phi1} is provided as an example:
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\textwidth]{figures/alt2plot_norm_phi_1}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for 
+  \includegraphics[width=\textwidth]{figures/alt2_plot_norm1}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal mean $\mu$, the marginal standard deviation $\sigma_x$, and
     the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
-    a marginal standard normal distribution with 
+    a marginal standard 
+    normal distribution with AR coefficient
     $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
-    block bootstrap with $l = \lceil n^{1/3} \rceil$. The
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
     error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:alt_phi1}
+  \label{fig:alt2_norm1}
 \end{figure}
 
 \jy{I'm interested in seeing the figures overlaid as in
   Figure~\ref{fig:mu}.}
 \mc{addressed}\jy{Put them overlaid; three plots in one with facet
   grid as the last one.}
+  \mc{addressed. I think the last one looks better}
 
 \begin{comment}
 6.  Is there a reason why the coverage for mu (in Figure 1) is better for 

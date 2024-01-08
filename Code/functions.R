@@ -122,6 +122,8 @@ graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 
 alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
 {
+  cbPalette <- 
+    c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
   font_add_google("EB Garamond")
   #  windows()
   
@@ -135,7 +137,7 @@ alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
     geom_line(size = .2, position = position_dodge(width = 0.5)) +
     geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2,
                   position = position_dodge(width = 0.5)) +
-    facet_grid(. ~ factor(phi), scales = 'free') +
+    facet_grid(factor(target) ~ factor(phi), scales = 'free') +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
@@ -143,13 +145,16 @@ alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
           strip.text.y = element_text(angle = 270, hjust = 1),
           legend.position = "bottom") +
     scale_y_continuous(trans=trans) +
-    guides(colour = guide_legend(nrow = 1))
+    guides(colour = guide_legend(nrow = 1)) +
+    scale_colour_manual(values=cbPalette)
   ggsave(paste('../Manuscript/figures/alt_plot_', t, '.pdf', sep = ''), width = 10,
-         height = 3)
+         height = 6)
 }
 
 alt_graph_bts2 <- function(t, width, data, trans = 'identity', level = .95)
 {
+  cbPalette <- 
+    c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
   font_add_google("EB Garamond")
   #  windows()
   
@@ -158,17 +163,21 @@ alt_graph_bts2 <- function(t, width, data, trans = 'identity', level = .95)
   data$CI <- factor(data$CI, levels = c('stdCI', 'stuCI', 'pctCI', 'bcCI', 'bcaCI', 'propCI'), 
                     labels = c('Standard', 'Student\'s t', 'Percentile', 'BC', 'BCA', 'Recentered'))
   
-  ggplot(data, aes(x = n, y = cov)) +
+  ggplot(data, aes(x = n, y = cov, color = CI)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
-    geom_line(size = .2) +
-    geom_errorbar(aes(ymin=LB, ymax = UB), colour="black", width = width, size = .2) +
-    facet_grid(factor(CI) ~ factor(phi)) +
+    geom_line(size = .2, position = position_dodge(width = 0.5)) +
+    geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2,
+                  position = position_dodge(width = 0.5)) +
+    facet_grid(factor(target) ~ factor(phi)) +
     labs(x = 'Sample Size', y = 'Coverage Rate') +
     scale_x_continuous(breaks = c(100, 200, 400, 800, 1600, 3200), trans='log2') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), text =
             element_text(family = "EB Garamond", size = 10),
-          strip.text.y = element_text(angle = 270, hjust = 1)) +
-    scale_y_continuous(trans=trans)
-  ggsave(paste('../Manuscript/figures/alt2plot_', t, '.pdf', sep = ''), width = 10,
-         height = 5.8)
+          strip.text.y = element_text(angle = 270, hjust = 1),
+          legend.position = "bottom") +
+    scale_y_continuous(trans=trans) +
+    guides(colour = guide_legend(nrow = 1)) +
+    scale_colour_manual(values=cbPalette)
+  ggsave(paste('../Manuscript/figures/alt2_plot_', t, '.pdf', sep = ''), width = 10,
+         height = 6)
 }
