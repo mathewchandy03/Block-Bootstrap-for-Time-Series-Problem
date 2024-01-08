@@ -788,6 +788,23 @@ construct the width of the CI. However, the recentered approach, does not
 correct from the original point estimate $\hat\theta_n$.
 
 
+\subsection*{Exponential Marginal Distribution}
+For an exponential marginal distribution, the empirical coverage rates for 
+$\mu$, $\sigma_w$, %\eds{define $\sigma_w$} 
+%\mc{added definitions for $\mu$ and $\sigma_w$ in the above paragraph} 
+and 
+the lag-1 autocorrelation coefficient, %\mc{replaced $\phi$ here, as I understand
+%it, we are not using $\phi$ in reference to the temporal dependence of the 
+%exponentially distributed series?}, 
+as well as 95\%
+confidence intervals of the real coverage are displayed in 
+\textbf{Figures~\ref{fig:exp_mu1}--\ref{fig:exp_phi1}}. 
+Additionally, a set of 50 CIs are displayed for each of the percentile, 
+BC, and recentered percentile approaches for exponentially distributed
+samples of $n \in \{800, 1600\}$ with lag-1 autocorrelation coefficient 0.355
+($\phi = 0.4$) in Figure~\ref{fig:eri}.
+
+
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/plot_exp_mu_1}
@@ -847,26 +864,18 @@ correct from the original point estimate $\hat\theta_n$.
   \label{fig:eri}
 \end{figure}
 
-\subsection*{Exponential Marginal Distribution}
-For an exponential marginal distribution, the empirical coverage rates for 
-$\mu$, $\sigma_w$, %\eds{define $\sigma_w$} 
-%\mc{added definitions for $\mu$ and $\sigma_w$ in the above paragraph} 
-and 
-the lag-1 autocorrelation coefficient, %\mc{replaced $\phi$ here, as I understand
-%it, we are not using $\phi$ in reference to the temporal dependence of the 
-%exponentially distributed series?}, 
-as well as 95\%
-confidence intervals of the real coverage are displayed in 
-\textbf{Figures~\ref{fig:exp_mu1}--\ref{fig:exp_phi2}}. 
-Additionally, a set of 50 CIs are displayed for each of the percentile, 
-BC, and recentered percentile approaches for exponentially distributed
-samples of $n \in \{800, 1600\}$ with lag-1 autocorrelation coefficient 0.355
-($\phi = 0.4$) in Figure~\ref{fig:eri}.
-
 
 It appears that a greater sample size is generally required for the bootstrap
 CIs to cover the mean and standard deviation parameters in the exponential
-margin case than in the normal margin case. However, the trends and patterns
+margin case than in the normal margin case. In contrast to the marginal normal
+distribution, where coverage rates of were greater for stronger dependences 
+regardless of the sign, coverage rates seem to be greater only for stronger 
+negative
+dependencies and lesser for stronger positive dependences. 
+\mc{What could be an explanation for this?}
+However, the other 
+trends 
+and patterns
 discussed in the main text regarding the performance of various methods and
 diverse parameters remain consistent. For example, Student's $t$ confidence
 intervals still exhibit higher coverage rates in comparison to alternative
@@ -878,9 +887,10 @@ the lag-1 autocorrelation coefficient as sample size increases as demonstrated
 in Figure~\ref{fig:eri}. Both the percentile and BC intervals persist in
 manifesting the same bias issue. On the other hand, the recentered percentile
 confidence interval continues to be effective in estimating the temporal 
-dependence %\mc{replaced $\phi$ again here} 
+dependence 
 due to the
-inherent unbiasedness of the original point estimator. In sum, the findings for
+inherent unbiasedness of the original point estimator. In sum, 
+for the most part, the findings for
 series that are marginally exponentially distributed closely mirror those
 attained for series that are marginally normally distributed.
   
@@ -921,20 +931,25 @@ $\mu$ for $\phi = - 0.4$ when using smaller sample sizes, meaning that if $\phi$
 is known to have a very negative value, another CI may be required. However, in 
 real world applications, $\phi$ is more commonly found to be positive, so 
 Student's $t$ should still be used if $\phi$ is unknown. Lastly, to estimate 
-$\phi$, $n \geq 100$ using the Student's $t$ method may be sufficient. Although
+$\phi$, $n \geq 100$ using the Student's $t$ method may be sufficient. Further
+investigation may be necessary to see if there are other percentile-based 
+interval corrections
+that fix the coverage deterioration problem for $\phi$. 
+
+
+Although
 we have only used serial dependences as strong as 0.4, we have established the 
-trend. When estimating $\mu$, we expect coverage rates to decrease as
+trends as $|\phi|$ gets larger. When estimating $\mu$, we expect coverage rates 
+to decrease as
 $\phi$ approaches 1 - as $\phi$ approaches -1, we may observe increased 
 over-coverage. When estimating $\sigma$, we expect a larger sample size to
 be necessary as $|\phi|$ gets closer to 1. Lastly, when estimating $\phi$ for
 a marginal normal distribution, we 
 expect a larger sample size to be necessary as $|\phi|$ approaches 0. However, 
-for a marginal exponential distribution, we expect coverage rates of $\phi$ to 
+for a marginal exponential distribution, we expect coverage rates of the 
+first-order autocorrelation to 
 respond
-to stronger dependences similarly to coverage rates of $\mu$. Further
-investigation may be necessary to see if there are other percentile-based 
-interval corrections
-that fix the coverage deterioration problem for $\phi$.
+to stronger dependences in a trend similar to that of coverage rates of $\mu$.
 
 
 This study could be used as a guide for applied statistics courses for students
