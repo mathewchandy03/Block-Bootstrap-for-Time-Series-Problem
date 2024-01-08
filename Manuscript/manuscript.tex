@@ -941,14 +941,18 @@ a marginal standard normal distribution, whereas $n \geq 1600$ may be required
 under under a marginal exponential distribution. Further
 investigation may be necessary to see if there are other percentile-based 
 interval corrections
-that fix the coverage deterioration problem for $\phi$. 
+that fix the coverage deterioration problem for~$\phi$.
+\jy{add tilde to avoid line break where you are sure you don't want a
+  line break.}
 
 
+\jy{This is for our method. Some percentile-based CIs may have coverage
+  approaching zero, right?}
 Although
 we have only used serial dependences as strong as 0.4, we have established the 
 trends as $|\phi|$ gets larger. When estimating $\mu$, we expect coverage rates 
 to decrease as
-$\phi$ approaches 1 - as $\phi$ approaches -1, we may observe increased 
+$\phi$ approaches 1 --- as $\phi$ approaches -1, we may observe increased 
 over-coverage. When estimating the standard deviation, we expect a larger sample 
 size to
 be necessary as $|\phi|$ gets closer to 1. Lastly, when estimating $\phi$ for
@@ -957,7 +961,7 @@ expect a larger sample size to be necessary as $|\phi|$ approaches 0. However,
 for a marginal exponential distribution, we expect coverage rates of the 
 first-order autocorrelation to 
 respond
-to stronger dependences in a trend similar to that of coverage rates of $\mu$.
+to stronger dependences in a trend similar to that of coverage rates of~$\mu$.
 
 
 This study could be used as a guide for applied statistics courses for students
@@ -976,11 +980,14 @@ appropriately recover the parameters of a time series. We discussed some
 drawbacks of block bootstrap in the introduction, which could motivate a similar
 simulation study for alternatives to block bootstrap, such 
 as AR-Sieve bootstrap, \citep{kreiss1992bootstrap} which 
-\citet{buhlmann2002bootstraps} finds to be the best for linear time series. 
-Lastly, because of its exceptional performance in comparison to the other 
-percentile-based CIs, the proposed recentered percentile 
-CI would be
-an interesting method to study further with different bootstrap schemes.
+\citet{buhlmann2002bootstraps} finds to be the best for linear time series.
+Finally, there is a need for a more in-depth exploration to comprehend
+the reasons behind the subpar performance of existing percentile-based
+CIs when estimating the autocorrelation parameter. It is crucial to
+conduct a thorough investigation into the specific scenarios where the
+proposed CI demonstrates superior performance and the conditions under
+which it should be recommended.
+
 
 \section*{Appendix: Simulation Study with $l = \lceil 2n^{1/3} \rceil$}
 
