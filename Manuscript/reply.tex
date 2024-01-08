@@ -53,17 +53,14 @@ revised accordingly with the following notable changes:
   clarification'; your could put all the clarifications as one
   item. Keep this list short for the reviewers to have a  
   quick idea about the major changes (e.g., additional simulation studies).}
+\mc{addressed}
 
 \begin{enumerate}
-\item Added clarifications of rationals for decisions regarding the experimental
-design;
+\item Added clarifications of design and more detail examination of results;
 \item Reorganization of paragraphs on the Simulation Study, including moving the
 Appendix on the Exponential Marginal Distribution Study to the main text;
 \item Further discussion of the justification, advantages, and implications of
 the Recentered Percentile CI;
-\item Clarified wording and additional citations;
-\item More detailed xxamination of limitations of study and block bootstrap 
-in general
 \item An Appendix on simulation study using block size 
 $l = \lceil 2n^{1/3} \rceil$
 \end{enumerate}
@@ -107,16 +104,42 @@ would look like.
 
 
 \jy{put the legend on one line.}
+\mc{addressed}
 
 \jy{This plot seems fine to me. Could you make it for the other
   parameters too? Then we can make a decision. If we use this, the
   number of figures would be greatly reduced.}
+\mc{addressed}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/alt_plot_norm_mu_1}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal mean $\mu$ of an AR(1) process with a marginal standard 
+    normal distribution with AR coefficient
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
+    error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:mu}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/alt_plot_norm_sigma_1}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal mean $\sigma$ of an AR(1) process with a marginal standard 
+    normal distribution with AR coefficient
+    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
+    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
+    error bars represent 95\% CIs of the real coverage rates.}
+  \label{fig:mu}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/alt_plot_norm_phi_1}
+  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
+    the marginal mean $\phi$ of an AR(1) process with a marginal standard 
     normal distribution with AR coefficient
     $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
     $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
@@ -259,6 +282,7 @@ proportions
 (especially for phi = -0.4) as {plot\_norm\_mu\_1.pdf} (Wald-Type)}
 
 \jy{Are there big differences? We could report the CP CIs in the paper.}
+\mc{I included it in the paper but they do not seem too different}
 
 We have also included a figure in the Results section which 
 uses exact 
@@ -300,6 +324,7 @@ Figure~\ref{fig:alt_phi1} is provided as an example:
 
 \jy{I'm interested in seeing the figures overlaid as in
   Figure~\ref{fig:mu}.}
+\mc{addressed}
 
 \begin{comment}
 6.  Is there a reason why the coverage for mu (in Figure 1) is better for 
