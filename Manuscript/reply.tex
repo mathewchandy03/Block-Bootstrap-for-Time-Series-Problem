@@ -78,9 +78,9 @@ BLOCK BOOTSTRAP CIS section. Please check and add a comment here if you like it.
 Thank you for this suggestion. The motivation behind the proposed
 recentered CI is that. for the autocorrelation parameter in the
 simulation studies, the centers of the existing CIs appeared to be a
-biased estimator of the target while the spreadness of the CIs still
+biased estimator of the target while the spreads of the CIs still
 provide good uncertainty measures. This has now been added in the
-Recentered Percentile CI pargarph.
+Recentered Percentile CI paragraph.
 
 
 \begin{comment}
@@ -95,12 +95,10 @@ Thank you for this idea. We have provided Figure~\ref{fig:norm1} as an
 example of what this suggested figure
 would look like.
 
-\jy{Could you put the three plots in one? Perhaps use facet grid: phi
-  by parameter (mu, sigma, phi). Then we just need one caption.}
-\mc{I think it looks good, only problem is I'm not sure how friendly it is for
-colorblind people. I used a palette which is supposed to be more colorblind
-friendly}
+\jy{Lets use the new graph in the paper too. You may also use
+  different line types to distinguish them.}
 
+\jy{Use latex symbols for mu, sigma, phi in the plots.}
 
 \begin{figure}[tbp]
   \centering
@@ -116,20 +114,13 @@ friendly}
   \label{fig:norm1}
 \end{figure}
 
-%We find that this format
-%is a little
-%cluttered to make comparisons, so we have elected to remain with the original 
-%format.
-
-
 
 \begin{comment}
 3. The Appendix should be moved to the main text? Assessing the performance of 
 various CI formulations for non-normal error is of central interest.
 \end{comment} 
 
-You are correct. To remedy this, the text highlighting the simulation study with 
-an exponential marginal 
+Agreed. The text highlighting the simulation study with an exponential marginal
 distribution from the Appendix has been moved to the Simulation Study 
 section. 
 
@@ -251,19 +242,12 @@ proportions
 
 \jy{Are there big differences? We could report the CP CIs in the paper.}
 \mc{I included it in the paper but they do not seem too different}
-
+\jy{Point out the location of the changes in the text.}
+  
 We have also included a figure in the Results section which 
 uses exact 
 Clopper-Pearson CIs to verify that the choice of interval
 for the binomial proportion did not cause undercoverage in this case.
-
-%CIs for $\mu$ exhibit coverage rates quite close to 1 for $\phi = -0.4$, and
-%as stated before, the Wald-type CI is known to have undercoverage in such 
-%situations.
-%Figure~\ref{fig:norm_mu_1_cp} shows the same coverage rates using exact 
-%Clopper-Pearson intervals to verify that it is the choice of Wald interval
-%does not cause undercoverage of the coverage rate. Indeed, the widths of the
-%exact proportion CIs do not seem to differ heavily from the Wald-type CIs.
 
 
 \begin{comment}
