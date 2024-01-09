@@ -73,7 +73,7 @@ autocorrelation coefficient.
 
 
 Thank you for this suggestion. The motivation behind the proposed
-recentered CI is that. for the autocorrelation parameter in the
+recentered CI is that for the autocorrelation parameter in the
 simulation studies, the centers of the existing CIs appeared to be a
 biased estimator of the target while the spreads of the CIs still
 provide good uncertainty measures. This has now been added in the
@@ -88,7 +88,8 @@ performance.
 \end{comment}
 
 
-Thank you for the suggestion idea. We have reformatted all of our coverage rate plots 
+Thank you for the suggested idea. We have reformatted all of our coverage rate 
+plots 
 accordingly, which has saved a lot of space!
 
 \mc{for exponential, the first-order autocorrelation coefficient
@@ -121,12 +122,12 @@ distribution depends more on the sample size than on the marginal
 distribution of the time series. So we expect such CIs to 
 have similar performance for different marginal distributions when the
 sample sizes is large.  The percentile-based CIs (Percentile, BC, BCA,
-Recentered Percentile CI) are not necessatily expected to perform
+Recentered Percentile) are not necessarily expected to perform
 better under non-normal marginal distributions. The student's t and
 and normal-based CIs are only noticeably different when the number of
 blocks is smaller than 20. We have added a discussion on this point in
-the first paragraph of the subsection of Marginal Unit Exponential
-Distribution.
+the first paragraph of the Marginal Unit Exponential
+Distribution subsection.
 
 
 \begin{comment}
@@ -193,7 +194,11 @@ the Wald-type interval has undercoverage when the true proportion is near 0 or
 Thank you for pointing this out. We tried both Wald intervals and exact 
 Clopper-Pearson intervals. Although we did not find a major difference between
 the two, we have switched to Clopper-Pearson intervals to avoid the potential
-undercoverage.
+undercoverage. We have discussed this in the third paragraph of the Marginal 
+Standard Normal 
+Distribution subsection of the Design section, and we have provided a reference
+for Clopper-Pearson intervals \citep{clopper1934use} as well as the package we 
+used \citep{PropCIs}.
 
 \eds{I don't think this answers the question.  The reviewer is saying that 0.95 
 is close to the boundary of 1, so the undercoverage observed intervals
@@ -213,10 +218,7 @@ proportions
 \jy{Point out the location of the changes in the text.}
 \mc{addressed}
   
-We have discussed this in the third paragraph of the Marginal Standard Normal 
-Distribution subsection of the Design section, and we have provided a reference
-for Clopper-Pearson intervals \citep{clopper1934use} as well as the package we 
-used \citep{PropCIs}.
+
 
 
 \begin{comment}
@@ -227,8 +229,10 @@ y-axis to make comparisons easier.
 
 Thank you for the suggestion. However, because of the deterioration for $\phi$, 
 we found it hard to fix the limits on the 
-y-axis without hurting the visualization for the other rows. 
-Figure~\ref{fig:alt2_norm1} is provided as an example:
+y-axis without hurting the visualization for the other rows. The other reviewer
+suggested that we put the 6 figures in a column in 
+a single plot.
+Figure~\ref{fig:alt2_norm1} is provided as an example of this with fixed limits:
 
 \begin{figure}[tbp]
   \centering
@@ -264,7 +268,6 @@ size is decreased, whereas is a series has a negative autocorrelation, the
 effective sample size is increased. Additionally, this seems to have a 
 greater effect on the the estimation of the location parameter versus that
 of the scale parameter or temporal dependence parameter. We have included a 
-similar
 comment at the end of the paragraph on estimation of~$\mu$, and we provided a 
 reference for effective sample size \citep{geyer2011introduction}.
 
@@ -326,7 +329,8 @@ used serial dependences as strong as 0.4, because we only seek to
 establish the 
 general trend as the strength of the autocorrelation 
 increases, and how it varies depending on the sign of the autocorrelation and 
-the parameter of interest. This justification has been added to the Design 
+the parameter of interest. This justification has been added to the first
+paragraph of the Normal section of the Design 
 section. We have also added a deliberation (third paragraph in the Discussion) 
 regarding what would
 be expected for higher dependence levels.
@@ -350,9 +354,10 @@ important point that isn’t mentioned at all until the literal last line.
 \end{comment}
 
 Thank you for the comment. We have included a discussion of problems 
-with block bootstrap in the introduction, while also highlighting its advantages
+with block bootstrap as the second paragraph in the introduction, while also 
+highlighting its advantages
 which motivated this investigation into their CI performance. This
-last sentences of the manuscript has also been rewritten to call for
+last few sentences of the manuscript have also been rewritten to call for
 understanding of the subpar performance of the existing
 percentile-based CIs for the autocorrelation parameter and situations
 where the proposed CI should be recommended.
