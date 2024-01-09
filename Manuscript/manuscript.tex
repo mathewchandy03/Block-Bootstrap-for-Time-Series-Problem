@@ -45,13 +45,13 @@
 \setlength{\belowcaptionskip}{-10pt}
 
 % control floats
-%% \renewcommand\floatpagefraction{.9}
-%% \renewcommand\topfraction{.9}
-%% \renewcommand\bottomfraction{.9}
-%% \renewcommand\textfraction{.2}
-%% \setcounter{totalnumber}{50}
-%% \setcounter{topnumber}{50}
-%% \setcounter{bottomnumber}{50}
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.2}
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
 
 
 % These commands set the paragraph and line spacing
@@ -136,7 +136,7 @@ are generated from a first-order autoregressive process. The empirical coverage
 rates of several commonly used bootstrap confidence intervals for the mean, 
 standard deviation, and the lag-1 autocorrelation coefficient are compared. A 
 quite large sample is found necessary for the intervals to have the right 
-coverage rates even when estimating a simple parameter like the mean. Some block 
+coverage rates even when estimating a simple parameter like the mean. Some block
 bootstrap methods could fail when estimating the lag-1 autocorrelation. It is 
 surprising that the coverage property even deteriorates as the sample size 
 increases with some commonly used block bootstrap confidence intervals including 
@@ -156,7 +156,7 @@ Resampling; Simulation; Time Series
 % If you add additional section or subsection headings, use an asterisk * to avoid numbering. 
 
 
-\section*{introduction}
+\section*{Introduction}
 
 Block bootstrap is a tool to construct confidence intervals (CI) to make
 inferences about dependent data. Essentially, it depends on correct estimation
@@ -173,14 +173,7 @@ to produce CIs with coverage rates matching their nominal levels as the sample
 size grows. However, when dealing with finite sample sizes, an important 
 question is how large the sample size must be for block bootstrap CIs to have 
 the desired coverage rates.
-%\eds{I think the superscript citations need to go before the punctuation.  
-%Please check in other AJUR papers and adjust throughout the paper if needed.}
-%\mc{from the style guide: "Please bold and superscript the numbers for 
-%references in the text.1 Separate superscripted numbers by comma and space,1, 2 
-%they should be separated by an en-dash if the consecutive list of more than two 
-%numbers is used.1–3 List them AFTER punctuation (be it comma or period) with no 
-%space.2} 
-%\eds{thank you for checking!}
+
 
 \citet{lahiri1999theoretical} finds that moving block bootstrap has better 
 performance than non-overlapping block bootstrap. Additionally, moving block 
@@ -201,10 +194,6 @@ computationally more difficult than the resampling step of basic bootstrap.
 Furthermore, block bootstrap performs better than local bootstrap in terms of
 mimicking dependence structures.
 
-\eds{If we include all these drawbacks here, we need to also provide some good 
-features of block bootstrap as well, otherwise, why do we care about their CI 
-performance?}
-\mc{addressed}
 
 For independent data, extensive research has explored the effectiveness of
 bootstrap standard errors in providing accurate uncertainty measures. For 
@@ -247,14 +236,13 @@ bootstrap in \citet{hesterberg2015teachers}. We consider a simple situation of
 a stationary time series, where the parameters of interests are the mean, 
 standard deviation, and the first-order autocorrelation coefficient. We compare 
 six variants of block bootstrap CIs from the 
-literature:\citep{diciccio1996bootstrap, rice2006mathematical} a standard normal 
-CI, a 
+literature:\citep{diciccio1996bootstrap, rice2006mathematical}
+a standard normal CI, a 
 Student's $t$ CI, a percentile CI, a bias-corrected CI, a bias-corrected and 
 accelerated CI, and a recentered percentile CI proposed in this article. Their 
 empirical coverage rates at different sample sizes and dependence levels are 
 compared in a simulation study. The results of this study suggest that recovery 
 of temporal dependence parameters is reliant on the type of interval used.
-
 
 
 The remainder of the paper is organized as follows. The first section 
@@ -264,7 +252,7 @@ estimate is proposed for comparison. The second section reports a simulation
 study comparing the coverage rates of six block bootstrap CIs. A discussion
 concludes in the final section.
 
-\section*{block bootstrap cis}
+\section*{Block Bootstrap CIs}
 \label{sec:bbci}
 
 Consider a stationary time series $\{X_t: t = 1, \ldots, n\}$ with length~$n$. 
@@ -354,14 +342,6 @@ A $(1 - \alpha)100\%$ standard normal CI is
 (\hat{\theta}_{n} - z_{(1-\alpha/2)}\widehat{\text{SE}}, \quad
 \hat{\theta}_{n} - z_{(\alpha/2)}\widehat{\text{SE}}).
 \]
-%\eds{If $z_{(\alpha)}$ is the upper quantile, then $z_{(\alpha/2)}$ will be 
-%positive and $z_{(1-\alpha/2)}$ will be negative for small $\alpha$ values; with
-%the subtraction of the quantiles, the smaller CI endpoint would appear to
-%be listed first.  Please check this notation, and the notation for Student's $t$ 
-%CI, and other intervals which use the $z_{(\alpha)}$ upper standard normal 
-%quantile.} 
-%\mc{Replaced upper quantile with quantile function}
-
 This CI is centered by the original point estimate $\hat\theta_n$ and is 
 symmetric. The standard CI is classified by \citet{efron1993introduction} 
 as a confidence interval based on bootstrap ``tables", which essentially means 
@@ -383,7 +363,6 @@ a $(1 - \alpha)100\%$ Student's $t$ CI is
 (\hat{\theta}_{n} - t_{(1-\alpha/2), k - 1}\widehat{\text{SE}}, \quad
 \hat{\theta}_{n} - t_{(\alpha/2), k -1}\widehat{\text{SE}}),
 \]
-%\eds{define $t_{(.)}$ and check the signs}  \mc{addressed}
 where $k$ is the number of blocks. This CI is centered by the original point 
 estimate $\hat\theta_n$ and is symmetric. Like the standard normal interval, the
 Student's $t$ CI is classified by \citet{efron1993introduction} 
@@ -420,10 +399,7 @@ A $(1 - \alpha)100\%$ ~BC CI is
 \[
 (\hat\theta_{n, \alpha_1}^{B}, \quad \hat\theta_{n, \alpha_2}^{B}).
 \]
-%\eds{the $z_{\alpha/2}$ and $z_{1 - \alpha/2}$ may need to be switched now in 
-%$\alpha_1$ and $\alpha_2$ with the quantile definition for $z_{\alpha}$ -- 
-%please check.} 
-%\mc{yes they had to be switched}
+
 
 \paragraph{Bias-Corrected and Accelerated (BCA) CI}
 The BCA CI was first suggested in \citet{efron1987better}. Let $Z_{(i)}$ be the 
@@ -446,9 +422,6 @@ and
 \alpha_2 = \Phi\left(\hat{z}_{0} + \frac{\hat{z}_{0} +
   z_{1 - \alpha/2}}{1 - \hat{a}(\hat{z}_{0} + z_{1 - \alpha/2})}\right).
 \end{equation*}
-%\eds{please check $z_{\alpha/2}$ and $z_{1 - \alpha/2}$ in 
-%$\alpha_1$ and $\alpha_2$ with the quantile definition for $z_{\alpha}$} 
-%\mc{this one is okay}
 A $(1 - \alpha)100\%$ ~BCA CI is
 \[
 (\hat\theta_{n, \alpha_1}^{B}, \quad \hat\theta_{n, \alpha_2}^{B}).
@@ -479,17 +452,14 @@ It is not necessarily symmetric, as different critical values are used to
 compute the lower and upper bounds. It has the same width as the percentile CI.
 
 
-\section*{simulation design}
+\section*{Simulation Design}
 \label{sec:simdes}
 
-%\subsection*{Design}
-
-\eds{We compared the performance of the different block bootstrap CI methods 
-under two marginal distributions: normal and exponential.} 
+We compared the performance of the different block bootstrap CI methods
+under two marginal distributions: normal and exponential.
 
 \subsection*{Marginal Standard Normal Distribution}
-%We designed a simulation study to compare the performance of the different block 
-%bootstrap CI methods. In particular, 
+
 We generated time series $X_t$ from a 1st 
 order autoregressive (AR(1)) process:
 \begin{equation*}
@@ -515,7 +485,7 @@ Three target parameters of $X_t$ were considered:
 3) $\phi$, the lag-1 autocorrelation coefficient.
 To investigate the effect of sample size~$n$, we considered an array of values
 $n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 
-10000 replicates. The 
+10,000 replicates. The 
 block bootstrap sampling step was done with function \texttt{tsboot} from R 
 package \textsl{boot},\citep{boot} with block size $\lceil n / l \rceil$. This 
 function by default is an implementation of moving block bootstrap as described 
@@ -524,14 +494,14 @@ and we tried both $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$,
 keeping the order of the block size constant but varying the coefficient. 
 For each replicate, we constructed 
 six 95\% block bootstrap 
-CIs for each parameter as described in the last section with $B = 1000$. We can 
-estimate $\mu$, 
-$\sigma_x$, and $\phi$ by computing the sample mean, sample standard deviation, 
+CIs for each parameter as described in the last section with $B = 1000$. We can
+estimate $\mu$, $\sigma_x$, and $\phi$ by computing the sample mean,
+sample standard deviation, 
 and lag-1 autocorrelation, respectively, of each bootstrap sample. Then we can 
 construct intervals for each parameter using the appropriate procedures 
 described in \textit{Block Bootstrap CIs}. 
 Then we estimated their actual coverage 
-rates along with their 95\% confidence intervals from the 10000 replicates. 
+rates along with their 95\% confidence intervals from the 10,000 replicates. 
 
 
 The coverage rates of the CIs were used to compare the performance of CIs. Let
@@ -543,7 +513,7 @@ $r \in \{1, \ldots, R\}$. If a CI method is valid, then the coverage rate is
 expected to match the nominal level. Because it is unlikely for the coverage to 
 exactly match the nominal level, we can construct a 95\% Wald-type CI of the 
 coverage rate 
-(which is an estimate of a proportion with $R = 10000$). If the proportion 0.95 
+(which is an estimate of a proportion with $R = 10,000$). If the proportion 0.95 
 is included in the interval, the block bootstrap method is likely performing 
 well. If all values in the interval are below 0.95, the results would suggest 
 that the method either is providing inaccurate estimation, is underestimating 
@@ -559,62 +529,54 @@ R \textsl{ggplot2} package.\citep{ggplot2}
 
 
 \subsection*{Marginal Unit Exponential Distribution}
-Additionally, we evaluated the performance of block bootstrap when used to 
-estimate
-the mean, standard deviation, and the lag-1 autocorrelation coefficient of a
-stationary series with a marginal exponential distribution. The motivation of
-for this study was to investigate if the results are robust to nonnormal
-marginal distributions.
+Additionally, to investigate if the results are robust to nonnormal
+marginal distributions, we evaluated the performance of block
+bootstrap for a time series with a non-normal marginal
+distribution. Specifically, we estimated the mean, standard deviation,
+and the lag-1 autocorrelation coefficient of a stationary series with
+marginal unit exponential distribution. Note that we expect the CIs
+that are based on bootstrap ``tables" to depend on the 
+asymptotic distribution of the estimator.  This asymptotic
+distribution depends more on the sample size than on the marginal
+distribution of the time series. So we expect such CIs to 
+have similar performance for different marginal distributions when the
+sample sizes is large.  The percentile-based CIs (Percentile, BC, BCA,
+Recentered Percentile CI) are not necessatily expected to perform
+better under non-normal marginal distributions. The student's t and
+and normal-based CIs are only noticeably different when the number of
+blocks is smaller than 20.
 
-It is important to note that we expect the CIs that are based on bootstrap 
-``tables" to depend on the 
-asymptotic distribution of the statistics, but we expect such CIs to 
-have similar performance for different error structures. For example, under the 
-Central
-Limit Theorem, we expect the asymptotic distribution of the sample mean to be 
-approximately 
-normal for both marginal normal distributions and marginal exponential 
-distributions. Therefore, we do not expect CIs that are percentile-based
-(Percentile, BC, BCA, Recentered Percentile CI) to perform better under
-non-normal error structures.
 
 The series were generated by marginally transforming the
-AR(1) series $X_t$ in the simulation study by
+AR(1) series $X_t$ in the first simulation study by
 \begin{equation*}
 W_t = F^{-1}[\Phi(X_t)],
 \end{equation*}
 where $F^{-1}(p)$ is the quantile function for the unit exponential 
 distribution. The true mean ($\mu$) and standard deviation ($\sigma_w$) 
-parameters 
-of $W_t$ are~1. The 
-lag-1
+parameters of $W_t$ are~1. The lag-1
 autocorrelation coefficient is not invariant to the
-transformation, \citep{hofert2018elements} but its value can be obtained by
+transformation,\citep{hofert2018elements} but its value can be obtained by
 \begin{equation*}
 \int_{-\infty}^\infty \int_{-\infty}^\infty F^{-1}[\Phi(x)] F^{-1}[\Phi(y)] g_2(x, y; \phi) \dd x \dd y - 1,
 \end{equation*}
 where $g_2(x, y; \phi)$ is the density of a standard bivariate normal
 distribution with correlation parameter~$\phi$. We kept the configuration of
 $\phi \in \{-0.4, -0.2, 0.0, 0.2, 0.4\}$, and the corresponding lag-1
-autocorrelation coefficients are $\{-0.298, -0.156, \allowbreak 0, 0.170, 0.355\}$.
+autocorrelation coefficients are
+$\rho \in \{-0.298, -0.156, \allowbreak 0, 0.170, 0.355\}$.
 
 For a marginal exponential  distribution, the empirical coverage rates for 
-$\mu$, $\sigma_w$, %\eds{define $\sigma_w$} 
-%\mc{added definitions for $\mu$ and $\sigma_w$ in the above paragraph} 
-and 
-the lag-1 autocorrelation coefficient using block bootstrap
-with $l = \lceil n^{1/3} \rceil$, %\mc{replaced $\phi$ here, as I understand
-%it, we are not using $\phi$ in reference to the temporal dependence of the 
-%exponentially distributed series?}, 
-as well as 95\%
+$\mu$, $\sigma_w$, and 
+the lag-1 autocorrelation coefficient $\rho$ using block bootstrap
+with $l = \lceil n^{1/3} \rceil$, as well as 95\%
 confidence intervals of the real coverage are displayed in 
 \textbf{Figure~\ref{fig:exp1}}. 
 
 
-\section*{simulation results}
+\section*{Simulation Results}
 \label{sec:simres}
 
-%\subsection*{Results}
 
 \subsection*{Marginal Standard Normal Distribution}
 
@@ -655,11 +617,13 @@ stronger, holding everything else equal, coverage decreases, and a larger sample
 is necessary to recover~$\mu$. A possible explanation for this is that if a 
 stationary series has a positive 
 autocorrelation, the effective sample
-size is decreased, whereas is a series has a negative autocorrelation, the
+size is decreased, whereas if a series has a negative autocorrelation, the
 effective sample size is increased. Additionally, this seems to have a 
 greater effect on the the estimation of the location parameter versus that
 of the scale parameter or temporal dependence parameter.
 
+\jy{Are we reporting the C-P intervals? Clarify the desciption and
+  cite the reference.}
 
 %CIs for $\mu$ exhibit coverage rates quite close to 1 for $\phi = -0.4$, and
 %as stated before, the Wald-type CI is known to have undercoverage in such 
@@ -809,10 +773,12 @@ margin case than in the normal margin case. In contrast to the marginal normal
 distribution, where standard normal, Student's $t$, and 
 recentered percentile CI coverage rates were greater for stronger dependences 
 regardless of the sign, coverage rates for these CIs seem to be greater only for 
-stronger 
-negative
-dependencies and lesser for stronger positive dependences. 
+stronger negative dependencies and lesser for stronger positive dependences. 
 \mc{What could be an explanation for this?}
+\jy{I don't follow this. Are you talking about mu only? Even for mu,
+  the statement does not look right.}
+\jy{This would invalidate our explanation using the effective sample
+  size. Let's tune it down or remove it.}
 However, the other 
 trends 
 and patterns
@@ -820,28 +786,26 @@ discussed in the main text regarding the performance of various methods and
 diverse parameters remain consistent. For example, Student's $t$ confidence
 intervals still exhibit higher coverage rates in comparison to alternative
 methods. Performance continues to be more favorable when temporal dependence is
-negative rather than positive. Of particular significance, the 
-percentile, BC,
+negative rather than positive. Of particular significance, the percentile, BC,
 and BCA confidence intervals still display a decline in coverage accuracy for
 the lag-1 autocorrelation coefficient as sample size increases as demonstrated
 in Figure~\ref{fig:eri}. Both the percentile and BC intervals persist in
 manifesting the same bias issue. On the other hand, the recentered percentile
 confidence interval continues to be effective in estimating the temporal 
-dependence 
-due to the
+dependence due to the
 inherent unbiasedness of the original point estimator. In sum, 
 for the most part, the findings for
 series that are marginally exponentially distributed closely mirror those
 attained for series that are marginally normally distributed.
   
-\section*{discussion}
+\section*{Discussion}
 \label{sec:disc}
 
 Block bootstrap is a useful method for estimating parameters of a time series,
 from simple parameters like the mean to more complicated temporal dependence
 factors. We know theoretically that the block bootstrap procedure will cover a 
 parameter of a time series at the nominal level given an infinitely large 
-sample, \citep{calhoun2018} so the goal for this study was to find the smallest 
+sample,\citep{calhoun2018} so the goal for this study was to find the smallest 
 finite sample length 
 $n$ of a time series in order for the block bootstrap procedure to recover its 
 associated parameters at an acceptable rate. Our analysis relies on the 
@@ -854,17 +818,29 @@ deterioration as $n$ increased. The percentile CI's coverage deterioration can
 be attributed to bias that is not corrected as $n$ increases. Specifically, as 
 $n$ increases, the width of the CI decreases, but because the percentile CI 
 underestimates $\phi$, the coverage decreases. The BC CI seems to correct the 
-bias, but the width of the CI seems to be inconsistent. The acceleration factor 
-of the BCA CI seems to fail, as the width of the CI seems to be inconsistent. 
+bias, but the width of the CI seems to be too short. The acceleration factor 
+of the BCA CI seems to fail, as the width of the CI seems to be too
+short.
+\jy{Inconsistent means not consistent and consistency is a desired
+  property of an estimator. When we talk about width of a CI, what
+  does consistency mean? Do an throughout check, please.}
 
 
-One of the goals of this study was to provide some practical recommendations for 
-necessary sample sizes when using block bootstrap to estimate parameters of 
-serially dependent data. When using Student's $t$ intervals and the marginal
+One of the goals of this study was to provide some practical recommendations for
+necessary sample sizes when using block bootstrap to estimate the parameters of
+serially dependent data. When using Student's $t$ intervals and the
+marginal
+\jy{Recall that t is not different from normal when sample size is
+  large. So the recommendation is to do t always since it performs
+  better for small samples.}
 distribution and temporal dependence is 
 unknown, the results of this study suggest that $n \geq 1600$ may be necessary 
 for common practice to estimate $\mu$, whereas $n > 3200$ may be necessary
-to estimate the standard deviation. If 
+to estimate the standard deviation. If
+\jy{Don't discuss these. The recommended method is regardless of what
+  the dependence struture and marginald istribution are. That's why we
+  did the study. Just gave recommendations based on both
+  scenarios. Rewrite this paragraph.}
 the dependences tructure or the marginal distribution is already known, a 
 lesser $n$ may be 
 adequate to estimate these 
@@ -873,7 +849,10 @@ when estimating the standard deviation. For negative values of $\phi$, coverage 
 parameters is higher in general. Under a marginal standard normal distribution, 
 Student's $t$ seems to over-cover 
 $\mu$ for $\phi = - 0.4$  when 
-using smaller sample sizes, meaning that if $\phi$ 
+using smaller sample sizes, meaning that if $\phi$
+\jy{These statements are not to the point. Let's not discuss the case
+  where phi is know or not. They are not known. We want the method to
+  be robust to phi and the true marginal distribution.}
 is known to have a very negative value, another CI may be required. However, in 
 real world applications, $\phi$ is more commonly found to be positive, so 
 Student's $t$ should still be used if $\phi$ is unknown. 
@@ -884,14 +863,7 @@ under under a marginal exponential distribution. Further
 investigation may be necessary to see if there are other percentile-based 
 interval corrections
 that fix the coverage deterioration problem for~$\phi$.
-\jy{add tilde to avoid line break where you are sure you don't want a
-  line break.}
-\mc{addressed}
 
-
-\jy{This is for our method. Some percentile-based CIs may have coverage
-  approaching zero, right?}
-\mc{addressed}
   
 Although
 we have only used serial dependences as strong as 0.4, we have established the 
@@ -929,7 +901,7 @@ more
 appropriately recover the parameters of a time series. We discussed some
 drawbacks of block bootstrap in the introduction, which could motivate a similar
 simulation study for alternatives to block bootstrap, such 
-as AR-Sieve bootstrap, \citep{kreiss1992bootstrap} which 
+as AR-Sieve bootstrap,\citep{kreiss1992bootstrap} which 
 \citet{buhlmann2002bootstraps} finds to be the best for linear time series.
 Finally, there is a need for a more in-depth exploration to comprehend
 the reasons behind the subpar performance of existing percentile-based
@@ -980,6 +952,8 @@ slightly lower
 especially for negative values of $\phi$, although Student's $t$ CIs are again
 not as influenced by this change in~$l$. A larger sample size seems necessary
 when using other CIs to estimate $\sigma_x$ for $l = \lceil 2n^{1/3} \rceil$.
+
+\jy{Put the small paragraphs into a bigger one.}
 
 As shown in \textbf{Figure~\ref{fig:norm2}},
 recentered percentile and standard CIs have slightly lower coverage rates when
