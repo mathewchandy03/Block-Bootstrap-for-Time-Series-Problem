@@ -517,14 +517,16 @@ $r \in \{1, \ldots, R\}$. If a CI method is valid, then the coverage rate is
 expected to match the nominal level. Because it is unlikely for the coverage to 
 exactly match the nominal level, we can construct a 95\% Clopper-Pearson
 exact CI of the 
-coverage rate 
-<<<<<<< HEAD
-(which is an estimate of a proportion with $R = 10,000$). The choice of
+coverage rate,\citep{clopper1934use}
+which is an estimate of a proportion with $R = 10,000$. We used the
+R \textsl{PropCIs} package to achieve this.\citep{PropCIs}
+The choice of
 Clopper-Pearson was motivated by the Wald 
-interval's poor coverage as the proportion approaches 0 or 1, as noted by
+interval's poor coverage as the proportion approaches 0 or 1, as noted by 
 \citet{brown2001interval}, although when we tried Wald intervals, the coverage
 rate intervals
-did not appear to have large differences. If the 
+did not appear to have large differences. 
+If the 
 proportion 0.95 
 is included in the interval, the block bootstrap method is likely performing 
 well. If all values in the interval are below 0.95, the results would suggest 
@@ -566,7 +568,7 @@ W_t = F^{-1}[\Phi(X_t)],
 where $F^{-1}(p)$ is the quantile function for the unit exponential 
 distribution. The true mean ($\mu$) and standard deviation ($\sigma_w$) 
 parameters of $W_t$ are~1. The lag-1
-autocorrelation coefficient is not invariant to the
+autocorrelation coefficient ($\rho$) is not invariant to the
 transformation,\citep{hofert2018elements} but its value can be obtained by
 \begin{equation*}
 \int_{-\infty}^\infty \int_{-\infty}^\infty F^{-1}[\Phi(x)] F^{-1}[\Phi(y)] g_2(x, y; \phi) \dd x \dd y - 1,
@@ -781,12 +783,14 @@ It appears that a greater sample size is generally required for the bootstrap
 CIs to cover the mean and standard deviation parameters in the exponential
 margin case than in the normal margin case. In contrast to the marginal normal
 distribution, where standard normal, Student's $t$, and 
-recentered percentile CI coverage rates were greater for stronger dependences 
-regardless of the sign, coverage rates for these CIs seem to be greater only for 
+recentered percentile CI $\phi$ coverage rates were greater for stronger 
+dependences 
+regardless of the sign, $\rho$ coverage rates for these CIs seem to be greater 
+only for 
 stronger negative dependencies and lesser for stronger positive dependences. 
 \mc{What could be an explanation for this?}
 \jy{I don't follow this. Are you talking about mu only? Even for mu,
-  the statement does not look right.}
+  the statement does not look right.} \mc{for lag-1 autocorrelation}
 \jy{This would invalidate our explanation using the effective sample
   size. Let's tune it down or remove it.}
 However, the other 
@@ -834,6 +838,9 @@ short.
 \jy{Inconsistent means not consistent and consistency is a desired
   property of an estimator. When we talk about width of a CI, what
   does consistency mean? Do an throughout check, please.}
+\mc{I was basically trying to say that the widths of the CI vary more 
+for BC CIs than for percentile or recentered CIs, I think it may be simpler to
+just say that they are shorter}
 
 
 One of the goals of this study was to provide some practical recommendations for
