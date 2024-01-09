@@ -1,5 +1,6 @@
 source("functions.R")
 library(copula)
+library(PropCIs)
 setwd("../Data")
 nrep <- 10000
 file_names <- list.files(pattern = "^exp_results")

@@ -1,4 +1,5 @@
 source("functions.R")
+library(PropCIs)
 setwd("../Data")
 nrep <- 10000
 file_names <- list.files(pattern = "^norm_results")
