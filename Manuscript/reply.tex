@@ -88,21 +88,14 @@ performance.
 \end{comment}
 
 
-Thank you for this idea. We have reformatted all of our coverage rate plots 
+Thank you for the suggestion idea. We have reformatted all of our coverage rate plots 
 accordingly, which has saved a lot of space!
 
-\jy{Lets use the new graph in the paper too. You may also use
-  different line types to distinguish them.}
-\mc{addressed}
-
-\jy{Use latex symbols for mu, sigma, phi in the plots.}
 \mc{for exponential, the first-order autocorrelation coefficient
 is not the same as $\phi$, should I define $\rho$ as the first-order 
 autocorrelation coefficient in the manuscript so that I can use the greek letter
 in the plot}
-
-
-
+\jy{Yes.}
 
 \begin{comment}
 3. The Appendix should be moved to the main text? Assessing the performance of 
@@ -122,23 +115,17 @@ formula works well under both normal and non-normal error structures.
 
 Thank you for the comment. We expect the CIs that 
 are based on bootstrap ``tables" to depend on the 
-asymptotic distribution of the statistics, but we expect such CIs to 
-have similar performance for different error structures. For example, under the 
-Central
-Limit Theorem, we expect the asymptotic distribution of the sample mean to be 
-approximately 
-normal for both marginal normal distributions and marginal exponential 
-distributions. Therefore, we do not expect percentile-based CIs (Percentile, BC, BCA, Recentered Percentile CI) to perform better 
-under
-non-normal error structures. We have called attention to this in the Exponential
-Marginal Distribution subsection of the Design section.
-
-\eds{you will need to add more here.  This concerns the
-(asymptotic) distribution of the statistics, not the underlying error 
-structure.}
-\mc{I changed it a bit... I'm not sure what to say for circumstances in which
-“non-parametric” CI 
-formulas would work better}
+asymptotic distribution of the point estimator. This asymptotic
+distribution depends more on the sample size than on the marginal
+distribution of the time series. So we expect such CIs to 
+have similar performance for different marginal distributions when the
+sample sizes is large.  The percentile-based CIs (Percentile, BC, BCA,
+Recentered Percentile CI) are not necessatily expected to perform
+better under non-normal marginal distributions. The student's t and
+and normal-based CIs are only noticeably different when the number of
+blocks is smaller than 20. We have added a discussion on this point in
+the first paragraph of the subsection of Marginal Unit Exponential
+Distribution.
 
 
 \begin{comment}
