@@ -190,9 +190,10 @@ the Wald-type interval has undercoverage when the true proportion is near 0 or
 1, which is the case in several of these scenarios, especially when phi is -0.4. 
 \end{comment}
 
-Thank you for pointing this out. We modified the Design section to include a 
-specification of the interval type for the coverage rate, as well as an 
-acknowledgement of its flaw.
+Thank you for pointing this out. We tried both Wald intervals and exact 
+Clopper-Pearson intervals. Although we did not find a major difference between
+the two, we have switched to Clopper-Pearson intervals to avoid the potential
+undercoverage.
 
 \eds{I don't think this answers the question.  The reviewer is saying that 0.95 
 is close to the boundary of 1, so the undercoverage observed intervals
@@ -210,11 +211,12 @@ proportions
 \jy{Are there big differences? We could report the CP CIs in the paper.}
 \mc{I included it in the paper but they do not seem too different}
 \jy{Point out the location of the changes in the text.}
+\mc{addressed}
   
-We have also included a figure in the Results section which 
-uses exact 
-Clopper-Pearson CIs to verify that the choice of interval
-for the binomial proportion did not cause undercoverage in this case.
+We have discussed this in the third paragraph of the Marginal Standard Normal 
+Distribution subsection of the Design section, and we have provided a reference
+for Clopper-Pearson intervals \citep{clopper1934use} as well as the package we 
+used \citep{PropCIs}.
 
 
 \begin{comment}

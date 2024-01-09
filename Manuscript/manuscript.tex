@@ -638,6 +638,7 @@ of the scale parameter or temporal dependence parameter.
 
 \jy{Are we reporting the C-P intervals? Clarify the desciption and
   cite the reference.}
+\mc{addressed}
 
 %situations.
 %Figure~\ref{fig:norm_mu_1_cp} shows the same coverage rates using exact 
@@ -793,6 +794,8 @@ stronger negative dependencies and lesser for stronger positive dependences.
   the statement does not look right.} \mc{for lag-1 autocorrelation}
 \jy{This would invalidate our explanation using the effective sample
   size. Let's tune it down or remove it.}
+\mc{this observation was for lag-1 autocorrelation. does it still invalidate 
+our effective sample size explanation?}
 However, the other 
 trends 
 and patterns
@@ -849,30 +852,23 @@ serially dependent data. When using Student's $t$ intervals and the
 marginal
 \jy{Recall that t is not different from normal when sample size is
   large. So the recommendation is to do t always since it performs
-  better for small samples.}
+  better for small samples.} \mc{addressed}
 distribution and temporal dependence is 
 unknown, the results of this study suggest that $n \geq 1600$ may be necessary 
 for common practice to estimate $\mu$, whereas $n > 3200$ may be necessary
-to estimate the standard deviation. If
+to estimate the standard deviation. Student's $t$ is always preferable to
+Standard Normal CIs
+as they performs better for smaller sample sizes and performs as good or better
+for larger sample sizes.
 \jy{Don't discuss these. The recommended method is regardless of what
   the dependence struture and marginald istribution are. That's why we
   did the study. Just gave recommendations based on both
   scenarios. Rewrite this paragraph.}
-the dependence structure or the marginal distribution is already known, a 
-lesser $n$ may be 
-adequate to estimate these 
-parameters. For lower absolute values of $\phi$, a smaller $n$ is sufficient 
-when estimating the standard deviation. For negative values of $\phi$, coverage of all 
-parameters is higher in general. Under a marginal standard normal distribution, 
-Student's $t$ seems to over-cover 
-$\mu$ for $\phi = - 0.4$  when 
-using smaller sample sizes, meaning that if $\phi$
+\mc{addressed}
 \jy{These statements are not to the point. Let's not discuss the case
   where phi is know or not. They are not known. We want the method to
   be robust to phi and the true marginal distribution.}
-is known to have a very negative value, another CI may be required. However, in 
-real world applications, $\phi$ is more commonly found to be positive, so 
-Student's $t$ should still be used if $\phi$ is unknown. 
+\mc{addressed}
 Lastly, to estimate 
 $\phi$, $n \geq 100$ using the Student's $t$ method may be sufficient under
 a marginal standard normal distribution, whereas $n \geq 1600$ may be required
@@ -958,9 +954,8 @@ would seem sufficient for most CIs when using $l = \lceil n^{1/3} \rceil$,
 $n = 800$ or 1600 is necessary to capture negative autocorrelations for 
 $l = \lceil n^{1/3} \rceil$. Student's $t$ CIs do not seem to be as affected
 by this change in $l$: for $\phi = -0.4$ and -0.2, they still over-cover $\mu$
-for smaller values of~$n$. 
-
-The results for $\sigma_x$ with $l = \lceil 2n^{1/3} \rceil$ look very similar 
+for smaller values of~$n$. The results for $\sigma_x$ with $l = \lceil 2n^{1/3} 
+\rceil$ look very similar 
 to 
 those the results for $\sigma_x$ with $l = \lceil n^{1/3} \rceil$, but coverage 
 rates of $\sigma_x$ do 
@@ -969,17 +964,12 @@ slightly lower
 especially for negative values of $\phi$, although Student's $t$ CIs are again
 not as influenced by this change in~$l$. A larger sample size seems necessary
 when using other CIs to estimate $\sigma_x$ for $l = \lceil 2n^{1/3} \rceil$.
-
-\jy{Put the small paragraphs into a bigger one.}
-
-As shown in \textbf{Figure~\ref{fig:norm2}},
-recentered percentile and standard CIs have slightly lower coverage rates when
+\jy{Put the small paragraphs into a bigger one.}\mc{addressed}
+Recentered percentile and standard CIs have slightly lower coverage rates when
 estimating negative values of $\phi$ with $l = \lceil 2n^{1/3} \rceil$. 
 Although it is still a problem, the coverage deterioration appears to be less 
 dramatic for BCA,
-BC, and percentile CIs.
-
-Aside from these differences, the overall changes
+BC, and percentile CIs. Aside from these differences, the overall changes
 in performance when other experimental factors are changed are the same as
 when $l = \lceil n^{1/3} \rceil$.
 
