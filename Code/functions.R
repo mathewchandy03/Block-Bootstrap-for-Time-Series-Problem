@@ -137,7 +137,7 @@ alt_graph_bts <- function(t, width, data, trans = 'identity', level = .95)
   ggplot(data, aes(x = n, y = cov, color = CI, linetype = CI)) +
     geom_hline(yintercept = level, linetype = 'dashed', color = 'orange') + 
     geom_line(linewidth = .2, position = position_dodge(width = 0.5)) +
-    geom_errorbar(aes(ymin=LB, ymax = UB, color = CI), width = width, size = .2,
+    geom_errorbar(aes(ymin=CP_LB, ymax = CP_UB, color = CI), width = width, size = .2,
                   position = position_dodge(width = 0.5)) +
     facet_grid(factor(target) ~ factor(phi), scales = 'free',
                labeller = label_parsed) +

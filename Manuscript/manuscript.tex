@@ -484,8 +484,8 @@ compute the lower and upper bounds. It has the same width as the percentile CI.
 
 %\subsection*{Design}
 
-\eds{We compared the performance of the different block bootstrap CI methods 
-under two marginal distributions: normal and exponential.} 
+We compared the performance of the different block bootstrap CI methods 
+under two marginal distributions: standard normal and unit exponential.
 
 \subsection*{Marginal Standard Normal Distribution}
 %We designed a simulation study to compare the performance of the different block 
@@ -541,16 +541,22 @@ $r \in \{1, \ldots, R\}$, where $R$ is the number of replicates. Then
 $cov = \#\{\hat\theta_{L, r} < \theta < \hat\theta_{U, r} \}/R$, for
 $r \in \{1, \ldots, R\}$. If a CI method is valid, then the coverage rate is
 expected to match the nominal level. Because it is unlikely for the coverage to 
-exactly match the nominal level, we can construct a 95\% Wald-type CI of the 
+exactly match the nominal level, we can construct a 95\% Clopper-Pearson
+exact CI of the 
 coverage rate 
-(which is an estimate of a proportion with $R = 10000$). If the proportion 0.95 
+(which is an estimate of a proportion with $R = 10000$). The choice of
+Clopper-Pearson was motivated by the Wald 
+interval's poor coverage as the proportion approaches 0 or 1, as noted by
+\citet{brown2001interval}, although when we tried Wald intervals, the coverage
+rate intervals
+did not appear to have large differences. If the 
+proportion 0.95 
 is included in the interval, the block bootstrap method is likely performing 
 well. If all values in the interval are below 0.95, the results would suggest 
 that the method either is providing inaccurate estimation, is underestimating 
 the process' variability, or a combination of both. If all values in the 
 interval are above .95, the results suggest that the method is overestimating 
-the process' variability. \citet{brown2001interval} notes that the Wald-type 
-interval has poor coverage as the proportion approaches 0 or 1.
+the process' variability. 
 \textbf{Figure~\ref{fig:norm1}} 
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
 real coverage for a marginal standard normal distribution using block bootstrap
@@ -656,13 +662,12 @@ is necessary to recover~$\mu$. A possible explanation for this is that if a
 stationary series has a positive 
 autocorrelation, the effective sample
 size is decreased, whereas is a series has a negative autocorrelation, the
-effective sample size is increased. Additionally, this seems to have a 
+effective sample size is increased. \citep{geyer2011introduction} Additionally, 
+this seems to have a 
 greater effect on the the estimation of the location parameter versus that
 of the scale parameter or temporal dependence parameter.
 
 
-%CIs for $\mu$ exhibit coverage rates quite close to 1 for $\phi = -0.4$, and
-%as stated before, the Wald-type CI is known to have undercoverage in such 
 %situations.
 %Figure~\ref{fig:norm_mu_1_cp} shows the same coverage rates using exact 
 %Clopper-Pearson intervals to verify that it is the choice of Wald interval
@@ -865,7 +870,7 @@ distribution and temporal dependence is
 unknown, the results of this study suggest that $n \geq 1600$ may be necessary 
 for common practice to estimate $\mu$, whereas $n > 3200$ may be necessary
 to estimate the standard deviation. If 
-the dependences tructure or the marginal distribution is already known, a 
+the dependence structure or the marginal distribution is already known, a 
 lesser $n$ may be 
 adequate to estimate these 
 parameters. For lower absolute values of $\phi$, a smaller $n$ is sufficient 
