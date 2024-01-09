@@ -14,9 +14,9 @@ amssymb, enumerate}
 \usepackage{bm}
 \usepackage{multirow, multicol}
 
-\usepackage{color}
+\usepackage[dvipsnames]{color}
 \definecolor{darkblue}{rgb}{0.1, 0.2, 0.6}
-\usepackage{xcolor}
+
 \newcommand{\jy}[1]{\textcolor{red}{JY: #1}}
 \newcommand{\eds}[1]{\textcolor{blue}{(EDS: #1)}}
 \newcommand{\mc}[1]{\textcolor{green}{(MC: #1)}}
@@ -89,15 +89,7 @@ performance.
 
 
 Thank you for the suggested idea. We have reformatted all of our coverage rate 
-plots 
-accordingly, which has saved a lot of space!
-
-\mc{for exponential, the first-order autocorrelation coefficient
-is not the same as $\phi$, should I define $\rho$ as the first-order 
-autocorrelation coefficient in the manuscript so that I can use the greek letter
-in the plot}
-\jy{Yes.}
-\mc{addressed}
+plots accordingly, which has saved a lot of space!
 
 \begin{comment}
 3. The Appendix should be moved to the main text? Assessing the performance of 
@@ -192,34 +184,15 @@ the Wald-type interval has undercoverage when the true proportion is near 0 or
 \end{comment}
 
 Thank you for pointing this out. We tried both Wald intervals and exact 
-Clopper-Pearson intervals. Although we did not find a major difference between
-the two, we have switched to Clopper-Pearson intervals to avoid the potential
-undercoverage. We have discussed this in the third paragraph of the Marginal 
+Clopper-Pearson intervals \citep{clopper1934use}, the latter of which
+as implemented in the R package \texttt{PropCIs}.\citep{PropCIs}
+No major difference between the two was found, which is expected as we
+have a large number replication (10,000). Nonetheless, we have
+switched to reporting Clopper-Pearson intervals to avoid the potential
+undercoverage and discussed this in the third paragraph of the Marginal 
 Standard Normal 
-Distribution subsection of the Design section, and we have provided a reference
-for Clopper-Pearson intervals \citep{clopper1934use} as well as the package we 
-used \citep{PropCIs}.
-
-\eds{I don't think this answers the question.  The reviewer is saying that 0.95 
-is close to the boundary of 1, so the undercoverage observed intervals
-(especially when phi -0.4) may be due, at least in part, to the flaws 
-of the asymptotic Wald interval you are using. 
-\@ Jun: do you think he should try exact Clopper-Pearson
-intervals for at least a few cases of undercoverage to verify it is not the Wald
-interval that is causing the undercoverage, then comment on this in at least the
-reply (and possibly also in the main paper)?}
-\mc{plot\_norm\_mu\_1\_cup.pdf (exact Clopper-Pearson) seems to have about the same 
-widths for high 
-proportions
-(especially for phi = -0.4) as {plot\_norm\_mu\_1.pdf} (Wald-Type)}
-
-\jy{Are there big differences? We could report the CP CIs in the paper.}
-\mc{I included it in the paper but they do not seem too different}
-\jy{Point out the location of the changes in the text.}
-\mc{addressed}
-  
-
-
+Distribution subsection of the Design section.
+\jy{Quanlity control the bib entries.}
 
 \begin{comment}
 5.  In all the figures, the y-axis is allowed to vary freely making it hard to 
@@ -227,32 +200,10 @@ compare one row directly to another.  I would suggest fixing the limits on the
 y-axis to make comparisons easier.  
 \end{comment}
 
-Thank you for the suggestion. However, because of the deterioration for $\phi$, 
-we found it hard to fix the limits on the 
-y-axis without hurting the visualization for the other rows. The other reviewer
-suggested that we put the 6 figures in a column in 
-a single plot.
-Figure~\ref{fig:alt2_norm1} is provided as an example of this with fixed limits:
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/alt2_plot_norm1}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\mu$, the marginal standard deviation $\sigma_x$, and
-    the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
-    a marginal standard 
-    normal distribution with AR coefficient
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates. The
-    error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:alt2_norm1}
-\end{figure}
-
-%\jy{I'm interested in seeing the figures overlaid as in
-%  Figure~\ref{fig:mu}.}
-\mc{addressed}\jy{Put them overlaid; three plots in one with facet
-  grid as the last one.}
-  \mc{addressed. I think the last one looks better}
+As suggested by the other reviewer, we now overlay the comparison of 6
+CIs within the same panels. Each row reports the results for one
+parameter, with a shared scale on the y-axis. The number of figures
+have been greatly reduced and the comparison made easier.
 
 \begin{comment}
 6.  Is there a reason why the coverage for mu (in Figure 1) is better for 
@@ -261,15 +212,14 @@ term? Can the authors give some intuition behind why that makes sense?
 \end{comment}
 
 Thank you for this comment.
-A possible explanation for this is that if a 
-stationary series has a positive 
-autocorrelation, the effective sample
-size is decreased, whereas is a series has a negative autocorrelation, the
-effective sample size is increased. Additionally, this seems to have a 
+A possible explanation for this is that if a stationary series has a positive
+autocorrelation, the effective sample size is decreased, whereas is a
+series has a negative autocorrelation, theeffective sample size is
+increased.\citep{geyer2011introduction}
+Additionally, this seems to have a 
 greater effect on the the estimation of the location parameter versus that
 of the scale parameter or temporal dependence parameter. We have included a 
-comment at the end of the paragraph on estimation of~$\mu$, and we provided a 
-reference for effective sample size \citep{geyer2011introduction}.
+comment at the end of the paragraph on estimation of~$\mu$.
 
 \begin{comment}
 7.  The authors say “A smaller sample size is generally required to estimate a 
@@ -282,8 +232,8 @@ sample sizes to get acceptable coverage when phi is positive).  Change this
 sentence to make it more clear. 
 \end{comment}
 
-Thank you for pointing this out. The original sentence has been reworded as you
-suggested to make it more clear.
+Thank you for pointing this out. The sentence has been rewphrased as
+suggested.
 
 \begin{comment}
 8.   In the Discussion section, the authors say “We know theoretically that the 
@@ -311,10 +261,6 @@ $l = \lceil n^{1/3} \rceil$ and $l = \lceil 2n^{1/3} \rceil$. We have included
 an Appendix detailing these results, as well as a discussion referring to these
 results at the end of the Simulation Study Results section.
 
-\jy{Add a discussion in the results section, referring to detailed
-  results in the appendix. Point out the location of this discussion
-  in this reply.}
-\mc{addressed}
 
 \begin{comment}
 10.   Why did the authors choose to only go as high as 0.4 (and as low as -0.4) 
@@ -332,10 +278,7 @@ increases, and how it varies depending on the sign of the autocorrelation and
 the parameter of interest. This justification has been added to the first
 paragraph of the Normal section of the Design 
 section. We have also added a deliberation (third paragraph in the Discussion) 
-regarding what would
-be expected for higher dependence levels.
-\jy{give the location of the paragraph in the text.}
-\mc{addressed}
+regarding what would be expected for higher dependence levels.
 
 
 \begin{comment}

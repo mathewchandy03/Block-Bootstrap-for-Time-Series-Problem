@@ -512,29 +512,26 @@ The coverage rates of the CIs were used to compare the performance of CIs. Let
 $\hat\theta_{L, r}$ and $\hat\theta_{U, r}$ be the lower and upper bound,
 respectively, for the confidence interval constructed for each replicate
 $r \in \{1, \ldots, R\}$, where $R$ is the number of replicates. Then
-$cov = \#\{\hat\theta_{L, r} < \theta < \hat\theta_{U, r} \}/R$, for
-$r \in \{1, \ldots, R\}$. If a CI method is valid, then the coverage rate is
+the empirical coverage rate is
+$ \sum_{r=1}^{R} I\{\hat\theta_{L, r} < \theta < \hat\theta_{U, r}
+\}/R$, where $I(\cdot)$ in the indicator function.
+If a CI method is valid, then the coverage rate is
 expected to match the nominal level. Because it is unlikely for the coverage to 
 exactly match the nominal level, we can construct a 95\% Clopper-Pearson
-exact CI of the 
-coverage rate,\citep{clopper1934use}
+exact CI of the coverage rate,\citep{clopper1934use}
 which is an estimate of a proportion with $R = 10,000$. We used the
 R \textsl{PropCIs} package to achieve this.\citep{PropCIs}
-The choice of
-Clopper-Pearson was motivated by the Wald 
-interval's poor coverage as the proportion approaches 0 or 1, as noted by 
-\citet{brown2001interval}, although when we tried Wald intervals, the coverage
-rate intervals
-did not appear to have large differences. 
-If the 
-proportion 0.95 
+The choice of Clopper-Pearson was motivated by the Wald 
+interval's poor coverage as the proportion approaches 0
+or~1,\citep{brown2001interval}
+although when we tried Wald intervals, the coverage
+rate intervals did not appear to have large differences. If the proportion 0.95
 is included in the interval, the block bootstrap method is likely performing 
 well. If all values in the interval are below 0.95, the results would suggest 
 that the method either is providing inaccurate estimation, is underestimating 
 the process' variability, or a combination of both. If all values in the 
 interval are above .95, the results suggest that the method is overestimating 
-the process' variability. 
-\textbf{Figure~\ref{fig:norm1}} 
+the process' variability. \textbf{Figure~\ref{fig:norm1}} 
 summarizes the empirical coverage rates and the 95\% confidence intervals of the 
 real coverage for a marginal standard normal distribution using block bootstrap
 with $l = \lceil n^{1/3} \rceil$, generated using the 
@@ -579,12 +576,7 @@ $\phi \in \{-0.4, -0.2, 0.0, 0.2, 0.4\}$, and the corresponding lag-1
 autocorrelation coefficients are
 $\rho \in \{-0.298, -0.156, \allowbreak 0, 0.170, 0.355\}$.
 
-For a marginal exponential  distribution, the empirical coverage rates for 
-$\mu$, $\sigma_w$, and 
-the lag-1 autocorrelation coefficient $\rho$ using block bootstrap
-with $l = \lceil n^{1/3} \rceil$, as well as 95\%
-confidence intervals of the real coverage are displayed in 
-\textbf{Figure~\ref{fig:exp1}}. 
+
 
 
 \section*{Simulation Results}
@@ -636,16 +628,6 @@ this seems to have a
 greater effect on the the estimation of the location parameter versus that
 of the scale parameter or temporal dependence parameter.
 
-\jy{Are we reporting the C-P intervals? Clarify the desciption and
-  cite the reference.}
-\mc{addressed}
-
-%situations.
-%Figure~\ref{fig:norm_mu_1_cp} shows the same coverage rates using exact 
-%Clopper-Pearson intervals to verify that it is the choice of Wald interval
-%does not cause undercoverage of the coverage rate. Indeed, the widths of the
-%exact proportion CIs do not seem to differ heavily from the Wald-type CIs.
-
 
 For estimating the standard deviation parameter~$\sigma_x$,
 \textbf{Figure~\ref{fig:norm1}} suggests that every method can reach nominal 
@@ -685,8 +667,8 @@ should not be used.
   \centering
   \includegraphics[width=\textwidth]{figures/norm_phi_intervals}
   \caption{50 replicate percentile, BC, and recentered percentile CIs for 
-    samples of $n \in \{800, 1600\}$ ($l = \lceil n^{1/3} \rceil$)
-    for an AR(1) process with $\phi = 0.4$. For 
+    samples of size $n \in \{800, 1600\}$ ($l = \lceil n^{1/3} \rceil$)
+    for the lag-1 autocorrelation of an AR(1) process with $\phi = 0.4$. For 
     each replicate, the lower and upper bounds of the CIs are displayed, as well 
     as $\hat\theta_n$ (blue circle) and $\bar\theta_n^{B}$ (red cross).}
   \label{fig:npi}
@@ -733,11 +715,10 @@ construct the width of the CI. However, the recentered approach, does not
 correct from the original point estimate $\hat\theta_n$.
 
 
-The
-plot and results for $l = \lceil 2n^{1/3} \rceil$ are included in the Appendix.
+The results for $l = \lceil 2n^{1/3} \rceil$ are reported in the Appendix.
 Performance generally seems to be better for $l = \lceil n^{1/3} \rceil$, but
-importantly, the changes in performance when varying other parameters do not
-change when a different block size is used.
+importantly, the patterns in performance when varying other parameters
+appear to be robust to the different block size.
 
 
 \subsection*{Marginal Unit Exponential Distribution}
@@ -760,17 +741,23 @@ change when a different block size is used.
 \end{figure}
 
 
+For the scenario of marginal exponential distribution, the empirical
+coverage rates for $\mu$, $\sigma_w$, and 
+the lag-1 autocorrelation coefficient $\rho$ using block bootstrap
+with $l = \lceil n^{1/3} \rceil$, as well as 95\%
+confidence intervals of the real coverage are displayed in 
+\textbf{Figure~\ref{fig:exp1}}. 
 Additionally, a set of 50 CIs are displayed for each of the percentile, 
 BC, and recentered percentile approaches for exponentially distributed
 samples of $n \in \{800, 1600\}$ with lag-1 autocorrelation coefficient 0.355
-($\phi = 0.4$) in Figure~\ref{fig:eri}.
+($\phi = 0.4$) in \textbf{Figure~\ref{fig:eri}}.
 
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/exp_phi_intervals}
   \caption{50 replicate percentile, BC, and recentered percentile CIs for the
-    lag-1 autocorrelation coefficient 0.355 ($\phi = 0.4$)
+    lag-1 autocorrelation coefficient $\rho = 0.355$ ($\phi = 0.4$)
     of a stationary series with marginal exponential distribution
     obtained by transforming an AR(1) process with $\phi = 0.4$ with
     sample size $n \in \{800, 1600\}$ ($l = \lceil n^{1/3} \rceil$). For 
@@ -782,25 +769,9 @@ samples of $n \in \{800, 1600\}$ with lag-1 autocorrelation coefficient 0.355
 
 It appears that a greater sample size is generally required for the bootstrap
 CIs to cover the mean and standard deviation parameters in the exponential
-margin case than in the normal margin case. In contrast to the marginal normal
-distribution, where standard normal, Student's $t$, and 
-recentered percentile CI $\phi$ coverage rates were greater for stronger 
-dependences 
-regardless of the sign, $\rho$ coverage rates for these CIs seem to be greater 
-only for 
-stronger negative dependencies and lesser for stronger positive dependences. 
-\mc{What could be an explanation for this?}
-\jy{I don't follow this. Are you talking about mu only? Even for mu,
-  the statement does not look right.} \mc{for lag-1 autocorrelation}
-\jy{This would invalidate our explanation using the effective sample
-  size. Let's tune it down or remove it.}
-\mc{this observation was for lag-1 autocorrelation. does it still invalidate 
-our effective sample size explanation?}
-However, the other 
-trends 
-and patterns
-discussed in the main text regarding the performance of various methods and
-diverse parameters remain consistent. For example, Student's $t$ confidence
+margin case than in the normal margin case. However, the other trends 
+and patterns discussed regarding the performance of various methods and
+diverse parameters remain unchanged. For example, Student's $t$ confidence
 intervals still exhibit higher coverage rates in comparison to alternative
 methods. Performance continues to be more favorable when temporal dependence is
 negative rather than positive. Of particular significance, the percentile, BC,
@@ -814,7 +785,7 @@ inherent unbiasedness of the original point estimator. In sum,
 for the most part, the findings for
 series that are marginally exponentially distributed closely mirror those
 attained for series that are marginally normally distributed.
-  
+
 \section*{Discussion}
 \label{sec:disc}
 
@@ -823,8 +794,8 @@ from simple parameters like the mean to more complicated temporal dependence
 factors. We know theoretically that the block bootstrap procedure will cover a 
 parameter of a time series at the nominal level given an infinitely large 
 sample,\citep{calhoun2018} so the goal for this study was to find the smallest 
-finite sample length 
-$n$ of a time series in order for the block bootstrap procedure to recover its 
+finite sample length~$n$
+of a time series in order for the block bootstrap procedure to recover its 
 associated parameters at an acceptable rate. Our analysis relies on the 
 assumption that there is a size $n$ large enough for the method to work: that 
 is, the method's performance improves as $n$ increases. Out of the six types of 
@@ -838,44 +809,23 @@ underestimates $\phi$, the coverage decreases. The BC CI seems to correct the
 bias, but the width of the CI seems to be too short. The acceleration factor 
 of the BCA CI seems to fail, as the width of the CI seems to be too
 short.
-\jy{Inconsistent means not consistent and consistency is a desired
-  property of an estimator. When we talk about width of a CI, what
-  does consistency mean? Do an throughout check, please.}
-\mc{I was basically trying to say that the widths of the CI vary more 
-for BC CIs than for percentile or recentered CIs, I think it may be simpler to
-just say that they are shorter}
 
 
 One of the goals of this study was to provide some practical recommendations for
 necessary sample sizes when using block bootstrap to estimate the parameters of
 serially dependent data. When using Student's $t$ intervals and the
-marginal
-\jy{Recall that t is not different from normal when sample size is
-  large. So the recommendation is to do t always since it performs
-  better for small samples.} \mc{addressed}
-distribution and temporal dependence is 
+marginal distribution and temporal dependence is 
 unknown, the results of this study suggest that $n \geq 1600$ may be necessary 
 for common practice to estimate $\mu$, whereas $n > 3200$ may be necessary
 to estimate the standard deviation. Student's $t$ is always preferable to
 Standard Normal CIs
 as they performs better for smaller sample sizes and performs as good or better
-for larger sample sizes.
-\jy{Don't discuss these. The recommended method is regardless of what
-  the dependence struture and marginald istribution are. That's why we
-  did the study. Just gave recommendations based on both
-  scenarios. Rewrite this paragraph.}
-\mc{addressed}
-\jy{These statements are not to the point. Let's not discuss the case
-  where phi is know or not. They are not known. We want the method to
-  be robust to phi and the true marginal distribution.}
-\mc{addressed}
-Lastly, to estimate 
-$\phi$, $n \geq 100$ using the Student's $t$ method may be sufficient under
+for larger sample sizes. Lastly, to estimate lag-1 autocorrelation,
+$n \geq 100$ using the Student's $t$ method may be sufficient under
 a marginal standard normal distribution, whereas $n \geq 1600$ may be required
 under under a marginal exponential distribution. Further
 investigation may be necessary to see if there are other percentile-based 
-interval corrections
-that fix the coverage deterioration problem for~$\phi$.
+interval corrections that fix the coverage deterioration problem for~$\phi$.
 
   
 Although
@@ -955,12 +905,9 @@ $n = 800$ or 1600 is necessary to capture negative autocorrelations for
 $l = \lceil n^{1/3} \rceil$. Student's $t$ CIs do not seem to be as affected
 by this change in $l$: for $\phi = -0.4$ and -0.2, they still over-cover $\mu$
 for smaller values of~$n$. The results for $\sigma_x$ with $l = \lceil 2n^{1/3} 
-\rceil$ look very similar 
-to 
+\rceil$ look very similar to 
 those the results for $\sigma_x$ with $l = \lceil n^{1/3} \rceil$, but coverage 
-rates of $\sigma_x$ do 
-look 
-slightly lower
+rates of $\sigma_x$ do look slightly lower
 especially for negative values of $\phi$, although Student's $t$ CIs are again
 not as influenced by this change in~$l$. A larger sample size seems necessary
 when using other CIs to estimate $\sigma_x$ for $l = \lceil 2n^{1/3} \rceil$.
@@ -972,11 +919,6 @@ dramatic for BCA,
 BC, and percentile CIs. Aside from these differences, the overall changes
 in performance when other experimental factors are changed are the same as
 when $l = \lceil n^{1/3} \rceil$.
-
-\textbf{Figure~\ref{fig:exp2}} 
-summarizes the empirical coverage rates and the 95\% confidence intervals of the 
-real coverage for a marginal exponential distribution using block bootstrap
-with $l = \lceil 2n^{1/3} \rceil$.
 
 \begin{figure}[tbp]
   \centering
@@ -995,10 +937,12 @@ with $l = \lceil 2n^{1/3} \rceil$.
   \label{fig:exp2}
 \end{figure}
 
-For a stationary series with a marginal unit exponential distribution, altering 
-the 
-block size results in the same 
-changes in performance of different CIs.
+\textbf{Figure~\ref{fig:exp2}} 
+summarizes the empirical coverage rates and the 95\% confidence intervals of the 
+real coverage for a marginal exponential distribution using block bootstrap
+with $l = \lceil 2n^{1/3} \rceil$. Again, altering the block size results in the same
+changes in performance of different CIs as those in the scenario of
+marginal normal distribution.
  
 \bibliographystyle{unsrtnat}
 \bibliography{citations}
