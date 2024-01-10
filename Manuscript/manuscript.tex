@@ -492,6 +492,7 @@ To investigate the effect of sample size~$n$, we considered an array of values
 $n \in \{100, 200, 400, 800, 1600, 3200\}$. In each configuration, we generated 
 10,000 replicates. The 
 block bootstrap sampling step was done with function \texttt{tsboot} from R 
+\citep{R}
 package \textsl{boot},\citep{boot} with block size $\lceil n / l \rceil$. This 
 function by default is an implementation of moving block bootstrap as described 
 in the previous section, meaning that that blocks are allowed to wrap around, 
