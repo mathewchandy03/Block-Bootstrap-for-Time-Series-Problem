@@ -18,11 +18,11 @@ cor(z[,1], z[,2])
 
 
 rho2phi <- function(rho) {
-    mymvd <- copula::mvdc(copula::normalCopula(rho), margins = "exp",
-                          paramMargins = list(rate=1), marginsIdentical = TRUE)
+    mymvd <- copula::mvdc(copula::normalCopula(rho), margins = "gamma",
+                          paramMargins = list(list(shape = 8, rate = 1)), marginsIdentical = TRUE)
     EXY <- pracma::dblquad(function(x, y) x * y * copula::dMvdc(cbind(x, y), mymvd),
                            0, 20, 0, 20)
-    phi <- (EXY - 1) / 1
+    phi <- (EXY - 64) / 8
     phi
 }
 

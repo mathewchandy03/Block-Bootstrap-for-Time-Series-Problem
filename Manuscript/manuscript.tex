@@ -483,6 +483,12 @@ series $X_t$ has mean zero and variance
 $\sigma_x^2 = (1 - \phi^2) \sigma_{\epsilon}^2$, so for each value of $\phi$, we 
 set $\sigma_{\epsilon}^2 = 1 / (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
 
+ The 
+series $X_t$ has mean zero and variance 
+$\sigma_x^2 = \sigma_{\epsilon}^2 / (1 - \phi^2)$, so for each value of $\phi$, 
+we 
+set $\sigma_{\epsilon}^2 = (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
+
 
 Three target parameters of $X_t$ were considered:
 1) $\mu = 0$, the mean of $X_t$;
@@ -947,7 +953,7 @@ with $l = \lceil 2n^{1/3} \rceil$. Again, altering the block size results in the
 changes in performance of different CIs as those in the scenario of
 marginal normal distribution.
  
-\bibliographystyle{unsrtnat}
+\bibliographystyle{ajur}
 \bibliography{citations}
 
 \end{document}
