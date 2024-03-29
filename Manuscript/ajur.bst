@@ -432,7 +432,7 @@ FUNCTION {bibinfo.warn}
 FUNCTION {format.url}
 {
   doi empty$
-    { url }
+%    { url }
     { "http://dx.doi.org/" doi * }
   if$
   duplicate$ empty$

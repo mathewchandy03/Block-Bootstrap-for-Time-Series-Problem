@@ -65,7 +65,7 @@
 
 % This designs the title display style for the maketitle command
 \makeatletter
-\newcommand\sixteen{\@setfontsize\sixteen{17pt}{6}}
+\newcommand\sixteen{\@setfontsize\sixteen{16pt}{6}}
 \renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
 \begin{flushleft}
 \sixteen\bfseries \@title
@@ -109,8 +109,9 @@
 % Add author information below. Communicating author is indicated by an 
 % asterisk, the affiliation is shown by superscripted lower case letter if 
 % several affiliations need to be noted.
-\author{Mathew Chandy*, Elizabeth D. Schifano, Jun Yan \\ \medskip 
-Department of Statistics, University of Connecticut, Storrs, CT \\ \medskip 
+\author{Mathew Chandy*, Elizabeth D. Schifano, \& Jun Yan \\ \medskip \medskip 
+Department of Statistics, University of Connecticut, Storrs, CT \\ \medskip\medskip 
+https://doi.org/10.33697/ajur.2024.101\\ \medskip\medskip 
 Student: mathew.chandy@uconn.edu* \\
 Mentors: elizabeth.schifano@uconn.edu, jun.yan@uconn.edu
 }
@@ -252,7 +253,7 @@ estimate is proposed for comparison. The second section reports a simulation
 study comparing the coverage rates of six block bootstrap CIs. A discussion
 concludes in the final section.
 
-\section*{Block Bootstrap CIs}
+\section*{\textit{Block Bootstrap CIs}}
 \label{sec:bbci}
 
 Consider a stationary time series $\{X_t: t = 1, \ldots, n\}$ with length~$n$. 
@@ -477,15 +478,12 @@ We only
 used serial dependences as strong as 0.4, because we only seek to 
 establish the 
 general trend as the strength of the autocorrelation 
-increases, and how it varies depending on the sign of the autocorrelation and 
+increases, and how it varies depending on the sign of the autocorrelation
+and 
 the parameter of interest. The 
 series $X_t$ has mean zero and variance 
-$\sigma_x^2 = (1 - \phi^2) \sigma_{\epsilon}^2$, so for each value of $\phi$, we 
-set $\sigma_{\epsilon}^2 = 1 / (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
-
- The 
-series $X_t$ has mean zero and variance 
-$\sigma_x^2 = \sigma_{\epsilon}^2 / (1 - \phi^2)$, so for each value of $\phi$, 
+$\sigma_x^2 = \sigma_{\epsilon}^2 / (1 - \phi^2)$, so for each value of
+$\phi$, 
 we 
 set $\sigma_{\epsilon}^2 = (1 - \phi^2)$ such that $\sigma_x^2 = 1$.
 
@@ -596,6 +594,7 @@ $\rho \in \{-0.298, \allowbreak -0.156, 0, 0.170, 0.355\}$.
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/alt_plot_norm1}
+  \includegraphics[width=\textwidth]{figures/alt_plot_norm2}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal mean $\mu$, the marginal standard deviation $\sigma_x$, and
     the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
@@ -605,12 +604,14 @@ $\rho \in \{-0.298, \allowbreak -0.156, 0, 0.170, 0.355\}$.
     $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates
     of
     block bootstrap with $l = \lceil n^{1/3} \rceil$. The
-    error bars represent 95\% CIs of the real coverage rates.}
+    error bars represent 95\% CIs of the real coverage rates.
+  Top: $l = \lceil n^{1/3} \rceil$. Bottom: $l = \lceil 2n^{1/3} \rceil$.}
   \label{fig:norm1}
 \end{figure}
 
 
-For estimating the mean parameter~$\mu$, \textbf{Figure~\ref{fig:norm1}} suggests 
+For estimating the mean parameter~$\mu$, the top panel of
+\textbf{Figure~\ref{fig:norm1}} suggests 
 that all methods eventually approach correct coverage of $\mu$ as sample size 
 increases. Student's $t$ CIs appear to need the smallest sample size to achieve 
 correct coverage, except for samples with strong negative dependence, in which 
@@ -723,10 +724,32 @@ construct the width of the CI. However, the recentered approach, does not
 correct from the original point estimate $\hat\theta_n$.
 
 
-The results for $l = \lceil 2n^{1/3} \rceil$ are reported in the Appendix.
-Performance generally seems to be better for $l = \lceil n^{1/3} \rceil$, but
+The results for $l = \lceil 2n^{1/3} \rceil$ are reported in the
+bottom panel of Figure~\ref{fig:norm1}. The performances generally
+seems to be inferior compared those with $l = \lceil n^{1/3}\rceil$, but
 importantly, the patterns in performance when varying other parameters
 appear to be robust to the different block size.
+For negative autocorrelations, the coverage 
+rates of $\mu$ appear to be lower when
+using $l = \lceil 2n^{1/3} \rceil$. For example, whereas $n = 100$ or 200 
+would seem sufficient for most CIs when using $l = \lceil n^{1/3} \rceil$, 
+$n = 800$ or 1600 is necessary to capture negative autocorrelations for 
+$l = \lceil n^{1/3} \rceil$. Student's $t$ CIs do not seem to be as affected
+by this change in $l$: for $\phi = -0.4$ and -0.2, they still over-cover $\mu$
+for smaller values of~$n$. The results for $\sigma_x$ with $l = \lceil 2n^{1/3} 
+\rceil$ look very similar to 
+those the results for $\sigma_x$ with $l = \lceil n^{1/3} \rceil$, but coverage 
+rates of $\sigma_x$ do look slightly lower
+especially for negative values of $\phi$, although Student's $t$ CIs are again
+not as influenced by this change in~$l$. A larger sample size seems necessary
+when using other CIs to estimate $\sigma_x$ for $l = \lceil 2n^{1/3} \rceil$.
+Recentered percentile and standard CIs have slightly lower coverage rates when
+estimating negative values of $\phi$ with $l = \lceil 2n^{1/3} \rceil$. 
+Although it is still a problem, the coverage deterioration appears to be less 
+dramatic for BCA,
+BC, and percentile CIs. Aside from these differences, the overall changes
+in performance when other experimental factors are changed are the same as
+when $l = \lceil n^{1/3} \rceil$.
 
 
 \subsection*{Marginal Unit Exponential Distribution}
@@ -734,6 +757,7 @@ appear to be robust to the different block size.
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/alt_plot_exp1}
+  \includegraphics[width=\textwidth]{figures/alt_plot_exp2}
   \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
     the marginal mean $\mu$, the marginal standard deviation $\sigma_w$, and
     the first-order autocorrelation coefficient $\rho$ of a stationary series 
@@ -744,7 +768,8 @@ appear to be robust to the different block size.
     $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates 
     replicates of
     block bootstrap with $l = \lceil n^{1/3} \rceil$. 
-    The error bars represent 95\% CIs of the real coverage rates.}
+    The error bars represent 95\% CIs of the real coverage rates.
+    Top: $l = \lceil n^{1/3} \rceil$. Bottom: $l = \lceil 2n^{1/3} \rceil$.}
   \label{fig:exp1}
 \end{figure}
 
@@ -752,7 +777,7 @@ appear to be robust to the different block size.
 For the scenario of marginal exponential distribution, the empirical
 coverage rates for $\mu$, $\sigma_w$, and 
 the lag-1 autocorrelation coefficient $\rho$ using block bootstrap
-with $l = \lceil n^{1/3} \rceil$, as well as 95\%
+with $l  \in \{\lceil n^{1/3} \rceil, \lceil 2n^{1/3} \rceil$, as well as 95\%
 confidence intervals of the real coverage are displayed in 
 \textbf{Figure~\ref{fig:exp1}}. 
 Additionally, a set of 50 CIs are displayed for each of the percentile, 
@@ -782,7 +807,10 @@ and patterns discussed regarding the performance of various methods and
 diverse parameters remain unchanged. For example, Student's $t$ confidence
 intervals still exhibit higher coverage rates in comparison to alternative
 methods. Performance continues to be more favorable when temporal dependence is
-negative rather than positive. Of particular significance, the percentile, BC,
+negative rather than positive. Again, altering the block size results
+in the same changes in performance of different CIs as those in the
+scenario of  marginal normal distribution.
+Of particular significance, the percentile, BC,
 and BCA confidence intervals still display a decline in coverage accuracy for
 the lag-1 autocorrelation coefficient as sample size increases as demonstrated
 in Figure~\ref{fig:eri}. Both the percentile and BC intervals persist in
@@ -794,6 +822,7 @@ for the most part, the findings for
 series that are marginally exponentially distributed closely mirror those
 attained for series that are marginally normally distributed.
 
+
 \section*{Discussion}
 \label{sec:disc}
 
@@ -801,7 +830,6 @@ Block bootstrap is a useful method for estimating parameters of a time series,
 from simple parameters like the mean to more complicated temporal dependence
 factors. We know theoretically that the block bootstrap procedure will cover a 
 parameter of a time series at the nominal level given an infinitely large
-%\jy{Also cite Calhoun in the introduction}\mc{addressed}
 sample,\citep{calhoun2018} so the goal for this study was to find the smallest 
 finite sample length~$n$
 of a time series in order for the block bootstrap procedure to recover its 
@@ -882,85 +910,14 @@ conduct a thorough investigation into the specific scenarios where the
 proposed CI demonstrates superior performance and the conditions under
 which it should be recommended.
 
-
-\section*{Appendix: Simulation Study with $l = \lceil 2n^{1/3} \rceil$}
-
-\textbf{Figure~\ref{fig:norm2}} 
-summarizes the empirical coverage rates and the 95\% confidence intervals of the 
-real coverage for a marginal standard normal distribution using block bootstrap
-with $l = \lceil 2n^{1/3} \rceil$.
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/alt_plot_norm2}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\mu$, the marginal standard deviation $\sigma_x$, and
-    the first-order autocorrelation coefficient $\phi$ of an AR(1) process with 
-    a marginal standard 
-    normal distribution with AR coefficient
-    $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ and series length
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates of
-    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. The
-    error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:norm2}
-\end{figure}
-
-Based on \textbf{Figure~\ref{fig:norm2}}, for negative autocorrelations, the 
-coverage 
-rates of $\mu$ appear to be lower when
-using $l = \lceil 2n^{1/3} \rceil$. For example, whereas $n = 100$ or 200 
-would seem sufficient for most CIs when using $l = \lceil n^{1/3} \rceil$, 
-$n = 800$ or 1600 is necessary to capture negative autocorrelations for 
-$l = \lceil n^{1/3} \rceil$. Student's $t$ CIs do not seem to be as affected
-by this change in $l$: for $\phi = -0.4$ and -0.2, they still over-cover $\mu$
-for smaller values of~$n$. The results for $\sigma_x$ with $l = \lceil 2n^{1/3} 
-\rceil$ look very similar to 
-those the results for $\sigma_x$ with $l = \lceil n^{1/3} \rceil$, but coverage 
-rates of $\sigma_x$ do look slightly lower
-especially for negative values of $\phi$, although Student's $t$ CIs are again
-not as influenced by this change in~$l$. A larger sample size seems necessary
-when using other CIs to estimate $\sigma_x$ for $l = \lceil 2n^{1/3} \rceil$.
-%\jy{Put the small paragraphs into a bigger one.}\mc{addressed}
-Recentered percentile and standard CIs have slightly lower coverage rates when
-estimating negative values of $\phi$ with $l = \lceil 2n^{1/3} \rceil$. 
-Although it is still a problem, the coverage deterioration appears to be less 
-dramatic for BCA,
-BC, and percentile CIs. Aside from these differences, the overall changes
-in performance when other experimental factors are changed are the same as
-when $l = \lceil n^{1/3} \rceil$.
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\textwidth]{figures/alt_plot_exp2}
-  \caption{Empirical coverage rates of different 95\% block bootstrap CIs for
-    the marginal mean $\mu$, the marginal standard deviation $\sigma_w$, and
-    the first-order autocorrelation coefficient $\rho$ of a stationary series 
-    with 
-    marginal unit exponential distribution obtained by transforming an AR(1) 
-    process
-    with $\phi \in \{-0.4, 0.2, 0, 0.2, 0.4\}$ with series length 
-    $n \in \{100, 200, 400, 800, 1600, 3200\}$ based on 10,000 replicates 
-    replicates of
-    block bootstrap with $l = \lceil 2n^{1/3} \rceil$. 
-    The error bars represent 95\% CIs of the real coverage rates.}
-  \label{fig:exp2}
-\end{figure}
-
-\textbf{Figure~\ref{fig:exp2}} 
-summarizes the empirical coverage rates and the 95\% confidence intervals of the 
-real coverage for a marginal exponential distribution using block bootstrap
-with $l = \lceil 2n^{1/3} \rceil$. Again, altering the block size results in the same
-changes in performance of different CIs as those in the scenario of
-marginal normal distribution.
- 
 \bibliographystyle{ajur}
-\bibliography{citations}
+\input{citation}
 
 
 \section*{About Student Author}
 \label{sec:asa}
 Mathew Chandy is a senior majoring in both Statistics and Statistical Data Science, 
-and he plans to graduate in the spring of 2024.
+and he plans to graduate in the Spring of 2024.
 
 
 \section*{Press Summary}
@@ -980,6 +937,9 @@ estimation of the lag-1 autocorrelation - using
 Student's $t$ bootstrap confidence intervals - demands a sample size of at least 100 
 when the marginal distribution is standard normal and a sample size of at least 1600 
 when the marginal distribution is unit exponential.
+
+
+
 
 
 \end{document}
